@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UnwiseGenius</title>
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="https://unpkg.com/@google/model-viewer@3.4.0/dist/model-viewer.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            background: #4A00FF;
+            color: white;
+            font-family: 'Helvetica Neue', sans-serif;
+            overflow-x: hidden;
+        }
+
+        header.nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem 3rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+        .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  text-transform: uppercase;
+  color: var(--white);
+  text-decoration: none; /* Remove underline */
+}
+
+.logo:hover {
+  opacity: 0.8; /* subtle hover feedback */
+  transition: opacity 0.2s ease;
+}
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            position: relative;
+        }
+
+        nav a:hover {
+            opacity: 0.7;
+        }
+
+        .hero {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: left;
+            min-height: 80vh;
+            padding: 0 3rem;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4rem;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .text h1 {
+            font-size: 4rem;
+            line-height: 1.05;
+            font-weight: normal;
+        }
+
+        .hello {
+            font-weight: 900;
+            font-size: 5rem;
+            display: block;
+            letter-spacing: -0.02em;
+            margin-bottom: -1rem;
+        }
+
+        /* === Black & White, Bright Model === */
+        model-viewer {
+            width: 320px;
+            height: 320px;
+            background: transparent;
+            transition: transform 0.05s linear;
+            will-change: transform;
+            filter: grayscale(100%) brightness(1.9) contrast(1.25);
+        }
+
+        @media (max-width: 900px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .text h1 {
+                font-size: 3rem;
+            }
+
+            .hello {
+                font-size: 4rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="nav">
+        <a href="index.html" class="logo">
+            <img src="assets/brain.png" alt="Brain logo" />
+            <span>Jared Russell</span>
+        </a>
+
+        <nav>
+            <a href="about.html">About Me</a>
+            <a href="portfolio.html">Portfolio</a>
+            <a href="contact.html">Get in Touch!</a>
+        </nav>
+    </header>
+
+
+    <main class="hero">
+        <div class="hero-content">
+            <div class="text">
+                <h1>
+                    <span class="hello">HELLO!</span>
+                    I’m Jared Russell<br />
+                    <span class="sub">//UnwiseGenius.</span>
+                </h1>
+            </div>
+
+            <!-- 3D Model -->
+            <model-viewer id="brainModel" src="assets/unwisegeniuslogo.glb" alt="3D logo of UnwiseGenius" disable-zoom
+                interaction-prompt="none" auto-rotate rotation-speed="6" style="background: transparent;">
+            </model-viewer>
+        </div>
+    </main>
+
+    <script>
+
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            current.x += (target.x - current.x) * FOLLOW_SPEED;
+            current.y += (target.y - current.y) * FOLLOW_SPEED;
+
+            const rotX = -current.y * MAX_TILT_X;
+            const rotY = current.x * MAX_TILT_Y;
+            const tx = current.x * MAX_TRANSLATE;
+            const ty = current.y * MAX_TRANSLATE;
+
+            model.style.transform = `
+        translate3d(${tx}px, ${ty}px, 0)
+        rotateX(${rotX}deg)
+        rotateY(${rotY}deg)
+      `;
+        }
+        animate();
+    </script>
+</body>
+
+</html>
