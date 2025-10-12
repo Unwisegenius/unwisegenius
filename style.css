@@ -1,326 +1,285 @@
 /* === FONTS === */
 @font-face {
-    font-family: 'HelveticaNeueLTProBlk';
-    src: url('fonts/Helvetica Neue LT Pro 93 Black Extended.otf') format('opentype');
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'HelveticaNeue';
-    src: url('fonts/HelveticaNeueLTPro-Roman.otf') format('opentype');
-    font-display: swap;
-  }
-  
-  /* === THEME === */
-  :root {
-    --blue: #4A00FF;
-    --white: #ffffff;
-  }
-  
-  /* === RESET === */
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  
-  /* === BASE === */
-  body {
-    font-family: 'HelveticaNeue', Helvetica, Arial, sans-serif;
-    background: var(--blue);
-    color: var(--white);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
-  }
-  
-/* =============== HEADER / NAV =============== */
-header.nav {
-    display: flex;
-    align-items: center;            /* vertical centering */
-    justify-content: space-between; /* logo left, nav right */
-    gap: 1rem;
-    padding: clamp(1rem, 4vw, 2rem) clamp(1.5rem, 5vw, 3rem);
-  }
-  
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-family: 'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
-    font-size: clamp(0.9rem, 2vw, 1rem);
-    text-transform: uppercase;
-  }
-  .logo img { width: clamp(30px, 4vw, 40px); height: auto; }
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-family: 'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
-    font-size: clamp(0.9rem, 2vw, 1rem);
-    text-transform: uppercase;
-    color: var(--white);
-    text-decoration: none;
-    cursor: pointer; /* 👈 adds hand cursor for clarity */
-  }
-  
-  .logo img {
-    width: clamp(30px, 4vw, 40px);
-    height: auto;
-    display: inline-block;
-    filter: none;
-    opacity: 1;
-  }
-  
-  .logo:hover {
-    opacity: 0.8; /* subtle feedback on hover */
-    transition: opacity 0.2s ease;
-  }
-  
-  nav {
-    display: flex;
-    gap: clamp(1rem, 3vw, 2rem);
-  }
-  nav a {
-    font-family: 'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
-    font-size: clamp(0.8rem, 1.8vw, 0.95rem);
-    color: var(--white);
-    text-decoration: none;
-    transition: opacity .2s ease;
-  }
-  nav a:hover { opacity: .7; }
-  
-  /* Small screens: stack nav under the logo */
-  @media (max-width: 900px) {
-    header.nav {
-      flex-direction: column;
-      align-items: flex-start;
-      padding-bottom: 1.25rem;
-    }
-    nav {
-      flex-wrap: wrap;
-      gap: 1rem 1.25rem;
-      margin-top: .5rem;
-    }
-  }
-  
-  
-  /* =============== HERO (HOME) =============== */
-  .hero {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 clamp(1rem, 5vw, 3rem);
-  }
-  .hero-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: clamp(2rem, 6vw, 5rem);
-    max-width: 1200px;
-    width: 100%;
-  }
-  .text h1 {
-    font-family: 'HelveticaNeue', Helvetica, Arial, sans-serif;
-    font-size: clamp(2rem, 5vw, 4.5rem);
-    line-height: 1.05;
-    font-weight: 400;
-  }
-  .hello {
-    font-family: 'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
-    font-size: clamp(3rem, 7vw, 6rem);
-    display: block;
-    letter-spacing: -0.02em;
-    margin-bottom: clamp(1rem, 2vw, 2rem);
-  }
-  .sub { display: block; font-size: clamp(1.8rem, 5vw, 4.5rem); }
-  
-  /* 3D logo (model-viewer) */
-  model-viewer {
-    width: clamp(200px, 34vw, 380px);
-    height: clamp(200px, 34vw, 380px);
-    max-width: 420px; max-height: 420px;
-    background: transparent;
-    filter: grayscale(100%) brightness(1.6) contrast(1.3);
-    transition: transform .05s linear;
-  }
-  
-  /* On narrow screens, stack hero content cleanly */
-  @media (max-width: 900px) {
-    .hero-content { flex-direction: column; text-align: center; gap: 2rem; }}
-    /* ===== ABOUT — Figma-accurate ===== */
+  font-family: 'HelveticaNeueLTProBlk';
+  src: url('fonts/Helvetica Neue LT Pro 93 Black Extended.otf') format('opentype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'HelveticaNeue';
+  src: url('fonts/HelveticaNeueLTPro-Roman.otf') format('opentype');
+  font-display: swap;
+}
+
+/* === THEME === */
 :root {
-    --brand: #4A00FF;
-    --about-pad-x: 56px;   /* desktop gutters */
-    --about-pad-top: 48px; /* space from rounded white top */
-    --about-pad-bot: 72px;
+  --blue: #4A00FF;
+  --white: #ffffff;
+}
+
+/* === RESET === */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* === BASE === (HOME defaults) */
+body {
+  font-family: 'HelveticaNeue', Helvetica, Arial, sans-serif;
+  background: var(--blue);   /* Home stays purple */
+  color: var(--white);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* ================= HEADER / NAV (shared) ================= */
+header.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;  /* logo left, nav right */
+  gap: 1rem;
+  padding: clamp(1rem, 4vw, 2rem) clamp(1.5rem, 5vw, 3rem);
+}
+
+/* clickable logo link */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  text-transform: uppercase;
+  color: var(--white);             /* Home default: white text */
+  text-decoration: none;
+  cursor: pointer;
+}
+.logo img {
+  width: clamp(30px, 4vw, 40px);
+  height: auto;
+  display: inline-block;
+}
+.logo:hover { opacity: .85; transition: opacity .2s ease; }
+
+/* nav links (typography shared) */
+nav {
+  display: flex;
+  gap: clamp(1rem, 3vw, 2rem);
+}
+nav a {
+  font-family: 'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
+  font-size: clamp(0.8rem, 1.8vw, 0.95rem);
+  color: var(--white);             /* Home default: white links */
+  text-decoration: none;
+  transition: opacity .2s ease;
+}
+nav a:hover { opacity: .7; }
+
+/* Small screens: stack nav under the logo */
+@media (max-width: 900px) {
+  header.nav {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 1.25rem;
   }
-  
-  /* White canvas under your purple header */
-  .about {
-    background: #fff;
-    color: #111;
-    border-top-left-radius: 18px;
-    border-top-right-radius: 18px;
-    padding: var(--about-pad-top) var(--about-pad-x) var(--about-pad-bot);
-    min-height: 100vh; /* fills to bottom, like your Figma page */
-  }
-  /* So it never clips before the 3-col can fit */
-@media (max-width: 1260px) {
-    .about-grid {
-      grid-template-columns: minmax(320px, 1fr) minmax(420px, 1fr);
-      column-gap: clamp(24px, 3.5vw, 40px);
-      align-items: start;
-    }
-    .about-main { justify-content: start; }
-    .about-side { justify-content: start; margin-top: 16px; }
-  }
- /* Desktop: 3 columns — photo | about | side (flexible, no overflow) */
+  nav { flex-wrap: wrap; gap: 1rem 1.25rem; margin-top: .5rem; }
+}
+
+/* ================= HERO (HOME) ================= */
+.hero {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 clamp(1rem, 5vw, 3rem);
+}
+.hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(2rem, 6vw, 5rem);
+  max-width: 1200px;
+  width: 100%;
+}
+.text h1 {
+  font-family: 'HelveticaNeue', Helvetica, Arial, sans-serif;
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  line-height: 1.05;
+  font-weight: 400;
+}
+.hello {
+  font-family: 'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
+  font-size: clamp(3rem, 7vw, 6rem);
+  display: block;
+  letter-spacing: -0.02em;
+  margin-bottom: clamp(1rem, 2vw, 2rem);
+}
+.sub { display: block; font-size: clamp(1.8rem, 5vw, 4.5rem); }
+
+/* 3D logo (model-viewer) */
+model-viewer {
+  width: clamp(200px, 34vw, 380px);
+  height: clamp(200px, 34vw, 380px);
+  max-width: 420px; max-height: 420px;
+  background: transparent;
+  filter: grayscale(100%) brightness(1.6) contrast(1.3);
+  transition: transform .05s linear;
+}
+
+/* On narrow screens, stack hero content cleanly */
+@media (max-width: 900px) {
+  .hero-content { flex-direction: column; text-align: center; gap: 2rem; }
+}
+
+/* ================= ABOUT (content section) ================= */
+:root {
+  --brand: #4A00FF;
+  --about-pad-x: 56px;
+  --about-pad-top: 48px;
+  --about-pad-bot: 72px;
+}
+.about {
+  background: #fff;
+  color: #111;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  padding: var(--about-pad-top) var(--about-pad-x) var(--about-pad-bot);
+  min-height: 100vh;
+}
 .about-grid {
-    width: min(100%, 1200px);          /* hard cap, but never exceed viewport */
-    margin: 0 auto;
-    display: grid;
-    /* keep the visual ratio but let columns shrink when needed */
-    grid-template-columns:
-      minmax(280px, 1.8fr)             /* was 560px */
-      minmax(320px, 1.6fr)             /* was 520px */
-      minmax(240px, 1fr);              /* was 320px */
-    column-gap: clamp(28px, 4vw, 56px);/* scales down gap instead of overflowing */
-    align-items: center;
+  width: min(100%, 1200px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(280px, 1.8fr) minmax(320px, 1.6fr) minmax(240px, 1fr);
+  column-gap: clamp(28px, 4vw, 56px);
+  align-items: center; /* center text vertically with image */
+}
+.about-photo img {
+  width: 100%; height: auto; display: block;
+  border-radius: 16px; filter: grayscale(100%);
+}
+.about-main { display: flex; flex-direction: column; justify-content: center; }
+.about-title {
+  font-family: 'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-size: 22px;
+  color: var(--brand);
+  letter-spacing: 0.01em;
+  margin: 0 0 12px 0;
+  position: relative;
+  padding-bottom: 10px;
+  line-height: 1.1;
+}
+.about-title::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 3px; background: var(--brand); border-radius: 2px;
+}
+.about-copy {
+  font-family: 'HelveticaNeue', Helvetica, Arial, sans-serif;
+  font-size: 14px; line-height: 1.35; color: #2a2a2a; margin-top: 22px;
+}
+.about-side { display: flex; flex-direction: column; justify-content: center; gap: 40px; }
+.mini { display: block; }
+.mini-title {
+  font-family: 'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
+  font-size: 16px; color: var(--brand); letter-spacing: .02em;
+  text-transform: uppercase; margin: 0 0 12px 0; position: relative;
+}
+.mini-title::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -8px;
+  height: 2px; background: var(--brand); border-radius: 2px;
+}
+.mini p {
+  font-family: 'HelveticaNeue', Helvetica, Arial, sans-serif;
+  font-size: 14px; line-height: 1.35; color: #2a2a2a; margin-top: 18px;
+}
+
+/* Tablet layout for about */
+@media (max-width: 1100px) {
+  .about { --about-pad-x: 40px; --about-pad-top: 40px; --about-pad-bot: 56px; }
+  .about-grid {
+    grid-template-columns: minmax(320px, 1fr) minmax(380px, 1fr);
+    column-gap: 40px; align-items: start;
   }
-  
-  /* = Portrait (left) */
-  .about-photo img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 16px;       /* matches rounded corners in Figma */
-    filter: grayscale(100%);   /* black-and-white portrait */
-  }
-  
-  /* = Middle column: About text */
-  .about-main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;   /* vertically centered to the image */
-  }
-  
-  .about-title {
-    font-family: 'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
-    font-weight: normal;      /* ensure the Black face is used (not faux bold) */
-    font-size: 22px;
-    color: var(--brand);
-    letter-spacing: 0.01em;
-    margin: 0 0 12px 0;
-    position: relative;
-    padding-bottom: 10px;     /* room for the underline */
-    line-height: 1.1;
-  }
-  
-  .about-title::after {
-    content: "";
-    position: absolute;
-    left: 0; right: 0;
-    bottom: 0;                /* sits within the padding area */
-    height: 3px;
-    background: var(--brand);
-    border-radius: 2px;
-  }
-  
-  
-  .about-copy {
-    font-family: 'HelveticaNeue', Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    line-height: 1.35;
-    color: #2a2a2a;
-    margin-top: 22px;          /* space below the rule, like your layout */
-  }
-  
-  /* = Right column: Location + Design Philosophy */
-  .about-side {
-    display: flex;             /* center the whole stack to the portrait */
-    flex-direction: column;
-    justify-content: center;   /* vertical centering */
-    gap: 40px;                 /* space between the two mini sections */
-  }
-  
-  .mini {
-    display: block;
-  }
-  
-  .mini-title {
-    font-family: 'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    color: var(--brand);
-    letter-spacing: 0.02em;
-    text-transform: uppercase; /* matches Figma’s small caps vibe */
-    margin: 0 0 12px 0;
-    position: relative;
-  }
-  
-  /* thinner purple rule under right-side headings */
-  .mini-title::after {
-    content: "";
-    position: absolute;
-    left: 0; right: 0;
-    bottom: -8px;
-    height: 2px;
-    background: var(--brand);
-    border-radius: 2px;
-  }
-  
-  .mini p {
-    font-family: 'HelveticaNeue', Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    line-height: 1.35;
-    color: #2a2a2a;
-    margin-top: 18px; /* space after the thin rule */
-  }
-  
-  /* ===== Tablet (<=1100px): image | (about + side stacked) ===== */
-  @media (max-width: 1100px) {
-    .about {
-      --about-pad-x: 40px;
-      --about-pad-top: 40px;
-      --about-pad-bot: 56px;
-    }
-  
-    .about-grid {
-      grid-template-columns: minmax(320px, 1fr) minmax(380px, 1fr);
-      column-gap: 40px;
-      align-items: start;     /* prevent awkward vertical gaps here */
-    }
-  
-    .about-main {
-      justify-content: start;
-    }
-  
-    .about-side {
-      justify-content: start;
-      margin-top: 16px;       /* sits right under the About copy */
-    }
-  }
-  
-  /* ===== Mobile (<=820px): single column ===== */
-  @media (max-width: 820px) {
-    .about {
-      --about-pad-x: 20px;
-      --about-pad-top: 20px;
-      --about-pad-bot: 32px;
-    }
-  
-    .about-grid {
-      grid-template-columns: 1fr;
-      row-gap: 24px;
-    }
-  
-    .about-side {
-      gap: 28px;
-    }
-  
-    .about-title { font-size: 20px; }
-    .mini-title  { font-size: 15px; }
-  }
-  
-  /* ===== Small phones (<=420px): compact type ===== */
-  @media (max-width: 420px) {
-    .about-copy, .mini p { font-size: 13.5px; }
-  }
-  
+  .about-main { justify-content: start; }
+  .about-side { justify-content: start; margin-top: 16px; }
+}
+@media (max-width: 820px) {
+  .about { --about-pad-x: 20px; --about-pad-top: 20px; --about-pad-bot: 32px; }
+  .about-grid { grid-template-columns: 1fr; row-gap: 24px; }
+  .about-side { gap: 28px; }
+  .about-title { font-size: 20px; }
+  .mini-title  { font-size: 15px; }
+}
+@media (max-width: 420px) {
+  .about-copy, .mini p { font-size: 13.5px; }
+}
+
+/* ================= PORTFOLIO & ABOUT PAGE OVERRIDES ================= */
+.page-portfolio,
+.page-about {                 /* page background white */
+  background: #fff;
+  color: #111;
+}
+
+/* Purple logo + links on white nav */
+.page-portfolio header.nav .logo,
+.page-about     header.nav .logo { color: var(--blue); }
+.page-portfolio header.nav nav a,
+.page-about     header.nav nav a { color: var(--blue); }
+.page-portfolio header.nav nav a:hover,
+.page-about     header.nav nav a:hover { opacity: .7; }
+
+/* ================= PORTFOLIO SECTION ================= */
+.portfolio-feature{
+  position: relative;
+  width: min(100%, 1120px);
+  height: clamp(180px, 32vw, 360px);
+  margin: clamp(16px, 3vw, 28px) auto clamp(28px, 4vw, 44px);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--blue);  /* fallback if WebGL off */
+}
+#shaderCanvas{ position:absolute; inset:0; display:block; width:100%; height:100%; }
+.feature-title{
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
+  color:#fff;
+  font-size: clamp(26px, 5vw, 64px);
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  pointer-events:none;
+  text-align:center;
+}
+
+/* Work grid/cards */
+.work-grid{
+  width: min(100%, 1120px);
+  margin: 0 auto clamp(64px, 8vw, 96px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(20px, 3.5vw, 40px);
+}
+.work-card{ display:block; }
+.work-thumb{
+  display:block; width:100%;
+  aspect-ratio: 654/436; overflow:hidden; background:#eee;
+}
+.work-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+.work-title{
+  margin-top: 12px;
+  font-family:'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-size: clamp(16px, 1.8vw, 20px);
+  line-height: 1.2; color:#000;
+}
+.work-meta{
+  margin-top: 6px;
+  font-size: clamp(12px, 1.2vw, 13px);
+  color:#6b6b6b; max-width: 60ch;
+}
+
+/* Portfolio responsive */
+@media (max-width: 900px){
+  .work-grid{ grid-template-columns: 1fr; }
+  /* header.nav already stacks above */
+  .portfolio-feature{ height: clamp(140px, 40vw, 220px); }
+}

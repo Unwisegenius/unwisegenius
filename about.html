@@ -6,30 +6,34 @@
   <title>About — Jared Russell // UnwiseGenius</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-    <header class="nav">
-        <a href="index.html" class="logo">
-          <img src="assets/brain.png" alt="Brain logo" />
-          <span>Jared Russell</span>
-        </a>
-      
-        <nav>
-          <a href="about.html" class="active">About Me</a>
-          <a href="portfolio.html">Portfolio</a>
-          <a href="contact.html">Get in Touch!</a>
-        </nav>
-      </header>
-      
 
+<body class="page-about">
+  <!-- Header (matches Portfolio header style) -->
+  <header class="nav">
+    <a href="index.html" class="logo">
+      <img src="assets/brain.png" alt="Brain logo" />
+      <span>Jared<br />Russell</span>
+    </a>
+
+    <nav>
+      <a href="about.html" class="active">ABOUT ME</a>
+      <a href="portfolio.html">PORTFOLIO</a>
+      <a href="contact.html">GET IN TOUCH!</a>
+    </nav>
+  </header>
+
+  <!-- About Section -->
   <main class="about">
     <div class="about-grid">
+      <!-- Left column: photo -->
       <figure class="about-photo">
         <img src="assets/jared-portrait.jpg" alt="Portrait of Jared Russell" />
       </figure>
 
-      <section class="about-block">
+      <!-- Middle column: about text -->
+      <section class="about-main">
         <h2 class="about-title">About</h2>
-        <p>
+        <p class="about-copy">
           I’m an ambitious UX design student currently seeking a role in a design team who has a passion for user
           interaction and branding. My goals are to innovate with my work and be a part of an organisation that
           prioritises creativity and innovation. I also want to gain experience for the future. Apart from designing,
@@ -38,13 +42,14 @@
         </p>
       </section>
 
+      <!-- Right column: mini info sections -->
       <aside class="about-side">
-        <section class="about-mini">
+        <section class="mini">
           <h3 class="mini-title">Location</h3>
           <p>Anywhere</p>
         </section>
 
-        <section class="about-mini">
+        <section class="mini">
           <h3 class="mini-title">Design Philosophy</h3>
           <p>
             I want to push my designs to the best version they can be—and to learn something new from each project

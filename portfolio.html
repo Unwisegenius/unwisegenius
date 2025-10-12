@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — Jared Russell // UnwiseGenius</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="page-portfolio">
+
+  <header class="nav">
+    <a href="index.html" class="logo">
+      <img src="assets/brain.png" alt="Brain logo" />
+      <span>Jared<br />Russell</span>
+    </a>
+    <nav>
+      <a href="about.html">ABOUT ME</a>
+      <a href="portfolio.html" class="active">PORTFOLIO</a>
+      <a href="contact.html">GET IN TOUCH!</a>
+    </nav>
+  </header>
+
+  <section class="portfolio-feature">
+    <canvas id="shaderCanvas"></canvas>
+    <div class="feature-title">PORTFOLIO</div>
+  </section>
+
+  <script>
+  (() => {
+    const canvas = document.getElementById('shaderCanvas');
+    const gl = canvas.getContext('webgl');
+    if (!gl) return;
+
+    const container = canvas.parentElement;
+    function resize() {
+      const r = container.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(r.width * dpr);
+      canvas.height = Math.floor(r.height * dpr);
+      canvas.style.width = r.width + 'px';
+      canvas.style.height = r.height + 'px';
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    }
+    new ResizeObserver(resize).observe(container);
+    window.addEventListener('resize', resize);
+    resize();
+
+    const vert = `
+      attribute vec2 aPos;
+      void main() {
+        gl_Position = vec4(aPos, 0.0, 1.0);
+      }
+    `;
+
+    const frag = `
+      precision highp float;
+      uniform vec2 iResolution;
+      uniform float iTime;
+      const float spin_rotation_speed = 1.0;
+      const float move_speed = 9.0;
+      const float contrast = 3.2;
+      const float lighting = 0.2;
+      const float spin_amount = 0.55;
+      const float pixel_filter = 2000.0;
+      const bool is_rotating = true;
+      #define SPIN_EASE 1.0
+   // Inverted palette — white base, purple swirl
+const vec4 colour_1 = vec4(0.290, 0.000, 1.000, 1.0); // main tone (now white)
+const vec4 colour_2 = vec4(0.290, 0.000, 1.000, 1.0); // accent swirl (#4A00FF)
+const vec4 colour_3 = vec4(0.290, 0.000, 0.700, 0.4); // soft pale background tint
+
+
+      vec4 effect(vec2 screenSize, vec2 screen_coords){
+        float pixel_size = length(screenSize.xy) / pixel_filter;
+        vec2 uv = (floor(screen_coords.xy*(1.0/pixel_size))*pixel_size - 0.5*screenSize.xy)/length(screenSize.xy);
+        float uv_len = length(uv);
+
+        float speed = (spin_rotation_speed*SPIN_EASE*0.2);
+        if(is_rotating){ speed = iTime * speed; }
+        speed += 302.2;
+
+        float new_pixel_angle = (atan(uv.y, uv.x)) + speed - SPIN_EASE*20.0*(1.0*spin_amount*uv_len + (1.0 - 1.0*spin_amount));
+        vec2 mid = (screenSize.xy/length(screenSize.xy))/2.0;
+        uv = (vec2((uv_len * cos(new_pixel_angle) + mid.x), (uv_len * sin(new_pixel_angle) + mid.y)) - mid);
+
+        uv *= 30.0;
+        float t2 = iTime*(move_speed);
+        vec2 uv2 = vec2(uv.x+uv.y);
+
+        for(int i=0; i<5; i++){
+          uv2 += sin(max(uv.x, uv.y)) + uv;
+          uv  += 0.5*vec2(cos(5.1123314 + 0.353*uv2.y + t2*0.131121), sin(uv2.x - 0.113*t2));
+          uv  -= 1.0*cos(uv.x + uv.y) - 1.0*sin(uv.x*0.711 - uv.y);
+        }
+
+        float contrast_mod = (0.25*contrast + 0.5*spin_amount + 1.2);
+        float paint_res = min(2.0, max(0.0, length(uv)*(0.035)*contrast_mod));
+        float c1p = max(0.0, 1.0 - contrast_mod*abs(1.0 - paint_res));
+        float c2p = max(0.0, 1.0 - contrast_mod*abs(paint_res));
+        float c3p = 1.0 - min(1.0, c1p + c2p);
+
+        float ligth = (lighting - 0.2) * max(c1p*5.0 - 4.0, 0.0) + lighting * max(c2p*5.0 - 4.0, 0.0);
+        vec4 ret_col = (0.3/contrast)*colour_1 + (1.0 - 0.3/contrast)*(colour_1*c1p + colour_2*c2p + vec4(c3p*colour_3.rgb, c3p*colour_1.a)) + ligth;
+        return ret_col;
+      }
+
+      void main(){
+        vec2 uv = gl_FragCoord.xy;
+        vec4 col = effect(iResolution, uv);
+        gl_FragColor = col;
+      }
+    `;
+
+    function compile(type, src){
+      const sh = gl.createShader(type);
+      gl.shaderSource(sh, src);
+      gl.compileShader(sh);
+      if(!gl.getShaderParameter(sh, gl.COMPILE_STATUS)){
+        console.error(gl.getShaderInfoLog(sh));
+      }
+      return sh;
+    }
+    const vs = compile(gl.VERTEX_SHADER, vert);
+    const fs = compile(gl.FRAGMENT_SHADER, frag);
+    const prog = gl.createProgram();
+    gl.attachShader(prog, vs);
+    gl.attachShader(prog, fs);
+    gl.linkProgram(prog);
+    gl.useProgram(prog);
+
+    const quad = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, quad);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+      -1,-1,  1,-1, -1, 1,
+       1,-1,  1, 1, -1, 1
+    ]), gl.STATIC_DRAW);
+    const aPos = gl.getAttribLocation(prog, 'aPos');
+    gl.enableVertexAttribArray(aPos);
+    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+    const uRes = gl.getUniformLocation(prog, 'iResolution');
+    const uTime = gl.getUniformLocation(prog, 'iTime');
+
+    let start = performance.now();
+    function tick(now){
+      const t = (now - start) / 1000;
+      gl.uniform2f(uRes, canvas.width, canvas.height);
+      gl.uniform1f(uTime, t);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  })();
+  </script>
+
+  <main class="work-grid">
+    <article class="work-card">
+      <a class="work-thumb" href="#"><img src="assets/xp-bank-cover.jpg" alt="XP Bank - Branding cover" /></a>
+      <h3 class="work-title">XP Bank - Branding</h3>
+      <p class="work-meta">A Bank made for the younger generation</p>
+    </article>
+
+    <article class="work-card">
+      <a class="work-thumb" href="#"><img src="assets/crocodiles-website.png" alt="The Street of Crocodiles website" /></a>
+      <h3 class="work-title">The Street of Crocodiles - Website</h3>
+      <p class="work-meta">An extract from The street of crocodiles novel, digitalised</p>
+    </article>
+
+    <article class="work-card">
+      <a class="work-thumb" href="#"><img src="assets/roasters-product.jpg" alt="Roasters - Product Design" /></a>
+      <h3 class="work-title">Roasters - Product Design</h3>
+      <p class="work-meta">The coffee business that is all coffee</p>
+    </article>
+
+    <article class="work-card">
+      <a class="work-thumb" href="#"><img src="assets/ava-app.jpg" alt="AVA - App Development" /></a>
+      <h3 class="work-title">AVA - App Development</h3>
+      <p class="work-meta">The perfect assistant, on your watch at all times.</p>
+    </article>
+
+    <article class="work-card">
+      <a class="work-thumb" href="#"><img src="assets/flik-multiplex.png" alt="Flik Multiplex - Branding" /></a>
+      <h3 class="work-title">Flik Multiplex - Branding</h3>
+      <p class="work-meta">A modern cinema, reminiscent of the glory days</p>
+    </article>
+  </main>
+
+</body>
+</html>
