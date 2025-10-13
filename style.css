@@ -676,3 +676,50 @@ model-viewer {
 }
 .cv-link:hover { opacity: 0.85; }
 .cv-link:active { transform: translateY(1px); }
+/* ===== Keep logo left & all three links right on every screen ===== */
+header.nav{
+  position: sticky;           /* optional: keeps the bar pinned while scrolling */
+  top: 0;
+  z-index: 20;
+  background: inherit;        /* stays purple on home, white on white pages */
+}
+
+/* Make sure logo stays left */
+.logo{ flex: 0 0 auto; }
+
+/* Keep the links on the right, allow wrap if absolutely needed */
+nav{
+  flex: 1 1 auto;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: nowrap;          /* keep them on one line */
+  gap: clamp(.5rem, 2.5vw, 1.25rem);
+}
+nav a{
+  white-space: nowrap;        /* each label stays intact */
+  font-size: clamp(11px, 2.8vw, 14px);  /* smaller on phones so they fit */
+  letter-spacing: 0.02em;
+}
+
+/* Tighten everything on narrow screens instead of stacking */
+@media (max-width: 900px){
+  header.nav{
+    padding: clamp(.6rem, 3.5vw, 1rem) clamp(1rem, 4.5vw, 1.5rem);
+  }
+  nav{
+    gap: clamp(.4rem, 2.2vw, .9rem);
+  }
+}
+
+@media (max-width: 420px){
+  nav a{
+    font-size: clamp(10px, 3.2vw, 12px);  /* squeeze a bit more on very small phones */
+  }
+}
+
+/* Ensure white pages keep a solid white bar behind the sticky header */
+.page-portfolio header.nav,
+.page-about header.nav,
+.page-contact header.nav{
+  background: #fff;
+}
