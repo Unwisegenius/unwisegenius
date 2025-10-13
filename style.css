@@ -10,10 +10,12 @@
   font-display: swap;
 }
 
-/* === THEME === */
 :root {
   --blue: #4A00FF;
   --white: #ffffff;
+
+  /* NEW: fluid side padding for small screens */
+  --page-pad: clamp(16px, 5vw, 28px);
 }
 
 /* === RESET === */
@@ -257,6 +259,7 @@ model-viewer {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: clamp(20px, 3.5vw, 40px);
+  padding-inline: var(--page-pad)
 }
 .work-card{ display:block; }
 .work-thumb{
@@ -282,4 +285,86 @@ model-viewer {
   .work-grid{ grid-template-columns: 1fr; }
   /* header.nav already stacks above */
   .portfolio-feature{ height: clamp(140px, 40vw, 220px); }
+}
+/* ===== Sticky case-study layout ===== */
+.case-wrap{
+  width: min(100%, 1120px);
+  margin: clamp(24px, 5vw, 56px) auto clamp(64px, 8vw, 120px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr); /* media | text */
+  gap: clamp(28px, 4vw, 56px);
+  align-items: start;
+  padding-inline: var(--page-pad);  
+}
+
+/* Left column: vertical stack of images that naturally scroll */
+.case-media{
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 3vw, 32px);
+}
+.case-media img{
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px;
+  background: #eee; /* placeholder/fallback */
+}
+
+/* Right column: sticky sidebar */
+.case-sidebar{
+  position: sticky;
+  /* Offset from viewport top so it doesn't collide with the header */
+  top: clamp(16px, 4vw, 32px);
+  align-self: start;         /* start at top of grid track */
+}
+
+/* Typography matches your system */
+.case-title{
+  font-family: 'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
+  font-size: clamp(22px, 3vw, 28px);
+  color: var(--blue);
+  text-transform: uppercase;
+  position: relative;
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+  line-height: 1.1;
+}
+.case-title::after{
+  content:"";
+  position:absolute; left:0; right:0; bottom:0;
+  height: 3px; background: var(--blue); border-radius: 2px;
+}
+.case-copy{
+  font-family: 'HelveticaNeue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1a1a1a;
+  margin-top: 12px;
+  max-width: 60ch;
+}
+.case-link{
+  font-family: 'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
+  color: var(--blue);
+  text-decoration: none;
+  border-bottom: 1px solid var(--blue);
+  padding-bottom: 2px;
+  transition: opacity .2s ease;
+}
+.case-link:hover{ opacity:.7; }
+
+/* Responsive: stack columns on small screens */
+@media (max-width: 920px){
+  .case-wrap{
+    grid-template-columns: 1fr;
+  }
+  .case-sidebar{
+    position: static;  /* no sticky on mobile */
+    order: -1;         /* put text above the images */
+    margin-bottom: 8px;
+  }
+}
+@media (max-width: 900px){
+  .portfolio-feature{ height: clamp(140px, 40vw, 220px); }
+  .work-grid{ padding-inline: var(--page-pad); }         /* keeps the padding on phones */
 }
