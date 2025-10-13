@@ -67,7 +67,7 @@ nav {
 }
 nav a {
   font-family: 'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
-  font-size: clamp(0.7rem, 1.8vw, 0.95rem);
+  font-size: clamp(0.68rem, 1.8vw, 0.90rem);
   color: var(--white);             /* Home default: white links */
   text-decoration: none;
   transition: opacity .2s ease;
