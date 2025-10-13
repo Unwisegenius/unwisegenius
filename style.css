@@ -69,12 +69,14 @@ nav{
 }
 nav a{
   font-family:'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
-  font-size: clamp(.68rem, 1.8vw, .9rem);
+  font-size: clamp(.6rem, 1.4vw, .8rem); /* smaller globally */
   color:var(--white);
   text-decoration:none;
   transition:opacity .2s ease;
   white-space:nowrap;
+  letter-spacing: 0.015em;
 }
+
 nav a:hover{ opacity:.7; }
 
 /* ===== MOBILE header: logo on top, links on ONE row beneath ===== */
