@@ -170,7 +170,14 @@ model-viewer{
   letter-spacing:.01em; margin:0 0 12px 0; position:relative; padding-bottom:10px; line-height:1.1;
 }
 .about-title::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:3px; background:var(--brand); border-radius:2px; }
-.about-copy{ font-family:'HelveticaNeue', Helvetica, Arial, sans-serif; font-size:14px; line-height:1.35; color:#2a2a2a; margin-top:22px; }
+.about-copy {
+  font-family: 'HelveticaNeue', Helvetica, Arial, sans-serif;
+  font-size: clamp(15px, 1.1vw, 18px);
+  line-height: 1.45;
+  color: #2a2a2a;
+  margin-top: 24px;
+}
+
 .about-side{ display:flex; flex-direction:column; justify-content:center; gap:40px; }
 .mini{ display:block; }
 .mini-title{
@@ -367,3 +374,42 @@ model-viewer{
 }
 .cv-link:hover{ opacity:.85; }
 .cv-link:active{ transform: translateY(1px); }
+/* ===== Folder CTA (Home) ===== */
+.folder-cta{
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(10px, 1.6vw, 16px);
+  margin-top: clamp(16px, 3vw, 28px);
+  text-decoration: none;
+  color: #fff;
+  transform: translateZ(0);          /* crisp hover */
+}
+
+.folder-cta img{
+  width: clamp(72px, 10vw, 140px);
+  height: auto;
+  display: block;
+  filter: none;                       /* keep folder crisp white/black */
+}
+
+.folder-cta__label{
+  font-family: 'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
+  font-size: clamp(14px, 2.2vw, 24px);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.folder-cta:hover{
+  opacity: .9;
+}
+
+.folder-cta:active{
+  transform: translateY(1px);
+}
+
+/* Center the CTA on narrow screens to match your stacked hero */
+@media (max-width: 900px){
+  .folder-cta{
+    justify-content: center;
+  }
+}
