@@ -120,6 +120,18 @@ nav a:hover{ opacity:.7; }
   line-height:1.05;
   font-weight:400;
 }
+.case-title2 {
+  font-family: 'HelveticaNeueLTproblk', Helvetica, Arial, sans-serif;
+  font-weight: 200;
+  color: #494949;
+  font-size: clamp(16px, 1.8vw, 22px);
+  margin-top: clamp(32px, 4vw, 20px);
+  margin-bottom: 8px;
+  padding-top: clamp(8px, 1vw, 12px);
+  line-height: 1.2;
+  text-transform: none; /* optional: keep it natural, not uppercase */
+}
+
 .hello{
   font-family:'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
   font-size: clamp(3rem, 7vw, 6rem);
@@ -275,7 +287,49 @@ model-viewer{
 .case-media{ display:flex; flex-direction:column; gap: clamp(20px, 3vw, 32px); }
 .case-media img{ width:100%; height:auto; display:block; border-radius:6px; background:#eee; }
 
-.case-sidebar{ position:sticky; top: clamp(16px, 4vw, 32px); align-self:start; }
+.case-sidebar{
+  position: sticky;
+  top: clamp(16px, 4vw, 32px);
+  align-self: start;
+
+  /* Make it an independent, smooth scroll area */
+  max-height: calc(100svh - clamp(16px, 4vw, 32px));
+  overflow: auto;
+  -webkit-overflow-scrolling: touch; /* iOS momentum */
+  scroll-behavior: smooth;
+
+  /* Keep layout stable when scrollbar shows */
+  scrollbar-gutter: stable both-edges;
+
+  /* Small breathing room so text doesn't hit the scrollbar */
+  padding-right: clamp(6px, 1vw, 12px);
+}
+
+/* Nice, subtle scrollbar */
+.case-sidebar::-webkit-scrollbar{ width: 10px; }
+.case-sidebar::-webkit-scrollbar-thumb{
+  background: rgba(0,0,0,.25);
+  border-radius: 8px;
+}
+.case-sidebar::-webkit-scrollbar-track{
+  background: transparent;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .case-sidebar{ scroll-behavior: auto; }
+}
+
+/* On narrow screens you already drop sticky; keep that behavior */
+@media (max-width:920px){
+  .case-sidebar{
+    position: static;
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+  }
+}
+
 .case-title{
   font-family:'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
   font-size: clamp(22px, 3vw, 28px); color:var(--blue); text-transform:uppercase;
