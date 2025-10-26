@@ -19,97 +19,213 @@
 </head>
 
 <body class="page-portfolio">
-    <!-- Header -->
+    <!-- Header (unchanged) -->
     <header class="nav">
-        <a href="index.html" class="logo">
-            <img src="assets/brain2.png" alt="Brain logo" />
-            <span>Jared<br>Russell</span>
-        </a>
-        <nav>
-            <a href="about.html">ABOUT ME</a>
-            <a href="portfolio.html" class="active">PORTFOLIO</a>
-            <a href="contact.html">GET IN TOUCH!</a>
-        </nav>
+      <a href="index.html" class="logo">
+        <img src="assets/brain2.png" alt="Brain logo" />
+        <span>Jared<br>Russell</span>
+      </a>
+      <nav>
+        <a href="about.html">ABOUT ME</a>
+        <a href="portfolio.html" class="active">PORTFOLIO</a>
+        <a href="contact.html">GET IN TOUCH!</a>
+      </nav>
     </header>
-
-    <!-- CASE STUDY: sticky sidebar layout -->
-    <section class="case-wrap">
-        <!-- LEFT: scrolling media column -->
-        <div class="case-media">
-            <img src="assets/xpbank.gif" alt="XP Bank header mockup" />
-            <img src="assets/xp-bank-1.jpg" alt="XP Bank app mockup on sofa" />
-            <img src="assets/credit.gif" alt="XP Bank card designs" />
-            <img src="assets/xp-bank-3.jpg" alt="XP Bank stationery mockup" />
-            <img src="assets/xp-bank-4.jpg" alt="XP Bank website mockup" />
-            <img src="assets/xp-bank-5.jpg" alt="XP Bank components page" />
-            <img src="assets/xp-bank-6.jpg" alt="XP Bank brand guidelines booklet" />
+  
+    <!-- CASE STUDY: FIGMA-STYLE -->
+    <main class="cs">
+      <!-- Masthead -->
+      <section class="cs-hero">
+      
+      
+        <!-- GIF hero with reduced-motion fallback -->
+        <picture>
+          <!-- If user prefers reduced motion, show a still frame instead -->
+          <source srcset="assets/xpbank-still.jpg" media="(prefers-reduced-motion: reduce)">
+          <img
+            class="cs-hero-media"
+            src="assets/xpbank.gif"
+            alt="XP Bank motion hero"
+            decoding="async"
+          >
+        </picture>
+      </section>
+      
+      <section class="cs-section" id="specs">
+        <!-- Title full width -->
+        <h2 class="case-title2">PROJECT SPECIFICATIONS</h2>
+      
+        <!-- Specs list -->
+        <div class="cs-body">
+          <ul class="specs-list" role="list">
+            <!-- 1 -->
+            <li class="spec-line">
+              <span class="spec-icon" aria-hidden="true">
+                <!-- hourglass -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 2h12M6 22h12" />
+                  <path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2" />
+                  <path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4" />
+                </svg>
+              </span>
+              <p class="case-copy">The time it took for this project was <strong>9 – 12 Weeks</strong>.</p>
+            </li>
+      
+            <!-- 2 -->
+            <li class="spec-line">
+              <span class="spec-icon" aria-hidden="true">
+                <!-- pen -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 20h9" />
+                  <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                </svg>
+              </span>
+              <p class="case-copy">
+                Software used for this project:
+                <strong>Figma</strong>, <strong>Blender</strong>, and <strong>After Effects</strong>.
+              </p>
+            </li>
+      
+            <!-- 3 -->
+            <li class="spec-line">
+              <span class="spec-icon" aria-hidden="true">
+                <!-- checklist (lines moved right) -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M11.5 6h11" />
+                  <path d="M11.5 12h11" />
+                  <path d="M11.5 18h11" />
+                  <path d="M4 6l1.5 1.5L8 5" />
+                  <path d="M4 12l1.5 1.5L8 11" />
+                  <path d="M4 18l1.5 1.5L8 17" />
+                </svg>
+              </span>
+              <p class="case-copy">
+                This was a branding project that created an identity for a <strong>modern bank</strong>.
+              </p>
+            </li>
+      
+            <!-- 4 -->
+            <li class="spec-line">
+              <span class="spec-icon" aria-hidden="true">
+                <!-- user -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21a8 8 0 1 0-16 0" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </span>
+              <p class="case-copy">The target audience was <strong>16–25 year olds</strong>.</p>
+            </li>
+          </ul>
         </div>
+      </section>
+      
+      <!-- The Brief -->
+      <section class="cs-section" id="brief">
+        <div class="cs-sticky"><h2>THE BRIEF</h2></div>
+        <div class="cs-body">
+          <p>
+            Create a commercial bank brand for 16–25 year-olds. Options were to rebrand an existing bank or start fresh —
+            I chose to build a new brand to fit the audience from the ground up.
+          </p>
+        </div>
+      </section>
+  
+      <!-- Research -->
+      <section class="cs-section" id="research">
+        <div class="cs-sticky"><h2>RESEARCH</h2></div>
+        <div class="cs-body">
+          <p>
+            I reviewed brand guidelines and design systems from banks like Monzo, Santander and Wise to understand how
+            they present identity and functionality. I also developed user personas and defined values for XP Bank:
+          </p>
+          <ul class="cs-bullets">
+            <li>Human rights: fairness, inclusion, no discrimination</li>
+            <li>Responsible banking: helping users save, invest and grow</li>
+            <li>Round-the-clock support: reliable customer service</li>
+            <li>Strong security: proactive scam prevention</li>
+            <li>Innovation & feedback: the bank evolves through user input</li>
+          </ul>
+        </div>
+      </section>
+  
+      <!-- Ideation -->
+      <section class="cs-section" id="ideation">
+        <div class="cs-sticky"><h2>IDEATION</h2></div>
+        <div class="cs-body">
+          <p>
+            Naming the brand was a big step. I tested ideas almost calling it bear bank. (yes, “Bear Bank” was one of them) but eventually chose “XP” for its simplicity and resonance with younger, gaming-aware users. The term XP suggests gaining experience — here it fits the idea of advancing your financial life through the bank.
+          </p>
 
-        <!-- RIGHT: sticky text column -->
-        <aside class="case-sidebar">
-            <h1 class="case-title">XP BANK</h1>
-            <h2 class="case-title2">The Brief</h2>
-            <p class="case-copy">
-                Create a commercial bank brand for 16–25 year-olds. Options were to rebrand an existing bank or start
-                fresh — I chose to build a new brand to fit the audience from the ground up.
+    
+          <p>
+            Design-wise, I originally pitched a cyberpunk aesthetic (lots of energy, lots of risk). Feedback showed it was too niche and off-target, so I pivoted to a more brutalist style: clearer, stronger, more accessible.
+          </p>
+  
+          <div class="cs-grid cs-grid--2">
+            <figure><img src="assets/xpmb.png" alt="Explorations & early motion" /></figure>
+            <figure><img src="assets/xpmm.png" alt="Card and brand system explorations" /></figure>
+          </div>
+        </div>
+      </section>
+  
+      <!-- Designing -->
+      <section class="cs-section" id="designing">
+        <div class="cs-sticky"><h2>DESIGNING</h2></div>
+        <div class="cs-body">
+          <p>
+            Drawing on the brutalist direction, I built the visual system: bold layouts, minimalist structure, strong typography and consistent brand elements. The identity covers word-mark, logomark, colours, typography, tone of voice, values and applications.
 
-            </p>
-            <h2 class="case-title2">Research</h2>
-            <p class="case-copy">
-                I reviewed brand guidelines and design systems from banks like Monzo, Santander and Wise. This helped me
-                understand how they present identity and functionality. I also developed user personas and defined
-                values for XP Bank:
+            I then applied that system across a full component library for scalability and consistency, eleven web-app screens covering core flows and interaction design, a four-page landing page focused on features, value proposition and a clear call to action, and motion graphics that bring brand energy while enhancing the experience.
+          </p>
+  
+          <div class="cs-grid cs-grid--3">
+            <figure><img src="assets/xp-bank-4.jpg" alt="Website mockups" /></figure>
+            <figure><img src="assets/xp-bank-6.jpg" alt="Brand guidelines booklet" /></figure>
+            <figure><img src="assets/xp-bank-5.jpg" alt="Components library" /></figure>
+          </div>
+  
+          <div class="cs-grid cs-grid--2">
+            <figure><img src="assets/xp-bank-1.jpg" alt="App on device" /></figure>
+            <figure><img src="assets/xp-bank-3.jpg" alt="Stationery set" /></figure>
+          </div>
+        </div>
+      </section>
+  
+      <!-- Testing & Feedback -->
+      <section class="cs-section" id="testing">
+        <div class="cs-sticky"><h2>TESTING AND FEEDBACK</h2></div>
+        <div class="cs-body">
+          <p>
+            User testing and peer review highlighted a few issues: the XP metaphor needed more explanation, the style could feel “too game-y” for banking, and some components didn’t scale cleanly across screens. I refined labels, simplified visuals, strengthened contrast for accessibility and reworked the component structure in Figma.
+          </p>
+          <figure class="cs-wide">
+            <img src="assets/credit.gif" alt="Component revisions and accessibility tweaks" />
+          </figure>
+        </div>
+      </section>
+  
+      <!-- Reflection -->
+      <section class="cs-section" id="reflection">
+        <div class="cs-sticky"><h2>REFLECTION</h2></div>
+        <div class="cs-body">
+          <p>
+            Building XP Bank taught me how to align brand identity with real-life usability. I learned that clarity must come before flair, and that a design system is only useful if it’s built to scale and be shared. I tackled naming, visual identity, component design, prototyping and motion — all of it from scratch. The end result is a bank brand that feels credible, modern and aimed squarely at a younger audience.
 
-                - Human rights: fairness, inclusion, no discrimination
-                - Responsible banking: helping users save, invest and grow
-                - Round-the-clock support: reliable customer service
-                - Strong security: proactive scam prevention
-                - Innovation & feedback: the bank evolves through user input
-            </p>
-            <h2 class="case-title2">Ideation</h2>
-            <p class="case-copy">
-                Naming the brand was a big step. I tested ideas (yes, “Bear Bank” was one of them) but eventually chose
-                “XP” for its simplicity and resonance with younger, gaming-aware users. The term XP suggests gaining
-                experience — here it fits the idea of advancing your financial life through the bank.
-
-                Design-wise, I originally pitched a cyberpunk aesthetic (lots of energy, lots of risk). Feedback showed
-                it was too niche and off-target, so I pivoted to a more brutalist style: clearer, stronger, more
-                accessible.
-            </p>
-            <h2 class="case-title2">Designing</h2>
-            <p class="case-copy">
-                Drawing on the brutalist direction, I built the visual system: bold layouts, minimalist structure,
-                strong
-                typography and consistent brand elements. The identity covers word-mark, logomark, colours, typography,
-                tone
-                of voice, values and applications.
-            </p>
-            <h2 class="case-title2">Testing and Feedback</h2>
-            <p class="case-copy">
-                User testing and peer review highlighted a few issues: the XP metaphor needed more explanation, the
-                style could feel “too game-y” for banking, and some components didn’t scale cleanly across screens. I
-                refined labels (e.g., changed “XP Lvl 1” to “Goal Level 1”), simplified visuals, strengthened contrast
-                for accessibility and reworked the component structure in Figma.
-            </p>
-            <h2 class="case-title2">Reflection</h2>
-            <p class="case-copy">
-                Building XP Bank taught me how to align brand identity with real-life usability. I learned that clarity
-                must come before flair, and that a design system is only useful if it’s built to scale and be shared. I
-                tackled naming, visual identity, component design, prototyping and motion — all of it from scratch. The
-                end result is a bank brand that feels credible, modern and aimed squarely at a younger audience.
-
-                If I were to continue, I’d love to build a real-life build of the app and see the system in action with
-                users. But for now, I’m proud of what I achieved and excited for the next project
-            </p>
-            <p class="case-copy">
-                <a class="case-link"
-                    href="https://jaredrussell.notion.site/Bank-Brand-XP-18a9a122e2e0806a8619e67c19ba4506"
-                    target="_blank" rel="noopener">
-                    NOTION BLOG
-                </a>
-            </p>
-        </aside>
-    </section>
-</body>
-
+            If I were to continue, I’d love to build a real-life build of the app and see the system in action with users. But for now, I’m proud of what I achieved and excited for the next project.
+          </p>
+    
+          <p>
+            <a class="case-link" href="https://jaredrussell.notion.site/Bank-Brand-XP-18a9a122e2e0806a8619e67c19ba4506" target="_blank" rel="noopener">
+              READ NOTES ON MY NOTION
+            </a>
+          </p>
+        </div>
+      </section>
+    </main>
+  </body>
+  
 </html>

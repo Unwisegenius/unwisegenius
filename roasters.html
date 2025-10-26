@@ -1,70 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- Favicon -->
-<link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/brain-16.png">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/brain-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/brain-180.png">
+  <meta name="theme-color" content="#4A00FF">
 
-<!-- iOS home screen (optional but nice) -->
-<link rel="apple-touch-icon" sizes="180x180" href="assets/brain-180.png">
-
-<!-- Theme color for mobile UI (optional) -->
-<meta name="theme-color" content="#4A00FF">
-
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Roasters — Case Study | Jared Russell // UnwiseGenius</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roasters — Case Study | Jared Russell // UnwiseGenius</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body class="page-portfolio">
-    <!-- Header -->
-    <header class="nav">
-        <a href="index.html" class="logo">
-            <img src="assets/brain2.png" alt="Brain logo" />
-            <span>Jared<br>Russell</span>
-        </a>
-        <nav>
-            <a href="about.html">ABOUT ME</a>
-            <a href="portfolio.html" class="active">PORTFOLIO</a>
-            <a href="contact.html">GET IN TOUCH!</a>
-        </nav>
-    </header>
+  <!-- Header -->
+  <header class="nav">
+    <a href="index.html" class="logo">
+      <img src="assets/brain2.png" alt="Brain logo" />
+      <span>Jared<br>Russell</span>
+    </a>
+    <nav>
+      <a href="about.html">ABOUT ME</a>
+      <a href="portfolio.html" class="active">PORTFOLIO</a>
+      <a href="contact.html">GET IN TOUCH!</a>
+    </nav>
+  </header>
 
-    <!-- CASE STUDY: sticky sidebar layout -->
-    <section class="case-wrap">
-        <!-- LEFT: scrolling media column -->
-        <div class="case-media">
-            <img src="assets/r1.jpg" alt="Roasters Coffee Cup" />
-            <img src="assets/r2.jpg" alt="Roasters Coffee Cup Holder" />
-            <img src="assets/r3.png" alt="Roasters business card menu" />
-            <img src="assets/r4.png" alt="Roasters Menu and Coffee Bean Mockup" />
-            <img src="assets/r5.jpg" alt="Roasters Coffee Beans" />
-            <img src="assets/r6.jpg" alt="Roasters Merch" />
-            <img src="assets/r7.jpg" alt="Roasters Coffee Cold Brew" />
-            <img src="assets/r8.png" alt="Roasters Building Logo" />
-            <img src="assets/r9.png" alt="Roasters Packaging" />
-
-        </div>
-
-        <!-- RIGHT: sticky text column -->
-        <aside class="case-sidebar">
-            <h1 class="case-title">Roasters</h1>
-            <p class="case-copy">
-                This was a little mini project I set myself for fun and to explore more branding during the summer. I made Chat GPT create the brief for me as I wanted to simulate the project as if it were a real coffee chain. I took inspiration from the Helwit design style. Which contained monospace typography and dark neon colours
-            </p>
-            <p class="case-copy">
-                The brief was to create a brand identity for a fake coffee company set in Belfast. While also designing some products that would showcase the brand.  I researched by visiting several coffee shops & restaurants. Places like Bunsen who use the business card menu which is slick, minimal and effective. Fidela Coffee for having their own ground coffee with it’s own brand on it. Follow Coffee, for a bold bright design that stands out.
-            </p>
-            <p class="case-copy">
-                I learned a lot more about branding, all it takes is to have a solid idea and finding the best way to present that. You’ll notice that there is a lot of mock-ups in this project. Which was to push the idea that this is a real location. I wanted it to look legit. My favourite parts of this project was the coffee holder, the menu and the coffee grounds packaging. I gave myself two weeks to do this project and I’m very pleased with it!
-    
-        
-
-         
-        </aside>
+  <!-- CASE STUDY (new layout) -->
+  <main class="cs">
+    <!-- Hero -->
+    <section class="cs-hero">
+      
+      <picture>
+        <!-- static hero; you can swap to a motion or different ratio if needed -->
+        <img class="cs-hero-media" src="assets/r1.jpg" alt="Roasters coffee cup hero">
+      </picture>
     </section>
-</body>
 
+    <!-- Overview -->
+    <section class="cs-section" id="overview">
+      <div class="cs-sticky"><h2>OVERVIEW</h2></div>
+      <div class="cs-body">
+        <p>
+          This was a little mini project I set myself for fun and to explore more branding during the summer.
+          I made ChatGPT create the brief for me as I wanted to simulate the project as if it were a real coffee chain.
+          I took inspiration from the Helwit design style monospace typography and dark neon colours.
+        </p>
+      </div>
+    </section>
+
+    <!-- Research -->
+    <section class="cs-section" id="research">
+      <div class="cs-sticky"><h2>RESEARCH</h2></div>
+      <div class="cs-body">
+        <p>
+          The brief was to create a brand identity for a fake coffee company set in Belfast, and design products to
+          showcase the brand. I researched by visiting coffee shops & restaurants—Bunsen for the slick business-card
+          menu; Fidela for branded ground coffee; Follow Coffee for bold, bright design that stands out.
+        </p>
+
+        <!-- Small supporting gallery -->
+        <div class="cs-grid cs-grid--2">
+          <figure><img src="assets/r2.jpg" alt="Roasters cup holder mockup" /></figure>
+          <figure><img src="assets/r3.png" alt="Roasters business card menu mockup" /></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Designing -->
+    <section class="cs-section" id="designing">
+      <div class="cs-sticky"><h2>DESIGNING</h2></div>
+      <div class="cs-body">
+        <p>
+          I focused on creating a confident, minimal system that could flex across packaging, menus, and signage.
+          The palette leverages dark bases with neon accents; typography leans monospace to keep it utilitarian but
+          characterful. Mock-ups were used heavily to sell the “real place” feeling.
+        </p>
+
+        <!-- Wide key visual -->
+        <div class="cs-wide">
+          <img src="assets/r4.png" alt="Roasters menu and coffee bean packaging composition">
+        </div>
+      </div>
+    </section>
+
+    <!-- Outcomes -->
+    <section class="cs-section" id="outcomes">
+      <div class="cs-sticky"><h2>OUTCOMES</h2></div>
+      <div class="cs-body">
+        <p>
+          I learned that a solid idea + consistent presentation goes a long way. I pushed mock-ups to make the brand
+          feel like a real location. Favourites: the cup holder, the menu, and the coffee grounds packaging.
+          I gave myself two weeks and I’m very pleased with the result.
+        </p>
+
+        <!-- Final gallery (2 columns, larger tiles) -->
+        <div class="cs-grid cs-grid--2large">
+          <figure><img src="assets/r5.jpg" alt="Roasters coffee beans close-up" /></figure>
+          <figure><img src="assets/r6.jpg" alt="Roasters merchandise set" /></figure>
+          <figure><img src="assets/r7.jpg" alt="Roasters cold brew bottle" /></figure>
+          <figure><img src="assets/r8.png" alt="Roasters building logo signage" /></figure>
+          <figure><img src="assets/r9.png" alt="Roasters packaging lineup" /></figure>
+          <figure><img src="assets/r1.jpg" alt="Roasters branded cup" /></figure>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
 </html>

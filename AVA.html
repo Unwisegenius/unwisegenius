@@ -1,87 +1,258 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- Favicon -->
-<link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/brain-16.png">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/brain-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/brain-180.png">
+  <meta name="theme-color" content="#4A00FF">
 
-<!-- iOS home screen (optional but nice) -->
-<link rel="apple-touch-icon" sizes="180x180" href="assets/brain-180.png">
-
-<!-- Theme color for mobile UI (optional) -->
-<meta name="theme-color" content="#4A00FF">
-
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AVA — Case Study | Jared Russell // UnwiseGenius</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AVA — Case Study | Jared Russell // UnwiseGenius</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body class="page-portfolio">
-    <!-- Header -->
-    <header class="nav">
-        <a href="index.html" class="logo">
-            <img src="assets/brain2.png" alt="Brain logo" />
-            <span>Jared<br>Russell</span>
-        </a>
-        <nav>
-            <a href="about.html">ABOUT ME</a>
-            <a href="portfolio.html" class="active">PORTFOLIO</a>
-            <a href="contact.html">GET IN TOUCH!</a>
-        </nav>
-    </header>
+  <!-- Header -->
+  <header class="nav">
+    <a href="index.html" class="logo">
+      <img src="assets/brain2.png" alt="Brain logo" />
+      <span>Jared<br>Russell</span>
+    </a>
+    <nav>
+      <a href="about.html">ABOUT ME</a>
+      <a href="portfolio.html" class="active">PORTFOLIO</a>
+      <a href="contact.html">GET IN TOUCH!</a>
+    </nav>
+  </header>
 
-    <!-- CASE STUDY: sticky sidebar layout -->
-    <section class="case-wrap">
-        <!-- LEFT: scrolling media column -->
-        <div class="case-media">
-            <img src="assets/1.jpg" alt="AVA Screens" />
-            <img src="assets/2.jpg" alt="AVA assistant" />
-            <img src="assets/3.jpg" alt="AVA Directions" />
-            <img src="assets/4.jpg" alt="AVA Home Features" />
-            <img src="assets/5.png" alt="AVA Search the Web" />
-            <img src="assets/6.png" alt="AVA Spotify" />
-            <img src="assets/Style Guide.jpg" alt="Style Guide for AVA" />
-        </div>
-
-        <!-- RIGHT: sticky text column -->
-        <aside class="case-sidebar">
-            <h1 class="case-title">AVA</h1>
-            <p class="case-copy">
-                For this project I had to create an app for a smart-watch. The brief was open meaning your app could be
-                your own. I had the idea of creating an assistant on your watch, like JARVIS from Iron Man. But there
-                two constraints with this project. 1. It's constrained to a 44mm screen 2. There was three weeks to do
-                the entire project. Not ideal, but I powered through and I have created something strong.
-            </p>
-            <p class="case-copy">
-                The project took inspiration from Balatro, a popular card game online. Which has a nice background
-                shader which I incorporated into my own design. Whilst of course making it my own. My main focus of the
-                project was to make it more efficient for the user. I wanted the user to drive their car and use their
-                watch to play their favourite podcast. I wanted the user to ask their watch a question and get an answer
-                mid debate with someone. I wanted the user to get help from a mini assistant with greater efficiency.
-            </p>
-            <p class="case-copy">
-                The timing of the project was hard, with only three weeks to make something I got started. I put in the
-                hours for this project, and I'm pleased with how it turned out. I also faced some issues with the
-                critique, I wasn't happy with the feedback. It wasn't that it was bad, it was due to some technical
-                issues and the lack of elaboration with some of it. But I took a day, read over it and took it into
-                strong consideration, changing some major screens in the process. All this helped the project to be
-                better, and I'm glad I came back with a more positive mindset. In conclusion, I enjoyed this project and
-                it warmed me up for my second year of university. If you would like to read more
-
-                <p class="case-copy">
-                    <a class="case-link"
-                        href="https://jaredrussell.notion.site/Smartwatch-App-2799a122e2e0807484c8ce26bc51fd6e"
-                        target="_blank" rel="noopener">
-                        Read full case study
-                    </a>
-                </p>
-
-
-
-        </aside>
+  <!-- CASE STUDY -->
+  <main class="cs">
+    <!-- Hero -->
+    <section class="cs-hero">
+    
+      <picture>
+        <source srcset="assets/avabanner.jpg" media="(prefers-reduced-motion: reduce)">
+        <img class="cs-hero-media" src="assets/avabanner.jpg" alt="AVA watch screens overview">
+      </picture>
     </section>
-</body>
 
+    <!-- Specs -->
+    <section class="cs-section" id="specs">
+      <h2 class="case-title2">PROJECT SPECIFICATIONS</h2>
+      <div class="cs-body">
+        <ul class="specs-list" role="list">
+          <li class="spec-line">
+            <span class="spec-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 2h12M6 22h12" />
+                <path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2" />
+                <path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4" />
+              </svg>
+            </span>
+            <p class="case-copy">The time it took for this project was <strong>3 Weeks</strong>.</p>
+          </li>
+
+          <li class="spec-line">
+            <span class="spec-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20h9" />
+                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+              </svg>
+            </span>
+            <p class="case-copy">
+              Software used for this project:
+              <strong>Figma</strong> and <strong>Visual Studio Code</strong>
+            </p>
+          </li>
+
+          <li class="spec-line">
+            <span class="spec-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M11.5 6h11" />
+                <path d="M11.5 12h11" />
+                <path d="M11.5 18h11" />
+                <path d="M4 6l1.5 1.5L8 5" />
+                <path d="M4 12l1.5 1.5L8 11" />
+                <path d="M4 18l1.5 1.5L8 17" />
+              </svg>
+            </span>
+            <p class="case-copy">
+              This was a user interface project that created a <strong>smartwatch app</strong>.
+            </p>
+          </li>
+
+          <li class="spec-line">
+            <span class="spec-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21a8 8 0 1 0-16 0" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            </span>
+            <p class="case-copy">The target audience was <strong>16–25 year olds</strong>.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Brief -->
+    <section class="cs-section" id="brief">
+      <div class="cs-sticky"><h2>THE BRIEF</h2></div>
+      <div class="cs-body">
+        <p>
+          We were tasked with designing three smartwatch app screens, supported by a style guide, brand, and wireframes.
+          The final submission should include high-resolution mockups.
+        </p>
+      </div>
+    </section>
+
+    <!-- Research -->
+    <section class="cs-section" id="research">
+      <div class="cs-sticky"><h2>RESEARCH</h2></div>
+      <div class="cs-body">
+        <p>
+          I began by browsing Pinterest to explore smartwatch app design and immediately noticed that nearly everything
+          used dark mode. That sparked an idea—if I designed mine with a bright interface, it would stand out instantly.
+        </p>
+        <p>
+          I then examined three apps on my Apple Watch SE: <strong>Workout</strong>, <strong>Spotify</strong>,
+          and <strong>Outlook</strong>. Workout emphasizes fitness tracking, iPhone syncing, and large, accessible
+          icons. Spotify enables music control (though some icons are too small). Outlook offers streamlined email,
+          calendar access, and quick voice replies. All three prioritize glanceability, quick actions, and dark color
+          schemes. They’re built for brief, simple interactions—something I wanted to challenge by creating a visually
+          bright and fluid experience.
+        </p>
+
+        <!-- Research images -->
+        <div class="cs-grid cs-grid--2">
+          <figure><img src="assets/outlook.png" alt="Outlook app reference" /></figure>
+          <figure><img src="assets/workout.png" alt="Workout app reference" /></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ideation -->
+    <section class="cs-section" id="ideation">
+      <div class="cs-sticky"><h2>IDEATION</h2></div>
+      <div class="cs-body">
+        <p>
+          We started with analogical connection exercises—linking unrelated ideas. My first concept combined
+          Doctors and Blog into a practical voice-note app, but it felt too safe. I wanted something more experimental,
+          so I created an AI smartwatch assistant that helps you on the go through voice commands and syncs seamlessly
+          with your phone.
+        </p>
+        <p>
+          I brainstormed names inspired by J.A.R.V.I.S., eventually landing on <strong>AVA</strong>
+          (Adaptive Virtual Assistant) for its simplicity. The visuals draw inspiration from
+          <em>Balatro</em>’s liquid-like style—a reactive orb that listens, thinks, and acts. I refined sketches,
+          added prompt suggestions, and designed a cohesive watch face. The concept blends AI personality, motion,
+          and simplicity into one fluid design.
+        </p>
+
+        <!-- Ideation sketches -->
+        <div class="cs-grid cs-grid--2">
+          <figure><img src="assets/avask1.png" alt="Early AVA concept sketches" /></figure>
+          <figure><img src="assets/avask2.png" alt="Additional AVA sketch layouts" /></figure>
+        </div>
+      </div>
+    </section>
+
+   <!-- Designing -->
+<section class="cs-section" id="designing">
+    <div class="cs-sticky"><h2>DESIGNING</h2></div>
+    <div class="cs-body">
+      <p>
+        AVA is designed to feel alive—an AI smartwatch assistant that moves, thinks, and responds naturally.
+        I drew inspiration from how the brain works, specifically its neurochemicals like dopamine, serotonin,
+        and oxytocin. Each represents a different emotion, so I built a color system around them: blue for calm (idle),
+        orange for creativity (thinking), red for action, and pink for empathy. Each screen reflects AVA’s emotional
+        state, connecting science and design.
+      </p>
+      <p>
+        Visually, I took cues from the fluid shader effects in <em>Balatro</em>. I recreated that look using JavaScript
+        and shader code, building a soft, chemical-like background that moves in real time. For typography, I chose
+        <em>Helvetica Neue LT Pro 93 Black Extended</em> for headings and <em>Helvetica Neue Bold</em> for body text—
+        both clean, bold, and readable on small screens.
+      </p>
+      <p>
+        After early feedback, I built screens for prompts, maps, and music playback, refining icons and adding subtle
+        gradients for clarity. The final design feels cohesive and alive—blending emotion, motion, and usability into
+        a minimal, intelligent assistant that captures the feeling of thinking itself.
+      </p>
+  
+      <!-- Motion video -->
+      <figure class="cs-video">
+        <video autoplay loop muted playsinline preload="metadata" poster="assets/1.jpg">
+          <source src="assets/avainitialdraft.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <figcaption>AVA — initial motion prototype</figcaption>
+      </figure>
+    </div>
+  </section>
+  
+
+    <!-- Feedback -->
+    <section class="cs-section" id="feedback">
+      <div class="cs-sticky"><h2>FEEDBACK</h2></div>
+      <div class="cs-body">
+        <p>
+          After presenting AVA, I received peer feedback that shaped the final design. The main points were
+          readability and contrast. The swirl background, while visually interesting, made screens like the JFK search
+          result hard to read. I replaced it with a clean white background, improving cohesion and accessibility.
+        </p>
+        <p>
+          It was also noted that the prompt screens felt unbalanced, so I reduced icon sizes, simplified shapes, and
+          adjusted the layout for better visual harmony. I was encouraged to demonstrate real usage through an
+          animation or prototype and to simplify the map screen into something like a compass. I redesigned it with a
+          minimal compass layout and refined icons throughout. These changes made the design cleaner, more consistent,
+          and easier to understand without compromising AVA’s identity.
+        </p>
+
+        <!-- Feedback image -->
+        <div class="cs-wide">
+          <img src="assets/Feedbackava.png" alt="Feedback stage showing revised AVA smartwatch design screens">
+        </div>
+      </div>
+    </section>
+
+    <!-- Reflection -->
+    <section class="cs-section" id="reflection">
+      <div class="cs-sticky"><h2>REFLECTION</h2></div>
+      <div class="cs-body">
+        <p>
+          The smartwatch project produced 11 unique screens, a presentation, and a style guide. Time was the biggest
+          challenge, but I stayed true to my concept rather than simplifying it. The critique was tough—some feedback
+          felt unclear—but it pushed me to refine contrast, simplify layouts, and use the swirl effect more
+          intentionally.
+        </p>
+        <p>
+          Despite the pressure, I enjoyed returning to coding in VS Code and experimenting with shaders. Overall, the
+          project strengthened my design process and prepared me for more advanced work ahead.
+        </p>
+
+        <!-- Final gallery -->
+        <div class="cs-grid cs-grid--2large">
+            <figure><img src="assets/1.jpg" alt="AVA early prototype screens" /></figure>
+            <figure><img src="assets/2.jpg" alt="Assistant interaction" /></figure>
+            <figure><img src="assets/3.jpg" alt="Turn-by-turn directions / compass" /></figure>
+            <figure><img src="assets/4.jpg" alt="Home features and quick actions" /></figure>
+            <figure><img src="assets/5.png" alt="Alternate visual design and layout" /></figure>
+            <figure><img src="assets/6.png" alt="Spotify controls" /></figure>
+          </div>
+          
+        <p>
+          <a class="case-link"
+             href="https://jaredrussell.notion.site/Smartwatch-App-2799a122e2e0807484c8ce26bc51fd6e"
+             target="_blank" rel="noopener">READ NOTES ON MY NOTION</a>
+        </p>
+      </div>
+    </section>
+  </main>
+</body>
 </html>
