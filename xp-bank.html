@@ -227,5 +227,40 @@
       </section>
     </main>
   </body>
-  
+  <script>
+    /* Page reveal on load (CSS uses html.body-ready to avoid flash) */
+    document.documentElement.classList.add('body-ready');
+    
+    /* Intercept internal links for a graceful exit, then navigate.
+       Uses View Transitions API when available; falls back to CSS fade. */
+    (function () {
+      const isInternal = (a) => (
+        a &&
+        a.origin === window.location.origin &&
+        !a.hasAttribute('download') &&
+        a.getAttribute('target') !== '_blank' &&
+        !a.getAttribute('href')?.startsWith('#')
+      );
+    
+      addEventListener('click', (e) => {
+        const a = e.target.closest('a');
+        if (!isInternal(a)) return;
+    
+        e.preventDefault();
+        const go = () => location.href = a.href;
+    
+        if (document.startViewTransition) {
+          // Native View Transition (Chrome/Edge/Arc)
+          document.startViewTransition(() => {
+            document.body.classList.add('leaving');
+          }).finished.then(go);
+        } else {
+          // CSS fallback
+          document.body.classList.add('leaving');
+          setTimeout(go, 250);
+        }
+      }, { capture: true });
+    })();
+    </script>
+    
 </html>
