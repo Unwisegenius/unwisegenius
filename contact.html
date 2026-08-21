@@ -2,26 +2,23 @@
 <html lang="en">
 <head>
   <!-- Favicon -->
-<link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/brain-16.png">
-
-<!-- iOS home screen (optional but nice) -->
-<link rel="apple-touch-icon" sizes="180x180" href="assets/brain-180.png">
-
-<!-- Theme color for mobile UI (optional) -->
-<meta name="theme-color" content="#4A00FF">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/brain-16.png">
+  <!-- iOS home screen (optional but nice) -->
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/brain-180.png">
+  <!-- Theme color for mobile UI (optional) -->
+  <meta name="theme-color" content="#4A00FF">
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Get in Touch — Jared Russell // UnwiseGenius</title>
 
-  <!-- Global site styles (your existing file) -->
-  <link rel="stylesheet" href="style.css" />
-
+  <!-- IMPORTANT: The ?v=1 forces the browser to load the NEW CSS, bypassing the cache -->
+  <link rel="stylesheet" href="style.css?v=1" />
 </head>
 <body class="page-contact">
 
-  <!-- Header (same pattern as other pages) -->
+  <!-- Header -->
   <header class="nav">
     <a href="index.html" class="logo">
       <img src="assets/brain2.png" alt="Brain logo" />
@@ -48,14 +45,15 @@
           project/team. Let’s create something great!
         </p>
       </div>
-
       <div class="brain-wrap" aria-hidden="true">
         <img class="brain" src="assets/brain.png" alt="" />
       </div>
     </section>
+
+    <!-- Card 1.5: CONTACT FORM -->
     <section class="contact-card card-form">
       <form class="contact-form" action="https://formspree.io/f/xyegvkjo" method="POST">
-        
+        <!-- Anti-spam honeypot -->
         <input type="text" name="_gotcha" style="display:none" />
 
         <div class="form-row">
@@ -77,45 +75,37 @@
         <button type="submit" class="form-submit">SEND</button>
       </form>
     </section>
+
     <!-- Card 2: SOCIAL. -->
-<section class="contact-card card-social">
-  <h1 class="social-title">SOCIAL</h1>
+    <section class="contact-card card-social">
+      <h1 class="social-title">SOCIAL</h1>
 
-  <a class="social-link" data-external href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener">
-    INSTAGRAM
-  </a>
-  
-  <a class="social-link" data-external href="https://www.linkedin.com/in/jared-russell-09bb63334/" target="_blank" rel="noopener">
-    LINKEDIN
-  </a>
-  
-  <a class="social-link" data-external href="mailto:hello@unwisegenius.com">
-    EMAIL — hello@unwisegenius.com
-  </a>
-  
-  <a class="social-link" data-external href="https://jaredrussell.notion.site/Digital-Design-Jared-Russell-13e9a122e2e0803493aaf32231b9fd4c" target="_blank" rel="noopener">
-    NOTION
-  </a>
-  
+      <a class="social-link" data-external href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener">
+        INSTAGRAM
+      </a>
+      <a class="social-link" data-external href="https://www.linkedin.com/in/jared-russell-09bb63334/" target="_blank" rel="noopener">
+        LINKEDIN
+      </a>
+      <a class="social-link" data-external href="mailto:hello@unwisegenius.com">
+        EMAIL — hello@unwisegenius.com
+      </a>
+      <a class="social-link" data-external href="https://jaredrussell.notion.site/Digital-Design-Jared-Russell-13e9a122e2e0803493aaf32231b9fd4c" target="_blank" rel="noopener">
+        NOTION
+      </a>
 
-  <p class="social-note">Please feel free to follow me on my social media!</p>
+      <p class="social-note">Please feel free to follow me on my social media!</p>
 
-  <a class="cv-link"
-   data-download
-   href="assets/Jared Russell CV 2026.pdf"
-   download
-   rel="noopener"
-   aria-label="Download Jared Russell's CV (PDF)">
-  Why don't you check out my CV?
-</a>
-</section>
-
-
- 
+      <a class="cv-link"
+       data-download
+       href="assets/Jared Russell CV 2026.pdf"
+       download
+       rel="noopener"
+       aria-label="Download Jared Russell's CV (PDF)">
+      Why don't you check out my CV?
+      </a>
     </section>
   </main>
 
-</body>
 <script>
   /* Page reveal on load (CSS uses html.body-ready to avoid flash) */
   document.documentElement.classList.add('body-ready');
@@ -139,17 +129,15 @@
       const go = () => location.href = a.href;
   
       if (document.startViewTransition) {
-        // Native View Transition (Chrome/Edge/Arc)
         document.startViewTransition(() => {
           document.body.classList.add('leaving');
         }).finished.then(go);
       } else {
-        // CSS fallback
         document.body.classList.add('leaving');
         setTimeout(go, 250);
       }
     }, { capture: true });
   })();
-  </script>
-  
+</script>
+</body>
 </html>
