@@ -800,4 +800,107 @@ img {
     opacity: 1;
     transform: translateY(1px);
   }
-  
+  /* ================= CONTACT FORM (Card 1.5) ================= */
+.card-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* Override the default min-height so it wraps tightly around the form */
+  min-height: auto; 
+  padding: clamp(40px, 6vw, 80px) clamp(28px, 5.6vw, 64px);
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 3vw, 32px);
+  width: 100%;
+  max-width: 900px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(24px, 3vw, 32px);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-group label {
+  font-family: 'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
+  font-size: clamp(16px, 1.8vw, 20px);
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+
+.contact-form input,
+.contact-form textarea {
+  font-family: 'HelveticaNeue', Helvetica, Arial, sans-serif;
+  font-size: clamp(16px, 1.6vw, 18px);
+  color: #fff;
+  /* Deep translucent background to mimic the reference image style while keeping your blue */
+  background: rgba(0, 0, 0, 0.15); 
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: clamp(16px, 2vw, 20px);
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  width: 100%;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #fff;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 180px;
+}
+
+.form-submit {
+  align-self: center;
+  background: #fff;
+  color: var(--blue);
+  font-family: 'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
+  font-size: clamp(16px, 2vw, 22px);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  padding: clamp(14px, 2vw, 18px) clamp(48px, 6vw, 80px);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.1s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+  margin-top: clamp(8px, 2vw, 16px);
+}
+
+.form-submit:hover {
+  opacity: 0.9;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.form-submit:active {
+  transform: translateY(2px);
+}
+
+/* Mobile Responsiveness for the form */
+@media (max-width: 640px) {
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .form-submit {
+    width: 100%; /* Makes the button full width on phones */
+  }
+}
