@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalogue</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        /* Custom CSS for the rapid flashing animation */
+        @keyframes rapidFlash {
+            0%, 100% { 
+                color: #39FF14; /* Bright Lime Green */
+                text-shadow: 0 0 20px #39FF14, 0 0 50px #39FF14;
+            }
+            50% { 
+                color: #FFD700; /* Bright Gold Yellow */
+                text-shadow: 0 0 20px #FFD700, 0 0 50px #FFD700;
+            }
+        }
+
+        .massive-dollar {
+            /* 
+               Using vmin ensures the dollar sign is as large as possible 
+               on mobile and desktop without overflowing the screen.
+            */
+            font-size: 85vmin; 
+            line-height: 1;
+            font-weight: 900;
+            font-family: 'Inter', system-ui, sans-serif;
+            /* 0.3s creates a very rapid, intense flashing effect */
+            animation: rapidFlash 0.3s infinite ease-in-out;
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-800 h-screen w-screen m-0 p-0 flex justify-center items-center overflow-hidden">
+
+    <span class="massive-dollar">$</span>
+
+</body>
+</html>
