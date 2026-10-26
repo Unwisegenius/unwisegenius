@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Sugar - Peanut M&M's</title>
+    <!-- Importing Source Serif Pro from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Variables for Fonts and Colors */
+        :root {
+            --font-sans: 'Stolzl', sans-serif;
+            --font-serif: 'Source Serif Pro', serif;
+            --color-orange: #f25a24;
+            --color-blue: #00a0df;
+            --color-dark: #231f20;
+            --color-bg: #ffffff;
+        }
+
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-serif);
+            background-color: var(--color-bg);
+            color: var(--color-dark);
+        }
+
+        h1, h2, h3, .sans-text, .btn, .price, .label, .qty-selector {
+            font-family: var(--font-sans);
+        }
+
+        /* Header / Navbar */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: #fff;
+        }
+
+        .logo img {
+            height: 100px;
+            width: auto;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--color-dark);
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+
+        nav ul li a:hover {
+            color: var(--color-blue);
+        }
+
+        .cart-icon img {
+            height: 25px;
+            cursor: pointer;
+        }
+
+        /* Blue Wave Divider */
+        .wave-container {
+            width: 100%;
+            height: 50px;
+            background-color: var(--color-blue);
+            border-top-left-radius: 50% 100%;
+            border-top-right-radius: 50% 100%;
+            margin-top: -10px;
+        }
+
+        /* Product Detail Section */
+        .product-detail-container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 50px;
+            align-items: flex-start;
+        }
+
+        .product-image {
+            flex: 1.1;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .product-info h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--color-dark);
+        }
+
+        /* Ratings */
+        .rating-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stars {
+            color: #ffc107;
+            font-size: 1.4rem;
+        }
+
+        .reviews {
+            font-size: 0.85rem;
+            color: #666;
+            font-family: var(--font-sans);
+        }
+
+        /* Typography spacing & subheadings */
+        .description {
+            font-size: 1.15rem;
+            line-height: 1.5;
+            color: var(--color-dark);
+        }
+
+        .meta-label {
+            font-weight: bold;
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+
+        .meta-text {
+            font-size: 0.95rem;
+            color: #444;
+            margin-bottom: 5px;
+        }
+
+        .price-section .label {
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: var(--color-dark);
+            margin-bottom: 4px;
+        }
+
+        .price {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--color-dark);
+        }
+
+        /* Quantity & Add to Cart */
+        .qty-label {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .qty-selector {
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 5px 15px;
+            gap: 15px;
+            font-size: 1.2rem;
+            width: fit-content;
+            margin-bottom: 15px;
+        }
+
+        .qty-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.4rem;
+            font-family: var(--font-sans);
+        }
+
+        .add-to-cart-btn {
+            background-color: var(--color-orange);
+            color: #fff;
+            border: none;
+            padding: 16px 40px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            max-width: 320px;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #d64a18;
+        }
+
+        .add-to-cart-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Recommended Carousel / grid */
+        .recommendations-section {
+            padding: 60px 20px;
+            text-align: center;
+            background-color: #ffffff;
+            border-top: 1px solid #f0f0f0;
+            margin-top: 40px;
+        }
+
+        .recommendations-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .recommendations-section p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: #555;
+        }
+
+        /* 3-Column Grid for recommendations */
+        .rec-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Card Overlay Styles - kept from index.html with 1:1 image scales */
+        .card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #f4f4f4;
+            aspect-ratio: 1 / 1; 
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 25px;
+        }
+
+        .card:hover .card-overlay {
+            opacity: 1;
+        }
+
+        .card:hover img {
+            transform: scale(1.05);
+        }
+
+        .card-overlay span {
+            color: #ffffff;
+            font-family: var(--font-sans);
+            font-weight: bold;
+            font-size: 1.3rem;
+            text-align: center;
+            letter-spacing: 0.5px;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--color-dark);
+            padding: 20px 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        footer img {
+            height: 50px;
+        }
+
+        /* Responsive Viewports */
+        @media (max-width: 900px) {
+            .product-detail-container {
+                flex-direction: column;
+                gap: 35px;
+                padding: 0 30px;
+            }
+            .product-image {
+                width: 100%;
+            }
+            .rec-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                max-width: 450px;
+            }
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <header>
+
+        <div class="logo">
+            <a href="catalogue.html">
+                <img src="assets/ShopSugar.png" alt="Shop Sugar Logo">
+            </a>
+        </div>
+        <nav>
+            <ul>
+<!-- ... existing code ... -->
+        <nav>
+            <ul>
+                <li><a href="#">Chocolates</a></li>
+                <li><a href="#">Cookies</a></li>
+                <li><a href="#">Peanuts</a></li>
+                <li><a href="#">Gummies</a></li>
+                <li><a href="#">Candy</a></li>
+            </ul>
+        </nav>
+        <div class="cart-icon">
+            <img src="assets/shopping-cart.png" alt="Shopping Cart">
+        </div>
+    </header>
+
+    <main>
+        <!-- Blue Wave Decorative Line -->
+        <div class="wave-container"></div>
+
+        <!-- Product Details -->
+        <section class="product-detail-container">
+            <!-- Left image -->
+            <div class="product-image">
+                <img src="assets/PeanutM&M'sAI.png" alt="Peanut M&M's Box with Yellow M&M Character">
+            </div>
+
+            <!-- Right product info & purchase -->
+            <div class="product-info">
+                <h1>Peanut M&M’s</h1>
+                
+                <div class="rating-row">
+                    <span class="stars">★★★★★</span>
+                    <span class="reviews">4.5 Stars • 37 Reviews</span>
+                </div>
+
+                <p class="description">
+                    M&M'S Peanut Chocolate Candy is a little nutty, a lot tasty and always full of fun. Enjoy roasted peanuts covered in delicious chocolate and a colorful candy shell.
+                </p>
+
+                <div class="meta-section">
+                    <div class="meta-label">Details:</div>
+                    <div class="meta-text">3.1 oz Theatre Box, 210kcal per serving</div>
+                    
+                    <div class="meta-label">Allergens:</div>
+                    <div class="meta-text">Peanuts, Milk, Soy</div>
+                </div>
+
+                <div class="price-section">
+                    <div class="label">Price</div>
+                    <div class="price">$1.59</div>
+                </div>
+
+                <div class="quantity-section">
+                    <div class="qty-label">Quantity</div>
+                    <div class="qty-selector">
+                        <button class="qty-btn" aria-label="Decrease quantity">−</button>
+                        <span>1</span>
+                        <button class="qty-btn" aria-label="Increase quantity">+</button>
+                    </div>
+                </div>
+
+                <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+        </section>
+
+        <!-- "People Also Bought" recommendation carousel/grid -->
+        <section class="recommendations-section">
+            <h2>People Also Bought</h2>
+            <p>Most Popular Sweets This Week</p>
+
+            <div class="rec-grid">
+                <!-- Product Recommended 1 (Butterfinger) -->
+                <div class="card">
+                    <img src="assets/butterfinger.png" alt="Butterfinger">
+                    <div class="card-overlay">
+                        <span>Butterfinger</span>
+                    </div>
+                </div>
+
+                <!-- Product Recommended 2 (Chip's Ahoy) -->
+                <div class="card">
+                    <img src="assets/chipsahoyAI.png" alt="Chip's Ahoy">
+                    <div class="card-overlay">
+                        <span>Chip's Ahoy</span>
+                    </div>
+                </div>
+
+                <!-- Product Recommended 3 (Oreo Mini's) -->
+                <div class="card">
+                    <img src="assets/oreoAI.png" alt="Oreo Mini's">
+                    <div class="card-overlay">
+                        <span>Oreo Mini's</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo">
+    </footer>
+
+</body>
+</html>

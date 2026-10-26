@@ -3,42 +3,320 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catalogue</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Shop Sugar</title>
+    <!-- Importing Source Serif Pro from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     
     <style>
-        /* Custom CSS for the rapid flashing animation */
-        @keyframes rapidFlash {
-            0%, 100% { 
-                color: #39FF14; /* Bright Lime Green */
-                text-shadow: 0 0 20px #39FF14, 0 0 50px #39FF14;
-            }
-            50% { 
-                color: #FFD700; /* Bright Gold Yellow */
-                text-shadow: 0 0 20px #FFD700, 0 0 50px #FFD700;
-            }
+        /* CSS Variables for Fonts and Colors */
+        :root {
+            --font-sans: 'Stolzl', sans-serif;
+            --font-serif: 'Source Serif Pro', serif;
+            --color-orange: #f25a24;
+            --color-blue: #00a0df;
+            --color-dark: #231f20;
+            --color-bg: #ffffff;
         }
 
-        .massive-dollar {
-            /* 
-               Using vmin ensures the dollar sign is as large as possible 
-               on mobile and desktop without overflowing the screen.
-            */
-            font-size: 85vmin; 
-            line-height: 1;
-            font-weight: 900;
-            font-family: 'Inter', system-ui, sans-serif;
-            /* 0.3s creates a very rapid, intense flashing effect */
-            animation: rapidFlash 0.3s infinite ease-in-out;
-            user-select: none;
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-serif);
+            background-color: var(--color-bg);
+            color: var(--color-dark);
+        }
+
+        h1, h2, h3, .sans-text {
+            font-family: var(--font-sans);
+        }
+
+        /* Header / Navbar */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: #fff;
+        }
+
+        .logo img {
+            height: 100px;
+            width: auto;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--color-dark);
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+
+        nav ul li a:hover {
+            color: var(--color-blue);
+        }
+
+        .cart-icon img {
+            height: 25px;
+            cursor: pointer;
+        }
+
+        /* Blue Wave Divider */
+        .wave-container {
+            width: 100%;
+            height: 50px;
+            background-color: var(--color-blue);
+            /* A simple curved top simulating the wave in the design */
+            border-top-left-radius: 50% 100%;
+            border-top-right-radius: 50% 100%;
+            margin-top: -10px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: var(--color-orange);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            /* Removed flex and padding properties to allow full-bleed image */
+        }
+
+        .hero-collage {
+            width: 100%;
+            display: block;
+        }
+
+        .hero-collage img {
+            width: 100%;
+            height: auto;
+            display: block; /* Removes bottom spacing below images */
+        }
+
+        /* Best Sellers Section */
+        .best-sellers-section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .best-sellers-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .best-sellers-section p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Product Cards & Hover Effect */
+        .card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #f4f4f4; /* Placeholder background */
+            aspect-ratio: 1 / 1; 
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Black gradient overlay that appears on hover */
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 25px;
+        }
+
+        .card:hover .card-overlay {
+            opacity: 1;
+        }
+
+        .card:hover img {
+            transform: scale(1.05); /* Slight zoom effect to make it dynamic */
+        }
+
+        .card-overlay span {
+            color: #ffffff;
+            font-family: var(--font-sans);
+            font-weight: bold;
+            font-size: 1.3rem;
+            text-align: center;
+            letter-spacing: 0.5px;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.5); /* Extra legibility */
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--color-dark);
+            padding: 20px 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        footer img {
+            height: 50px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+<body>
 
-<body class="bg-gray-800 h-screen w-screen m-0 p-0 flex justify-center items-center overflow-hidden">
+    <!-- Navigation -->
+    <header>
+        <div class="logo">
+            <!-- Updated Path -->
+            <img src="assets/ShopSugar.png" alt="Shop Sugar Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Chocolates</a></li>
+                <li><a href="#">Cookies</a></li>
+                <li><a href="#">Peanuts</a></li>
+                <li><a href="#">Gummies</a></li>
+                <li><a href="#">Candy</a></li>
+            </ul>
+        </nav>
+        <div class="cart-icon">
+             <!-- Updated Path -->
+            <img src="assets/shopping-cart.png" alt="Shopping Cart">
+        </div>
+    </header>
 
-    <span class="massive-dollar">$</span>
+    <main>
+        <!-- Decorative Blue Wave -->
+        <div class="wave-container"></div>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-collage">
+                <!-- Updated Path -->
+                <img src="assets/welcome banner.png" alt="Welcome Sweet Tooths, Crave the Classics? Collage of classic candies">
+            </div>
+        </section>
+
+        <!-- Best Sellers Section -->
+        <section class="best-sellers-section">
+            <h2>Best Sellers</h2>
+            <p>Check out what's selling!</p>
+
+          <!-- ... existing code ... -->
+        <!-- Best Sellers Section -->
+        <section class="best-sellers-section">
+            <h2>Best Sellers</h2>
+            <p>Check out what's selling!</p>
+
+            <div class="grid">
+                <!-- Product 1 -->
+                <a href="peanutM&M's.html" class="card" style="text-decoration: none; display: block;">
+                    <!-- Updated Path -->
+                    <img src="assets/PeanutM&M'sAI.png" alt="Peanut M&Ms">
+                    <div class="card-overlay">
+                        <span>Peanut M&M's</span>
+                    </div>
+                </a>
+
+            
+
+                <!-- Product 2 -->
+                <div class="card">
+                     <!-- Updated Path -->
+                    <img src="assets/chipsahoyAI.png" alt="Chip's Ahoy">
+                    <div class="card-overlay">
+                        <span>Chip's Ahoy</span>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="card">
+                     <!-- Updated Path -->
+                    <img src="assets/oreoAI.png" alt="Oreo Mini's">
+                    <div class="card-overlay">
+                        <span>Oreo Mini's</span>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="card">
+                     <!-- Updated Path -->
+                    <img src="assets/butterfinger.png" alt="Butterfinger">
+                    <div class="card-overlay">
+                        <span>Butterfinger</span>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="card">
+                     <!-- Updated Path -->
+                    <img src="assets/reecescups.png" alt="Reece's Cups">
+                    <div class="card-overlay">
+                        <span>Reece's Cups</span>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="card">
+                     <!-- Updated Path -->
+                    <img src="assets/tony's chocolonelyAI.png" alt="Tony's Chocolonely">
+                    <div class="card-overlay">
+                        <span>Tony's Chocolonely</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+         <!-- Updated Path -->
+        <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo">
+    </footer>
 
 </body>
 </html>
