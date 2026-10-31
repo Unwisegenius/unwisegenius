@@ -3,21 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop Sugar</title>
-    <!-- Importing Source Serif Pro from Google Fonts -->
+    <title>Shop Sugar - The Anatomy of Sugar</title>
+    
+    <!-- Importing Fonts: Londrina Solid (for the cutout Saul Bass look) & Source Serif Pro -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@400;900&family=Source+Serif+Pro:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     
     <style>
-        /* CSS Variables for Fonts and Colors */
+        /* Saul Bass Inspired Variables */
         :root {
-            --font-sans: 'Stolzl', sans-serif;
-            --font-serif: 'Source Serif Pro', serif;
-            --color-orange: #f25a24;
-            --color-blue: #00a0df;
-            --color-dark: #231f20;
-            --color-bg: #ffffff;
+            --font-title: 'Londrina Solid', sans-serif;
+            --font-body: 'Source Serif Pro', serif;
+            --color-purple: #9b539c; /* Cover purple */
+            --color-yellow: #fcd703; /* Contents yellow */
+            --color-red: #e31837; /* Contents red */
+            --color-orange: #f25a24; /* Header orange */
+            --color-black: #111111;
+            --color-white: #fdfbf7; /* Off-white paper look */
         }
 
         /* Basic Reset */
@@ -28,181 +31,204 @@
         }
 
         body {
-            font-family: var(--font-serif);
-            background-color: var(--color-bg);
-            color: var(--color-dark);
+            font-family: var(--font-body);
+            background-color: var(--color-white);
+            color: var(--color-black);
+            overflow-x: hidden;
         }
 
-        h1, h2, h3, .sans-text {
-            font-family: var(--font-sans);
-        }
-
-        /* Header / Navbar */
+        /* Header / Navbar - Stark & Brutalist */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px 50px;
-            background-color: #fff;
+            background-color: var(--color-orange); /* Changed to orange */
+            color: var(--color-white);
+            border-bottom: 5px solid var(--color-white);
         }
 
         .logo img {
-            height: 100px;
+            height: 80px;
             width: auto;
+            /* Filter removed so original colors show */
         }
 
         nav ul {
             display: flex;
             list-style: none;
-            gap: 30px;
+            gap: 40px;
         }
 
         nav ul li a {
             text-decoration: none;
-            color: var(--color-dark);
-            font-size: 1.1rem;
-            transition: color 0.2s;
+            color: var(--color-white);
+            font-family: var(--font-title);
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.2s, transform 0.2s;
+            display: inline-block;
         }
 
         nav ul li a:hover {
-            color: var(--color-blue);
+            color: var(--color-yellow);
+            transform: rotate(-3deg) scale(1.1); /* Kinetic hover effect */
         }
 
         .cart-icon img {
-            height: 25px;
+            height: 35px;
             cursor: pointer;
+            filter: invert(1); /* Keeps the icon white */
         }
 
-        /* Blue Wave Divider */
-        .wave-container {
-            width: 100%;
-            height: 50px;
-            background-color: var(--color-blue);
-            /* A simple curved top simulating the wave in the design */
-            border-top-left-radius: 50% 100%;
-            border-top-right-radius: 50% 100%;
-            margin-top: -10px;
-        }
-
-        /* Hero Section */
+        /* Hero Section - The Anatomy of Sugar Cover */
         .hero {
-            background-color: var(--color-orange);
+            background-color: var(--color-purple);
+            padding: 80px 50px 80px 50px; /* Adjusted bottom padding to center text without image */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
             position: relative;
-            overflow: hidden;
-            width: 100%;
-            /* Removed flex and padding properties to allow full-bleed image */
+            border-bottom: 10px solid var(--color-black);
         }
 
-        .hero-collage {
-            width: 100%;
-            display: block;
+        .hero h1 {
+            font-family: var(--font-title);
+            font-size: 8rem;
+            line-height: 0.9;
+            color: var(--color-white);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            text-shadow: 6px 6px 0px var(--color-black); /* Blocky shadow */
+            transform: skew(-2deg, -2deg);
         }
 
-        .hero-collage img {
-            width: 100%;
-            height: auto;
-            display: block; /* Removes bottom spacing below images */
+        .hero p {
+            color: var(--color-white);
+            font-size: 1.5rem;
+            max-width: 600px;
+            font-style: italic;
+            margin-bottom: 20px;
         }
 
-        /* Best Sellers Section */
-        .best-sellers-section {
+        /* Best Sellers Banner replacement */
+        .best-sellers-banner {
+            background-color: var(--color-yellow);
             padding: 60px 20px;
             text-align: center;
+            border-bottom: 10px solid var(--color-black);
         }
 
-        .best-sellers-section h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
+        .best-sellers-banner h2 {
+            font-family: var(--font-title);
+            font-size: 5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transform: rotate(-2deg);
+            text-shadow: 4px 4px 0px var(--color-black);
         }
 
-        .best-sellers-section p {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
+        /* Catalogue Editorial Grid */
+        .catalogue-section {
+            padding: 80px 40px;
+            background-color: var(--color-white);
         }
 
-        /* Grid Layout */
         .grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            max-width: 900px;
+            gap: 80px 60px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        /* Product Cards & Hover Effect */
-        .card {
-            position: relative;
-            overflow: hidden;
-            border-radius: 4px;
-            cursor: pointer;
-            background-color: #f4f4f4; /* Placeholder background */
-            aspect-ratio: 1 / 1; 
+        /* The "Page Spread" Product Card */
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: transform 0.2s ease;
         }
 
-        .card img {
+        .card-link:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image-block {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background-color: var(--color-black); /* Fallback block */
+            border: 4px solid var(--color-black);
+            box-shadow: 10px 10px 0px var(--color-black);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .product-image-block img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: transform 0.4s ease;
         }
 
-        .card-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* Black gradient overlay that appears on hover */
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0) 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
+        /* Editorial Text Layout below image */
+        .product-editorial {
             display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            padding-bottom: 25px;
+            flex-direction: column;
+            position: relative;
         }
 
-        .card:hover .card-overlay {
-            opacity: 1;
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
         }
 
-        .card:hover img {
-            transform: scale(1.05); /* Slight zoom effect to make it dynamic */
+        .product-title {
+            font-family: var(--font-title);
+            font-size: 3rem;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            max-width: 75%;
         }
 
-        .card-overlay span {
-            color: #ffffff;
-            font-family: var(--font-sans);
+        /* Updated Stylized Text Price (No Image) */
+        .price-text {
+            font-family: var(--font-title);
+            font-size: 2.8rem;
+            color: var(--color-red);
+            transform: rotate(4deg);
+            text-shadow: 2px 2px 0px var(--color-black);
+        }
+
+        .product-desc {
+            font-size: 1.1rem;
+            line-height: 1.4;
+            margin-bottom: 15px;
+            padding-right: 20px;
+        }
+
+        .product-meta {
+            font-size: 0.9rem;
+            font-style: italic;
+            margin-bottom: 5px;
+        }
+
+        .product-allergens {
+            font-size: 0.85rem;
             font-weight: bold;
-            font-size: 1.3rem;
-            text-align: center;
-            letter-spacing: 0.5px;
-            text-shadow: 0px 2px 4px rgba(0,0,0,0.5); /* Extra legibility */
+            text-transform: uppercase;
         }
 
-        /* Footer */
-        footer {
-            background-color: var(--color-dark);
-            padding: 20px 50px;
-            display: flex;
-            align-items: center;
-        }
-
-        footer img {
-            height: 50px;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                gap: 20px;
-            }
-            .grid {
-                grid-template-columns: 1fr;
-            }
+        /* Responsive */
+        @media (max-width: 900px) {
+            .grid { grid-template-columns: 1fr; gap: 60px; }
+            .hero h1 { font-size: 5rem; }
+            .best-sellers-banner h2 { font-size: 4rem; }
         }
     </style>
 </head>
@@ -211,8 +237,7 @@
     <!-- Navigation -->
     <header>
         <div class="logo">
-            <!-- Updated Path -->
-            <img src="assets/ShopSugar.png" alt="Shop Sugar Logo">
+            <a href="#"><img src="assets/ShopSugar.png" alt="Shop Sugar Logo"></a>
         </div>
         <nav>
             <ul>
@@ -224,93 +249,132 @@
             </ul>
         </nav>
         <div class="cart-icon">
-             <!-- Updated Path -->
             <img src="assets/shopping-cart.png" alt="Shopping Cart">
         </div>
     </header>
 
     <main>
-        <!-- Decorative Blue Wave -->
-        <div class="wave-container"></div>
-
-        <!-- Hero Section -->
+        <!-- Anatomy of Sugar Cover Block -->
         <section class="hero">
-            <div class="hero-collage">
-                <!-- Updated Path -->
-                <img src="assets/welcome banner.png" alt="Welcome Sweet Tooths, Crave the Classics? Collage of classic candies">
-            </div>
+            <h1>The Anatomy<br>Of Sugar</h1>
+            <p>A look through different Sweets & Candies, through the lens of Saul Bass's Design Style...</p>
+            <!-- Removed the Sugar Pouring Image here -->
         </section>
 
-          <!-- ... existing code ... -->
-        <!-- Best Sellers Section -->
-        <section class="best-sellers-section">
+        <!-- Best Sellers Banner replacing contents spread -->
+        <section class="best-sellers-banner">
             <h2>Best Sellers</h2>
-            <p>Check out what's selling!</p>
+        </section>
 
+        <!-- Editorial Catalogue Grid -->
+        <section class="catalogue-section">
             <div class="grid">
-                <!-- Product 1 -->
-                <a href="peanutm&m's.html" class="card" style="text-decoration: none; display: block;">
-                    <!-- Updated Path -->
-                    <img src="assets/PeanutM&M'sAI.png" alt="Peanut M&Ms">
-                    <div class="card-overlay">
-                        <span>Peanut M&M's</span>
+                
+                <!-- Product 1 (Linked to Item Page) -->
+                <a href="peanutm&m's.html" class="card-link">
+                    <div class="product-image-block">
+                        <img src="assets/PeanutM&M'sAI.png" alt="Peanut M&Ms Graphic">
+                    </div>
+                    <div class="product-editorial">
+                        <div class="product-header">
+                            <h3 class="product-title">Peanut M&M's</h3>
+                            <div class="price-text">$1.59</div>
+                        </div>
+                        <p class="product-desc">A kinetic swarm of graphic primary hues suspended in motion. Strip away the hard shell to reveal a smooth cocoa core, neat geometric disks engineered for pure, colour blocked sweetness.</p>
+                        <p class="product-meta">Melts in your mouth, not in your hand.</p>
+                        <p class="product-allergens">Allergens:<br>Milk, Soy (May contain Peanuts)</p>
                     </div>
                 </a>
 
-            
-
                 <!-- Product 2 -->
-                <div class="card">
-                     <!-- Updated Path -->
-                    <img src="assets/chipsahoyAI.png" alt="Chip's Ahoy">
-                    <div class="card-overlay">
-                        <span>Chip's Ahoy</span>
+               <!-- Product 2: Oreo Mini's -->
+<a href="oreominis.html" class="card-link">
+                    <div class="product-image-block">
+                        <img src="assets/oreoAI.png" alt="Oreo Mini's Graphic">
                     </div>
-                </div>
+                    <div class="product-editorial">
+                        <div class="product-header">
+                            <h3 class="product-title">Oreo Mini's</h3>
+                            <div class="price-text">$3.99</div>
+                        </div>
+                        <p class="product-desc">A study in high-contrast monochrome. Strip back the wrapper to reveal dense cocoa disks sandwiching a stark white core, poppable geometry engineered for a revolution in black and white.</p>
+                        <p class="product-meta">Twist. Lick. Dunk.</p>
+                        <p class="product-allergens">Allergens:<br>Wheat, Soy</p>
+                    </div>
+                </a>
 
                 <!-- Product 3 -->
-                <div class="card">
-                     <!-- Updated Path -->
-                    <img src="assets/oreoAI.png" alt="Oreo Mini's">
-                    <div class="card-overlay">
-                        <span>Oreo Mini's</span>
+               <!-- Product 3: Reece's Cups -->
+<a href="reecescups.html" class="card-link">
+                    <div class="product-image-block">
+                        <img src="assets/reecescups.png" alt="Reese's Cups Graphic">
                     </div>
-                </div>
+                    <div class="product-editorial">
+                        <div class="product-header">
+                            <h3 class="product-title">Reece's Cups</h3>
+                            <div class="price-text">$2.00</div>
+                        </div>
+                        <p class="product-desc">An exercise in radial symmetry and scalloped contours. Strip away the vibrant orange frame to reveal fluted chocolate disks encasing a dense, salted peanut butter core.</p>
+                        <p class="product-meta">Two perfect cups of salty-sweet symmetry.</p>
+                        <p class="product-allergens">Allergens:<br>Peanuts, Milk, Soy</p>
+                    </div>
+                </a>
 
                 <!-- Product 4 -->
-                <div class="card">
-                     <!-- Updated Path -->
-                    <img src="assets/Butterfinger.png" alt="Butterfinger">
-                    <div class="card-overlay">
-                        <span>Butterfinger</span>
-                    </div>
-                </div>
-
+                <!-- Product 4: Chip's Ahoy -->
+<a href="chipsahoy.html" class="card-link">
+    <div class="product-image-block">
+        <img src="assets/chipsahoyAI.png" alt="Chip's Ahoy Graphic">
+    </div>
+    <div class="product-editorial">
+        <div class="product-header">
+            <h3 class="product-title">Chip's Ahoy</h3>
+            <div class="price-text">$3.50</div>
+        </div>
+        <p class="product-desc">A rigid sequence of chocolate-studded craters. Engineered for rapid-fire crunch and maximum chocolate chip density.</p>
+        <p class="product-meta">The classic crunch.</p>
+        <p class="product-allergens">Allergens:<br>Wheat, Milk, Soy</p>
+    </div>
+</a>
                 <!-- Product 5 -->
-                <div class="card">
-                     <!-- Updated Path -->
-                    <img src="assets/reecescups.png" alt="Reece's Cups">
-                    <div class="card-overlay">
-                        <span>Reece's Cups</span>
-                    </div>
-                </div>
+                <!-- Product 5: Butterfinger -->
+<a href="butterfinger.html" class="card-link">
+    <div class="product-image-block">
+        <img src="assets/Butterfinger.png" alt="Butterfinger Graphic">
+    </div>
+    <div class="product-editorial">
+        <div class="product-header">
+            <h3 class="product-title">Butterfinger</h3>
+            <div class="price-text">$1.89</div>
+        </div>
+        <p class="product-desc">A sharp, angular core of crystallized peanut butter bathed in milk chocolate. A graphic exercise in flaky, jagged textures.</p>
+        <p class="product-meta">Crispety, crunchety.</p>
+        <p class="product-allergens">Allergens:<br>Peanuts, Milk, Soy</p>
+    </div>
+</a>
 
                 <!-- Product 6 -->
-                <div class="card">
-                     <!-- Updated Path -->
-                    <img src="assets/tony's chocolonelyAI.png" alt="Tony's Chocolonely">
-                    <div class="card-overlay">
-                        <span>Tony's Chocolonely</span>
+                <a href="tonys.html" class="card-link">
+                    <div class="product-image-block">
+                        <img src="assets/tony's chocolonelyAI.png" alt="Tony's Chocolonely Graphic">
                     </div>
-                </div>
+                    <div class="product-editorial">
+                        <div class="product-header">
+                            <h3 class="product-title">Tony's Chocolonely</h3>
+                            <div class="price-text">$6.79</div>
+                        </div>
+                        <p class="product-desc">A bold disruption of standard gridlines and symmetry. Strip back the vibrant wrapper to expose a massive, fractured slab, unequal, jagged blocks engineered to lay bare cocoa industry inequality.</p>
+                        <p class="product-meta">Unequal pieces for an equal cause.</p>
+                        <p class="product-allergens">Allergens:<br>Milk, Soy (May contain Wheat, Eggs, Peanuts, Tree Nuts)</p>
+                    </div>
+                </a>
             </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer>
-         <!-- Updated Path -->
-        <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo">
+    <footer style="background-color: var(--color-black); padding: 40px 50px; display: flex; align-items: center; border-top: 5px solid var(--color-white);">
+        <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo" style="height: 50px;">
     </footer>
 
 </body>
