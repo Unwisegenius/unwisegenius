@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Sugar - Chocolates</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@400;900&family=Source+Serif+Pro:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --font-title: 'Londrina Solid', sans-serif;
+            --font-body: 'Source Serif Pro', serif;
+            --color-purple: #9b539c;
+            --color-yellow: #fcd703;
+            --color-red: #e31837;
+            --color-orange: #f25a24;
+            --color-black: #111111;
+            --color-white: #fdfbf7;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-body); background-color: var(--color-white); color: var(--color-black); overflow-x: hidden; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background-color: var(--color-orange); color: var(--color-white); border-bottom: 5px solid var(--color-white); }
+        .logo img { height: 80px; width: auto; }
+        nav ul { display: flex; list-style: none; gap: 40px; }
+        nav ul li a { text-decoration: none; color: var(--color-white); font-family: var(--font-title); font-size: 1.5rem; letter-spacing: 1px; text-transform: uppercase; transition: color 0.2s, transform 0.2s; display: inline-block; }
+        nav ul li a:hover, nav ul li a.active { color: var(--color-yellow); transform: rotate(-3deg) scale(1.1); }
+        .cart-icon img { height: 35px; cursor: pointer; filter: invert(1); }
+        .category-hero { background-color: var(--color-purple); padding: 80px 50px; text-align: center; border-bottom: 10px solid var(--color-black); }
+        .category-hero h1 { font-family: var(--font-title); font-size: 7rem; line-height: 0.9; color: var(--color-white); text-transform: uppercase; text-shadow: 6px 6px 0px var(--color-black); transform: skew(-2deg, -2deg); margin-bottom: 20px; }
+        .category-hero p { color: var(--color-white); font-size: 1.4rem; max-width: 750px; margin: 0 auto; line-height: 1.4; font-style: italic; }
+        .catalogue-section { padding: 80px 40px; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 80px 60px; max-width: 1200px; margin: 0 auto; }
+        .card-link { text-decoration: none; color: inherit; display: block; transition: transform 0.2s ease; }
+        .card-link:hover { transform: translateY(-5px); }
+        .product-image-block { width: 100%; aspect-ratio: 1 / 1; background-color: var(--color-black); border: 4px solid var(--color-black); box-shadow: 10px 10px 0px var(--color-black); overflow: hidden; margin-bottom: 30px; }
+        .product-image-block img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .product-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+        .product-title { font-family: var(--font-title); font-size: 3rem; line-height: 1; text-transform: uppercase; letter-spacing: 1px; max-width: 75%; }
+        .price-text { font-family: var(--font-title); font-size: 2.8rem; color: var(--color-red); transform: rotate(4deg); text-shadow: 2px 2px 0px var(--color-black); }
+        .product-desc { font-size: 1.1rem; line-height: 1.4; margin-bottom: 15px; }
+        .product-meta { font-size: 0.95rem; font-style: italic; margin-bottom: 8px; }
+        .product-allergens { font-size: 0.85rem; font-weight: bold; text-transform: uppercase; }
+        footer { background-color: var(--color-black); padding: 40px 50px; display: flex; align-items: center; border-top: 5px solid var(--color-white); }
+        footer img { height: 50px; }
+        @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } .category-hero h1 { font-size: 4.5rem; } header { flex-direction: column; gap: 20px; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="catalogue.html"><img src="assets/ShopSugar.png" alt="Shop Sugar Logo"></a></div>
+        <nav>
+            <ul>
+                <li><a href="chocolates.html" class="active">Chocolates</a></li>
+                <li><a href="cookies.html">Cookies</a></li>
+                <li><a href="peanuts.html">Peanuts</a></li>
+                <li><a href="gummies.html">Gummies</a></li>
+                <li><a href="candy.html">Candy</a></li>
+            </ul>
+        </nav>
+        <div class="cart-icon"><img src="assets/shopping-cart.png" alt="Shopping Cart"></div>
+    </header>
+
+    <main>
+        <section class="category-hero">
+            <h1>Chocolates</h1>
+            <p>Enter the shadow where deep, roasted darkness collides with smooth, molten velvet. Cut through the surface to unravel a hypnotic descent into pure, unrelenting flavour.</p>
+        </section>
+
+        <section class="catalogue-section">
+            <div class="grid">
+                <!-- Chocolate M&M's -->
+                <div class="card-link">
+                    <div class="product-image-block"><img src="assets/chocolateM&Ms AI.png" alt="Chocolate M&M's"></div>
+                    <div class="product-editorial">
+                        <div class="product-header"><h3 class="product-title">Chocolate M&M's</h3><div class="price-text">$1.59</div></div>
+                        <p class="product-desc">A kinetic swarm of graphic primary hues suspended in motion. Strip away the hard shell to reveal a smooth cocoa core, neat geometric disks engineered for pure, colour blocked sweetness.</p>
+                        <p class="product-meta">Melts in your mouth, not in your hand. • 3.1 oz Theatre Box, 140kcal</p>
+                        <p class="product-allergens">Allergens: Milk, Soy (May contain Peanuts)</p>
+                    </div>
+                </div>
+
+                <!-- Cadbury's Dairy Milk -->
+                <div class="card-link">
+                    <div class="product-image-block"><img src="assets/cadburydairymilkAI.png" alt="Cadbury Dairy Milk"></div>
+                    <div class="product-editorial">
+                        <div class="product-header"><h3 class="product-title">Cadbury's Dairy Milk</h3><div class="price-text">$2.99</div></div>
+                        <p class="product-desc">A study in deep purple and ultra-creamy precision. Strip back the classic foil boundary to reveal a smooth, unbroken slab of English Choccy. Bold geometric blocks engineered to dissolve into liquid velvet.</p>
+                        <p class="product-meta">A glass and a half of a proper British chocolate. • 3.5 oz Bar, 200kcal</p>
+                        <p class="product-allergens">Allergens: Milk, Soy (May contain Peanuts, Tree Nuts)</p>
+                    </div>
+                </div>
+
+                <!-- Kit-Kat Bar -->
+                <div class="card-link">
+                    <div class="product-image-block"><img src="assets/kitkatAI.png" alt="Kit Kat Bar"></div>
+                    <div class="product-editorial">
+                        <div class="product-header"><h3 class="product-title">Kit-Kat Bar</h3><div class="price-text">$2.99</div></div>
+                        <p class="product-desc">A sharp composition of parallel lines and crisp wafer beams encased in milk chocolate. Engineered for a clean, structural snap, a graphic break from the ordinary!</p>
+                        <p class="product-meta">Have a break, snap into symmetry. • 4.3 oz XL Bar, 210kcal</p>
+                        <p class="product-allergens">Allergens: Wheat, Milk, Soy</p>
+                    </div>
+                </div>
+
+                <!-- Tony's Chocolonely (Linked to tonys.html) -->
+                <a href="tonys.html" class="card-link">
+                    <div class="product-image-block"><img src="assets/tony's chocolonelyAI.png" alt="Tony's Chocolonely"></div>
+                    <div class="product-editorial">
+                        <div class="product-header"><h3 class="product-title">Tony's Chocolonely</h3><div class="price-text">$6.79</div></div>
+                        <p class="product-desc">A bold disruption of standard gridlines and symmetry. Strip back the vibrant wrapper to expose a massive, fractured slab, unequal, jagged blocks engineered to lay bare cocoa industry inequality.</p>
+                        <p class="product-meta">Unequal pieces for an equal cause. • 6.35 oz Bar, 170kcal</p>
+                        <p class="product-allergens">Allergens: Milk, Soy (May contain Wheat, Eggs, Peanuts, Tree Nuts)</p>
+                    </div>
+                </a>
+
+                <!-- Junior Mints -->
+                <div class="card-link">
+                    <div class="product-image-block"><img src="assets/juniormintss.png" alt="Junior Mints"></div>
+                    <div class="product-editorial">
+                        <div class="product-header"><h3 class="product-title">Junior Mints</h3><div class="price-text">$1.59</div></div>
+                        <p class="product-desc">A stark study in dark obsidian silhouettes and high-contrast frost. Strip away the deep chocolate shell to expose a snow-white core, a cool, kinetic burst of peppermint precision.</p>
+                        <p class="product-meta">A refreshing contrast of dark chocolate and icy mint. • 3.5 oz Theatre Box, 170kcal</p>
+                        <p class="product-allergens">Allergens: May contain Soy, Milk</p>
+                    </div>
+                </div>
+
+                <!-- Hershey's Kisses -->
+                <div class="card-link">
+                    <div class="product-image-block"><img src="assets/kissesAI.png" alt="Hershey's Kisses"></div>
+                    <div class="product-editorial">
+                        <div class="product-header"><h3 class="product-title">Hershey's Kisses</h3><div class="price-text">$6.99</div></div>
+                        <p class="product-desc">A study in silver geometry and iconic teardrop silhouettes. Strip away the gleaming metallic foil to reveal a sculpted chocolate monument engineered to melt on contact.</p>
+                        <p class="product-meta">A timeless silhouette wrapped in silver. • 9.5 oz Share Pack Bag, 160kcal</p>
+                        <p class="product-allergens">Allergens: May contain Soy, Milk</p>
+                    </div>
+                </div>
+
+                <!-- Lindt Milk Chocolate -->
+                <div class="card-link">
+                    <div class="product-image-block"><img src="assets/lindtchocolateAI.png" alt="Lindt Chocolate Bar"></div>
+                    <div class="product-editorial">
+                        <div class="product-header"><h3 class="product-title">Lindt Chocolate</h3><div class="price-text">$5.99</div></div>
+                        <p class="product-desc">A masterclass in crimson foil and elongated, linear precision. Born from Swiss origins, strip back the gold-script wrapper to reveal a slim, continuous baton of solid cocoa.</p>
+                        <p class="product-meta">A slender silhouette of pure Swiss luxury. • 4.4 oz Bar, 230kcal</p>
+                        <p class="product-allergens">Allergens: Milk, Soy (May contain Tree Nuts)</p>
+                    </div>
+                </div>
+
+                <!-- Milk Duds -->
+                <div class="card-link">
+                    <div class="product-image-block"><img src="assets/milkdudsAI.png" alt="Milk Duds"></div>
+                    <div class="product-editorial">
+                        <div class="product-header"><h3 class="product-title">Milk Duds</h3><div class="price-text">$1.50</div></div>
+                        <p class="product-desc">Strip away the vibrant frame to reveal dark chocolate nuggets, imperfect, glossy spheres engineered to resist every bite with dense caramel chew.</p>
+                        <p class="product-meta">The rich caramel classic that takes its time. • 5 oz Theatre Box, 170kcal</p>
+                        <p class="product-allergens">Allergens: Milk, Soy</p>
+                    </div>
+                </div>
+
+                <!-- Nutella & Go! -->
+                <div class="card-link">
+                    <div class="product-image-block"><img src="assets/nutella&goAI.png" alt="Nutella & Go"></div>
+                    <div class="product-editorial">
+                        <div class="product-header"><h3 class="product-title">Nutella & Go!</h3><div class="price-text">$2.79</div></div>
+                        <p class="product-desc">A kinetic study in dual form and structural contrast. Enjoy golden breadstick cylinders poised above a deep, dark pool of hazelnut cocoa.</p>
+                        <p class="product-meta">The pairing of crunch & cream. • 1.8 oz Cup, 260kcal</p>
+                        <p class="product-allergens">Allergens: Tree Nuts (Hazelnuts), Milk, Soy, Wheat</p>
+                    </div>
+                </div>
+
+                <!-- Snickers -->
+                <div class="card-link">
+                    <div class="product-image-block"><img src="assets/snickersAI.png" alt="Snickers Bar"></div>
+                    <div class="product-editorial">
+                        <div class="product-header"><h3 class="product-title">Snickers</h3><div class="price-text">$1.89</div></div>
+                        <p class="product-desc">A heavy-duty composition of dense layers and dramatic relief. Fluffy nougat collides with a kinetic surge of golden caramel and jagged peanut crags.</p>
+                        <p class="product-meta">Hunger meets its modernist match. • 52g Bar, 250kcal</p>
+                        <p class="product-allergens">Allergens: Contains Peanuts, Milk, Egg, Soy</p>
+                    </div>
+                </div>
+
+                <!-- Whoppers -->
+                <div class="card-link">
+                    <div class="product-image-block"><img src="assets/whoppersAI.png" alt="Whoppers"></div>
+                    <div class="product-editorial">
+                        <div class="product-header"><h3 class="product-title">Whoppers</h3><div class="price-text">$3.49</div></div>
+                        <p class="product-desc">A study in spherical perfection and architectural lightness. High-contrast dark cocoa globes concealing an airy, honeycomb lattice of golden malt.</p>
+                        <p class="product-meta">The original malted milk silhouette. • 12 oz Box, 180kcal</p>
+                        <p class="product-allergens">Allergens: Milk, Wheat, Soy, Barley</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer><img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo"></footer>
+</body>
+</html>

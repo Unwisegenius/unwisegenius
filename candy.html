@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Sugar - Candy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@400;900&family=Source+Serif+Pro:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --font-title: 'Londrina Solid', sans-serif;
+            --font-body: 'Source Serif Pro', serif;
+            --color-yellow: #fcd703;
+            --color-red: #e31837;
+            --color-orange: #f25a24;
+            --color-purple: #9b539c;
+            --color-black: #111111;
+            --color-white: #fdfbf7;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-body); background-color: var(--color-white); color: var(--color-black); overflow-x: hidden; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background-color: var(--color-orange); color: var(--color-white); border-bottom: 5px solid var(--color-white); }
+        .logo img { height: 80px; width: auto; }
+        nav ul { display: flex; list-style: none; gap: 40px; }
+        nav ul li a { text-decoration: none; color: var(--color-white); font-family: var(--font-title); font-size: 1.5rem; letter-spacing: 1px; text-transform: uppercase; transition: color 0.2s, transform 0.2s; display: inline-block; }
+        nav ul li a:hover, nav ul li a.active { color: var(--color-yellow); transform: rotate(-3deg) scale(1.1); }
+        .cart-icon img { height: 35px; cursor: pointer; filter: invert(1); }
+        .category-hero { background-color: #f7a01d; padding: 80px 50px; text-align: center; border-bottom: 10px solid var(--color-black); }
+        .category-hero h1 { font-family: var(--font-title); font-size: 7rem; line-height: 0.9; color: var(--color-white); text-transform: uppercase; text-shadow: 6px 6px 0px var(--color-black); transform: skew(-2deg, -2deg); margin-bottom: 20px; }
+        .category-hero p { color: var(--color-white); font-size: 1.4rem; max-width: 750px; margin: 0 auto; line-height: 1.4; font-style: italic; }
+        .catalogue-section { padding: 80px 40px; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 80px 60px; max-width: 1200px; margin: 0 auto; }
+        .card-link { text-decoration: none; color: inherit; display: block; transition: transform 0.2s ease; }
+        .card-link:hover { transform: translateY(-5px); }
+        .product-image-block { width: 100%; aspect-ratio: 1 / 1; background-color: var(--color-black); border: 4px solid var(--color-black); box-shadow: 10px 10px 0px var(--color-black); overflow: hidden; margin-bottom: 30px; }
+        .product-image-block img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .product-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+        .product-title { font-family: var(--font-title); font-size: 3rem; line-height: 1; text-transform: uppercase; letter-spacing: 1px; max-width: 75%; }
+        .price-text { font-family: var(--font-title); font-size: 2.8rem; color: var(--color-red); transform: rotate(4deg); text-shadow: 2px 2px 0px var(--color-black); }
+        .product-desc { font-size: 1.1rem; line-height: 1.4; margin-bottom: 15px; }
+        .product-meta { font-size: 0.95rem; font-style: italic; margin-bottom: 8px; }
+        .product-allergens { font-size: 0.85rem; font-weight: bold; text-transform: uppercase; }
+        footer { background-color: var(--color-black); padding: 40px 50px; display: flex; align-items: center; border-top: 5px solid var(--color-white); }
+        footer img { height: 50px; }
+        @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } .category-hero h1 { font-size: 4.5rem; } header { flex-direction: column; gap: 20px; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="catalogue.html"><img src="assets/ShopSugar.png" alt="Shop Sugar Logo"></a></div>
+        <nav>
+            <ul>
+                <li><a href="chocolates.html">Chocolates</a></li>
+                <li><a href="cookies.html">Cookies</a></li>
+                <li><a href="peanuts.html">Peanuts</a></li>
+                <li><a href="gummies.html">Gummies</a></li>
+                <li><a href="candy.html" class="active">Candy</a></li>
+            </ul>
+        </nav>
+        <div class="cart-icon"><img src="assets/shopping-cart.png" alt="Shopping Cart"></div>
+    </header>
+
+    <main>
+        <section class="category-hero">
+            <h1>Candy</h1>
+            <p>Hyper-saturated colour detonates without warning. Dense geometric blocks collide in a high-tension chew, unleashing an electric surge of juicy sweetness. A kinetic assault of raw fruit flavour that refuses to fade.</p>
+        </section>
+
+        <section class="catalogue-section">
+            <div class="grid">
+                <!-- Twizzlers -->
+                <div class="card-link">
+                    <div class="product-image-block"><img src="assets/Twizzlers Advert.png" alt="Twizzlers Advert"></div>
+                    <div class="product-editorial">
+                        <div class="product-header"><h3 class="product-title">Twizzlers</h3><div class="price-text">$4.69</div></div>
+                        <p class="product-desc">Step right up and feast your eyes on America's favourite candy-counter legend! Bend it, twist it, and pull it apart—classic American snacking at its finest.</p>
+                        <p class="product-meta">Makes chewing fun! • 12 oz Bag, 120kcal</p>
+                        <p class="product-allergens">Allergens: Wheat</p>
+                    </div>
+                </div>
+
+                <!-- Skittles -->
+                <div class="card-link">
+                    <div class="product-image-block"><img src="assets/skittles AI.png" alt="Skittles"></div>
+                    <div class="product-editorial">
+                        <div class="product-header"><h3 class="product-title">Skittles</h3><div class="price-text">$1.89</div></div>
+                        <p class="product-desc">A kinetic spectrum of lenticular buttons suspended in motion. Strip away the vibrant red packet to reveal saturated, colour-blocked spheres.</p>
+                        <p class="product-meta">Taste the rainbow in high definition. • 2.17 oz Pack, 250kcal</p>
+                        <p class="product-allergens">Allergens: None</p>
+                    </div>
+                </div>
+
+                <!-- Starburst Mini's -->
+                <div class="card-link">
+                    <div class="product-image-block"><img src="assets/Starburst Mini's Ai.png" alt="Starburst Mini's"></div>
+                    <div class="product-editorial">
+                        <div class="product-header"><h3 class="product-title">Starburst Mini's</h3><div class="price-text">$3.79</div></div>
+                        <p class="product-desc">A study in unwrapped geometry and compact scale. Strip back the frame to reveal dense, vibrant cubes engineered for an immediate burst of juicy fruit nectar.</p>
+                        <p class="product-meta">Unwrapped squares of pure fruit momentum. • 8oz Grab and Go Bag, 130kcal</p>
+                        <p class="product-allergens">Allergens: None</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer><img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo"></footer>
+</body>
+</html>

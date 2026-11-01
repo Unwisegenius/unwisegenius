@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Sugar - Cookies</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@400;900&family=Source+Serif+Pro:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --font-title: 'Londrina Solid', sans-serif;
+            --font-body: 'Source Serif Pro', serif;
+            --color-blue: #0077c8;
+            --color-yellow: #fcd703;
+            --color-red: #e31837;
+            --color-orange: #f25a24;
+            --color-black: #111111;
+            --color-white: #fdfbf7;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-body); background-color: var(--color-white); color: var(--color-black); overflow-x: hidden; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background-color: var(--color-orange); color: var(--color-white); border-bottom: 5px solid var(--color-white); }
+        .logo img { height: 80px; width: auto; }
+        nav ul { display: flex; list-style: none; gap: 40px; }
+        nav ul li a { text-decoration: none; color: var(--color-white); font-family: var(--font-title); font-size: 1.5rem; letter-spacing: 1px; text-transform: uppercase; transition: color 0.2s, transform 0.2s; display: inline-block; }
+        nav ul li a:hover, nav ul li a.active { color: var(--color-yellow); transform: rotate(-3deg) scale(1.1); }
+        .cart-icon img { height: 35px; cursor: pointer; filter: invert(1); }
+        .category-hero { background-color: var(--color-blue); padding: 80px 50px; text-align: center; border-bottom: 10px solid var(--color-black); }
+        .category-hero h1 { font-family: var(--font-title); font-size: 7rem; line-height: 0.9; color: var(--color-white); text-transform: uppercase; text-shadow: 6px 6px 0px var(--color-black); transform: skew(-2deg, -2deg); margin-bottom: 20px; }
+        .category-hero p { color: var(--color-white); font-size: 1.4rem; max-width: 750px; margin: 0 auto; line-height: 1.4; font-style: italic; }
+        .catalogue-section { padding: 80px 40px; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 80px 60px; max-width: 1200px; margin: 0 auto; }
+        .card-link { text-decoration: none; color: inherit; display: block; transition: transform 0.2s ease; }
+        .card-link:hover { transform: translateY(-5px); }
+        .product-image-block { width: 100%; aspect-ratio: 1 / 1; background-color: var(--color-black); border: 4px solid var(--color-black); box-shadow: 10px 10px 0px var(--color-black); overflow: hidden; margin-bottom: 30px; }
+        .product-image-block img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .product-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+        .product-title { font-family: var(--font-title); font-size: 3rem; line-height: 1; text-transform: uppercase; letter-spacing: 1px; max-width: 75%; }
+        .price-text { font-family: var(--font-title); font-size: 2.8rem; color: var(--color-red); transform: rotate(4deg); text-shadow: 2px 2px 0px var(--color-black); }
+        .product-desc { font-size: 1.1rem; line-height: 1.4; margin-bottom: 15px; }
+        .product-meta { font-size: 0.95rem; font-style: italic; margin-bottom: 8px; }
+        .product-allergens { font-size: 0.85rem; font-weight: bold; text-transform: uppercase; }
+        footer { background-color: var(--color-black); padding: 40px 50px; display: flex; align-items: center; border-top: 5px solid var(--color-white); }
+        footer img { height: 50px; }
+        @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } .category-hero h1 { font-size: 4.5rem; } header { flex-direction: column; gap: 20px; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="catalogue.html"><img src="assets/ShopSugar.png" alt="Shop Sugar Logo"></a></div>
+        <nav>
+            <ul>
+                <li><a href="chocolates.html">Chocolates</a></li>
+                <li><a href="cookies.html" class="active">Cookies</a></li>
+                <li><a href="peanuts.html">Peanuts</a></li>
+                <li><a href="gummies.html">Gummies</a></li>
+                <li><a href="candy.html">Candy</a></li>
+            </ul>
+        </nav>
+        <div class="cart-icon"><img src="assets/shopping-cart.png" alt="Shopping Cart"></div>
+    </header>
+
+    <main>
+        <section class="category-hero">
+            <h1>Cookies</h1>
+            <p>Golden dough shatters against jagged fragments of dark chocolate. A rugged landscape of heat, crisp crumbs, and hard-edged tension. Brace yourself for the bite that breaks the silence.</p>
+        </section>
+
+        <section class="catalogue-section">
+            <div class="grid">
+                <!-- Chip's Ahoy (Linked to chipsahoy.html) -->
+                <a href="chipsahoy.html" class="card-link">
+                    <div class="product-image-block"><img src="assets/chipsahoyAI.png" alt="Chip's Ahoy"></div>
+                    <div class="product-editorial">
+                        <div class="product-header"><h3 class="product-title">Chip's Ahoy</h3><div class="price-text">$2.99</div></div>
+                        <p class="product-desc">A kinetic scatter of dark matter across a pale, golden disk. Strip away the vibrant blue frame to reveal the anatomy of a crunch, imperfect circles punctuated by sharp, chocolate-chip crags.</p>
+                        <p class="product-meta">The original chocolate chip silhouette. • 8.6 oz Sleeve Box, 140kcal</p>
+                        <p class="product-allergens">Allergens: Wheat, Soy, Milk</p>
+                    </div>
+                </a>
+
+                <!-- Oreo Mini's (Linked to oreominis.html) -->
+                <a href="oreominis.html" class="card-link">
+                    <div class="product-image-block"><img src="assets/oreoAI.png" alt="Oreo Mini's"></div>
+                    <div class="product-editorial">
+                        <div class="product-header"><h3 class="product-title">Oreo Mini's</h3><div class="price-text">$3.99</div></div>
+                        <p class="product-desc">A study in high-contrast monochrome. Strip back the wrapper to reveal dense cocoa disks sandwiching a stark white core, poppable geometry engineered for a revolution in black and white.</p>
+                        <p class="product-meta">Twist. Lick. Dunk. • 8oz Bag, 140kcal</p>
+                        <p class="product-allergens">Allergens: Wheat, Soy</p>
+                    </div>
+                </a>
+
+                <!-- Golden Oreo Mini's -->
+                <div class="card-link">
+                    <div class="product-image-block"><img src="assets/whiteoreoAI.png" alt="Golden Oreo Mini's"></div>
+                    <div class="product-editorial">
+                        <div class="product-header"><h3 class="product-title">Golden Oreo Mini's</h3><div class="price-text">$3.99</div></div>
+                        <p class="product-desc">A study in monochrome warmth. Strip back the bright yellow frame to reveal sun-baked golden wafers enclosing a stark white core, warm geometry engineered for a buttery, poppable crunch.</p>
+                        <p class="product-meta">The golden vanilla silhouette in a bite-sized frame. • 8oz Bag, 140kcal</p>
+                        <p class="product-allergens">Allergens: Wheat, Soy</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer><img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo"></footer>
+</body>
+</html>
