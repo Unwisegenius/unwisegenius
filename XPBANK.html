@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/brain-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/brain-180.png">
+  <meta name="theme-color" content="#4A00FF">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XP Bank — Case Study | Jared Russell // UnwiseGenius</title>
+
+  <!-- Google Fonts: Host Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
+  <style>
+    /* CSS RESET & VARIABLES */
+    :root {
+      --primary-color: #5d33ff;
+      --sputnik-grey: #2e3238; /* Cool, industrial Sputnik Grey */
+      --text-main: #111111;
+      --text-muted: #555555;
+      --bg-color: #ffffff;
+      
+      /* Fonts */
+      --font-heading: 'Stolzl', sans-serif;
+      --font-body: 'Host Grotesk', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-weight: 700;
+      color: var(--text-main);
+      background-color: var(--bg-color);
+      line-height: 1.6;
+      opacity: 1; 
+      transition: opacity 0.25s ease-out;
+      overflow-x: hidden;
+    }
+
+    body.leaving {
+      opacity: 0;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-heading);
+      font-weight: 400;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    /* HEADER */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 5%;
+      background-color: var(--primary-color);
+      color: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo img {
+      width: 40px; 
+      filter: brightness(0) invert(1);
+      transition: opacity 0.2s ease;
+    }
+
+    .logo img:hover {
+      opacity: 0.8;
+    }
+
+    .nav nav {
+      display: flex;
+      gap: 2rem;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .nav nav a {
+      transition: opacity 0.2s ease;
+      opacity: 1;
+    }
+
+    .nav nav a:not(.active):hover {
+      opacity: 0.6;
+    }
+    
+    .nav nav a.active {
+      opacity: 1;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    /* MAIN CONTAINER */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 5%;
+    }
+
+    /* HERO */
+    .cs-hero {
+      text-align: center;
+      margin-top: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .cs-hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-media-wrapper {
+      width: 100%;
+      background-color: var(--primary-color);
+      border-radius: 4px;
+      overflow: hidden;
+      aspect-ratio: 21 / 9; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-media-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* SCROLL ANIMATION CLASSES (Intersection Observer) */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transition: opacity 1s ease-out;
+    }
+
+    .fade-right {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    
+    .fade-left {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .is-visible {
+      opacity: 1 !important;
+      transform: translate(0, 0) !important;
+    }
+
+    .stagger-1 { transition-delay: 0.1s; }
+    .stagger-2 { transition-delay: 0.2s; }
+    .stagger-3 { transition-delay: 0.3s; }
+    .stagger-4 { transition-delay: 0.4s; }
+
+    /* SECTION STYLES */
+    section {
+      margin-bottom: 4rem;
+    }
+
+    section h2 {
+      font-size: 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      font-size: 1rem;
+    }
+
+    .purple-link {
+      color: var(--primary-color);
+      font-size: 1.1rem;
+      text-decoration: underline;
+      display: inline-block;
+      margin-top: 0.5rem;
+    }
+
+    /* CONTENTS LIST WITH MOTION & PURPLE BULLETS */
+    .contents-list {
+      list-style: none;
+      font-size: 1.1rem;
+      padding-left: 1.5rem;
+    }
+
+    .contents-list li {
+      position: relative;
+      margin-bottom: 1.2rem;
+      width: fit-content;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform-origin: left center;
+    }
+
+    .contents-list li::before {
+      content: "•";
+      color: var(--primary-color);
+      position: absolute;
+      left: -1.2rem;
+      top: -0.1rem;
+      font-size: 1.5em;
+      line-height: 1;
+    }
+
+    .contents-list li:hover {
+      transform: scale(2);
+      z-index: 10;
+    }
+    
+    .contents-list a {
+      transition: color 0.2s;
+    }
+
+    .contents-list a:hover {
+      color: var(--primary-color);
+    }
+
+    /* SPECS */
+    .specs-list {
+      list-style: none;
+    }
+
+    .spec-line {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .spec-icon {
+      color: var(--primary-color);
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+    
+    .spec-line p {
+      margin: 0;
+    }
+
+    /* SIDE-BY-SIDE GRIDS */
+    .split-section {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .split-section {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .split-image {
+      width: 100%;
+      border-radius: 8px;
+      object-fit: contain; 
+    }
+
+    /* IDEATION GRID */
+    .cs-grid {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .cs-grid--3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .cs-grid--2 {
+      grid-template-columns: repeat(2, 1fr);
+      margin-bottom: 2rem;
+    }
+
+    .cs-grid figure {
+      margin: 0;
+      max-height: 400px; 
+      display: flex;
+      justify-content: center;
+    }
+
+    .cs-grid img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; 
+      border-radius: 6px;
+    }
+
+    /* DEVELOPMENT IMAGE CYCLER */
+    .image-cycler {
+      position: relative; 
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+      background-color: #f8f8f8;
+    }
+
+    .cycle-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain; 
+      object-position: center; 
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .cycle-img.active {
+      opacity: 1;
+      z-index: 2;
+    }
+
+    /* FIGMA EMBED / LAPTOP */
+    .laptop-mockup {
+      width: 100%;
+      max-width: 900px;
+      margin: 3rem auto;
+      border: 12px solid #333;
+      border-radius: 12px 12px 0 0;
+      background: #000;
+      position: relative;
+      aspect-ratio: 16 / 10;
+    }
+
+    .laptop-mockup::after {
+      content: '';
+      position: absolute;
+      bottom: -24px;
+      left: -5%;
+      width: 110%;
+      height: 24px;
+      background: #e0e0e0;
+      border-radius: 0 0 12px 12px;
+    }
+
+    .laptop-mockup iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #fff;
+    }
+
+    /* FOOTER CTA: RISE UP */
+    .footer-rise {
+      text-align: center;
+      margin: 6rem 0 4rem;
+    }
+
+    .rise-up-btn {
+      display: inline-block;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .rise-up-btn h2 {
+      font-size: clamp(3rem, 6vw, 5rem);
+      margin: 0;
+      text-transform: uppercase;
+      display: inline-block;
+      transition: color 0.3s ease, font-style 0.3s ease, transform 0.3s ease;
+    }
+
+    .rise-up-btn:hover h2 {
+      color: var(--primary-color);
+      font-style: oblique;
+      transform: skewX(-12deg);
+    }
+
+    /* FOOTER */
+    .site-footer {
+      background-color: var(--sputnik-grey); /* Sputnik Grey */
+      color: #ffffff;
+      padding: 3rem 5%;
+      width: 100%;
+    }
+
+    .footer-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-logo img {
+      height: 38px;
+      width: auto;
+      display: block;
+      transition: opacity 0.2s ease;
+    }
+
+    .footer-logo img:hover {
+      opacity: 0.8;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 2rem;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .footer-socials a {
+      transition: opacity 0.2s ease;
+    }
+
+    .footer-socials a:hover {
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .footer-socials {
+        gap: 1.25rem;
+      }
+    }
+
+    /* BULLETS */
+    .cs-bullets {
+      padding-left: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    
+    .cs-bullets li {
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+
+<body id="top">
+  <!-- HEADER -->
+  <header class="nav">
+    <a href="index.html" class="logo">
+      <img src="assets/brain2.png" alt="Brain logo" />
+    </a>
+    <nav>
+      <a href="about.html">About Me</a>
+      <a href="portfolio.html" class="active">Portfolio</a>
+      <a href="contact.html">Get in Touch!</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="cs-hero fade-up observe">
+      <h1>XP Bank</h1>
+      <div class="hero-media-wrapper">
+        <picture>
+          <source srcset="assets/xpbank-still.jpg" media="(prefers-reduced-motion: reduce)">
+          <img src="assets/xpbank.gif" alt="XP Bank motion hero" decoding="async">
+        </picture>
+      </div>
+    </section>
+
+    <!-- SUMMARY -->
+    <section id="summary" class="fade-up observe stagger-1">
+      <h2>Summary Of Project</h2>
+      <p>I wanted to design a bank that felt approachable and supportive for first-time and early-career users who often feel let down by both traditional and modern banks. By looking at Trustpilot reviews of Nationwide and Monzo, I consistently identified the same issues: long waiting times, overcomplicated verification, and a lack of effective support when something went wrong.</p>
+      <a href="https://jaredrussell.notion.site/Bank-Brand-XP-18a9a122e2e0806a8619e67c19ba4506" target="_blank" rel="noopener" class="purple-link">Read this project's notes on Notion</a>
+    </section>
+
+    <!-- CONTENTS -->
+    <section id="contents" class="fade-right observe">
+      <h2>Contents</h2>
+      <ul class="contents-list">
+        <li><a href="#brief">The Brief</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#ideation">Ideation</a></li>
+        <li><a href="#development">Development</a></li>
+        <li><a href="#final-product">Final Product</a></li>
+        <li><a href="#reflection">Reflection</a></li>
+      </ul>
+    </section>
+
+    <!-- SPECS -->
+    <section id="specs" class="fade-up observe">
+      <h2>Project Specifications</h2>
+      <ul class="specs-list" role="list">
+        <li class="spec-line fade-left observe stagger-1">
+          <span class="spec-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12"/><path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2"/><path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4"/></svg>
+          </span>
+          <p>The time it took for this project was <strong>9 – 12 Weeks</strong>.</p>
+        </li>
+        <li class="spec-line fade-left observe stagger-2">
+          <span class="spec-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </span>
+          <p>Software used for this project: <strong>Figma</strong>, <strong>Blender</strong>, and <strong>After Effects</strong>.</p>
+        </li>
+        <li class="spec-line fade-left observe stagger-3">
+          <span class="spec-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 6h11"/><path d="M11.5 12h11"/><path d="M11.5 18h11"/><path d="M4 6l1.5 1.5L8 5"/><path d="M4 12l1.5 1.5L8 11"/><path d="M4 18l1.5 1.5L8 17"/></svg>
+          </span>
+          <p>This was a branding project that created an identity for a <strong>modern bank</strong>.</p>
+        </li>
+        <li class="spec-line fade-left observe stagger-4">
+          <span class="spec-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21a8 8 0 1 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>
+          <p>The target audience was <strong>16–25 year olds</strong>.</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- THE BRIEF -->
+    <section id="brief">
+      <h2 class="fade-up observe">The Brief</h2>
+      <div class="split-section">
+        <img src="assets/brief-money.png" alt="Person holding money" class="split-image fade-right observe" />
+        <div class="text-content fade-left observe">
+          <p>We were tasked with creating a commercial bank brand aimed at 16–25-year-olds. We could either rebrand an existing bank or create a new one.</p>
+          <p>I chose to build a new brand from the ground up so it could be shaped entirely around the needs, behaviours, and expectations of the chosen age group (16-25).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESEARCH -->
+    <section id="research">
+      <h2 class="fade-up observe">Research</h2>
+      <div class="split-section">
+        <img src="assets/research-cards.png" alt="XP Bank Phone and Cards" class="split-image fade-right observe" />
+        <div class="text-content fade-left observe">
+          <p>I began by creating user personas that represented both the younger and older ends of the 16–25 age range, created through my research. These personas helped define XP Bank’s five core values:</p>
+          <ul class="cs-bullets">
+            <li>Human rights: fairness, inclusion, no discrimination</li>
+            <li>Responsible banking: helping users save, invest and grow</li>
+            <li>Round-the-clock support: reliable customer service</li>
+            <li>Strong security: proactive scam prevention</li>
+            <li>Innovation & feedback: the bank evolves through user input</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- IDEATION -->
+    <section id="ideation">
+      <h2 class="fade-up observe">Ideation</h2>
+      <!-- 3 images top row -->
+      <div class="cs-grid cs-grid--3">
+        <figure class="fade-up observe stagger-1"><img src="assets/xp-bank-4.jpg" alt="Website mockups" /></figure>
+        <figure class="fade-up observe stagger-2"><img src="assets/xp-bank-6.jpg" alt="Brand guidelines booklet" /></figure>
+        <figure class="fade-up observe stagger-3"><img src="assets/xp-bank-5.jpg" alt="Components library" /></figure>
+      </div>
+      <!-- 2 images bottom row -->
+      <div class="cs-grid cs-grid--2">
+        <figure class="fade-up observe stagger-1"><img src="assets/xp-bank-1.jpg" alt="App on device" /></figure>
+        <figure class="fade-up observe stagger-2"><img src="assets/xp-bank-3.jpg" alt="Stationery set" /></figure>
+      </div>
+
+      <p class="fade-up observe">Using real user pain points to shape the brand identity, I realised that users struggle most during moments of stress, such as scams, locked accounts, or unexpected issues. In response, I prioritised visible security actions, simplified user flows, and created a dedicated help area to make the experience feel more reassuring and less intimidating.</p>
+      <p class="fade-up observe">Initially, I wanted a cyberpunk-inspired UI influenced by my interest in Cyberpunk 2077 and Blade Runner 2049. However, through critique and reflection, it became clear that this approach was too niche and risked harming accessibility. I refined the visual direction into a more restrained, brutalist style that retained personality while significantly improving clarity and usability.</p>
+    </section>
+
+    <!-- DEVELOPMENT -->
+    <section id="development">
+      <h2 class="fade-up observe">Development</h2>
+      
+      <!-- Fading Image Cycler -->
+      <div class="image-cycler fade-in observe">
+        <img src="assets/debitcards.png" class="cycle-img active" alt="Debit Cards" />
+        <img src="assets/billboards.png" class="cycle-img" alt="Billboards" />
+        <img src="assets/ipadmockup.png" class="cycle-img" alt="iPad Mockup" />
+        <img src="assets/credit copy.gif" class="cycle-img" alt="Credit Copy" />
+        <img src="assets/filebinder.png" class="cycle-img" alt="File Binder" />
+        <img src="assets/laptopxp.png" class="cycle-img" alt="Laptop XP" />
+      </div>
+
+      <p class="fade-up observe">This project ran for approximately 9–12 weeks (February–May 2025) and covered a wide scope, including brand guidelines, mobile app screens, and a marketing landing page. I primarily worked in Figma, with After Effects and Blender used for motion work.</p>
+      <p class="fade-up observe">Wanting to push the project further, I looked at professional examples such as Wise’s design system. This encouraged me to move beyond a static PDF and create a fully interactive design system website, allowing me to demonstrate how the brand, components, and patterns scale consistently across different contexts.</p>
+    </section>
+
+    <!-- FINAL PRODUCT -->
+    <section id="final-product">
+      <h2 class="fade-up observe">Final Product</h2>
+      <p class="fade-up observe stagger-1">The final outcome included a 55-page brand guideline, a structured component library, 11 mobile app screens, a multi-page landing website, and a fully prototyped design system.</p>
+      <p class="fade-up observe stagger-2">Below is the interactive Figma Prototype of all of my deliverables:</p>
+      
+      <!-- CSS-styled laptop mockup holding the iframe -->
+      <div class="laptop-mockup fade-up observe stagger-3">
+        <iframe 
+          src="https://embed.figma.com/design/XYmJCC8mQ6QbNA2ymcIGWA/XP-Bank?node-id=0-1&embed-host=share" 
+          allowfullscreen 
+          loading="lazy" 
+          title="XP Bank Interactive Prototype">
+        </iframe>
+      </div>
+    </section>
+
+    <!-- REFLECTION -->
+    <section id="reflection">
+      <h2 class="fade-up observe">Reflection</h2>
+      <p class="fade-up observe">This project significantly changed how I approach design. If I were to develop it further, I would conduct structured usability testing and a full UX audit to refine accessibility, interaction accuracy, and edge cases. While feedback initially challenged my design direction, it ultimately helped me grow and respond more confidently to critique. Most importantly, I learnt how to embed values into design decisions, prioritise real user problems over purely visual ideas, and adapt my work when feedback leads to a better outcome.</p>
+    </section>
+
+    <!-- FOOTER CTA (SCROLL TO TOP) -->
+    <div class="footer-rise fade-in observe">
+      <a href="#top" class="rise-up-btn" aria-label="Scroll to top of page">
+        <h2>Rise Up!</h2>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- FOOTER (SPUTNIK GREY) -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <a href="index.html" class="footer-logo">
+        <img src="assets/unwisegeniuslogowhite.png" alt="UnwiseGenius Logo" />
+      </a>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener">YouTube</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* Page reveal on load */
+    document.documentElement.classList.add('body-ready');
+
+    /* Intercept internal links for a graceful exit, ignoring hash anchors */
+    (function () {
+      const isInternal = (a) => (
+        a &&
+        a.origin === window.location.origin &&
+        !a.hasAttribute('download') &&
+        a.getAttribute('target') !== '_blank' &&
+        !a.getAttribute('href')?.startsWith('#')
+      );
+
+      addEventListener('click', (e) => {
+        const a = e.target.closest('a');
+        if (!isInternal(a)) return;
+
+        e.preventDefault();
+        const go = () => location.href = a.href;
+
+        if (document.startViewTransition) {
+          document.startViewTransition(() => {
+            document.body.classList.add('leaving');
+          }).finished.then(go);
+        } else {
+          document.body.classList.add('leaving');
+          setTimeout(go, 250);
+        }
+      }, { capture: true });
+    })();
+
+    /* Rise Up Scroll to Top Smooth Interaction */
+    document.querySelector('.rise-up-btn')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    /* Scroll Animation Observer */
+    document.addEventListener('DOMContentLoaded', () => {
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      const elementsToAnimate = document.querySelectorAll('.observe');
+      elementsToAnimate.forEach(el => {
+        observer.observe(el);
+      });
+    });
+
+    /* Image Cycler for Development Section */
+    document.addEventListener('DOMContentLoaded', () => {
+      const cycleImages = document.querySelectorAll('.cycle-img');
+      if (cycleImages.length > 1) {
+        let currentIndex = 0;
+        setInterval(() => {
+          cycleImages[currentIndex].classList.remove('active');
+          currentIndex = (currentIndex + 1) % cycleImages.length;
+          cycleImages[currentIndex].classList.add('active');
+        }, 3000);
+      }
+    });
+  </script>
+</body>
+</html>
