@@ -1,143 +1,692 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/brain-16.png">
-  <!-- iOS home screen (optional but nice) -->
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/brain-180.png">
-  <!-- Theme color for mobile UI (optional) -->
-  <meta name="theme-color" content="#4A00FF">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get in Touch | Jared Russell // UnwiseGenius</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/brain-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/brain-180.png">
+    <meta name="theme-color" content="#4D04FF">
 
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Get in Touch — Jared Russell // UnwiseGenius</title>
+    <!-- Google Fonts: Rajdhani & Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- Link to global CSS -->
+    <link rel="stylesheet" href="style.css">
 
-  <!-- IMPORTANT: The ?v=1 forces the browser to load the NEW CSS, bypassing the cache -->
-  <link rel="stylesheet" href="style.css?v=1" />
+    <!-- Import Three.js dependencies for 3D Brain -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+
+    <!-- Contact Page Specific Styling -->
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+
+        /* --- NAVIGATION (Solid Purple Bar) --- */
+        .contact-header {
+            position: relative;
+            background-color: #4D04FF;
+            padding: 24px 6vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .contact-header .top-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-header .brain-icon {
+            width: 38px;
+            height: auto;
+            display: block;
+        }
+
+        .contact-header .top-right {
+            display: flex;
+            gap: clamp(18px, 2.8vw, 38px);
+            margin-top: 0;
+        }
+
+        /* --- SECTION 1: HERO / LET'S TALK --- */
+        #contact-hero {
+            background-color: #4D04FF;
+            color: #ffffff;
+            padding: 60px 8vw 100px 8vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-copy {
+            max-width: 55%;
+            z-index: 2;
+        }
+
+        .hero-copy h1 {
+            font-size: clamp(3.2rem, 5.5vw, 5.5rem);
+            letter-spacing: -2px;
+            margin-bottom: 28px;
+            line-height: 1.05;
+        }
+
+        .hero-copy p {
+            font-size: clamp(1.15rem, 1.4vw, 1.45rem);
+            line-height: 1.55;
+            margin-bottom: 24px;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .hero-copy .callout {
+            font-weight: 700;
+            font-size: clamp(1.25rem, 1.6vw, 1.65rem);
+            margin-top: 10px;
+            color: #ffffff;
+        }
+
+        .hero-visual {
+            max-width: 45%;
+            width: 100%;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        #brain-canvas-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: default;
+        }
+
+        /* --- SECTION 2: FORM / GET IN TOUCH --- */
+        #contact-form-section {
+            background-color: #F8F8FA;
+            padding: 100px 8vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #contact-form-section h2 {
+            font-size: clamp(2.8rem, 4.5vw, 4.5rem);
+            letter-spacing: -1.5px;
+            color: #111111;
+            margin-bottom: 55px;
+            text-align: center;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 820px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #111111;
+            margin-bottom: 12px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            background-color: #783CFF;
+            color: #ffffff;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            padding: 18px 22px;
+            font-family: 'Stozl', 'Stolzl', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.25s ease;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 0.95rem;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #CFFF04;
+            box-shadow: 0 0 16px rgba(120, 60, 255, 0.4);
+        }
+
+        .form-group textarea {
+            min-height: 180px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .btn-cancel {
+            background-color: #1A1A1E;
+            color: #ffffff;
+            border: none;
+            padding: 16px 45px;
+            border-radius: 6px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-cancel:hover {
+            background-color: #333333;
+            transform: translateY(-2px);
+        }
+
+        .btn-submit {
+            background-color: #5E23FF;
+            color: #ffffff;
+            border: none;
+            padding: 16px 50px;
+            border-radius: 6px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #4D04FF;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(77, 4, 255, 0.35);
+        }
+
+        /* --- SECTION 3: SOCIALS --- */
+        #socials-section {
+            background-color: #CFFF04;
+            padding: 90px 8vw 120px 8vw;
+        }
+
+        #socials-section h2 {
+            font-size: clamp(3.2rem, 5vw, 5.2rem);
+            color: #000000;
+            letter-spacing: -2px;
+            margin-bottom: 30px;
+        }
+
+        .social-list {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            border-top: 2.5px solid #000000;
+        }
+
+        .social-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 10px;
+            border-bottom: 2.5px solid #000000;
+            color: #000000;
+            text-decoration: none;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.8rem, 3.2vw, 3.4rem);
+            letter-spacing: -1px;
+            transition: transform 0.2s ease, padding 0.2s ease;
+        }
+
+        .social-row .row-text {
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+        }
+
+        .social-row .sub-email {
+            font-family: 'Stozl', 'Stolzl', sans-serif;
+            font-size: clamp(1.1rem, 1.8vw, 2rem);
+            font-weight: 500;
+            letter-spacing: -0.5px;
+        }
+
+        .social-row .arrow-icon {
+            font-size: clamp(2rem, 3.5vw, 3.6rem);
+            transition: transform 0.25s ease;
+        }
+
+        .social-row .cv-icon {
+            width: clamp(40px, 4vw, 54px);
+            height: clamp(40px, 4vw, 54px);
+            border: 3px solid #000000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.25s ease;
+        }
+
+        .social-row .cv-icon svg {
+            width: 65%;
+            height: 65%;
+            fill: #000000;
+        }
+
+        .social-row:hover {
+            padding-left: 20px;
+        }
+
+        .social-row:hover .arrow-icon {
+            transform: translate(6px, -6px);
+        }
+
+        .social-row:hover .cv-icon {
+            transform: translateY(6px);
+        }
+
+        /* --- RESPONSIVENESS --- */
+        @media (max-width: 900px) {
+            #contact-hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 60px 6vw 70px 6vw;
+            }
+
+            .hero-copy {
+                max-width: 100%;
+            }
+
+            .hero-visual {
+                max-width: 100%;
+                height: 350px;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            #contact-form-section {
+                padding: 70px 6vw;
+            }
+
+            #socials-section {
+                padding: 70px 6vw 90px 6vw;
+            }
+
+            .social-row .row-text {
+                flex-direction: column;
+                gap: 4px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contact-header {
+                padding: 16px 5vw;
+            }
+
+            .contact-header .top-right {
+                gap: 12px;
+            }
+
+            .btn-cancel, .btn-submit {
+                padding: 12px 30px;
+                font-size: 0.9rem;
+            }
+            
+            .hero-visual {
+                height: 250px;
+            }
+        }
+    </style>
 </head>
-<body class="page-contact">
+<body>
 
-  <!-- Header -->
-  <header class="nav">
-    <a href="index.html" class="logo">
-      <img src="assets/brain2.png" alt="Brain logo" />
-      <span>Jared<br/>Russell</span>
-    </a>
-    <nav>
-      <a href="about.html">ABOUT ME</a>
-      <a href="portfolio.html">PORTFOLIO</a>
-      <a href="contact.html" class="active">GET IN TOUCH!</a>
-    </nav>
-  </header>
-
-  <main class="contact-stack" aria-label="Contact sections">
-    <!-- Card 1: LET’S / GET IN TOUCH -->
-    <section class="contact-card card-touch">
-      <div class="touch-copy">
-        <div class="touch-block lets">LET’S.</div>
-        <div class="divider" aria-hidden="true"></div>
-        <div class="touch-block get-in-touch">GET IN TOUCH</div>
-        <p class="touch-small">
-          Whether you’re a big company looking for a potential employee or a client who wants a total brand
-          revamp, I’d love to get in touch and hear you out. I specialise in delivering innovative and
-          creative work accustomed to your needs! I’m eager to bring a unique and immediate idea to your
-          project/team. Let’s create something great!
-        </p>
-      </div>
-      <div class="brain-wrap" aria-hidden="true">
-        <img class="brain" src="assets/brain.png" alt="" />
-      </div>
-    </section>
-
-    <!-- Card 1.5: CONTACT FORM -->
-    <section class="contact-card card-form">
-      <form class="contact-form" action="https://formspree.io/f/xyegvkjo" method="POST">
-        <!-- Anti-spam honeypot -->
-        <input type="text" name="_gotcha" style="display:none" />
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" placeholder="Your name" required>
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Your email" required>
-          </div>
+    <!-- === HEADER / NAVIGATION === -->
+    <header class="contact-header">
+        <div class="top-left cyber-hud">
+            <a href="index.html">
+                <img src="assets/brain-180.png" alt="Brain Logo" class="brain-icon">
+            </a>
         </div>
+        <nav class="top-right">
+            <a href="about.html" class="cyber-nav-link" data-text="About Me">About Me</a>
+            <a href="index.html#portfolio" class="cyber-nav-link" data-text="Portfolio">Portfolio</a>
+            <a href="contact.html" class="cyber-nav-link" data-text="Get in Touch!">Get in Touch!</a>
+        </nav>
+    </header>
 
-        <div class="form-group">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" rows="6" placeholder="Let's connect!" required></textarea>
+    <!-- === HERO / LET'S TALK === -->
+    <section id="contact-hero" class="reveal-section visible">
+        <div class="hero-copy">
+            <h1 class="scramble-heading">Let's Talk!</h1>
+            <p>Whether you're hiring or have a commission, I'd love to connect. I aim to deliver creative, tailored work and bring fresh ideas to your team.</p>
+            <p class="callout">Let's create something great!</p>
         </div>
-
-        <button type="submit" class="form-submit">SEND</button>
-      </form>
+        
+        <div class="hero-visual">
+            <div id="brain-canvas-container"></div>
+        </div>
     </section>
 
-    <!-- Card 2: SOCIAL. -->
-    <section class="contact-card card-social">
-      <h1 class="social-title">SOCIAL</h1>
+    <!-- === FORM / GET IN TOUCH === -->
+    <section id="contact-form-section" class="reveal-section">
+        <h2 class="scramble-heading">Get in Touch!</h2>
+        
+        <div class="form-container">
+            <form action="https://formspree.io/f/xyegvkjo" method="POST">
+                <input type="text" name="_gotcha" style="display:none">
 
-      <a class="social-link" data-external href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener">
-        INSTAGRAM
-      </a>
-      <a class="social-link" data-external href="https://www.linkedin.com/in/jared-russell-09bb63334/" target="_blank" rel="noopener">
-        LINKEDIN
-      </a>
-      <a class="social-link" data-external href="mailto:hello@unwisegenius.com">
-        EMAIL — hello@unwisegenius.com
-      </a>
-      <a class="social-link" data-external href="https://jaredrussell.notion.site/Digital-Design-Jared-Russell-13e9a122e2e0803493aaf32231b9fd4c" target="_blank" rel="noopener">
-        NOTION
-      </a>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" placeholder="Hi! Nice to meet ya! What's Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" name="email" placeholder="Well, I need a way to contact you!" required>
+                    </div>
+                </div>
 
-      <p class="social-note">Please feel free to follow me on my social media!</p>
+                <div class="form-group">
+                    <label for="message">Your Message</label>
+                    <textarea id="message" name="message" placeholder="What would you like to work together on!" required></textarea>
+                </div>
 
-      <a class="cv-link"
-       data-download
-       href="assets/Jared Russell CV 2026.pdf"
-       download
-       rel="noopener"
-       aria-label="Download Jared Russell's CV (PDF)">
-      Why don't you check out my CV?
-      </a>
+                <div class="form-actions">
+                    <button type="reset" class="btn-cancel">CANCEL</button>
+                    <button type="submit" class="btn-submit">SUBMIT</button>
+                </div>
+            </form>
+        </div>
     </section>
-  </main>
 
-<script>
-  /* Page reveal on load (CSS uses html.body-ready to avoid flash) */
-  document.documentElement.classList.add('body-ready');
-  
-  /* Intercept internal links for a graceful exit, then navigate.
-     Uses View Transitions API when available; falls back to CSS fade. */
-  (function () {
-    const isInternal = (a) => (
-      a &&
-      a.origin === window.location.origin &&
-      !a.hasAttribute('download') &&
-      a.getAttribute('target') !== '_blank' &&
-      !a.getAttribute('href')?.startsWith('#')
-    );
-  
-    addEventListener('click', (e) => {
-      const a = e.target.closest('a');
-      if (!isInternal(a)) return;
-  
-      e.preventDefault();
-      const go = () => location.href = a.href;
-  
-      if (document.startViewTransition) {
-        document.startViewTransition(() => {
-          document.body.classList.add('leaving');
-        }).finished.then(go);
-      } else {
-        document.body.classList.add('leaving');
-        setTimeout(go, 250);
-      }
-    }, { capture: true });
-  })();
-</script>
+    <!-- === SOCIALS SECTION === -->
+    <section id="socials-section" class="reveal-section">
+        <h2 class="scramble-heading">Socials</h2>
+
+        <div class="social-list">
+            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="social-row">
+                <span>Instagram</span>
+                <span class="arrow-icon">&#x2197;</span>
+            </a>
+
+            <a href="https://www.linkedin.com/in/jared-russell-09bb63334/" target="_blank" rel="noopener" class="social-row">
+                <span>Linkedin</span>
+                <span class="arrow-icon">&#x2197;</span>
+            </a>
+
+            <a href="mailto:hello@unwisegenius.com" class="social-row">
+                <div class="row-text">
+                    <span>Email</span>
+                    <span class="sub-email">hello@unwisegenius.com</span>
+                </div>
+                <span class="arrow-icon">&#x2197;</span>
+            </a>
+
+            <a href="https://jaredrussell.notion.site/Digital-Design-Jared-Russell-13e9a122e2e0803493aaf32231b9fd4c" target="_blank" rel="noopener" class="social-row">
+                <span>Notion</span>
+                <span class="arrow-icon">&#x2197;</span>
+            </a>
+
+            <a href="assets/Jared Russell CV 2026.pdf" download="Jared Russell CV 2026.pdf" class="social-row">
+                <span>Check out my CV!</span>
+                <div class="cv-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 3v13m0 0l-5-5m5 5l5-5M4 19h16" stroke="#000000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- === FOOTER === -->
+    <footer id="contact">
+        <div class="footer-left">
+            <a href="index.html" class="footer-logo-link">
+                <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo" class="footer-logo">
+            </a>
+        </div>
+        <div class="footer-right">
+            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram</a>
+            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
+            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">Youtube</a>
+        </div>
+    </footer>
+
+    <!-- === THREE.JS 3D BRAIN (PS1 LOW-POLY) & CYBERPUNK SCRIPT === -->
+    <script>
+        /* ==================================================================
+           1. THREE.JS 3D BRAIN (Low-Poly PS1 Style + Detail-Preserving Lighting)
+           ================================================================== */
+        const container = document.getElementById('brain-canvas-container');
+        
+        let width = container.clientWidth;
+        let height = container.clientHeight;
+        
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+        camera.position.set(0, 0, 5.5);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        container.appendChild(renderer.domElement);
+
+        // Calibrated lighting: softer ambient so dark folds aren't washed out
+        const ambientLight = new THREE.AmbientLight(0x2a1a50, 1.1);
+        scene.add(ambientLight);
+
+        // Key light to highlight top-facing polygon facets
+        const dirLight1 = new THREE.DirectionalLight(0xffffff, 1.4);
+        dirLight1.position.set(5, 6, 4);
+        scene.add(dirLight1);
+
+        // Purple fill/rim light for deep shadow definition
+        const dirLight2 = new THREE.DirectionalLight(0x8a4fff, 1.5);
+        dirLight2.position.set(-5, -4, -2);
+        scene.add(dirLight2);
+
+        // Soft back-top kicker for edge separation
+        const dirLight3 = new THREE.DirectionalLight(0xffffff, 0.6);
+        dirLight3.position.set(0, 4, -5);
+        scene.add(dirLight3);
+
+        const pivotGroup = new THREE.Group();
+        scene.add(pivotGroup);
+
+        let targetObject = null;
+        let modelWidth = 1;
+
+        // Low-Poly PS1 Chalk Material: flatShading + high roughness prevents blinding specular wash
+        const ps1BrainMaterial = new THREE.MeshStandardMaterial({
+            color: 0xdddddf,      // Off-white / light chalk
+            roughness: 0.85,     // Matte finish prevents blinding glare
+            metalness: 0.05,
+            flatShading: true     // Renders individual low-poly facets
+        });
+
+        function updateResponsiveScale() {
+            if (!targetObject || !modelWidth) return;
+            const aspect = width / height;
+            const fillPercentage = aspect < 1.0 ? 0.9 : 0.85; 
+            
+            const vFovRad = (camera.fov * Math.PI) / 180;
+            const visibleHeight = 2 * Math.tan(vFovRad / 2) * camera.position.z;
+            const visibleWidth = visibleHeight * camera.aspect;
+
+            const targetWidth = Math.min(visibleWidth * fillPercentage, 4.0);
+            const finalScale = targetWidth / modelWidth;
+            
+            targetObject.scale.set(finalScale, finalScale, finalScale);
+        }
+
+        const loader = new THREE.GLTFLoader();
+        loader.load(
+          'assets/3dbrainlogo.glb', 
+          (gltf) => {
+            const model = gltf.scene;
+            
+            model.traverse((child) => {
+                if (child.isMesh) {
+                    // Convert indexed geometry to non-indexed so each triangle has unique flat normals
+                    if (child.geometry.index) {
+                        child.geometry = child.geometry.toNonIndexed();
+                    }
+                    child.geometry.computeVertexNormals();
+                    child.material = ps1BrainMaterial;
+                }
+            });
+
+            const box = new THREE.Box3().setFromObject(model);
+            const center = box.getCenter(new THREE.Vector3());
+            const size = box.getSize(new THREE.Vector3());
+
+            model.position.x -= center.x;
+            model.position.y -= center.y;
+            model.position.z -= center.z;
+
+            modelWidth = size.x;
+            
+            // Subtle forward tilt for optimal viewing angle
+            pivotGroup.rotation.x = 0.22;
+
+            pivotGroup.add(model);
+            targetObject = pivotGroup;
+
+            updateResponsiveScale();
+          },
+          undefined,
+          (error) => {
+            console.warn('3D Brain GLB not found. Generating low-poly fallback.', error);
+            const fallbackGeo = new THREE.IcosahedronGeometry(1.2, 1);
+            const model = new THREE.Mesh(fallbackGeo, ps1BrainMaterial);
+            
+            modelWidth = 2.4;
+            pivotGroup.rotation.x = 0.22;
+            pivotGroup.add(model);
+            targetObject = pivotGroup;
+            updateResponsiveScale();
+          }
+        );
+
+        window.addEventListener('resize', () => {
+            width = container.clientWidth;
+            height = container.clientHeight;
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+            updateResponsiveScale();
+        });
+
+        // Continuous 360-degree rotation + zero-G floating animation
+        const clock = new THREE.Clock();
+        function animate() {
+            requestAnimationFrame(animate);
+
+            if (targetObject) {
+                const delta = clock.getDelta();
+                const elapsedTime = clock.getElapsedTime();
+                
+                // Continuous 360 rotation
+                targetObject.rotation.y += delta * 0.75;
+
+                // Subtle zero-G vertical levitation
+                targetObject.position.y = Math.sin(elapsedTime * 1.8) * 0.12;
+            }
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        /* ==================================================================
+           2. UI EFFECTS: TEXT DECRYPTOR & SCROLL REVEALS
+           ================================================================== */
+        const GLYPHS = "!/<>[]-_=+*^?#_0101";
+
+        function scrambleElement(element) {
+          const originalText = element.getAttribute("data-original") || element.innerText;
+          element.setAttribute("data-original", originalText);
+          let iteration = 0;
+          
+          clearInterval(element._scrambleInterval);
+          element._scrambleInterval = setInterval(() => {
+            element.innerText = originalText
+              .split("")
+              .map((letter, index) => {
+                if (index < iteration) {
+                  return originalText[index];
+                }
+                if (letter === " ") return " ";
+                return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+              })
+              .join("");
+
+            if (iteration >= originalText.length) {
+              clearInterval(element._scrambleInterval);
+            }
+            iteration += 1 / 2;
+          }, 25);
+        }
+
+        document.querySelectorAll(".scramble-heading").forEach(h => {
+          h.addEventListener("mouseenter", () => scrambleElement(h));
+        });
+
+        setTimeout(() => {
+            document.querySelectorAll(".scramble-heading").forEach(h => {
+                const rect = h.getBoundingClientRect();
+                if(rect.top < window.innerHeight && rect.bottom >= 0) {
+                    scrambleElement(h);
+                }
+            });
+        }, 400);
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              const headings = entry.target.querySelectorAll(".scramble-heading");
+              headings.forEach(h => scrambleElement(h));
+            }
+          });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll(".reveal-section:not(.visible)").forEach(sec => observer.observe(sec));
+    </script>
 </body>
 </html>

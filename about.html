@@ -1,109 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Favicon -->
-<link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/brain-16.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jared Russell | About Me</title>
+    
+    <!-- Google Fonts: Rajdhani (Bold) for Nav/Footer & Space Grotesk (Bold) for Headings -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- About Page Specific Navigation Overrides -->
+    <style>
+        body {
+            background-color: #ffffff;
+        }
 
-<!-- iOS home screen (optional but nice) -->
-<link rel="apple-touch-icon" sizes="180x180" href="assets/brain-180.png">
+        /* Solid Purple Navigation Bar matching Figma design */
+        .about-header {
+            position: relative;
+            background-color: #4D04FF;
+            padding: 24px 5vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
 
-<!-- Theme color for mobile UI (optional) -->
-<meta name="theme-color" content="#4A00FF">
+        .about-header .top-left {
+            flex-direction: row;
+            align-items: center;
+            gap: 0;
+        }
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About — Jared Russell // UnwiseGenius</title>
-  <link rel="stylesheet" href="style.css" />
+        .about-header .brain-icon {
+            width: 38px;
+            height: auto;
+            display: block;
+        }
+
+        .about-header .top-right {
+            margin-top: 0;
+        }
+
+        /* Adjust top padding on content section to account for static purple nav */
+        #about-top {
+            padding-top: 80px;
+        }
+
+        @media (max-width: 768px) {
+            .about-header {
+                padding: 18px 5vw;
+            }
+            #about-top {
+                padding-top: 50px;
+            }
+        }
+    </style>
 </head>
+<body>
 
-<body class="page-about">
-  <!-- Header (matches Portfolio header style) -->
-  <header class="nav">
-    <a href="index.html" class="logo">
-      <img src="assets/brain2.png" alt="Brain logo" />
-      <span>Jared<br />Russell</span>
-    </a>
+    <!-- === HEADER / NAVIGATION === -->
+    <header class="about-header">
+        <div class="top-left cyber-hud">
+            <a href="index.html">
+                <img src="assets/brain-180.png" alt="Brain Logo" class="brain-icon">
+            </a>
+        </div>
+        <nav class="top-right">
+            <a href="about.html" class="cyber-nav-link" data-text="About Me">About Me</a>
+            <a href="index.html#portfolio" class="cyber-nav-link" data-text="Portfolio">Portfolio</a>
+            <a href="contact.html" class="cyber-nav-link" data-text="Get in Touch!">Get in Touch!</a>
+        </nav>
+    </header>
 
-    <nav>
-      <a href="about.html" class="active">ABOUT ME</a>
-      <a href="portfolio.html">PORTFOLIO</a>
-      <a href="contact.html">GET IN TOUCH!</a>
-    </nav>
-  </header>
+    <!-- === ABOUT TOP SECTION (White Background) === -->
+    <section id="about-top" class="reveal-section visible">
+        <div class="about-top-content">
+            <h1 class="scramble-heading text-purple">More about Me!</h1>
+            
+            <p> My name is Jared Russell, A UX design student passionate about user interaction and branding. I'm seeking a role in design that prioritises creativity and innovation.</p>
+            
+            <p>Apart from designing, I love researching design trends, exploring digital spaces, and enjoying a good cup of coffee.</p>
 
-  <!-- About Section -->
-  <main class="about">
-    <div class="about-grid">
-      <!-- Left column: photo -->
-      <figure class="about-photo">
-        <img src="assets/jared-portrait.jpg" alt="Portrait of Jared Russell" />
-      </figure>
+            <div class="location-block">
+                <h2 class="scramble-heading text-purple">Location</h2>
+                <p>Based in Belfast, Open to Anywhere!</p>
+            </div>
+        </div>
+        
+        <div class="about-top-image">
+            <div class="portrait-wrapper tilt-card">
+                <img src="assets/jared-portrait.jpg" alt="Jared Russell Portrait" onerror="this.src='https://via.placeholder.com/500x600?text=Jared+Portrait'">
+                <div class="scanline-sweep"></div>
+            </div>
+        </div>
+    </section>
 
-      <!-- Middle column: about text -->
-      <section class="about-main">
-        <h2 class="about-title">ABOUT</h2>
-        <p class="about-copy">
-          I’m an ambitious UX design student currently seeking a role in a design team who has a passion for user
-          interaction and branding. My goals are to innovate with my work and be a part of an organisation that
-          prioritises creativity and innovation. I also want to gain experience for the future. Apart from designing,
-          I love to research current design trends and spend a lot of my time in digital spaces. As well as having a
-          good cup of coffee.
-        </p>
-      </section>
+    <!-- === DESIGN PHILOSOPHY SECTION (Pink Background) === -->
+    <section id="philosophy" class="reveal-section">
+        <div class="philosophy-content">
+            <h2 class="scramble-heading">Design Philosophy</h2>
+            
+            <p>I'm still learning and growing both as a designer and a person so my design philosophy will only grow for design and it's many practices.</p>
+            
+            <p>As of right now, I believe that Design should be accessible to everyone, Everything designed by me will be pushed always, asking questions on how to improve this? Or what did I learn?</p>
+            
+            <p>I believe every project specifically in UI/UX design should be backed by research always, and constant feedback and ideation should be racing throughout a project.</p>
+            
+            <p>I also enjoy working with others, as that is what pushes a designer to do their best and keep the work accountable and high quality.</p>
+        </div>
+        
+        <div class="philosophy-image">
+            <div class="avatar-holo-wrapper">
+                <img src="assets/John Mouse Avatar.png" alt="Pixel Cursor Avatar" class="floating-avatar">
+            </div>
+        </div>
+    </section>
 
-      <!-- Right column: mini info sections -->
-      <aside class="about-side">
-        <section class="mini">
-          <h3 class="mini-title">Location</h3>
-          <p>Based in Belfast, Open to Anywhere!</p>
-        </section>
+    <!-- === FOOTER === -->
+    <footer id="contact">
+        <div class="footer-left">
+            <a href="index.html" class="footer-logo-link">
+                <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo" class="footer-logo">
+            </a>
+        </div>
+        <div class="footer-right">
+            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram</a>
+            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
+            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">Youtube</a>
+        </div>
+    </footer>
 
-        <section class="mini">
-          <h3 class="mini-title">Design Philosophy</h3>
-          <p>
-            I want to push my designs to the best version they can be—and to learn something new from each project
-            I work on.
-          </p>
-        </section>
-      </aside>
-    </div>
-  </main>
+    <!-- === CYBERPUNK SCRIPT === -->
+    <script>
+        // 1. Terminal Text Decryption / Hacker Scramble
+        const GLYPHS = "!/<>[]-_=+*^?#_0101";
+
+        function scrambleElement(element) {
+          const originalText = element.getAttribute("data-original") || element.innerText;
+          element.setAttribute("data-original", originalText);
+          let iteration = 0;
+          
+          clearInterval(element._scrambleInterval);
+          element._scrambleInterval = setInterval(() => {
+            element.innerText = originalText
+              .split("")
+              .map((letter, index) => {
+                if (index < iteration) {
+                  return originalText[index];
+                }
+                if (letter === " ") return " ";
+                return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+              })
+              .join("");
+
+            if (iteration >= originalText.length) {
+              clearInterval(element._scrambleInterval);
+            }
+            iteration += 1 / 2;
+          }, 25);
+        }
+
+        document.querySelectorAll(".scramble-heading").forEach(h => {
+          h.addEventListener("mouseenter", () => scrambleElement(h));
+        });
+
+        // Trigger scramble on initial load for visible elements
+        setTimeout(() => {
+            document.querySelectorAll(".scramble-heading").forEach(h => {
+                const rect = h.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom >= 0) {
+                    scrambleElement(h);
+                }
+            });
+        }, 500);
+
+        // 2. Intersection Observer for Scroll Reveals
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              const headings = entry.target.querySelectorAll(".scramble-heading");
+              headings.forEach(h => scrambleElement(h));
+            }
+          });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll(".reveal-section:not(.visible)").forEach(sec => observer.observe(sec));
+
+        // 3. Smooth 3D Card Tilt Interaction
+        const cards = document.querySelectorAll('.tilt-card');
+        
+        cards.forEach(card => {
+          let bounds;
+
+          function rotateToMouse(e) {
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+            const leftX = mouseX - bounds.x;
+            const topY = mouseY - bounds.y;
+            const center = {
+              x: leftX - bounds.width / 2,
+              y: topY - bounds.height / 2
+            };
+
+            card.style.transform = `
+              perspective(1000px)
+              scale3d(1.02, 1.02, 1.02)
+              rotateX(${-center.y / 25}deg)
+              rotateY(${center.x / 25}deg)
+            `;
+          }
+
+          card.addEventListener('mouseenter', () => {
+            bounds = card.getBoundingClientRect();
+            document.addEventListener('mousemove', rotateToMouse);
+          });
+
+          card.addEventListener('mouseleave', () => {
+            document.removeEventListener('mousemove', rotateToMouse);
+            card.style.transform = 'perspective(1000px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg)';
+          });
+        });
+    </script>
 </body>
-<script>
-  /* Page reveal on load (CSS uses html.body-ready to avoid flash) */
-  document.documentElement.classList.add('body-ready');
-  
-  /* Intercept internal links for a graceful exit, then navigate.
-     Uses View Transitions API when available; falls back to CSS fade. */
-  (function () {
-    const isInternal = (a) => (
-      a &&
-      a.origin === window.location.origin &&
-      !a.hasAttribute('download') &&
-      a.getAttribute('target') !== '_blank' &&
-      !a.getAttribute('href')?.startsWith('#')
-    );
-  
-    addEventListener('click', (e) => {
-      const a = e.target.closest('a');
-      if (!isInternal(a)) return;
-  
-      e.preventDefault();
-      const go = () => location.href = a.href;
-  
-      if (document.startViewTransition) {
-        // Native View Transition (Chrome/Edge/Arc)
-        document.startViewTransition(() => {
-          document.body.classList.add('leaving');
-        }).finished.then(go);
-      } else {
-        // CSS fallback
-        document.body.classList.add('leaving');
-        setTimeout(go, 250);
-      }
-    }, { capture: true });
-  })();
-  </script>
-  
 </html>

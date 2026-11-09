@@ -1,255 +1,481 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="brain.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/brain-16.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jared Russell | Digital Design Portfolio</title>
+    
+    <!-- Google Fonts: Rajdhani (Bold) for Nav/Footer & Space Grotesk (Bold) for Headings -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="style.css">
 
-  <!-- iOS home screen (optional but nice) -->
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/brain-180.png">
-
-  <!-- Theme color for mobile UI (optional) -->
-  <meta name="theme-color" content="#4A00FF">
-  <meta name="google-site-verification" content="ogG_2G7T-1_QTnPc-vXKbMPfTuhWfrlWR_HyaRiJLZQ" />
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UnwiseGenius — Jared Russell</title>
-  <meta name="description"
-    content="I'm Jared Russell or UnwiseGenius, a digital/graphic designer exploring branding, interaction, and storytelling. Check out my portfolio and get in touch!">
-  <link rel="stylesheet" href="style.css" />
-  <script type="module" src="https://unpkg.com/@google/model-viewer@3.4.0/dist/model-viewer.min.js"></script>
-
-  <style>
-    /* --- HOME PAGE LOCAL TWEAKS ONLY --- */
-    body {
-      background: #4A00FF;
-      color: #fff;
-      font-family: 'HelveticaNeue', Helvetica, Arial, sans-serif;
-      margin: 0;
-      overflow-x: hidden;
-    }
-
-    /* header matches global proportions */
-    header.nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: clamp(1rem, 4vw, 2rem) clamp(1.5rem, 5vw, 3rem);
-    }
-
-    /* clickable logo */
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-family: 'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
-      font-size: clamp(0.9rem, 2vw, 1rem);
-      text-transform: uppercase;
-      color: var(--white);
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .logo img {
-      width: clamp(30px, 4vw, 40px);
-      height: auto;
-    }
-
-    .logo:hover {
-      opacity: 0.8;
-      transition: opacity 0.2s ease;
-    }
-
-    nav {
-      display: flex;
-      gap: clamp(1rem, 3vw, 2rem);
-    }
-
-    nav a {
-      font-family: 'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
-      font-size: clamp(0.8rem, 1.8vw, 0.95rem);
-      color: #fff;
-      text-decoration: none;
-      transition: opacity 0.2s ease;
-    }
-
-    nav a:hover {
-      opacity: 0.7;
-    }
-
-    /* --- HERO --- */
-    .hero {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 clamp(1rem, 5vw, 3rem);
-      min-height: 80vh;
-    }
-
-    .hero-content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: clamp(2rem, 6vw, 5rem);
-      max-width: 1200px;
-      width: 100%;
-    }
-
-    /* text sizing matches other pages’ visual scale */
-    .text h1 {
-      font-family: 'HelveticaNeue', Helvetica, Arial, sans-serif;
-      font-size: clamp(2rem, 5vw, 4.5rem);
-      line-height: 1.05;
-      font-weight: 400;
-      text-align: left;
-    }
-
-    .hello {
-      font-family: 'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
-      font-size: clamp(3rem, 7vw, 6rem);
-      display: block;
-      letter-spacing: -0.02em;
-      margin-bottom: clamp(0.75rem, 2vw, 1.5rem);
-    }
-
-    .sub {
-      display: block;
-      font-size: clamp(1.8rem, 5vw, 4.5rem);
-      opacity: 0.9;
-    }
-
-    /* Folder CTA size tweak */
-    .folder-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: clamp(8px, 1.4vw, 14px);
-      text-decoration: none;
-      color: #fff;
-    }
-    .folder-cta img {
-      width: clamp(56px, 8vw, 100px);  /* slightly smaller than before */
-      height: auto;
-      display: block;
-    }
-    .folder-cta__label {
-      font-family: 'HelveticaNeueLTProBlk', Helvetica, Arial, sans-serif;
-      font-size: clamp(12px, 1.8vw, 20px);
-      letter-spacing: 0.01em;
-      white-space: nowrap;
-    }
-
-    /* 3D model — bright, crisp, grayscale look */
-    model-viewer {
-      width: clamp(220px, 34vw, 380px);
-      height: clamp(220px, 34vw, 380px);
-      max-width: 420px;
-      max-height: 420px;
-      background: transparent;
-      filter: grayscale(100%) brightness(1.8) contrast(1.3);
-      transition: transform 0.05s linear;
-      will-change: transform;
-    }
-
-    /* responsive tweaks */
-    @media (max-width: 900px) {
-      .hero-content {
-        flex-direction: column;
-        text-align: center;
-        gap: 2rem;
-      }
-
-      .text h1 {
-        font-size: clamp(2.2rem, 6vw, 3rem);
-        text-align: center;
-      }
-
-      .hello {
-        font-size: clamp(3rem, 10vw, 4rem);
-      }
-
-      .sub {
-        font-size: clamp(1.4rem, 6vw, 2.5rem);
-      }
-    }
-  </style>
+    <!-- Import Three.js, Loaders & Post-Processing Dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
 </head>
-
 <body>
-  <!-- Purple header (same layout as other pages) -->
-  <header class="nav">
-    <a href="index.html" class="logo">
-      <img src="assets/brain.png" alt="Brain logo" />
-      <span>Jared<br />Russell</span>
-    </a>
 
-    <nav>
-      <a href="about.html">ABOUT ME</a>
-      <a href="portfolio.html">PORTFOLIO</a>
-      <a href="contact.html">GET IN TOUCH!</a>
-    </nav>
-  </header>
+    <!-- === HEADER / NAVIGATION === -->
+    <header>
+        <div class="top-left cyber-hud">
+            <img src="assets/brain-180.png" alt="Brain Logo" class="brain-icon">
+            <div class="folder-group">
+                <img src="assets/Folder1.png" alt="My Work Folder" class="folder-icon">
+                <span class="folder-text">My Work</span>
+            </div>
+        </div>
+        <nav class="top-right">
+            <a href="about.html" class="cyber-nav-link" data-text="About Me">About Me</a>
+            <a href="#portfolio" class="cyber-nav-link" data-text="Portfolio">Portfolio</a>
+            <a href="contact.html" class="cyber-nav-link" data-text="Talk to Me">Get in Touch!</a>
+        </nav>
+    </header>
 
-  <!-- Hero Section -->
-  <main class="hero">
-    <div class="hero-content">
-      <div class="text">
-        <h1>
-          <span class="hello">HELLO!</span>
-          I’m Jared Russell<br />
-          <span class="sub">// UnwiseGenius</span>
-        </h1>
-        <!-- Folder CTA -->
-        <a href="portfolio.html" class="folder-cta" aria-label="Go to Portfolio">
-          <img src="assets/Folder1.png" alt="Open folder icon" loading="lazy" />
-          <span class="folder-cta__label">Check out my work!</span>
-        </a>
-      </div>
+    <!-- === HERO SECTION (Contains 3D Object) === -->
+    <section id="hero">
+        <div id="canvas-container"></div>
+    </section>
 
-      <!-- 3D rotating brain model -->
-      <model-viewer id="brainModel" src="assets/unwisegeniuslogo.glb" alt="3D logo of UnwiseGenius" auto-rotate
-        rotation-per-second="60deg" disable-zoom camera-controls interaction-prompt="none"
-        style="background: transparent;">
-      </model-viewer>
-    </div>
-  </main>
+    <!-- === ABOUT SECTION === -->
+    <section id="about" class="reveal-section">
+        <div class="about-content">
+            <h2 class="scramble-heading">A Bit about Me</h2>
+            <p class="lead-text">Hello, I'm Jared.</p>
+            <p>I'm a student currently studying Digital Design at Ulster University. My focus is in UI/UX, Branding, Research & Accessible Design.</p>
+            <a href="about.html" class="more-link cyber-btn">
+                <span>Want to know more?</span>
+                <span class="arrow">&rarr;</span>
+            </a>
+        </div>
+        <div class="about-image">
+            <div class="avatar-holo-wrapper">
+                <img src="assets/pixelartofme.png" alt="Jared Pixel Avatar" class="floating-avatar">
+            </div>
+        </div>
+    </section>
+
+    <!-- === PROJECTS SECTION === -->
+    <section id="portfolio" class="reveal-section">
+        <div class="portfolio-header">
+            <h2 class="scramble-heading">Featured Projects</h2>
+            <p>Projects I feel are worth checking out</p>
+        </div>
+        
+        <div class="projects-grid">
+            <!-- Project 1: XP Bank -->
+            <div class="project-card tilt-card">
+                <div class="project-img bg-purple">
+                    <img src="assets/xp-bank-cover.jpg" alt="XP Bank" onerror="this.style.display='none'">
+                    <div class="scanline-sweep"></div>
+                </div>
+                <div class="project-info">
+                    <h3>XP Bank</h3>
+                    <p>A bank branding project that focused on Branding, Design Systems, Research, Prototyping, Products & Motion. And how they could appeal to a younger target audience</p>
+                </div>
+            </div>
+
+            <!-- Project 2: AVA -->
+            <div class="project-card tilt-card">
+                <div class="project-img bg-ava">
+                    <img src="assets/ava-app.jpg" alt="AVA Smartwatch Concept">
+                    <div class="scanline-sweep"></div>
+                </div>
+                <div class="project-info">
+                    <h3>AVA</h3>
+                    <p>A Smartwatch concept that focused on Prototyping, Products & Motion. And how you could design under the constraint of a small screen</p>
+                </div>
+            </div>
+
+            <!-- Project 3: Scran -->
+            <div class="project-card tilt-card">
+                <div class="project-img bg-red">
+                    <img src="assets/Scran.png" alt="Scran Cookbook App">
+                    <div class="scanline-sweep"></div>
+                </div>
+                <div class="project-info">
+                    <h3>Scran</h3>
+                    <p>A cookbook app that focused on Prototyping, Research, Products & Motion. And how you could design for an audience of children.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- === FOOTER === -->
+    <footer id="contact">
+        <div class="footer-left">
+            <a href="index.html" class="footer-logo-link">
+                <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo" class="footer-logo">
+            </a>
+          
+        </div>
+        <div class="footer-right">
+            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram</a>
+            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
+            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">Youtube</a>
+        </div>
+    </footer>
+
+    <!-- === 3D LOGO & CYBERPUNK SCRIPT === -->
+    <script>
+        // --- 1. Cyberpunk Relic Glitch Shader Definition ---
+        const CyberpunkGlitchShader = {
+          uniforms: {
+            tDiffuse: { value: null },
+            amount: { value: 0.0 },
+            time: { value: 0.0 },
+            seed: { value: 0.0 }
+          },
+          vertexShader: `
+            varying vec2 vUv;
+            void main() {
+              vUv = uv;
+              gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+          `,
+          fragmentShader: `
+            uniform sampler2D tDiffuse;
+            uniform float amount;
+            uniform float time;
+            uniform float seed;
+            varying vec2 vUv;
+
+            float rand(vec2 co) {
+              return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
+            }
+
+            void main() {
+              if (amount <= 0.001) {
+                gl_FragColor = texture2D(tDiffuse, vUv);
+                return;
+              }
+
+              vec2 uv = vUv;
+
+              float sliceCount = 35.0;
+              float sliceY = floor(uv.y * sliceCount);
+              float sliceNoise = rand(vec2(sliceY, floor(time * 25.0) + seed));
+              
+              if (sliceNoise < amount * 0.85) {
+                float offset = (rand(vec2(sliceY, seed)) - 0.5) * 0.25 * amount;
+                uv.x += offset;
+              }
+
+              float splitOffset = 0.04 * amount * (rand(vec2(floor(time * 40.0), 1.0)) - 0.5);
+              vec4 rCol = texture2D(tDiffuse, uv + vec2(splitOffset, 0.0));
+              vec4 gCol = texture2D(tDiffuse, uv);
+              vec4 bCol = texture2D(tDiffuse, uv - vec2(splitOffset, 0.0));
+
+              float alpha = max(max(rCol.a, gCol.a), bCol.a);
+              if (alpha < 0.01) {
+                gl_FragColor = vec4(0.0);
+                return;
+              }
+
+              vec4 color = vec4(rCol.r, gCol.g, bCol.b, alpha);
+
+              float glitchNoise = rand(uv + time);
+              if (glitchNoise < amount * 0.3) {
+                color.r *= 0.2;
+                color.g += 0.5 * amount;
+                color.b += 0.8 * amount;
+              } else if (glitchNoise < amount * 0.4) {
+                color.r += 0.6 * amount; 
+                color.g *= 0.2;
+                color.b += 0.8 * amount; 
+              }
+
+              float scanline = sin(uv.y * 700.0) * 0.12 * amount;
+              color.rgb -= scanline;
+
+              vec2 blockUv = floor(uv * vec2(8.0, 60.0));
+              float blockRand = rand(blockUv + floor(time * 20.0));
+              if (blockRand < amount * 0.3) {
+                float colorPick = rand(blockUv + seed);
+                if (colorPick < 0.3) {
+                    color.rgb = vec3(0.0, 0.3, 1.0);
+                } else if (colorPick < 0.6) {
+                    color.rgb = vec3(0.0, 0.9, 0.3);
+                } else if (colorPick < 0.8) {
+                    color.rgb = vec3(0.7, 0.0, 0.9);
+                } else {
+                    color.rgb = vec3(0.0, 0.0, 0.0);
+                }
+                color.rgb += rand(blockUv + seed) * 0.2; 
+              }
+
+              gl_FragColor = color;
+            }
+          `
+        };
+
+        // --- 2. Scene, Camera, and Renderer Setup ---
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 0, 5);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        container.appendChild(renderer.domElement);
+
+        // --- 3. Post-Processing Pipeline ---
+        const composer = new THREE.EffectComposer(renderer);
+        const renderPass = new THREE.RenderPass(scene, camera);
+        composer.addPass(renderPass);
+
+        const glitchPass = new THREE.ShaderPass(CyberpunkGlitchShader);
+        composer.addPass(glitchPass);
+
+        // --- 4. Lighting Setup ---
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.3);
+        scene.add(ambientLight);
+
+        const dirLight1 = new THREE.DirectionalLight(0xffffff, 2.2);
+        dirLight1.position.set(5, 5, 5);
+        scene.add(dirLight1);
+
+        const dirLight2 = new THREE.DirectionalLight(0x9a88ff, 1.5);
+        dirLight2.position.set(-5, -5, -2);
+        scene.add(dirLight2);
+
+        // --- 5. Pivot Group & State Variables ---
+        const pivotGroup = new THREE.Group();
+        scene.add(pivotGroup);
+
+        let targetObject = null;
+        let mainModel = null;
+        let modelWidth = 1;
+
+        const targetRotation = { x: 0, y: 0 };
+        const mouse = { x: 0, y: 0 };
+
+        function updateResponsiveScale() {
+          if (!targetObject || !modelWidth) return;
+
+          const vFovRad = (camera.fov * Math.PI) / 180;
+          const visibleHeight = 2 * Math.tan(vFovRad / 2) * camera.position.z;
+          const visibleWidth = visibleHeight * camera.aspect;
+
+          const fillPercentage = camera.aspect < 1.0 ? 0.82 : 0.65;
+          const targetWidth = Math.min(visibleWidth * fillPercentage, 4.2);
+
+          const finalScale = targetWidth / modelWidth;
+          targetObject.scale.set(finalScale, finalScale, finalScale);
+        }
+
+        // --- 6. Load 3D glTF/GLB File ---
+        const loader = new THREE.GLTFLoader();
+
+        loader.load(
+          'assets/Unwisegeniuslogowhite.glb', 
+          (gltf) => {
+            mainModel = gltf.scene;
+            setupModel(mainModel);
+          },
+          undefined,
+          (error) => {
+            console.warn('Local glTF file not found. Creating fallback object.', error);
+            const fallbackGeo = new THREE.IcosahedronGeometry(1.2, 0);
+            const fallbackMat = new THREE.MeshStandardMaterial({
+              color: 0xffffff,
+              roughness: 0.3,
+              metalness: 0.7,
+            });
+            mainModel = new THREE.Mesh(fallbackGeo, fallbackMat);
+            setupModel(mainModel);
+          }
+        );
+
+        function setupModel(model) {
+          const box = new THREE.Box3().setFromObject(model);
+          const center = box.getCenter(new THREE.Vector3());
+          const size = box.getSize(new THREE.Vector3());
+
+          model.position.x -= center.x;
+          model.position.y -= center.y;
+          model.position.z -= center.z;
+
+          modelWidth = size.x;
+          pivotGroup.add(model);
+          targetObject = pivotGroup;
+
+          updateResponsiveScale();
+        }
+
+        // --- 7. Mouse & Touch Interaction ---
+        function onPointerMove(event) {
+          const clientX = event.touches ? event.touches[0].clientX : event.clientX;
+          const clientY = event.touches ? event.touches[0].clientY : event.clientY;
+
+          mouse.x = (clientX / window.innerWidth) * 2 - 1;
+          mouse.y = -(clientY / window.innerHeight) * 2 + 1;
+
+          targetRotation.y = mouse.x * (Math.PI / 4.5);
+          targetRotation.x = -mouse.y * (Math.PI / 4.5);
+        }
+
+        window.addEventListener('mousemove', onPointerMove);
+        window.addEventListener('touchmove', onPointerMove, { passive: true });
+
+        // --- 8. Glitch Animation Trigger Logic ---
+        let isGlitching = false;
+        let glitchProgress = 0;
+        const glitchDuration = 0.85; 
+
+        function triggerCyberpunkGlitch() {
+          isGlitching = true;
+          glitchProgress = 0;
+        }
+
+        window.addEventListener('click', triggerCyberpunkGlitch);
+
+        // --- 9. Window Resize Handling ---
+        window.addEventListener('resize', () => {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+          composer.setSize(window.innerWidth, window.innerHeight);
+          updateResponsiveScale();
+        });
+
+        // --- 10. Main Animation Loop with Zero-G Smooth Levitation ---
+        let clock = new THREE.Clock();
+
+        function animate() {
+          requestAnimationFrame(animate);
+
+          const delta = clock.getDelta();
+          const elapsedTime = clock.getElapsedTime();
+
+          if (targetObject) {
+            // Smooth cursor lerp rotation
+            targetObject.rotation.y += (targetRotation.y - targetObject.rotation.y) * 0.055;
+            targetObject.rotation.x += (targetRotation.x - targetObject.rotation.x) * 0.055;
+
+            // Zero-G Organic Float Calculation
+            const hoverWaveY = Math.sin(elapsedTime * 1.8) * 0.08;
+            const hoverWaveX = Math.cos(elapsedTime * 1.2) * 0.04;
+
+            targetObject.position.x += ((mouse.x * 0.28 + hoverWaveX) - targetObject.position.x) * 0.05;
+            targetObject.position.y += ((mouse.y * 0.28 + hoverWaveY) - targetObject.position.y) * 0.05;
+          }
+
+          if (isGlitching) {
+            glitchProgress += delta;
+            const normTime = glitchProgress / glitchDuration;
+
+            if (normTime >= 1.0) {
+              isGlitching = false;
+              glitchPass.uniforms.amount.value = 0.0;
+            } else {
+              const flicker = Math.sin(normTime * Math.PI * 18) * 1 + 1;
+              const fadeOut = Math.pow(1.0 - normTime, 1.2);
+              
+              glitchPass.uniforms.amount.value = (1.00 + flicker * 1.00) * fadeOut;
+              glitchPass.uniforms.time.value = elapsedTime;
+              glitchPass.uniforms.seed.value = Math.random();
+            }
+          }
+
+          composer.render();
+        }
+
+        animate();
+
+        // =====================================================================
+        // CYBERPUNK UI MOTION: DECRYPTOR TEXT, 3D TILT & SCROLL OBSERVER
+        // =====================================================================
+
+        // 1. Terminal Text Decryption / Hacker Scramble
+        const GLYPHS = "!/<>[]-_=+*^?#_0101";
+
+        function scrambleElement(element) {
+          const originalText = element.getAttribute("data-original") || element.innerText;
+          element.setAttribute("data-original", originalText);
+          let iteration = 0;
+          
+          clearInterval(element._scrambleInterval);
+          element._scrambleInterval = setInterval(() => {
+            element.innerText = originalText
+              .split("")
+              .map((letter, index) => {
+                if (index < iteration) {
+                  return originalText[index];
+                }
+                return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+              })
+              .join("");
+
+            if (iteration >= originalText.length) {
+              clearInterval(element._scrambleInterval);
+            }
+            iteration += 1 / 2;
+          }, 25);
+        }
+
+        document.querySelectorAll(".scramble-heading").forEach(h => {
+          h.addEventListener("mouseenter", () => scrambleElement(h));
+        });
+
+        // 2. Intersection Observer for Scroll Reveals
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              const heading = entry.target.querySelector(".scramble-heading");
+              if (heading) scrambleElement(heading);
+            }
+          });
+        }, { threshold: 0.18 });
+
+        document.querySelectorAll(".reveal-section").forEach(sec => observer.observe(sec));
+
+        // 3. Smooth 3D Card Tilt Interaction
+        const cards = document.querySelectorAll('.tilt-card');
+        
+        cards.forEach(card => {
+          let bounds;
+
+          function rotateToMouse(e) {
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+            const leftX = mouseX - bounds.x;
+            const topY = mouseY - bounds.y;
+            const center = {
+              x: leftX - bounds.width / 2,
+              y: topY - bounds.height / 2
+            };
+
+            const distance = Math.sqrt(center.x ** 2 + center.y ** 2);
+
+            card.style.transform = `
+              perspective(1000px)
+              scale3d(1.03, 1.03, 1.03)
+              rotateX(${-center.y / 18}deg)
+              rotateY(${center.x / 18}deg)
+            `;
+          }
+
+          card.addEventListener('mouseenter', () => {
+            bounds = card.getBoundingClientRect();
+            document.addEventListener('mousemove', rotateToMouse);
+          });
+
+          card.addEventListener('mouseleave', () => {
+            document.removeEventListener('mousemove', rotateToMouse);
+            card.style.transform = 'perspective(1000px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg)';
+          });
+        });
+    </script>
 </body>
-<script>
-  /* Page reveal on load (CSS uses html.body-ready to avoid flash) */
-  document.documentElement.classList.add('body-ready');
-  
-  /* Intercept internal links for a graceful exit, then navigate.
-     Uses View Transitions API when available; falls back to CSS fade. */
-  (function () {
-    const isInternal = (a) => (
-      a &&
-      a.origin === window.location.origin &&
-      !a.hasAttribute('download') &&
-      a.getAttribute('target') !== '_blank' &&
-      !a.getAttribute('href')?.startsWith('#')
-    );
-  
-    addEventListener('click', (e) => {
-      const a = e.target.closest('a');
-      if (!isInternal(a)) return;
-  
-      e.preventDefault();
-      const go = () => location.href = a.href;
-  
-      if (document.startViewTransition) {
-        // Native View Transition (Chrome/Edge/Arc)
-        document.startViewTransition(() => {
-          document.body.classList.add('leaving');
-        }).finished.then(go);
-      } else {
-        // CSS fallback
-        document.body.classList.add('leaving');
-        setTimeout(go, 250);
-      }
-    }, { capture: true });
-  })();
-  </script>
-  
 </html>
