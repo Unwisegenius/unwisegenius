@@ -1,233 +1,725 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Jared Russell</title>
+
     <!-- Favicon -->
-<link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/brain-16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/brain-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/brain-180.png">
+    <meta name="theme-color" content="#4D04FF">
 
-<!-- iOS home screen (optional but nice) -->
-<link rel="apple-touch-icon" sizes="180x180" href="assets/brain-180.png">
+    <!-- Google Fonts: Rajdhani & Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 
-<!-- Theme color for mobile UI (optional) -->
-<meta name="theme-color" content="#4A00FF">
+    <!-- Adobe Fonts (Typekit): Stolzl Regular 400 + Bold 700. Must load BEFORE style.css -->
+    <link rel="stylesheet" href="https://use.typekit.net/inw8ngx.css">
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio — Jared Russell // UnwiseGenius</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body class="page-portfolio">
+    <!-- Global CSS (keep this ?v= number in sync with the other pages) -->
+    <link rel="stylesheet" href="style.css?v=4">
 
-  <header class="nav">
-    <a href="index.html" class="logo">
-      <img src="assets/brain2.png" alt="Brain logo" />
-      <span>Jared<br />Russell</span>
-    </a>
-    <nav>
-      <a href="about.html">ABOUT ME</a>
-      <a href="portfolio.html" class="active">PORTFOLIO</a>
-      <a href="contact.html">GET IN TOUCH!</a>
-    </nav>
-  </header>
-
-  <section class="portfolio-feature">
-    <canvas id="shaderCanvas"></canvas>
-    <div class="feature-title">PORTFOLIO</div>
-  </section>
-
-  <script>
-  (() => {
-    const canvas = document.getElementById('shaderCanvas');
-    const gl = canvas.getContext('webgl');
-    if (!gl) return;
-
-    const container = canvas.parentElement;
-    function resize() {
-      const r = container.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.floor(r.width * dpr);
-      canvas.height = Math.floor(r.height * dpr);
-      canvas.style.width = r.width + 'px';
-      canvas.style.height = r.height + 'px';
-      gl.viewport(0, 0, canvas.width, canvas.height);
-    }
-    new ResizeObserver(resize).observe(container);
-    window.addEventListener('resize', resize);
-    resize();
-
-    const vert = `
-      attribute vec2 aPos;
-      void main() {
-        gl_Position = vec4(aPos, 0.0, 1.0);
-      }
-    `;
-
-    const frag = `
-      precision highp float;
-      uniform vec2 iResolution;
-      uniform float iTime;
-      const float spin_rotation_speed = 1.0;
-      const float move_speed = 9.0;
-      const float contrast = 3.2;
-      const float lighting = 0.2;
-      const float spin_amount = 0.55;
-      const float pixel_filter = 2000.0;
-      const bool is_rotating = true;
-      #define SPIN_EASE 1.0
-   // Inverted palette — white base, purple swirl
-const vec4 colour_1 = vec4(0.290, 0.000, 1.000, 1.0); // main tone (now white)
-const vec4 colour_2 = vec4(0.290, 0.000, 1.000, 1.0); // accent swirl (#4A00FF)
-const vec4 colour_3 = vec4(0.290, 0.000, 0.700, 0.4); // soft pale background tint
-
-
-      vec4 effect(vec2 screenSize, vec2 screen_coords){
-        float pixel_size = length(screenSize.xy) / pixel_filter;
-        vec2 uv = (floor(screen_coords.xy*(1.0/pixel_size))*pixel_size - 0.5*screenSize.xy)/length(screenSize.xy);
-        float uv_len = length(uv);
-
-        float speed = (spin_rotation_speed*SPIN_EASE*0.2);
-        if(is_rotating){ speed = iTime * speed; }
-        speed += 302.2;
-
-        float new_pixel_angle = (atan(uv.y, uv.x)) + speed - SPIN_EASE*20.0*(1.0*spin_amount*uv_len + (1.0 - 1.0*spin_amount));
-        vec2 mid = (screenSize.xy/length(screenSize.xy))/2.0;
-        uv = (vec2((uv_len * cos(new_pixel_angle) + mid.x), (uv_len * sin(new_pixel_angle) + mid.y)) - mid);
-
-        uv *= 30.0;
-        float t2 = iTime*(move_speed);
-        vec2 uv2 = vec2(uv.x+uv.y);
-
-        for(int i=0; i<5; i++){
-          uv2 += sin(max(uv.x, uv.y)) + uv;
-          uv  += 0.5*vec2(cos(5.1123314 + 0.353*uv2.y + t2*0.131121), sin(uv2.x - 0.113*t2));
-          uv  -= 1.0*cos(uv.x + uv.y) - 1.0*sin(uv.x*0.711 - uv.y);
+    <!-- Portfolio page styles (all prefixed pf- so they never clash with style.css) -->
+    <style>
+        :root {
+            --pf-purple: #4D04FF;
+            --pf-lime:   #CFFF04;
+            --pf-red:    #F5001E;
+            --pf-blue:   #0066FF;
+            --pf-violet: #B44AE8;
+            --pf-pink:   #FF4DD2;
         }
 
-        float contrast_mod = (0.25*contrast + 0.5*spin_amount + 1.2);
-        float paint_res = min(2.0, max(0.0, length(uv)*(0.035)*contrast_mod));
-        float c1p = max(0.0, 1.0 - contrast_mod*abs(1.0 - paint_res));
-        float c2p = max(0.0, 1.0 - contrast_mod*abs(paint_res));
-        float c3p = 1.0 - min(1.0, c1p + c2p);
+        body { background-color: #ffffff; }
 
-        float ligth = (lighting - 0.2) * max(c1p*5.0 - 4.0, 0.0) + lighting * max(c2p*5.0 - 4.0, 0.0);
-        vec4 ret_col = (0.3/contrast)*colour_1 + (1.0 - 0.3/contrast)*(colour_1*c1p + colour_2*c2p + vec4(c3p*colour_3.rgb, c3p*colour_1.a)) + ligth;
-        return ret_col;
-      }
+        .sr-only {
+            position: absolute;
+            width: 1px; height: 1px;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            white-space: nowrap;
+        }
 
-      void main(){
-        vec2 uv = gl_FragCoord.xy;
-        vec4 col = effect(iResolution, uv);
-        gl_FragColor = col;
-      }
-    `;
+        /* --- NAV BAR --- */
+        .pf-bar {
+            position: relative;
+            background-color: var(--pf-purple);
+            padding: 24px 6vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
 
-    function compile(type, src){
-      const sh = gl.createShader(type);
-      gl.shaderSource(sh, src);
-      gl.compileShader(sh);
-      if(!gl.getShaderParameter(sh, gl.COMPILE_STATUS)){
-        console.error(gl.getShaderInfoLog(sh));
-      }
-      return sh;
-    }
-    const vs = compile(gl.VERTEX_SHADER, vert);
-    const fs = compile(gl.FRAGMENT_SHADER, frag);
-    const prog = gl.createProgram();
-    gl.attachShader(prog, vs);
-    gl.attachShader(prog, fs);
-    gl.linkProgram(prog);
-    gl.useProgram(prog);
+        .pf-bar .top-left {
+            flex-direction: row;
+            align-items: center;
+            gap: 0;
+        }
 
-    const quad = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, quad);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-      -1,-1,  1,-1, -1, 1,
-       1,-1,  1, 1, -1, 1
-    ]), gl.STATIC_DRAW);
-    const aPos = gl.getAttribLocation(prog, 'aPos');
-    gl.enableVertexAttribArray(aPos);
-    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+        .pf-bar .brain-icon { width: 38px; height: auto; display: block; }
+        .pf-bar .top-right  { margin-top: 0; }
 
-    const uRes = gl.getUniformLocation(prog, 'iResolution');
-    const uTime = gl.getUniformLocation(prog, 'iTime');
+        /* --- MAIN: background colour changes with the active filter --- */
+        .pf-main {
+            --pf-bg: var(--pf-purple);
+            background-color: var(--pf-bg);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: clip;
+            transition: background-color 0.5s ease;
+        }
 
-    let start = performance.now();
-    function tick(now){
-      const t = (now - start) / 1000;
-      gl.uniform2f(uRes, canvas.width, canvas.height);
-      gl.uniform1f(uTime, t);
-      gl.drawArrays(gl.TRIANGLES, 0, 6);
-      requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  })();
-  </script>
+        .pf-main[data-filter="case-studies"]   { --pf-bg: var(--pf-violet); }
+        .pf-main[data-filter="graphic-design"] { --pf-bg: var(--pf-red); }
+        .pf-main[data-filter="favourites"]     { --pf-bg: var(--pf-blue); }
 
-  <main class="work-grid">
-    <article class="work-card">
-      <a class="work-thumb" href="xp-bank.html"><img src="assets/xp-bank-cover.jpg" alt="XP Bank - Branding cover" /></a>
-      <h3 class="work-title">XP Bank</h3>
-      <p class="work-meta">A Bank designed for the younger generation</p>
-    </article>
-    <article class="work-card">
-      <a class="work-thumb" href="AVA.html"><img src="assets/ava-app.jpg" alt="AVA - App Development" /></a>
-      <h3 class="work-title">AVA</h3>
-      <p class="work-meta">The perfect assistant, on your watch at all times.</p>
-    </article>
+        /* --- HERO: giant Grotesk title (stretched taller) + filter tabs --- */
+        .pf-hero {
+            padding: clamp(24px, 4vw, 56px) 7vw clamp(20px, 3.5vw, 56px);
+        }
 
+        .pf-title {
+            --pf-stretch: 1.18;           /* vertical stretch: raise for taller, 1 = no stretch */
+            position: relative;
+            display: block;
+            font-family: "Space Grotesk", "Grotesk", -apple-system, sans-serif;
+            font-weight: 700;
+            font-size: 18vw;              /* JS fits this exactly to the container width */
+            line-height: 0.86;
+            letter-spacing: 0.01em;       /* was -0.04em (too tight); raise for looser, lower for tighter */
+            white-space: nowrap;
+            color: #ffffff;
+            cursor: pointer;
+            transform: scaleY(var(--pf-stretch));
+            transform-origin: left top;
+            transition: color 0.25s ease, text-shadow 0.25s ease;
+        }
 
-  
-    </article>
-    <article class="work-card">
-      <a class="work-thumb" href="Scran.html"><img src="assets/Scran.png" alt="Scran SDG Project" /></a>
-      <h3 class="work-title">Scran</h3>
-      <p class="work-meta">A cooking app design specially towards children, promoting sustainability and zero food waste.</p>
-    </article>
-    <article class="work-card">
-      <a class="work-thumb" href="pioneersofwebdesign.html">
-        <img src="assets/Mac Logo.png" alt="Pioneers of Web Design presentation cover" />
-      </a>
-      <h3 class="work-title">Pioneers of Web Design</h3>
-      <p class="work-meta">A collaborative presentation exploring the early innovators of digital design</p>
-    </article>
-    
-  </main>
+        .pf-title span { display: inline-block; }
 
+        /* Hover = lime highlight. Pressing it drops back to the normal white state until the cursor leaves. */
+        @media (hover: hover) {
+            .pf-title:hover:not(.is-pressed) {
+                color: var(--pf-lime);
+                text-shadow: 0 0 0.05em rgba(207, 255, 4, 0.45);
+            }
+        }
+
+        .pf-tabs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            margin: 0 -2vw;
+            padding-top: clamp(10px, 1.8vw, 28px);
+            text-align: center;
+            position: relative;
+            z-index: 5;
+        }
+
+        .pf-tab {
+            background: none;
+            border: 0;
+            font-family: "stolzl", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            font-size: clamp(1.05rem, 2.15vw, 2.3rem);
+            color: #ffffff;
+            cursor: pointer;
+            padding: 0.3em 0.2em;
+            transition: color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .pf-tab:hover { color: var(--pf-lime); transform: translateY(-2px); }
+        .pf-tab[aria-pressed="true"] { color: var(--pf-lime); }
+        .pf-tab:focus-visible {
+            outline: 2px solid var(--pf-lime);
+            outline-offset: 4px;
+            border-radius: 6px;
+        }
+
+        .pf-tab-label {
+            display: inline-block;
+            pointer-events: none;
+        }
+
+        /* --- "ALL" VIEW: coloured year bands --- */
+        .pf-band {
+            display: grid;
+            grid-template-columns: 11.3vw 1fr;
+            align-items: start;
+            padding: clamp(16px, 2.4vw, 36px) 7vw;
+        }
+
+        .pf-band--2026 { background-color: var(--pf-purple); color: #ffffff; }
+        .pf-band--2025 { background-color: var(--pf-lime);   color: #111111; }
+        .pf-band--misc { background-color: var(--pf-red);    color: #ffffff; }
+
+        .pf-year {
+            font-family: "stolzl", sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.3rem, 2.4vw, 2.5rem);
+            line-height: 1;
+            margin-top: 0.1em;
+        }
+
+        .pf-items,
+        .pf-flat {
+            width: min(62vw, 920px);
+            display: flex;
+            flex-direction: column;
+            gap: clamp(24px, 4vw, 60px);
+        }
+
+        /* --- FILTERED VIEW: one centred list --- */
+        .pf-flat {
+            margin: 0 auto;
+            padding: clamp(8px, 2vw, 24px) 0 clamp(60px, 8vw, 120px);
+        }
+
+        /* --- PROJECT ROW (fades up as it scrolls into view) --- */
+        .pf-item {
+            display: grid;
+            grid-template-columns: 46.5% 1fr;
+            column-gap: 4.5%;
+            align-items: start;
+            opacity: 0;
+            transform: translateY(34px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .pf-item.is-in {
+            opacity: 1;
+            transform: none;
+        }
+
+        .pf-thumb {
+            position: relative;
+            aspect-ratio: 1.48 / 1;
+            border-radius: clamp(8px, 1vw, 16px);
+            overflow: hidden;
+            background-color: var(--tile, #dddddd);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            will-change: transform;
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+        }
+
+        .pf-thumb:hover {
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25), 0 0 25px rgba(207, 255, 4, 0.18);
+        }
+
+        .pf-thumb img,
+        .pf-thumb video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .pf-item:hover .pf-thumb img,
+        .pf-item:hover .pf-thumb video { transform: scale(1.05); }
+
+        /* Luminous scanline sweep (same effect as the homepage cards) */
+        .pf-scan {
+            position: absolute;
+            top: -120%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.25) 50%, transparent 100%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .pf-thumb:hover .pf-scan {
+            top: 120%;
+            transition: top 0.75s ease-in-out;
+        }
+
+        /* Shown only if the media file is missing, so you still see a coloured tile + the title */
+        .pf-thumb-label {
+            display: none;
+            padding: 12px;
+            text-align: center;
+            font-family: "stolzl", sans-serif;
+            font-weight: 700;
+            font-size: clamp(0.9rem, 1.6vw, 1.6rem);
+            color: var(--ink, #ffffff);
+        }
+
+        .pf-thumb.is-missing .pf-thumb-label { display: block; }
+
+        .pf-item h3 {
+            font-family: "stolzl", sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.05rem, 1.9vw, 1.95rem);
+            line-height: 1.2;
+            margin-bottom: clamp(8px, 1.4vw, 22px);
+        }
+
+        .pf-item p {
+            font-family: "stolzl", sans-serif;
+            font-weight: 400;
+            font-size: clamp(0.8rem, 1.3vw, 1.3rem);
+            line-height: 1.22;
+        }
+
+        .pf-item p strong { font-weight: 700; }
+
+        .pf-pill {
+            display: inline-block;
+            margin-top: clamp(12px, 1.6vw, 26px);
+            background-color: var(--pf-pink);
+            color: #ffffff;
+            font-family: "stolzl", sans-serif;
+            font-weight: 700;
+            font-size: clamp(0.8rem, 1.2vw, 1.2rem);
+            padding: 0.7em 1.5em;
+            border-radius: 14px;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .pf-pill:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .pf-pill:focus-visible { outline: 2px solid #111111; outline-offset: 3px; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 900px) {
+            .pf-items, .pf-flat { width: min(86vw, 920px); }
+            .pf-band { grid-template-columns: 1fr; row-gap: 14px; }
+            .pf-band .pf-items { width: 100%; }
+        }
+
+        @media (max-width: 640px) {
+            .pf-bar { padding: 18px 5vw; }
+            .pf-item { grid-template-columns: 1fr; row-gap: 14px; }
+            .pf-flat { width: 88vw; }
+            .pf-tab { font-size: 0.95rem; }
+            .pf-item h3 { font-size: 1.3rem; }
+            .pf-item p  { font-size: 1rem; }
+            .pf-pill    { font-size: 1rem; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .pf-item { opacity: 1; transform: none; transition: none; }
+            .pf-main, .pf-thumb, .pf-thumb img, .pf-thumb video, .pf-tab { transition: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- === NAV === -->
+    <header class="pf-bar">
+        <div class="top-left">
+            <a href="index.html">
+                <img src="assets/brain-180.png" alt="Home" class="brain-icon" width="38">
+            </a>
+        </div>
+        <nav class="top-right">
+            <a href="about.html" class="cyber-nav-link" data-text="About Me">About Me</a>
+            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio">Portfolio</a>
+            <a href="contact.html" class="cyber-nav-link" data-text="Get in Touch!">Get in Touch!</a>
+        </nav>
+    </header>
+
+    <main id="pf-main" class="pf-main" data-filter="all">
+
+        <!-- === HERO: title + filters === -->
+        <section class="pf-hero">
+            <h1 class="pf-title" id="pf-title"><span>Portfolio</span></h1>
+
+            <div class="pf-tabs" role="group" aria-label="Filter projects">
+                <button type="button" class="pf-tab" data-filter="case-studies"   aria-pressed="false" aria-label="Case Studies"><span class="pf-tab-label">Case Studies</span></button>
+                <button type="button" class="pf-tab" data-filter="graphic-design" aria-pressed="false" aria-label="Graphic Design"><span class="pf-tab-label">Graphic Design</span></button>
+                <button type="button" class="pf-tab" data-filter="favourites"     aria-pressed="false" aria-label="My Favourites"><span class="pf-tab-label">My Favourites</span></button>
+            </div>
+            <p id="pf-status" class="sr-only" aria-live="polite"></p>
+        </section>
+
+        <!-- === PROJECT LIST (rendered by the script below) === -->
+        <div id="pf-list"></div>
+        <noscript><p style="padding:40px 7vw">Please enable JavaScript to see my projects, or <a href="contact.html" style="color:#CFFF04">get in touch</a>.</p></noscript>
+    </main>
+
+    <!-- === FOOTER === -->
+    <footer id="contact">
+      <div class="footer-left">
+        <a href="index.html" class="footer-logo-link">
+            <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo" class="footer-logo" height="38">
+        </a>
+    </div>
+        <div class="footer-right">
+            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram</a>
+            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
+            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">Youtube</a>
+        </div>
+    </footer>
+
+    <script>
+        /* ==================================================================
+           PROJECT DATA — edit this section to add, remove or reorder projects.
+           - img:  path to the thumbnail. Images AND videos (.mp4 .mov .webm) both work here;
+                   videos autoplay muted on a loop while they're on screen.
+                   Paths must match the real filename, including capitals.
+           - tile / ink: fallback tile colour + text colour if the file is missing
+           - caseStudy: link for the pink "Case Study" button (omit for none)
+           ================================================================== */
+        const PROJECTS = {
+            sugar: {
+                title: "The Anatomy of Sugar",
+                img: "assets/theanatomyofsugar.png", tile: "#D96BD8", ink: "#111111",
+                desc: "A project in which I had to create a catalogue that would sell a product. I took photographs of 30 different kinds of Sweets and presented them in a Saul Bass design style in this catalogue"
+            },
+            bite: {
+                title: "Bite – Spray Painting Project",
+                img: "assets/blackoutline.MOV", tile: "#6F93C4", ink: "#111111",
+                desc: "A spray-painting project at CMU. In which we had to steal an artist’s alphabet and replicate their style in a word of our choosing, which in this case was <strong>LUCKY.</strong>"
+            },
+            shining: {
+                title: "Title Sequence Refresh for the Shining",
+                img: "assets/jaredR_titlesequence.mp4", tile: "#2F6FB2", ink: "#ffffff",
+                desc: "A CMU project in which I refreshed a chosen title sequence for a movie/show, to appeal to a younger demographic. For this I chose The Shining."
+            },
+            cex: {
+                title: "Brand Refresh for CEX",
+                img: "assets/cexrefresh.png", tile: "#C8102E", ink: "#ffffff",
+                desc: "A CMU project that let us refresh an existing brand’s identity. I chose CEX as I felt it was outdated and intimidating to the average shopper. (Hire me CEX &lt;3)"
+            },
+            mousepad: {
+                title: "Mousepad Competition For CMU",
+                img: "assets/johnmousemockup.png", tile: "#0AA7D6", ink: "#ffffff",
+                desc: "A design competition held in the first few weeks of my study abroad program at CMU."
+            },
+            orion: {
+                title: "Orion – A VR System without the Headset",
+                img: "assets/orion.png", tile: "#FFFFFF", ink: "#0A84FF",
+                desc: "A smart home project that focused on Research, Prototyping, Motion, Products &amp; Design Systems. I created a conceptual 3D Projector that you could interact with and do everyday tasks with.",
+                caseStudy: "case-studies/orion.html"
+            },
+            grub: {
+                title: "How Microinteractions Support the User Journey",
+                img: "assets/grublogo.png", tile: "#F5EBE4", ink: "#D01C30",
+                desc: "A food service prototype that focused on Prototyping, Research, &amp; Motion. I was tasked to write an essay on how micro interactions support the user journey, with a prototype to support the essay",
+                caseStudy: "case-studies/grub.html"
+            },
+            scran: {
+                title: "Scran – The Sustainable Cooking App for Kids!",
+                img: "assets/Scran.png", tile: "#DC0A14", ink: "#ffffff",
+                desc: "A cookbook app that focused on Prototyping, Research, Products &amp; Motion. And how you could design for an audience of children while also promoting sustainable habits.",
+                caseStudy: "case-studies/scran.html"
+            },
+            xp: {
+                title: "XP Bank – The Bank made for young people",
+                img: "assets/xp-bank-cover.jpg", tile: "#6A35FF", ink: "#ffffff",
+                desc: "A bank branding project that focused on Branding, Design Systems, Research, Prototyping, Products &amp; Motion. And how they could appeal to a younger target audience",
+                caseStudy: "case-studies/xp-bank.html"
+            },
+            pioneers: {
+                title: "The Pioneers of Web Design",
+                img: "assets/Mac Logo.png", tile: "#0000E6", ink: "#ffffff",
+                desc: "A group project that focused on Research, Presentation, &amp; Design Systems. Our task was to give a talk on the people who helped build the World Wide Web &amp; its design system"
+            },
+            flix: {
+                title: "Flix Multiplex – A Branding Concept",
+                img: "assets/flikbanner.png", tile: "#A30B26", ink: "#ffffff",
+                desc: "After working in a cinema for many years, it felt right after leaving (for the third time) to make a conceptual cinema brand to post online!"
+            },
+            roasters: {
+                title: "Roasters",
+                img: "assets/r1.jpg", tile: "#FFFFFF", ink: "#111111",
+                desc: "A Smartwatch concept that focused on Prototyping, Products &amp; Motion. And how you could design under the constraint of a small screen"
+            }
+        };
+
+        // "All" view: grouped by year, in this order
+        const GROUPS = [
+            { key: "2026", label: "2026", ids: ["sugar", "bite", "shining", "cex", "mousepad", "orion", "grub"] },
+            { key: "2025", label: "2025", ids: ["scran", "xp"] },
+            { key: "misc", label: "Misc", ids: ["pioneers", "flix", "roasters"] }
+        ];
+
+        // Filtered views: which projects show, and in what order
+        const FILTERS = {
+            "case-studies":   ["orion", "grub", "scran", "xp"],
+            "graphic-design": ["sugar", "bite", "shining", "cex", "mousepad", "flix", "roasters", "pioneers"],
+            "favourites":     ["xp", "grub", "bite", "shining", "scran"]
+        };
+
+        /* ==================================================================
+           SETUP
+           ================================================================== */
+        const main   = document.getElementById("pf-main");
+        const list   = document.getElementById("pf-list");
+        const status = document.getElementById("pf-status");
+        const title  = document.getElementById("pf-title");
+        const tabs   = Array.from(document.querySelectorAll(".pf-tab"));
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const canHover     = window.matchMedia("(hover: hover)").matches;
+        let current = "all";
+
+        const VIDEO_RE = /\.(mp4|mov|webm|m4v)(\?.*)?$/i;
+
+        /* ==================================================================
+           MOTION 1: Text scramble (same decryption effect as the homepage)
+           ================================================================== */
+        const GLYPHS = "!/<>[]-_=+*^?#_0101";
+
+        function scrambleElement(element) {
+            if (!element || reduceMotion) return;
+            const originalText = element.getAttribute("data-original") || element.innerText;
+            element.setAttribute("data-original", originalText);
+
+            // Long titles reveal faster so they never take more than ~0.6s
+            const step = Math.max(1 / 3, originalText.length / 20);
+            let iteration = 0;
+
+            clearInterval(element._scrambleInterval);
+            element._scrambleInterval = setInterval(() => {
+                element.innerText = originalText
+                    .split("")
+                    .map((letter, index) => {
+                        if (letter === " ") return " ";
+                        if (index < iteration) return originalText[index];
+                        return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+                    })
+                    .join("");
+
+                if (iteration >= originalText.length) {
+                    clearInterval(element._scrambleInterval);
+                    element.innerText = originalText;
+                }
+                iteration += step;
+            }, 30);
+        }
+
+        /* ==================================================================
+           MOTION 2: Scroll reveal (items fade up in a stagger, year labels
+           decrypt) + videos only play while they are on screen
+           ================================================================== */
+        const revealObserver = ("IntersectionObserver" in window)
+            ? new IntersectionObserver((entries, obs) => {
+                let n = 0;
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    const el = entry.target;
+                    if (el.classList.contains("pf-year")) {
+                        scrambleElement(el);
+                    } else {
+                        el.style.transitionDelay = (n++ * 80) + "ms";
+                        el.classList.add("is-in");
+                    }
+                    obs.unobserve(el);
+                });
+            }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" })
+            : null;
+
+        const videoObserver = ("IntersectionObserver" in window && !reduceMotion)
+            ? new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const p = entry.target.play();
+                        if (p && p.catch) p.catch(() => {});
+                    } else {
+                        entry.target.pause();
+                    }
+                });
+            }, { threshold: 0.25 })
+            : null;
+
+        /* ==================================================================
+           RENDERING
+           ================================================================== */
+        function mediaHTML(p) {
+            if (VIDEO_RE.test(p.img)) {
+                // #t=0.1 makes browsers show a frame instead of a blank box before playback starts
+                return `<video src="${p.img}#t=0.1" muted loop playsinline preload="metadata" aria-label="${p.title}"></video>`;
+            }
+            return `<img src="${p.img}" alt="${p.title}" loading="lazy">`;
+        }
+
+        function itemHTML(p) {
+            const pill = p.caseStudy
+                ? `<a class="pf-pill" href="${p.caseStudy}">Case Study</a>`
+                : "";
+            return `
+                <article class="pf-item">
+                    <div class="pf-thumb" style="--tile:${p.tile}; --ink:${p.ink}">
+                        ${mediaHTML(p)}
+                        <span class="pf-thumb-label">${p.title}</span>
+                        <span class="pf-scan" aria-hidden="true"></span>
+                    </div>
+                    <div class="pf-info">
+                        <h3>${p.title}</h3>
+                        <p>${p.desc}</p>
+                        ${pill}
+                    </div>
+                </article>`;
+        }
+
+        function render(filter) {
+            current = filter;
+            main.dataset.filter = filter;
+
+            tabs.forEach(btn => btn.setAttribute("aria-pressed", String(btn.dataset.filter === filter)));
+
+            let count = 0;
+
+            if (filter === "all") {
+                list.innerHTML = GROUPS.map(g => `
+                    <section class="pf-band pf-band--${g.key}" aria-label="${g.label}">
+                        <h2 class="pf-year">${g.label}</h2>
+                        <div class="pf-items">
+                            ${g.ids.map(id => { count++; return itemHTML(PROJECTS[id]); }).join("")}
+                        </div>
+                    </section>`).join("");
+            } else {
+                list.innerHTML = `
+                    <div class="pf-flat">
+                        ${FILTERS[filter].map(id => { count++; return itemHTML(PROJECTS[id]); }).join("")}
+                    </div>`;
+            }
+
+            status.textContent = count + " projects shown";
+
+            // Hook up scroll reveal + video playback for the freshly rendered nodes
+            if (revealObserver) revealObserver.disconnect();
+            if (videoObserver) videoObserver.disconnect();
+
+            list.querySelectorAll(".pf-item, .pf-year").forEach(el => {
+                if (revealObserver) revealObserver.observe(el);
+                else el.classList.add("is-in");
+            });
+
+            list.querySelectorAll("video").forEach(v => {
+                v.muted = true;            // required for autoplay in most browsers
+                v.defaultMuted = true;
+                if (videoObserver) videoObserver.observe(v);
+            });
+        }
+
+        // Missing image/video? Remove it so the coloured tile + title show instead.
+        list.addEventListener("error", (e) => {
+            if (e.target.tagName === "IMG" || e.target.tagName === "VIDEO") {
+                e.target.parentElement.classList.add("is-missing");
+                e.target.remove();
+            }
+        }, true);
+
+        /* ==================================================================
+           MOTION 3: 3D card tilt on thumbnails + scramble project titles on hover
+           ================================================================== */
+        if (!reduceMotion && canHover) {
+            list.addEventListener("mousemove", (e) => {
+                const thumb = e.target.closest(".pf-thumb");
+                if (!thumb) return;
+                const rect = thumb.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                thumb.style.transform =
+                    `perspective(1000px) scale3d(1.03, 1.03, 1.03) rotateX(${-y / 18}deg) rotateY(${x / 18}deg)`;
+            });
+
+            list.addEventListener("mouseout", (e) => {
+                const thumb = e.target.closest(".pf-thumb");
+                if (thumb && !thumb.contains(e.relatedTarget)) {
+                    thumb.style.transform = "";
+                }
+            });
+
+            list.addEventListener("mouseover", (e) => {
+                const item = e.target.closest(".pf-item");
+                if (item && !item.contains(e.relatedTarget)) {
+                    scrambleElement(item.querySelector("h3"));
+                }
+            });
+
+            tabs.forEach(btn => btn.addEventListener("mouseenter", () => scrambleElement(btn.firstElementChild)));
+        }
+
+        /* ==================================================================
+           FILTER TABS + URL HASH (#case-studies, #graphic-design, #favourites)
+           Clicking the active tab again returns to the full "All" view.
+           ================================================================== */
+        function filterFromHash() {
+            const name = location.hash.replace("#", "");
+            return FILTERS[name] ? name : "all";
+        }
+
+        function setHash(filter) {
+            try {
+                const url = filter === "all"
+                    ? location.pathname + location.search
+                    : "#" + filter;
+                history.replaceState(null, "", url);
+            } catch (err) {
+                /* some previews block history changes; the filter still works without a URL update */
+            }
+        }
+
+        tabs.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const next = current === btn.dataset.filter ? "all" : btn.dataset.filter;
+                render(next);
+                setHash(next);
+            });
+        });
+
+        window.addEventListener("hashchange", () => {
+            render(filterFromHash());
+        });
+
+        /* ==================================================================
+           GIANT TITLE: fit to full width, stretch taller, lime on hover
+           ================================================================== */
+        function fitTitle() {
+            const span = title.firstElementChild;
+            const stretch = parseFloat(getComputedStyle(title).getPropertyValue("--pf-stretch")) || 1;
+
+            title.style.fontSize = "100px";
+            title.style.marginBottom = "0px";
+
+            const target = title.clientWidth;
+            const natural = span.getBoundingClientRect().width;
+            if (natural > 0) {
+                title.style.fontSize = (100 * target / natural) + "px";
+            }
+
+            // scaleY doesn't change layout height, so add back the extra space it takes up
+            title.style.marginBottom = (title.offsetHeight * (stretch - 1)) + "px";
+        }
+
+        let fitQueued = false;
+        function queueFit() {
+            if (fitQueued) return;
+            fitQueued = true;
+            requestAnimationFrame(() => { fitQueued = false; fitTitle(); });
+        }
+
+        // Press the title = back to the normal white state (until the cursor leaves and comes back)
+        title.addEventListener("pointerdown", () => title.classList.add("is-pressed"));
+        title.addEventListener("pointerleave", () => title.classList.remove("is-pressed"));
+        title.addEventListener("pointercancel", () => title.classList.remove("is-pressed"));
+
+        /* ==================================================================
+           GO
+           ================================================================== */
+        render(filterFromHash());
+        fitTitle();
+        window.addEventListener("resize", queueFit);
+
+        if (document.fonts) {
+            document.fonts.ready.then(fitTitle);
+            document.fonts.addEventListener("loadingdone", fitTitle);
+        }
+    </script>
 </body>
-<script>
-  /* Page reveal on load (CSS uses html.body-ready to avoid flash) */
-  document.documentElement.classList.add('body-ready');
-  
-  /* Intercept internal links for a graceful exit, then navigate.
-     Uses View Transitions API when available; falls back to CSS fade. */
-  (function () {
-    const isInternal = (a) => (
-      a &&
-      a.origin === window.location.origin &&
-      !a.hasAttribute('download') &&
-      a.getAttribute('target') !== '_blank' &&
-      !a.getAttribute('href')?.startsWith('#')
-    );
-  
-    addEventListener('click', (e) => {
-      const a = e.target.closest('a');
-      if (!isInternal(a)) return;
-  
-      e.preventDefault();
-      const go = () => location.href = a.href;
-  
-      if (document.startViewTransition) {
-        // Native View Transition (Chrome/Edge/Arc)
-        document.startViewTransition(() => {
-          document.body.classList.add('leaving');
-        }).finished.then(go);
-      } else {
-        // CSS fallback
-        document.body.classList.add('leaving');
-        setTimeout(go, 250);
-      }
-    }, { capture: true });
-  })();
-  </script>
-  
 </html>
