@@ -15,39 +15,12 @@
     <link rel="stylesheet" href="https://use.typekit.net/inw8ngx.css">
 
     <!-- External CSS (keep this ?v= number in sync with index.html) -->
-    <link rel="stylesheet" href="style.css?v=4">
+    <link rel="stylesheet" href="style.css?v=5">
 
     <!-- About Page Specific Navigation Overrides -->
     <style>
         body {
             background-color: #ffffff;
-        }
-
-        /* Solid Purple Navigation Bar matching Figma design */
-        .about-header {
-            position: relative;
-            background-color: #4D04FF;
-            padding: 24px 5vw;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 10;
-        }
-
-        .about-header .top-left {
-            flex-direction: row;
-            align-items: center;
-            gap: 0;
-        }
-
-        .about-header .brain-icon {
-            width: 38px;
-            height: auto;
-            display: block;
-        }
-
-        .about-header .top-right {
-            margin-top: 0;
         }
 
         /* Adjust top padding on content section to account for static purple nav */
@@ -62,9 +35,6 @@
         }
 
         @media (max-width: 768px) {
-            .about-header {
-                padding: 18px 5vw;
-            }
             #about-top {
                 padding-top: 50px;
             }
@@ -74,15 +44,15 @@
 <body>
 
     <!-- === HEADER / NAVIGATION === -->
-    <header class="about-header">
+    <header>
         <div class="top-left">
             <a href="index.html">
-                <img src="assets/brain-180.png" alt="Brain Logo" class="brain-icon" width="38">
+                <img src="assets/brain-180.png" alt="Home" class="brain-icon" width="38">
             </a>
         </div>
         <nav class="top-right">
             <a href="about.html" class="cyber-nav-link" data-text="About Me">About Me</a>
-            <a href="index.html#portfolio" class="cyber-nav-link" data-text="Portfolio">Portfolio</a>
+            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio">Portfolio</a>
             <a href="contact.html" class="cyber-nav-link" data-text="Get in Touch!">Get in Touch!</a>
         </nav>
     </header>

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UnwiseGenius</title> <link rel="icon" type="image/x-icon" href="/assets/faviconbrain.png">
+    <title>UnwiseGenius</title>
+    <link rel="icon" type="image/x-icon" href="/assets/faviconbrain.png">
 
     <!-- Google Fonts: Rajdhani & Space Grotesk -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +15,7 @@
     <link rel="stylesheet" href="https://use.typekit.net/inw8ngx.css">
 
     <!-- External CSS (?v=4 busts stale caches; bump it whenever you change style.css) -->
-    <link rel="stylesheet" href="style.css?v=4">
+    <link rel="stylesheet" href="style.css?v=5">
 
     <!-- Three.js, Loaders & Post-Processing -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -29,21 +30,24 @@
     <!-- === HEADER / NAVIGATION === -->
     <header>
         <div class="top-left">
-            <img src="assets/brain-180.png" alt="Brain Logo" class="brain-icon" width="40">
-            <div class="folder-group">
-                <img src="assets/Folder1.png" alt="My Work Folder" class="folder-icon" width="60">
-                <span class="folder-text">My Work</span>
-            </div>
+            <a href="index.html">
+                <img src="assets/brain-180.png" alt="Home" class="brain-icon" width="38">
+            </a>
         </div>
         <nav class="top-right">
             <a href="about.html" class="cyber-nav-link" data-text="About Me">About Me</a>
             <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio">Portfolio</a>
-            <a href="contact.html" class="cyber-nav-link" data-text="Talk to Me">Get in Touch!</a>
+            <a href="contact.html" class="cyber-nav-link" data-text="Get in Touch!">Get in Touch!</a>
         </nav>
     </header>
 
     <!-- === HERO SECTION (Contains 3D Object) === -->
     <section id="hero">
+        <!-- Quick link to the portfolio (moved out of the nav bar so the bar matches every other page) -->
+        <a href="portfolio.html" class="folder-group hero-folder" aria-label="My Work - view my portfolio">
+            <img src="assets/Folder1.png" alt="" class="folder-icon" width="60">
+            <span class="folder-text">My Work</span>
+        </a>
         <div id="canvas-container"></div>
     </section>
 

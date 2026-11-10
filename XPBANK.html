@@ -1,751 +1,898 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/brain-16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/brain-180.png">
-  <meta name="theme-color" content="#4A00FF">
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XP Bank — Case Study | Jared Russell // UnwiseGenius</title>
-
-  <!-- Google Fonts: Host Grotesk -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-
-  <style>
-    /* CSS RESET & VARIABLES */
-    :root {
-      --primary-color: #5d33ff;
-      --sputnik-grey: #2e3238; /* Cool, industrial Sputnik Grey */
-      --text-main: #111111;
-      --text-muted: #555555;
-      --bg-color: #ffffff;
-      
-      /* Fonts */
-      --font-heading: 'Host Grotesk', sans-serif;
-      --font-body: 'Stolzl', sans-serif;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: var(--font-body);
-      font-weight: 400;
-      color: var(--text-main);
-      background-color: var(--bg-color);
-      line-height: 1.6;
-      opacity: 1; 
-      transition: opacity 0.25s ease-out;
-      overflow-x: hidden;
-    }
-
-    body.leaving {
-      opacity: 0;
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    h1, h2, h3, h4,h5 {
-      font-family: var(--font-heading);
-      font-weight: 600;
-      margin-bottom: 1rem;
-      line-height: 1.2;
-    }
-
-    /* HEADER */
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem 5%;
-      background-color: var(--primary-color);
-      color: #ffffff;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo img {
-      width: 40px; 
-      filter: brightness(0) invert(1);
-      transition: opacity 0.2s ease;
-    }
-
-    .logo img:hover {
-      opacity: 0.8;
-    }
-
-    .nav nav {
-      display: flex;
-      gap: 2rem;
-      font-family: var(--font-body);
-      font-weight: 700;
-      font-size: 0.9rem;
-    }
-
-    .nav nav a {
-      transition: opacity 0.2s ease;
-      opacity: 1;
-    }
-
-    .nav nav a:not(.active):hover {
-      opacity: 0.6;
-    }
-    
-    .nav nav a.active {
-      opacity: 1;
-      text-decoration: underline;
-      text-underline-offset: 4px;
-    }
-
-    /* MAIN CONTAINER */
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 0 5%;
-    }
-
-    /* HERO */
-    .cs-hero {
-      text-align: center;
-      margin-top: 2rem;
-      margin-bottom: 3rem;
-    }
-
-    .cs-hero h1 {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      margin-bottom: 1.5rem;
-    }
-
-    .hero-media-wrapper {
-      width: 100%;
-      background-color: var(--primary-color);
-      border-radius: 4px;
-      overflow: hidden;
-      aspect-ratio: 21 / 9; 
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .hero-media-wrapper img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* SCROLL ANIMATION CLASSES (Intersection Observer) */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
-
-    .fade-in {
-      opacity: 0;
-      transition: opacity 1s ease-out;
-    }
-
-    .fade-right {
-      opacity: 0;
-      transform: translateX(-40px);
-      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
-    
-    .fade-left {
-      opacity: 0;
-      transform: translateX(40px);
-      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
-
-    .is-visible {
-      opacity: 1 !important;
-      transform: translate(0, 0) !important;
-    }
-
-    .stagger-1 { transition-delay: 0.1s; }
-    .stagger-2 { transition-delay: 0.2s; }
-    .stagger-3 { transition-delay: 0.3s; }
-    .stagger-4 { transition-delay: 0.4s; }
-
-    /* SECTION STYLES */
-    section {
-      margin-bottom: 4rem;
-    }
-
-    section h2 {
-      font-size: 1.75rem;
-      margin-bottom: 1.25rem;
-    }
-
-    p {
-      margin-bottom: 1.25rem;
-      font-size: 1rem;
-    }
-
-    .purple-link {
-      color: var(--primary-color);
-      font-size: 1.1rem;
-      text-decoration: underline;
-      display: inline-block;
-      margin-top: 0.5rem;
-    }
-
-    /* CONTENTS LIST WITH MOTION & PURPLE BULLETS */
-    .contents-list {
-      list-style: none;
-      font-size: 1.1rem;
-      padding-left: 1.5rem;
-    }
-
-    .contents-list li {
-      position: relative;
-      margin-bottom: 1.2rem;
-      width: fit-content;
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      transform-origin: left center;
-    }
-
-    .contents-list li::before {
-      content: "•";
-      color: var(--primary-color);
-      position: absolute;
-      left: -1.2rem;
-      top: -0.1rem;
-      font-size: 1.5em;
-      line-height: 1;
-    }
-
-    .contents-list li:hover {
-      transform: scale(2);
-      z-index: 10;
-    }
-    
-    .contents-list a {
-      transition: color 0.2s;
-    }
-
-    .contents-list a:hover {
-      color: var(--primary-color);
-    }
-
-    /* SPECS */
-    .specs-list {
-      list-style: none;
-    }
-
-    .spec-line {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .spec-icon {
-      color: var(--primary-color);
-      width: 24px;
-      height: 24px;
-      flex-shrink: 0;
-    }
-    
-    .spec-line p {
-      margin: 0;
-    }
-
-    /* SIDE-BY-SIDE GRIDS */
-    .split-section {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    @media (min-width: 768px) {
-      .split-section {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    .split-image {
-      width: 100%;
-      border-radius: 8px;
-      object-fit: contain; 
-    }
-
-    /* IDEATION GRID */
-    .cs-grid {
-      display: grid;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .cs-grid--3 {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .cs-grid--2 {
-      grid-template-columns: repeat(2, 1fr);
-      margin-bottom: 2rem;
-    }
-
-    .cs-grid figure {
-      margin: 0;
-      max-height: 400px; 
-      display: flex;
-      justify-content: center;
-    }
-
-    .cs-grid img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain; 
-      border-radius: 6px;
-    }
-
-    /* DEVELOPMENT IMAGE CYCLER */
-    .image-cycler {
-      position: relative; 
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      border-radius: 8px;
-      overflow: hidden;
-      margin-bottom: 2rem;
-      background-color: #f8f8f8;
-    }
-
-    .cycle-img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain; 
-      object-position: center; 
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-    }
-
-    .cycle-img.active {
-      opacity: 1;
-      z-index: 2;
-    }
-
-    /* FIGMA EMBED / LAPTOP */
-    .laptop-mockup {
-      width: 100%;
-      max-width: 900px;
-      margin: 3rem auto;
-      border: 12px solid #333;
-      border-radius: 12px 12px 0 0;
-      background: #000;
-      position: relative;
-      aspect-ratio: 16 / 10;
-    }
-
-    .laptop-mockup::after {
-      content: '';
-      position: absolute;
-      bottom: -24px;
-      left: -5%;
-      width: 110%;
-      height: 24px;
-      background: #e0e0e0;
-      border-radius: 0 0 12px 12px;
-    }
-
-    .laptop-mockup iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      background: #fff;
-    }
-
-    /* FOOTER CTA: RISE UP */
-    .footer-rise {
-      text-align: center;
-      margin: 6rem 0 4rem;
-    }
-
-    .rise-up-btn {
-      display: inline-block;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .rise-up-btn h2 {
-      font-size: clamp(3rem, 6vw, 5rem);
-      margin: 0;
-      text-transform: uppercase;
-      display: inline-block;
-      transition: color 0.3s ease, font-style 0.3s ease, transform 0.3s ease;
-    }
-
-    .rise-up-btn:hover h2 {
-      color: var(--primary-color);
-      font-style: oblique;
-      transform: skewX(-12deg);
-    }
-
-    /* FOOTER */
-    .site-footer {
-      background-color: var(--sputnik-grey); /* Sputnik Grey */
-      color: #ffffff;
-      padding: 3rem 5%;
-      width: 100%;
-    }
-
-    .footer-container {
-      max-width: 1400px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-    }
-
-    .footer-logo img {
-      height: 38px;
-      width: auto;
-      display: block;
-      transition: opacity 0.2s ease;
-    }
-
-    .footer-logo img:hover {
-      opacity: 0.8;
-    }
-
-    .footer-socials {
-      display: flex;
-      gap: 2rem;
-      font-family: var(--font-body);
-      font-weight: 700;
-      font-size: 0.95rem;
-    }
-
-    .footer-socials a {
-      transition: opacity 0.2s ease;
-    }
-
-    .footer-socials a:hover {
-      opacity: 0.6;
-    }
-
-    @media (max-width: 600px) {
-      .footer-container {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-      }
-      .footer-socials {
-        gap: 1.25rem;
-      }
-    }
-
-    /* BULLETS */
-    .cs-bullets {
-      padding-left: 1.5rem;
-      margin-bottom: 1.25rem;
-    }
-    
-    .cs-bullets li {
-      margin-bottom: 0.5rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XP Bank | Case Study</title>
+    <link rel="icon" type="image/x-icon" href="/assets/faviconbrain.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/brain-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/brain-180.png">
+    <meta name="theme-color" content="#4D04FF">
+
+    <!-- Google Fonts: Rajdhani & Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Adobe Fonts (Typekit): Stolzl Regular 400 + Bold 700. Must load BEFORE style.css -->
+    <link rel="stylesheet" href="https://use.typekit.net/inw8ngx.css">
+
+    <!-- Global CSS (keep this ?v= number in sync with the other pages) -->
+    <link rel="stylesheet" href="style.css?v=5">
+
+    <!-- If JavaScript is off, show everything instead of leaving content faded out -->
+    <noscript>
+        <style>
+            .fade-up, .fade-in, .fade-right, .fade-left { opacity: 1 !important; transform: none !important; }
+        </style>
+    </noscript>
+
+    <!-- Case study styles (all prefixed cs- so they never clash with style.css) -->
+    <style>
+        :root {
+            --cs-purple: #4D04FF;
+            --cs-lime:   #CFFF04;
+            --cs-pink:   #FB4CD1;
+            --cs-label:  #FF4DD2;
+        }
+
+        body { background-color: #ffffff; }
+
+        /* Links take the colour of their section; .cyber-btn and the specific link styles below still win */
+        main a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* --- LAYOUT --- */
+        .cs-wrap {
+            width: min(1100px, 86vw);
+            margin: 0 auto;
+        }
+
+        .cs-band {
+            padding: clamp(56px, 7vw, 104px) 0;
+        }
+
+        .cs-band--white  { background-color: #ffffff;         color: #111111; }
+        .cs-band--lime   { background-color: var(--cs-lime);   color: #111111; }
+        .cs-band--pink   { background-color: var(--cs-pink);   color: #ffffff; }
+        .cs-band--purple { background-color: var(--cs-purple); color: #ffffff; }
+
+        .cs-band h2 {
+            font-size: clamp(2.2rem, 4vw, 3.6rem);
+            letter-spacing: -1.5px;
+            line-height: 1.05;
+            margin-bottom: clamp(20px, 2.4vw, 36px);
+            cursor: default;
+        }
+
+        .cs-band h2.cs-sub {
+            font-size: clamp(1.6rem, 2.6vw, 2.3rem);
+            letter-spacing: -1px;
+            margin-bottom: clamp(16px, 2vw, 28px);
+        }
+
+        .cs-band p {
+            font-size: clamp(1.05rem, 1.35vw, 1.3rem);
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+
+        .cs-band strong { font-weight: 700; }
+
+        section[id] { scroll-margin-top: 24px; }
+
+        /* --- HERO --- */
+        .cs-hero {
+            background-color: var(--cs-purple);
+            color: #ffffff;
+            padding: clamp(40px, 6vw, 88px) 0 clamp(48px, 6vw, 96px);
+        }
+
+        .cs-pill {
+            display: inline-block;
+            background-color: var(--cs-label);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: clamp(0.85rem, 1.2vw, 1.1rem);
+            padding: 0.6em 1.4em;
+            border-radius: 14px;
+            margin-bottom: clamp(16px, 2vw, 28px);
+            user-select: none;
+        }
+
+        .cs-title {
+            font-size: clamp(3.5rem, 10vw, 9rem);
+            letter-spacing: -0.02em;
+            line-height: 0.95;
+            margin-bottom: clamp(16px, 2vw, 28px);
+            cursor: default;
+        }
+
+        .cs-tags {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: clamp(28px, 4vw, 56px);
+        }
+
+        .cs-tags li {
+            border: 2px solid rgba(255, 255, 255, 0.75);
+            border-radius: 999px;
+            padding: 0.35em 1em;
+            font-size: clamp(0.85rem, 1.1vw, 1rem);
+        }
+
+        /* The hero GIF keeps its natural proportions (the old fixed 21:9 box cropped it) */
+        .cs-hero-media {
+            border-radius: clamp(10px, 1.2vw, 18px);
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .cs-hero-media img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* --- SUMMARY / CONTENTS / SPECS --- */
+        .cs-duo {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: clamp(32px, 5vw, 80px);
+            margin-top: clamp(40px, 5vw, 72px);
+        }
+
+        .cs-contents {
+            list-style: none;
+            display: grid;
+            gap: 0.5rem;
+            justify-items: start;
+        }
+
+        .cs-contents a {
+            position: relative;
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.8em;
+            padding: 0.2em 0.7em;
+            font-weight: 700;
+            font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+            transition: color 0.25s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cs-contents .cs-num {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8em;
+            opacity: 0.6;
+        }
+
+        /* Same [ bracket ] hover as the nav links */
+        .cs-contents a::before,
+        .cs-contents a::after {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            color: var(--cs-purple);
+            transition: opacity 0.25s ease;
+        }
+
+        .cs-contents a::before { content: '['; left: 0; }
+        .cs-contents a::after  { content: ']'; right: 0; }
+
+        .cs-contents a:hover {
+            color: var(--cs-purple);
+            transform: translateX(6px);
+        }
+
+        .cs-contents a:hover::before,
+        .cs-contents a:hover::after { opacity: 1; }
+
+        .cs-specs {
+            list-style: none;
+            display: grid;
+            gap: 1.25rem;
+        }
+
+        .cs-spec {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cs-spec-icon {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            border: 3px solid #111111;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #111111;
+        }
+
+        .cs-spec-icon svg { width: 55%; height: 55%; }
+
+        .cs-band .cs-spec p { margin: 0; }
+
+        /* --- IMAGES: tilt + scanline sweep (same effect as the homepage cards) --- */
+        .cs-media {
+            position: relative;
+            overflow: hidden;
+            border-radius: clamp(8px, 1vw, 14px);
+            will-change: transform;
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+        }
+
+        .cs-media:hover {
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22), 0 0 25px rgba(77, 4, 255, 0.18);
+        }
+
+        /* Full image always shown, never cropped */
+        .cs-media img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .cs-scan {
+            position: absolute;
+            top: -120%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.25) 50%, transparent 100%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .cs-media:hover .cs-scan {
+            top: 120%;
+            transition: top 0.75s ease-in-out;
+        }
+
+        /* If an image file is missing, show a neat tile with its description instead of a broken icon */
+        .cs-media.is-missing,
+        .cs-hero-media.is-missing {
+            min-height: 200px;
+            background-color: rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .cs-media.is-missing::after,
+        .cs-hero-media.is-missing::after {
+            content: attr(data-label);
+            font-weight: 700;
+        }
+
+        .cs-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(24px, 4vw, 64px);
+            align-items: center;
+        }
+
+        .cs-grid {
+            display: grid;
+            gap: clamp(12px, 1.6vw, 24px);
+            align-items: center;
+            margin-bottom: clamp(12px, 1.6vw, 24px);
+        }
+
+        .cs-grid--3 { grid-template-columns: repeat(3, 1fr); }
+        .cs-grid--2 { grid-template-columns: repeat(2, 1fr); margin-bottom: clamp(28px, 3vw, 44px); }
+
+        /* --- LISTS --- */
+        .cs-bullets {
+            list-style: none;
+            margin-bottom: 1.25rem;
+        }
+
+        .cs-bullets li {
+            position: relative;
+            padding-left: 2em;
+            margin-bottom: 0.7rem;
+            font-size: clamp(1.05rem, 1.35vw, 1.3rem);
+            line-height: 1.5;
+        }
+
+        /* Brain icon bullet (same artwork as the favicon) */
+        .cs-bullets li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.1em;
+            width: 1.3em;
+            height: 1.3em;
+            background: url("assets/faviconbrain.png") center / contain no-repeat;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+        }
+
+        /* --- DEVELOPMENT IMAGE CYCLER --- */
+        .cs-cycler {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: clamp(10px, 1.2vw, 18px);
+            overflow: hidden;
+            background-color: rgba(0, 0, 0, 0.22);
+        }
+
+        .cs-slide {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* whole image visible, never cropped */
+            object-position: center;
+            opacity: 0;
+            transition: opacity 0.9s ease-in-out;
+        }
+
+        .cs-slide.is-active {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        .cs-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 16px 0 clamp(28px, 3vw, 44px);
+        }
+
+        .cs-dot {
+            width: 12px;
+            height: 12px;
+            padding: 0;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            background: transparent;
+            cursor: pointer;
+            transition: background-color 0.25s ease, transform 0.25s ease;
+        }
+
+        .cs-dot:hover { transform: scale(1.2); }
+        .cs-dot[aria-current="true"] { background-color: var(--cs-lime); border-color: var(--cs-lime); }
+        .cs-dot:focus-visible { outline: 2px solid var(--cs-lime); outline-offset: 3px; }
+
+        /* --- FIGMA LAPTOP (the base now stays inside its box, so nothing gets cut off on small screens) --- */
+        .cs-laptop {
+            position: relative;
+            width: min(980px, 100%);
+            margin: clamp(24px, 3vw, 48px) auto 0;
+            padding: 0 3% 28px;
+        }
+
+        .cs-laptop-screen {
+            position: relative;
+            aspect-ratio: 16 / 10;
+            border: clamp(8px, 1.2vw, 14px) solid #1a1a1e;
+            border-radius: 14px 14px 0 0;
+            background-color: #000000;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .cs-laptop-screen iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+            background-color: #ffffff;
+        }
+
+        .cs-laptop::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 6px;
+            height: 22px;
+            background-color: #d9d9de;
+            border-radius: 0 0 16px 16px;
+            box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0.08);
+        }
+
+        .cs-band .cs-center { text-align: center; margin: clamp(24px, 3vw, 40px) auto 0; }
+
+        /* --- RISE UP --- */
+        .cs-rise {
+            text-align: center;
+            padding: clamp(56px, 8vw, 120px) 0;
+        }
+
+        .rise-up-btn {
+            display: inline-block;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .rise-up-btn h2 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            letter-spacing: -2px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin: 0;
+            transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .rise-up-btn:hover h2 {
+            color: var(--cs-purple);
+            transform: skewX(-12deg);
+            text-shadow: 6px 6px 0 var(--cs-lime);
+        }
+
+        /* --- SCROLL REVEAL --- */
+        .fade-up, .fade-in, .fade-right, .fade-left {
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-up    { transform: translateY(40px); }
+        .fade-right { transform: translateX(-40px); }
+        .fade-left  { transform: translateX(40px); }
+
+        .is-visible { opacity: 1; transform: none; }
+
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        .stagger-4 { transition-delay: 0.4s; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 820px) {
+            .cs-split { grid-template-columns: 1fr; }
+            .cs-duo   { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 640px) {
+            .cs-grid--3,
+            .cs-grid--2 { grid-template-columns: 1fr; }
+            .cs-cycler { aspect-ratio: 4 / 3; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .fade-up, .fade-in, .fade-right, .fade-left { opacity: 1; transform: none; transition: none; }
+            .cs-media, .cs-slide { transition: none; }
+        }
+    </style>
 </head>
 
 <body id="top">
-  <!-- HEADER -->
-  <header class="nav">
-    <a href="index.html" class="logo">
-      <img src="assets/brain2.png" alt="Brain logo" />
-    </a>
-    <nav>
-      <a href="about.html">About Me</a>
-      <a href="portfolio.html" class="active">Portfolio</a>
-      <a href="contact.html">Get in Touch!</a>
-    </nav>
-  </header>
 
-  <main class="container">
-    <!-- HERO -->
-    <section class="cs-hero fade-up observe">
-      <h1>XP Bank</h1>
-      <div class="hero-media-wrapper">
-        <picture>
-          <source srcset="assets/xpbank-still.jpg" media="(prefers-reduced-motion: reduce)">
-          <img src="assets/xpbank.gif" alt="XP Bank motion hero" decoding="async">
-        </picture>
-      </div>
-    </section>
-
-    <!-- SUMMARY -->
-    <section id="summary" class="fade-up observe stagger-1">
-      <h2>Summary Of Project</h2>
-      <p>I wanted to design a bank that felt approachable and supportive for first-time and early-career users who often feel let down by both traditional and modern banks. By looking at Trustpilot reviews of Nationwide and Monzo, I consistently identified the same issues: long waiting times, overcomplicated verification, and a lack of effective support when something went wrong.</p>
-      <a href="https://jaredrussell.notion.site/Bank-Brand-XP-18a9a122e2e0806a8619e67c19ba4506" target="_blank" rel="noopener" class="purple-link">Read this project's notes on Notion</a>
-    </section>
-
-    <!-- CONTENTS -->
-    <section id="contents" class="fade-right observe">
-      <h2>Contents</h2>
-      <ul class="contents-list">
-        <li><a href="#brief">The Brief</a></li>
-        <li><a href="#research">Research</a></li>
-        <li><a href="#ideation">Ideation</a></li>
-        <li><a href="#development">Development</a></li>
-        <li><a href="#final-product">Final Product</a></li>
-        <li><a href="#reflection">Reflection</a></li>
-      </ul>
-    </section>
-
-    <!-- SPECS -->
-    <section id="specs" class="fade-up observe">
-      <h2>Project Specifications</h2>
-      <ul class="specs-list" role="list">
-        <li class="spec-line fade-left observe stagger-1">
-          <span class="spec-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12"/><path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2"/><path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4"/></svg>
-          </span>
-          <p>The time it took for this project was <strong>9 – 12 Weeks</strong>.</p>
-        </li>
-        <li class="spec-line fade-left observe stagger-2">
-          <span class="spec-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-          </span>
-          <p>Software used for this project: <strong>Figma</strong>, <strong>Blender</strong>, and <strong>After Effects</strong>.</p>
-        </li>
-        <li class="spec-line fade-left observe stagger-3">
-          <span class="spec-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 6h11"/><path d="M11.5 12h11"/><path d="M11.5 18h11"/><path d="M4 6l1.5 1.5L8 5"/><path d="M4 12l1.5 1.5L8 11"/><path d="M4 18l1.5 1.5L8 17"/></svg>
-          </span>
-          <p>This was a branding project that created an identity for a <strong>modern bank</strong>.</p>
-        </li>
-        <li class="spec-line fade-left observe stagger-4">
-          <span class="spec-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21a8 8 0 1 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>
-          </span>
-          <p>The target audience was <strong>16–25 year olds</strong>.</p>
-        </li>
-      </ul>
-    </section>
-
-    <!-- THE BRIEF -->
-    <section id="brief">
-      <h2 class="fade-up observe">The Brief</h2>
-      <div class="split-section">
-        <img src="assets/brief-money.png" alt="Person holding money" class="split-image fade-right observe" />
-        <div class="text-content fade-left observe">
-          <p>We were tasked with creating a commercial bank brand aimed at 16–25-year-olds. We could either rebrand an existing bank or create a new one.</p>
-          <p>I chose to build a new brand from the ground up so it could be shaped entirely around the needs, behaviours, and expectations of the chosen age group (16-25).</p>
+    <!-- === HEADER / NAVIGATION (same as every other page) === -->
+    <header>
+        <div class="top-left">
+            <a href="index.html">
+                <img src="assets/brain-180.png" alt="Home" class="brain-icon" width="38">
+            </a>
         </div>
-      </div>
-    </section>
+        <nav class="top-right">
+            <a href="about.html" class="cyber-nav-link" data-text="About Me">About Me</a>
+            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio">Portfolio</a>
+            <a href="contact.html" class="cyber-nav-link" data-text="Get in Touch!">Get in Touch!</a>
+        </nav>
+    </header>
 
-    <!-- RESEARCH -->
-    <section id="research">
-      <h2 class="fade-up observe">Research</h2>
-      <div class="split-section">
-        <img src="assets/research-cards.png" alt="XP Bank Phone and Cards" class="split-image fade-right observe" />
-        <div class="text-content fade-left observe">
-          <p>I began by creating user personas that represented both the younger and older ends of the 16–25 age range, created through my research. These personas helped define XP Bank’s five core values:</p>
-          <ul class="cs-bullets">
-            <li>Human rights: fairness, inclusion, no discrimination</li>
-            <li>Responsible banking: helping users save, invest and grow</li>
-            <li>Round-the-clock support: reliable customer service</li>
-            <li>Strong security: proactive scam prevention</li>
-            <li>Innovation & feedback: the bank evolves through user input</li>
-          </ul>
+    <main>
+
+        <!-- === HERO === -->
+        <section class="cs-hero">
+            <div class="cs-wrap">
+                <span class="cs-pill fade-up observe">Case Study</span>
+                <h1 class="cs-title scramble-heading fade-up observe stagger-1">XP Bank</h1>
+
+                <ul class="cs-tags fade-up observe stagger-2" aria-label="Project focus">
+                    <li>Branding</li>
+                    <li>Design Systems</li>
+                    <li>Research</li>
+                    <li>Prototyping</li>
+                    <li>Products</li>
+                    <li>Motion</li>
+                </ul>
+
+                <div class="cs-hero-media fade-up observe stagger-3" data-label="XP Bank motion hero">
+                    <picture>
+                        <source srcset="assets/xpbank-still.jpg" media="(prefers-reduced-motion: reduce)">
+                        <img src="assets/xpbank.gif" alt="XP Bank motion hero" decoding="async">
+                    </picture>
+                </div>
+            </div>
+        </section>
+
+        <!-- === SUMMARY + CONTENTS + SPECS === -->
+        <section id="summary" class="cs-band cs-band--lime">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Summary Of Project</h2>
+                <p class="fade-up observe stagger-1">I wanted to design a bank that felt approachable and supportive for first-time and early-career users who often feel let down by both traditional and modern banks. By looking at Trustpilot reviews of Nationwide and Monzo, I consistently identified the same issues: long waiting times, overcomplicated verification, and a lack of effective support when something went wrong.</p>
+                <a href="https://jaredrussell.notion.site/Bank-Brand-XP-18a9a122e2e0806a8619e67c19ba4506" target="_blank" rel="noopener" class="cyber-btn fade-up observe stagger-2">
+                    <span>Read this project's notes on Notion</span>
+                    <span class="arrow">&nearr;</span>
+                </a>
+
+                <div class="cs-duo">
+                    <div id="contents">
+                        <h2 class="cs-sub scramble-heading fade-up observe">Contents</h2>
+                        <ul class="cs-contents">
+                            <li class="fade-right observe stagger-1"><a href="#brief"><span class="cs-num">01</span>The Brief</a></li>
+                            <li class="fade-right observe stagger-2"><a href="#research"><span class="cs-num">02</span>Research</a></li>
+                            <li class="fade-right observe stagger-3"><a href="#ideation"><span class="cs-num">03</span>Ideation</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#development"><span class="cs-num">04</span>Development</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#final-product"><span class="cs-num">05</span>Final Product</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num">06</span>Reflection</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="specs">
+                        <h2 class="cs-sub scramble-heading fade-up observe">Project Specifications</h2>
+                        <ul class="cs-specs" role="list">
+                            <li class="cs-spec fade-left observe stagger-1">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12"/><path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2"/><path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4"/></svg>
+                                </span>
+                                <p>The time it took for this project was <strong>9 – 12 Weeks</strong>.</p>
+                            </li>
+                            <li class="cs-spec fade-left observe stagger-2">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                                </span>
+                                <p>Software used for this project: <strong>Figma</strong>, <strong>Blender</strong>, and <strong>After Effects</strong>.</p>
+                            </li>
+                            <li class="cs-spec fade-left observe stagger-3">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 6h11"/><path d="M11.5 12h11"/><path d="M11.5 18h11"/><path d="M4 6l1.5 1.5L8 5"/><path d="M4 12l1.5 1.5L8 11"/><path d="M4 18l1.5 1.5L8 17"/></svg>
+                                </span>
+                                <p>This was a branding project that created an identity for a <strong>modern bank</strong>.</p>
+                            </li>
+                            <li class="cs-spec fade-left observe stagger-4">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21a8 8 0 1 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>
+                                </span>
+                                <p>The target audience was <strong>16–25 year olds</strong>.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === THE BRIEF === -->
+        <section id="brief" class="cs-band cs-band--white">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">The Brief</h2>
+                <div class="cs-split">
+                    <div class="fade-right observe">
+                        <div class="cs-media tilt-card" data-label="Person holding money">
+                            <img src="assets/brief-money.png" alt="Person holding money" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                    <div class="fade-left observe">
+                        <p>We were tasked with creating a commercial bank brand aimed at 16–25-year-olds. We could either rebrand an existing bank or create a new one.</p>
+                        <p>I chose to build a new brand from the ground up so it could be shaped entirely around the needs, behaviours, and expectations of the chosen age group (16-25).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === RESEARCH === -->
+        <section id="research" class="cs-band cs-band--pink">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Research</h2>
+                <div class="cs-split">
+                    <div class="fade-right observe">
+                        <div class="cs-media tilt-card" data-label="XP Bank phone and cards">
+                            <img src="assets/research-cards.png" alt="XP Bank Phone and Cards" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                    <div class="fade-left observe">
+                        <p>I began by creating user personas that represented both the younger and older ends of the 16–25 age range, created through my research. These personas helped define XP Bank’s five core values:</p>
+                        <ul class="cs-bullets">
+                            <li>Human rights: fairness, inclusion, no discrimination</li>
+                            <li>Responsible banking: helping users save, invest and grow</li>
+                            <li>Round-the-clock support: reliable customer service</li>
+                            <li>Strong security: proactive scam prevention</li>
+                            <li>Innovation &amp; feedback: the bank evolves through user input</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === IDEATION === -->
+        <section id="ideation" class="cs-band cs-band--white">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Ideation</h2>
+
+                <div class="cs-grid cs-grid--3">
+                    <figure class="fade-up observe stagger-1">
+                        <div class="cs-media tilt-card" data-label="Website mockups">
+                            <img src="assets/xplandingpagecard.png" alt="Website mockups" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                    </figure>
+                    <figure class="fade-up observe stagger-2">
+                        <div class="cs-media tilt-card" data-label="Brand guidelines booklet">
+                            <img src="assets/xp-bank-6.jpg" alt="Brand guidelines booklet" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                    </figure>
+                    <figure class="fade-up observe stagger-3">
+                        <div class="cs-media tilt-card" data-label="Components library">
+                            <img src="assets/xp-bank-5.jpg" alt="Components library" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                    </figure>
+                </div>
+
+                <div class="cs-grid cs-grid--2">
+                    <figure class="fade-up observe stagger-1">
+                        <div class="cs-media tilt-card" data-label="App on device">
+                            <img src="assets/xp-bank-1.jpg" alt="App on device" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                    </figure>
+                    <figure class="fade-up observe stagger-2">
+                        <div class="cs-media tilt-card" data-label="Stationery set">
+                            <img src="assets/xp-bank-3.jpg" alt="Stationery set" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                    </figure>
+                </div>
+
+                <p class="fade-up observe">Using real user pain points to shape the brand identity, I realised that users struggle most during moments of stress, such as scams, locked accounts, or unexpected issues. In response, I prioritised visible security actions, simplified user flows, and created a dedicated help area to make the experience feel more reassuring and less intimidating.</p>
+                <p class="fade-up observe">Initially, I wanted a cyberpunk-inspired UI influenced by my interest in Cyberpunk 2077 and Blade Runner 2049. However, through critique and reflection, it became clear that this approach was too niche and risked harming accessibility. I refined the visual direction into a more restrained, brutalist style that retained personality while significantly improving clarity and usability.</p>
+            </div>
+        </section>
+
+        <!-- === DEVELOPMENT === -->
+        <section id="development" class="cs-band cs-band--purple">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Development</h2>
+
+                <!-- Fading image cycler: every image is shown in full (object-fit: contain), with dots to jump between them -->
+                <div class="cs-cycler fade-in observe" id="cycler" role="group" aria-label="Development images">
+                    <img src="assets/xpcredit&debitcards.png"      class="cs-slide is-active" alt="Debit Cards">
+                    <img src="assets/Billboards.png"      class="cs-slide" alt="Billboards" loading="lazy">
+                    <img src="assets/ipadmockup.png"      class="cs-slide" alt="iPad Mockup" loading="lazy">
+                    <img src="assets/credit%20copy.gif"   class="cs-slide" alt="Credit Copy" loading="lazy">
+                    <img src="assets/xpfilebinder.png"      class="cs-slide" alt="File Binder" loading="lazy">
+                    <img src="assets/xplandingpage.png"        class="cs-slide" alt="Laptop XP" loading="lazy">
+                </div>
+                <div class="cs-dots" id="cycler-dots"></div>
+
+                <p class="fade-up observe">This project ran for approximately 9–12 weeks (February–May 2025) and covered a wide scope, including brand guidelines, mobile app screens, and a marketing landing page. I primarily worked in Figma, with After Effects and Blender used for motion work.</p>
+                <p class="fade-up observe">Wanting to push the project further, I looked at professional examples such as Wise’s design system. This encouraged me to move beyond a static PDF and create a fully interactive design system website, allowing me to demonstrate how the brand, components, and patterns scale consistently across different contexts.</p>
+            </div>
+        </section>
+
+        <!-- === FINAL PRODUCT === -->
+        <section id="final-product" class="cs-band cs-band--white">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Final Product</h2>
+                <p class="fade-up observe stagger-1">The final outcome included a 55-page brand guideline, a structured component library, 11 mobile app screens, a multi-page landing website, and a fully prototyped design system.</p>
+                <p class="fade-up observe stagger-2">Below is the interactive Figma Prototype of all of my deliverables:</p>
+
+                <div class="cs-laptop fade-up observe stagger-3">
+                    <div class="cs-laptop-screen">
+                        <iframe
+                            src="https://embed.figma.com/design/XYmJCC8mQ6QbNA2ymcIGWA/XP-Bank?node-id=0-1&amp;embed-host=share"
+                            allowfullscreen
+                            loading="lazy"
+                            title="XP Bank Interactive Prototype">
+                        </iframe>
+                    </div>
+                </div>
+
+                <p class="cs-center fade-up observe">
+                    <a href="https://www.figma.com/design/XYmJCC8mQ6QbNA2ymcIGWA/XP-Bank?node-id=0-1" target="_blank" rel="noopener" class="cyber-btn">
+                        <span>Open the prototype in Figma</span>
+                        <span class="arrow">&nearr;</span>
+                    </a>
+                </p>
+            </div>
+        </section>
+
+        <!-- === REFLECTION === -->
+        <section id="reflection" class="cs-band cs-band--lime">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Reflection</h2>
+                <p class="fade-up observe">This project significantly changed how I approach design. If I were to develop it further, I would conduct structured usability testing and a full UX audit to refine accessibility, interaction accuracy, and edge cases. While feedback initially challenged my design direction, it ultimately helped me grow and respond more confidently to critique. Most importantly, I learnt how to embed values into design decisions, prioritise real user problems over purely visual ideas, and adapt my work when feedback leads to a better outcome.</p>
+            </div>
+        </section>
+
+        <!-- === RISE UP (scroll to top) === -->
+        <section class="cs-rise fade-in observe">
+            <a href="#top" class="rise-up-btn" aria-label="Scroll to top of page">
+                <h2>Rise Up!</h2>
+            </a>
+        </section>
+
+    </main>
+
+    <!-- === FOOTER (same as every other page) === -->
+    <footer id="contact">
+        <div class="footer-left">
+            <a href="index.html" class="footer-logo-link">
+                <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo" class="footer-logo" height="38">
+            </a>
         </div>
-      </div>
-    </section>
+        <div class="footer-right">
+            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram</a>
+            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
+            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">Youtube</a>
+        </div>
+    </footer>
 
-    <!-- IDEATION -->
-    <section id="ideation">
-      <h2 class="fade-up observe">Ideation</h2>
-      <!-- 3 images top row -->
-      <div class="cs-grid cs-grid--3">
-        <figure class="fade-up observe stagger-1"><img src="assets/xp-bank-4.jpg" alt="Website mockups" /></figure>
-        <figure class="fade-up observe stagger-2"><img src="assets/xp-bank-6.jpg" alt="Brand guidelines booklet" /></figure>
-        <figure class="fade-up observe stagger-3"><img src="assets/xp-bank-5.jpg" alt="Components library" /></figure>
-      </div>
-      <!-- 2 images bottom row -->
-      <div class="cs-grid cs-grid--2">
-        <figure class="fade-up observe stagger-1"><img src="assets/xp-bank-1.jpg" alt="App on device" /></figure>
-        <figure class="fade-up observe stagger-2"><img src="assets/xp-bank-3.jpg" alt="Stationery set" /></figure>
-      </div>
+    <script>
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const canHover     = window.matchMedia("(hover: hover)").matches;
 
-      <p class="fade-up observe">Using real user pain points to shape the brand identity, I realised that users struggle most during moments of stress, such as scams, locked accounts, or unexpected issues. In response, I prioritised visible security actions, simplified user flows, and created a dedicated help area to make the experience feel more reassuring and less intimidating.</p>
-      <p class="fade-up observe">Initially, I wanted a cyberpunk-inspired UI influenced by my interest in Cyberpunk 2077 and Blade Runner 2049. However, through critique and reflection, it became clear that this approach was too niche and risked harming accessibility. I refined the visual direction into a more restrained, brutalist style that retained personality while significantly improving clarity and usability.</p>
-    </section>
+        /* ==================================================================
+           1. TEXT SCRAMBLE (same decryption effect as the other pages)
+           ================================================================== */
+        const GLYPHS = "!/<>[]-_=+*^?#_0101";
 
-    <!-- DEVELOPMENT -->
-    <section id="development">
-      <h2 class="fade-up observe">Development</h2>
-      
-      <!-- Fading Image Cycler -->
-      <div class="image-cycler fade-in observe">
-        <img src="assets/debitcards.png" class="cycle-img active" alt="Debit Cards" />
-        <img src="assets/Billboards.png" class="cycle-img" alt="Billboards" />
-        <img src="assets/ipadmockup.png" class="cycle-img" alt="iPad Mockup" />
-        <img src="assets/credit copy.gif" class="cycle-img" alt="Credit Copy" />
-        <img src="assets/filebinder.png" class="cycle-img" alt="File Binder" />
-        <img src="assets/laptopxp.png" class="cycle-img" alt="Laptop XP" />
-      </div>
+        function scrambleElement(element) {
+            if (!element || reduceMotion) return;
+            const originalText = element.getAttribute("data-original") || element.innerText;
+            element.setAttribute("data-original", originalText);
 
-      <p class="fade-up observe">This project ran for approximately 9–12 weeks (February–May 2025) and covered a wide scope, including brand guidelines, mobile app screens, and a marketing landing page. I primarily worked in Figma, with After Effects and Blender used for motion work.</p>
-      <p class="fade-up observe">Wanting to push the project further, I looked at professional examples such as Wise’s design system. This encouraged me to move beyond a static PDF and create a fully interactive design system website, allowing me to demonstrate how the brand, components, and patterns scale consistently across different contexts.</p>
-    </section>
+            const step = Math.max(1 / 3, originalText.length / 20);
+            let iteration = 0;
 
-    <!-- FINAL PRODUCT -->
-    <section id="final-product">
-      <h2 class="fade-up observe">Final Product</h2>
-      <p class="fade-up observe stagger-1">The final outcome included a 55-page brand guideline, a structured component library, 11 mobile app screens, a multi-page landing website, and a fully prototyped design system.</p>
-      <p class="fade-up observe stagger-2">Below is the interactive Figma Prototype of all of my deliverables:</p>
-      
-      <!-- CSS-styled laptop mockup holding the iframe -->
-      <div class="laptop-mockup fade-up observe stagger-3">
-        <iframe 
-          src="https://embed.figma.com/design/XYmJCC8mQ6QbNA2ymcIGWA/XP-Bank?node-id=0-1&embed-host=share" 
-          allowfullscreen 
-          loading="lazy" 
-          title="XP Bank Interactive Prototype">
-        </iframe>
-      </div>
-    </section>
+            clearInterval(element._scrambleInterval);
+            element._scrambleInterval = setInterval(() => {
+                element.innerText = originalText
+                    .split("")
+                    .map((letter, index) => {
+                        if (letter === " ") return " ";
+                        if (index < iteration) return originalText[index];
+                        return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+                    })
+                    .join("");
 
-    <!-- REFLECTION -->
-    <section id="reflection">
-      <h2 class="fade-up observe">Reflection</h2>
-      <p class="fade-up observe">This project significantly changed how I approach design. If I were to develop it further, I would conduct structured usability testing and a full UX audit to refine accessibility, interaction accuracy, and edge cases. While feedback initially challenged my design direction, it ultimately helped me grow and respond more confidently to critique. Most importantly, I learnt how to embed values into design decisions, prioritise real user problems over purely visual ideas, and adapt my work when feedback leads to a better outcome.</p>
-    </section>
-
-    <!-- FOOTER CTA (SCROLL TO TOP) -->
-    <div class="footer-rise fade-in observe">
-      <a href="#top" class="rise-up-btn" aria-label="Scroll to top of page">
-        <h2>Rise Up!</h2>
-      </a>
-    </div>
-
-  </main>
-
-  <!-- FOOTER (SPUTNIK GREY) -->
-  <footer class="site-footer">
-    <div class="footer-container">
-      <a href="index.html" class="footer-logo">
-        <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo" />
-      </a>
-      <div class="footer-socials">
-        <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener">YouTube</a>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    /* Page reveal on load */
-    document.documentElement.classList.add('body-ready');
-
-    /* Intercept internal links for a graceful exit, ignoring hash anchors */
-    (function () {
-      const isInternal = (a) => (
-        a &&
-        a.origin === window.location.origin &&
-        !a.hasAttribute('download') &&
-        a.getAttribute('target') !== '_blank' &&
-        !a.getAttribute('href')?.startsWith('#')
-      );
-
-      addEventListener('click', (e) => {
-        const a = e.target.closest('a');
-        if (!isInternal(a)) return;
-
-        e.preventDefault();
-        const go = () => location.href = a.href;
-
-        if (document.startViewTransition) {
-          document.startViewTransition(() => {
-            document.body.classList.add('leaving');
-          }).finished.then(go);
-        } else {
-          document.body.classList.add('leaving');
-          setTimeout(go, 250);
+                if (iteration >= originalText.length) {
+                    clearInterval(element._scrambleInterval);
+                    element.innerText = originalText;
+                }
+                iteration += step;
+            }, 30);
         }
-      }, { capture: true });
-    })();
 
-    /* Rise Up Scroll to Top Smooth Interaction */
-    document.querySelector('.rise-up-btn')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    });
-
-    /* Scroll Animation Observer */
-    document.addEventListener('DOMContentLoaded', () => {
-      const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.15
-      };
-
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
+        document.querySelectorAll(".scramble-heading").forEach(h => {
+            h.addEventListener("mouseenter", () => scrambleElement(h));
         });
-      }, observerOptions);
 
-      const elementsToAnimate = document.querySelectorAll('.observe');
-      elementsToAnimate.forEach(el => {
-        observer.observe(el);
-      });
-    });
+        /* ==================================================================
+           2. SCROLL REVEAL (fires once per element; headings decrypt as they appear)
+           ================================================================== */
+        const toAnimate = document.querySelectorAll(".observe");
 
-    /* Image Cycler for Development Section */
-    document.addEventListener('DOMContentLoaded', () => {
-      const cycleImages = document.querySelectorAll('.cycle-img');
-      if (cycleImages.length > 1) {
-        let currentIndex = 0;
-        setInterval(() => {
-          cycleImages[currentIndex].classList.remove('active');
-          currentIndex = (currentIndex + 1) % cycleImages.length;
-          cycleImages[currentIndex].classList.add('active');
-        }, 3000);
-      }
-    });
-  </script>
+        if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add("is-visible");
+                    if (entry.target.classList.contains("scramble-heading")) {
+                        scrambleElement(entry.target);
+                    }
+                    obs.unobserve(entry.target);
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -6% 0px" });
+
+            toAnimate.forEach(el => observer.observe(el));
+        } else {
+            toAnimate.forEach(el => el.classList.add("is-visible"));
+        }
+
+        /* ==================================================================
+           3. 3D TILT ON IMAGES (same as the homepage cards)
+           ================================================================== */
+        if (!reduceMotion && canHover) {
+            document.addEventListener("mousemove", (e) => {
+                const card = e.target.closest && e.target.closest(".tilt-card");
+                if (!card) return;
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                card.style.transform =
+                    `perspective(1000px) scale3d(1.02, 1.02, 1.02) rotateX(${-y / 25}deg) rotateY(${x / 25}deg)`;
+            });
+
+            document.addEventListener("mouseout", (e) => {
+                const card = e.target.closest && e.target.closest(".tilt-card");
+                if (card && !card.contains(e.relatedTarget)) {
+                    card.style.transform = "";
+                }
+            });
+        }
+
+        /* ==================================================================
+           4. DEVELOPMENT IMAGE CYCLER (auto-fades, dots to jump, pauses on hover)
+           ================================================================== */
+        (function () {
+            const stage = document.getElementById("cycler");
+            const dotsWrap = document.getElementById("cycler-dots");
+            if (!stage || !dotsWrap) return;
+
+            const slides = Array.from(stage.querySelectorAll(".cs-slide"));
+            if (slides.length < 2) return;
+
+            let index = 0;
+            let timer = null;
+
+            const dots = slides.map((slide, i) => {
+                const dot = document.createElement("button");
+                dot.type = "button";
+                dot.className = "cs-dot";
+                dot.setAttribute("aria-label", "Show image " + (i + 1) + ": " + slide.alt);
+                dot.addEventListener("click", () => { show(i); restart(); });
+                dotsWrap.appendChild(dot);
+                return dot;
+            });
+
+            function show(i) {
+                slides[index].classList.remove("is-active");
+                dots[index].removeAttribute("aria-current");
+                index = i;
+                slides[index].classList.add("is-active");
+                dots[index].setAttribute("aria-current", "true");
+            }
+
+            function next() { show((index + 1) % slides.length); }
+            function start() { if (!reduceMotion && !timer) timer = setInterval(next, 3500); }
+            function stop()  { clearInterval(timer); timer = null; }
+            function restart() { stop(); start(); }
+
+            dots[0].setAttribute("aria-current", "true");
+
+            stage.addEventListener("mouseenter", stop);
+            stage.addEventListener("mouseleave", start);
+            dotsWrap.addEventListener("focusin", stop);
+            dotsWrap.addEventListener("focusout", start);
+
+            start();
+        })();
+
+        /* ==================================================================
+           5. RISE UP (smooth scroll to top)
+           ================================================================== */
+        const rise = document.querySelector(".rise-up-btn");
+        if (rise) {
+            rise.addEventListener("click", (e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+        }
+
+        /* ==================================================================
+           6. MISSING IMAGE? Show a neat tile with its description instead of a broken icon
+           ================================================================== */
+        document.addEventListener("error", (e) => {
+            const img = e.target;
+            if (!img || img.tagName !== "IMG") return;
+            const box = img.closest(".cs-media, .cs-hero-media");
+            if (box) {
+                box.classList.add("is-missing");
+                if (!box.dataset.label) box.dataset.label = img.alt || "";
+                img.remove();
+            }
+        }, true);
+    </script>
 </body>
 </html>

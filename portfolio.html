@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Jared Russell</title>
+    <title>Portfolio</title>
+    <link rel="icon" type="image/x-icon" href="/assets/faviconbrain.png">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
@@ -20,7 +21,7 @@
     <link rel="stylesheet" href="https://use.typekit.net/inw8ngx.css">
 
     <!-- Global CSS (keep this ?v= number in sync with the other pages) -->
-    <link rel="stylesheet" href="style.css?v=4">
+    <link rel="stylesheet" href="style.css?v=5">
 
     <!-- Portfolio page styles (all prefixed pf- so they never clash with style.css) -->
     <style>
@@ -42,26 +43,6 @@
             clip: rect(0 0 0 0);
             white-space: nowrap;
         }
-
-        /* --- NAV BAR --- */
-        .pf-bar {
-            position: relative;
-            background-color: var(--pf-purple);
-            padding: 24px 6vw;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 10;
-        }
-
-        .pf-bar .top-left {
-            flex-direction: row;
-            align-items: center;
-            gap: 0;
-        }
-
-        .pf-bar .brain-icon { width: 38px; height: auto; display: block; }
-        .pf-bar .top-right  { margin-top: 0; }
 
         /* --- MAIN: background colour changes with the active filter --- */
         .pf-main {
@@ -262,6 +243,28 @@
             margin-bottom: clamp(8px, 1.4vw, 22px);
         }
 
+        a.pf-thumb {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .pf-title-link {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .pf-title-link:hover {
+            text-decoration: underline;
+            text-underline-offset: 0.18em;
+            text-decoration-thickness: 2px;
+        }
+
+        .pf-title-link:focus-visible {
+            outline: 2px solid currentColor;
+            outline-offset: 4px;
+            border-radius: 4px;
+        }
+
         .pf-item p {
             font-family: "stolzl", sans-serif;
             font-weight: 400;
@@ -281,16 +284,10 @@
             font-size: clamp(0.8rem, 1.2vw, 1.2rem);
             padding: 0.7em 1.5em;
             border-radius: 14px;
-            text-decoration: none;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: default;
+            user-select: none;
         }
 
-        .pf-pill:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-        }
-
-        .pf-pill:focus-visible { outline: 2px solid #111111; outline-offset: 3px; }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 900px) {
@@ -300,7 +297,6 @@
         }
 
         @media (max-width: 640px) {
-            .pf-bar { padding: 18px 5vw; }
             .pf-item { grid-template-columns: 1fr; row-gap: 14px; }
             .pf-flat { width: 88vw; }
             .pf-tab { font-size: 0.95rem; }
@@ -318,7 +314,7 @@
 <body>
 
     <!-- === NAV === -->
-    <header class="pf-bar">
+    <header>
         <div class="top-left">
             <a href="index.html">
                 <img src="assets/brain-180.png" alt="Home" class="brain-icon" width="38">
@@ -371,7 +367,7 @@
                    videos autoplay muted on a loop while they're on screen.
                    Paths must match the real filename, including capitals.
            - tile / ink: fallback tile colour + text colour if the file is missing
-           - caseStudy: link for the pink "Case Study" button (omit for none)
+           - caseStudy: the page the card + title link to (omit for no link)
            ================================================================== */
         const PROJECTS = {
             sugar: {
@@ -386,7 +382,7 @@
             },
             shining: {
                 title: "Title Sequence Refresh for the Shining",
-                img: "assets/jaredR_titlesequence.mp4", tile: "#2F6FB2", ink: "#ffffff",
+                img: "assets/theshiningtitlesequence.mp4", tile: "#2F6FB2", ink: "#ffffff",
                 desc: "A CMU project in which I refreshed a chosen title sequence for a movie/show, to appeal to a younger demographic. For this I chose The Shining."
             },
             cex: {
@@ -421,21 +417,21 @@
                 title: "XP Bank – The Bank made for young people",
                 img: "assets/xp-bank-cover.jpg", tile: "#6A35FF", ink: "#ffffff",
                 desc: "A bank branding project that focused on Branding, Design Systems, Research, Prototyping, Products &amp; Motion. And how they could appeal to a younger target audience",
-                caseStudy: "case-studies/xp-bank.html"
+                caseStudy: "XPBANK.html"
             },
             pioneers: {
                 title: "The Pioneers of Web Design",
-                img: "assets/Mac Logo.png", tile: "#0000E6", ink: "#ffffff",
+                img: "assets/macicon.png", tile: "#0000E6", ink: "#ffffff",
                 desc: "A group project that focused on Research, Presentation, &amp; Design Systems. Our task was to give a talk on the people who helped build the World Wide Web &amp; its design system"
             },
             flix: {
                 title: "Flix Multiplex – A Branding Concept",
-                img: "assets/flikbanner.png", tile: "#A30B26", ink: "#ffffff",
+                img: "assets/FlixMultiplexCard.png", tile: "#A30B26", ink: "#ffffff",
                 desc: "After working in a cinema for many years, it felt right after leaving (for the third time) to make a conceptual cinema brand to post online!"
             },
             roasters: {
                 title: "Roasters",
-                img: "assets/r1.jpg", tile: "#FFFFFF", ink: "#111111",
+                img: "assets/RoastersCard.png", tile: "#FFFFFF", ink: "#111111",
                 desc: "A Smartwatch concept that focused on Prototyping, Products &amp; Motion. And how you could design under the constraint of a small screen"
             }
         };
@@ -447,7 +443,8 @@
             { key: "misc", label: "Misc", ids: ["pioneers", "flix", "roasters"] }
         ];
 
-        // Filtered views: which projects show, and in what order
+        // Filtered views: which projects show, and in what order.
+        // (Projects in "case-studies" also get the pink "Case Study" label in every view.)
         const FILTERS = {
             "case-studies":   ["orion", "grub", "scran", "xp"],
             "graphic-design": ["sugar", "bite", "shining", "cex", "mousepad", "flix", "roasters", "pioneers"],
@@ -546,19 +543,35 @@
             return `<img src="${p.img}" alt="${p.title}" loading="lazy">`;
         }
 
-        function itemHTML(p) {
-            const pill = p.caseStudy
-                ? `<a class="pf-pill" href="${p.caseStudy}">Case Study</a>`
-                : "";
-            return `
-                <article class="pf-item">
-                    <div class="pf-thumb" style="--tile:${p.tile}; --ink:${p.ink}">
+        function itemHTML(p, id) {
+            const url = p.caseStudy;
+
+            const thumbInner = `
                         ${mediaHTML(p)}
                         <span class="pf-thumb-label">${p.title}</span>
-                        <span class="pf-scan" aria-hidden="true"></span>
-                    </div>
+                        <span class="pf-scan" aria-hidden="true"></span>`;
+
+            // Thumbnail + title both link to the project page. The thumbnail link is skipped by
+            // keyboard/screen readers because the title link already goes to the same place.
+            const thumb = url
+                ? `<a class="pf-thumb" href="${url}" tabindex="-1" aria-hidden="true" style="--tile:${p.tile}; --ink:${p.ink}">${thumbInner}</a>`
+                : `<div class="pf-thumb" style="--tile:${p.tile}; --ink:${p.ink}">${thumbInner}</div>`;
+
+            const heading = url
+                ? `<h3><a class="pf-title-link" href="${url}">${p.title}</a></h3>`
+                : `<h3>${p.title}</h3>`;
+
+            // Pink "Case Study" label under every project listed in FILTERS["case-studies"].
+            // It is a label only (not a link); the card and title do the linking.
+            const pill = FILTERS["case-studies"].includes(id)
+                ? `<span class="pf-pill">Case Study</span>`
+                : "";
+
+            return `
+                <article class="pf-item">
+                    ${thumb}
                     <div class="pf-info">
-                        <h3>${p.title}</h3>
+                        ${heading}
                         <p>${p.desc}</p>
                         ${pill}
                     </div>
@@ -578,13 +591,13 @@
                     <section class="pf-band pf-band--${g.key}" aria-label="${g.label}">
                         <h2 class="pf-year">${g.label}</h2>
                         <div class="pf-items">
-                            ${g.ids.map(id => { count++; return itemHTML(PROJECTS[id]); }).join("")}
+                            ${g.ids.map(id => { count++; return itemHTML(PROJECTS[id], id); }).join("")}
                         </div>
                     </section>`).join("");
             } else {
                 list.innerHTML = `
                     <div class="pf-flat">
-                        ${FILTERS[filter].map(id => { count++; return itemHTML(PROJECTS[id]); }).join("")}
+                        ${FILTERS[filter].map(id => { count++; return itemHTML(PROJECTS[id], id); }).join("")}
                     </div>`;
             }
 
@@ -638,7 +651,7 @@
             list.addEventListener("mouseover", (e) => {
                 const item = e.target.closest(".pf-item");
                 if (item && !item.contains(e.relatedTarget)) {
-                    scrambleElement(item.querySelector("h3"));
+                    scrambleElement(item.querySelector("h3 a") || item.querySelector("h3"));
                 }
             });
 
