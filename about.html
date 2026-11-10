@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jared Russell | About Me</title>
-    
+    <title>About Me</title>
+    <link rel="icon" type="image/x-icon" href="/assets/faviconbrain.png">
+
     <!-- Google Fonts: Rajdhani (Bold) for Nav/Footer & Space Grotesk (Bold) for Headings -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
-    
-    <!-- Link to external CSS -->
-    <link rel="stylesheet" href="style.css">
-    
+
+    <!-- Adobe Fonts (Typekit): Stolzl Regular 400 + Bold 700. Must load BEFORE style.css -->
+    <link rel="stylesheet" href="https://use.typekit.net/inw8ngx.css">
+
+    <!-- External CSS (keep this ?v= number in sync with index.html) -->
+    <link rel="stylesheet" href="style.css?v=4">
+
     <!-- About Page Specific Navigation Overrides -->
     <style>
         body {
@@ -51,6 +55,12 @@
             padding-top: 80px;
         }
 
+        /* Keeps the portrait area from collapsing if the image is missing */
+        .portrait-wrapper {
+            background-color: #e9e9e9;
+            min-height: 200px;
+        }
+
         @media (max-width: 768px) {
             .about-header {
                 padding: 18px 5vw;
@@ -65,9 +75,9 @@
 
     <!-- === HEADER / NAVIGATION === -->
     <header class="about-header">
-        <div class="top-left cyber-hud">
+        <div class="top-left">
             <a href="index.html">
-                <img src="assets/brain-180.png" alt="Brain Logo" class="brain-icon">
+                <img src="assets/brain-180.png" alt="Brain Logo" class="brain-icon" width="38">
             </a>
         </div>
         <nav class="top-right">
@@ -81,9 +91,9 @@
     <section id="about-top" class="reveal-section visible">
         <div class="about-top-content">
             <h1 class="scramble-heading text-purple">More about Me!</h1>
-            
-            <p> My name is Jared Russell, A UX design student passionate about user interaction and branding. I'm seeking a role in design that prioritises creativity and innovation.</p>
-            
+
+            <p>My name is Jared Russell, a UX design student passionate about user interaction and branding. I'm seeking a role in design that prioritises creativity and innovation.</p>
+
             <p>Apart from designing, I love researching design trends, exploring digital spaces, and enjoying a good cup of coffee.</p>
 
             <div class="location-block">
@@ -91,10 +101,11 @@
                 <p>Based in Belfast, Open to Anywhere!</p>
             </div>
         </div>
-        
+
         <div class="about-top-image">
             <div class="portrait-wrapper tilt-card">
-                <img src="assets/jared-portrait.jpg" alt="Jared Russell Portrait" onerror="this.src='https://via.placeholder.com/500x600?text=Jared+Portrait'">
+                <!-- The old via.placeholder.com fallback no longer works, so a missing image is now just hidden -->
+                <img src="assets/jared-portrait.jpg" alt="Jared Russell Portrait" onerror="this.style.display='none'">
                 <div class="scanline-sweep"></div>
             </div>
         </div>
@@ -104,18 +115,19 @@
     <section id="philosophy" class="reveal-section">
         <div class="philosophy-content">
             <h2 class="scramble-heading">Design Philosophy</h2>
-            
-            <p>I'm still learning and growing both as a designer and a person so my design philosophy will only grow for design and it's many practices.</p>
-            
-            <p>As of right now, I believe that Design should be accessible to everyone, Everything designed by me will be pushed always, asking questions on how to improve this? Or what did I learn?</p>
-            
-            <p>I believe every project specifically in UI/UX design should be backed by research always, and constant feedback and ideation should be racing throughout a project.</p>
-            
-            <p>I also enjoy working with others, as that is what pushes a designer to do their best and keep the work accountable and high quality.</p>
+
+            <p>I'm still learning and growing both as a designer and a person, so my design philosophy will only grow with design and its many practices.</p>
+
+            <p>As of right now, I believe that design should be accessible to everyone. Everything I design will always be pushed further, asking questions like: how can I improve this? What did I learn?</p>
+
+            <p>I believe every project, specifically in UI/UX design, should be backed by research, with constant feedback and ideation throughout.</p>
+
+            <p>I also enjoy working with others, as that is what pushes a designer to do their best and keeps the work accountable and high quality.</p>
         </div>
-        
+
         <div class="philosophy-image">
             <div class="avatar-holo-wrapper">
+                <!-- Tip: rename this file to john-mouse-avatar.png (no spaces/capitals) and update the path -->
                 <img src="assets/John Mouse Avatar.png" alt="Pixel Cursor Avatar" class="floating-avatar">
             </div>
         </div>
@@ -125,7 +137,7 @@
     <footer id="contact">
         <div class="footer-left">
             <a href="index.html" class="footer-logo-link">
-                <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo" class="footer-logo">
+                <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo" class="footer-logo" height="38">
             </a>
         </div>
         <div class="footer-right">
@@ -137,39 +149,38 @@
 
     <!-- === CYBERPUNK SCRIPT === -->
     <script>
-        // 1. Terminal Text Decryption / Hacker Scramble
+        // 1. Text scramble (spaces preserved)
         const GLYPHS = "!/<>[]-_=+*^?#_0101";
 
         function scrambleElement(element) {
-          const originalText = element.getAttribute("data-original") || element.innerText;
-          element.setAttribute("data-original", originalText);
-          let iteration = 0;
-          
-          clearInterval(element._scrambleInterval);
-          element._scrambleInterval = setInterval(() => {
-            element.innerText = originalText
-              .split("")
-              .map((letter, index) => {
-                if (index < iteration) {
-                  return originalText[index];
-                }
-                if (letter === " ") return " ";
-                return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
-              })
-              .join("");
+            const originalText = element.getAttribute("data-original") || element.innerText;
+            element.setAttribute("data-original", originalText);
+            let iteration = 0;
 
-            if (iteration >= originalText.length) {
-              clearInterval(element._scrambleInterval);
-            }
-            iteration += 1 / 2;
-          }, 25);
+            clearInterval(element._scrambleInterval);
+            element._scrambleInterval = setInterval(() => {
+                element.innerText = originalText
+                    .split("")
+                    .map((letter, index) => {
+                        if (letter === " ") return " ";
+                        if (index < iteration) return originalText[index];
+                        return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+                    })
+                    .join("");
+
+                if (iteration >= originalText.length) {
+                    clearInterval(element._scrambleInterval);
+                    element.innerText = originalText;
+                }
+                iteration += 1 / 3;
+            }, 30);
         }
 
         document.querySelectorAll(".scramble-heading").forEach(h => {
-          h.addEventListener("mouseenter", () => scrambleElement(h));
+            h.addEventListener("mouseenter", () => scrambleElement(h));
         });
 
-        // Trigger scramble on initial load for visible elements
+        // Scramble headings already on screen at load
         setTimeout(() => {
             document.querySelectorAll(".scramble-heading").forEach(h => {
                 const rect = h.getBoundingClientRect();
@@ -179,52 +190,36 @@
             });
         }, 500);
 
-        // 2. Intersection Observer for Scroll Reveals
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("visible");
-              const headings = entry.target.querySelectorAll(".scramble-heading");
-              headings.forEach(h => scrambleElement(h));
-            }
-          });
-        }, { threshold: 0.15 });
+        // 2. Scroll reveal (fires once per section)
+        if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                        entry.target.querySelectorAll(".scramble-heading").forEach(h => scrambleElement(h));
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
 
-        document.querySelectorAll(".reveal-section:not(.visible)").forEach(sec => observer.observe(sec));
+            document.querySelectorAll(".reveal-section:not(.visible)").forEach(sec => observer.observe(sec));
+        } else {
+            document.querySelectorAll(".reveal-section").forEach(sec => sec.classList.add("visible"));
+        }
 
-        // 3. Smooth 3D Card Tilt Interaction
-        const cards = document.querySelectorAll('.tilt-card');
-        
-        cards.forEach(card => {
-          let bounds;
+        // 3. Card tilt (uses live bounds, so it stays accurate while scrolling)
+        document.querySelectorAll(".tilt-card").forEach(card => {
+            card.addEventListener("mousemove", (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                card.style.transform =
+                    `perspective(1000px) scale3d(1.02, 1.02, 1.02) rotateX(${-y / 25}deg) rotateY(${x / 25}deg)`;
+            });
 
-          function rotateToMouse(e) {
-            const mouseX = e.clientX;
-            const mouseY = e.clientY;
-            const leftX = mouseX - bounds.x;
-            const topY = mouseY - bounds.y;
-            const center = {
-              x: leftX - bounds.width / 2,
-              y: topY - bounds.height / 2
-            };
-
-            card.style.transform = `
-              perspective(1000px)
-              scale3d(1.02, 1.02, 1.02)
-              rotateX(${-center.y / 25}deg)
-              rotateY(${center.x / 25}deg)
-            `;
-          }
-
-          card.addEventListener('mouseenter', () => {
-            bounds = card.getBoundingClientRect();
-            document.addEventListener('mousemove', rotateToMouse);
-          });
-
-          card.addEventListener('mouseleave', () => {
-            document.removeEventListener('mousemove', rotateToMouse);
-            card.style.transform = 'perspective(1000px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg)';
-          });
+            card.addEventListener("mouseleave", () => {
+                card.style.transform = "perspective(1000px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg)";
+            });
         });
     </script>
 </body>
