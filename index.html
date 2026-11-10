@@ -4,31 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jared Russell | Digital Design Portfolio</title>
-    
+
     <!-- Google Fonts: Rajdhani & Space Grotesk -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
-    
-    <!-- Link to external CSS -->
-    <link rel="stylesheet" href="style.css">
+
+    <!-- Adobe Fonts (Typekit): Stolzl Regular 400 + Bold 700. Must load BEFORE style.css -->
+    <link rel="stylesheet" href="https://use.typekit.net/inw8ngx.css">
+
+    <!-- External CSS (?v=4 busts stale caches; bump it whenever you change style.css) -->
+    <link rel="stylesheet" href="style.css?v=4">
 
     <!-- Three.js, Loaders & Post-Processing -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
 </head>
 <body>
 
     <!-- === HEADER / NAVIGATION === -->
     <header>
-        <div class="top-left cyber-hud">
-            <img src="assets/brain-180.png" alt="Brain Logo" class="brain-icon">
+        <div class="top-left">
+            <img src="assets/brain-180.png" alt="Brain Logo" class="brain-icon" width="40">
             <div class="folder-group">
-                <img src="assets/Folder1.png" alt="My Work Folder" class="folder-icon">
+                <img src="assets/Folder1.png" alt="My Work Folder" class="folder-icon" width="60">
                 <span class="folder-text">My Work</span>
             </div>
         </div>
@@ -49,7 +52,7 @@
         <div class="about-content">
             <h2 class="scramble-heading">A Bit about Me</h2>
             <p class="lead-text">Hello, I'm Jared.</p>
-            <p>I'm a student currently studying Digital Design at Ulster University. My focus is in UI/UX, Branding, Research & Accessible Design.</p>
+            <p>I'm a student currently studying Digital Design at Ulster University. My focus is in UI/UX, Branding, Research &amp; Accessible Design.</p>
             <a href="about.html" class="more-link cyber-btn">
                 <span>Want to know more?</span>
                 <span class="arrow">&rarr;</span>
@@ -68,7 +71,7 @@
             <h2 class="scramble-heading">Featured Projects</h2>
             <p>Projects I feel are worth checking out</p>
         </div>
-        
+
         <div class="projects-grid">
             <!-- Project 1: XP Bank -->
             <div class="project-card tilt-card">
@@ -78,7 +81,7 @@
                 </div>
                 <div class="project-info">
                     <h3>XP Bank</h3>
-                    <p>A bank branding project that focused on Branding, Design Systems, Research, Prototyping, Products & Motion.</p>
+                    <p>A bank branding project that focused on Branding, Design Systems, Research, Prototyping, Products &amp; Motion. And how they could appeal to a younger target audience.</p>
                 </div>
             </div>
 
@@ -90,7 +93,7 @@
                 </div>
                 <div class="project-info">
                     <h3>AVA</h3>
-                    <p>A Smartwatch concept that focused on Prototyping, Products & Motion under small screen constraints.</p>
+                    <p>A Smartwatch concept that focused on Prototyping, Products &amp; Motion. And how you could design under the constraint of a small screen.</p>
                 </div>
             </div>
 
@@ -102,7 +105,7 @@
                 </div>
                 <div class="project-info">
                     <h3>Scran</h3>
-                    <p>A cookbook app that focused on Prototyping, Research, Products & Motion for children.</p>
+                    <p>A cookbook app that focused on Prototyping, Research, Products &amp; Motion. And how you could design for an audience of children.</p>
                 </div>
             </div>
         </div>
@@ -112,9 +115,8 @@
     <footer id="contact">
         <div class="footer-left">
             <a href="index.html" class="footer-logo-link">
-                <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo" class="footer-logo">
+                <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo" class="footer-logo" height="38">
             </a>
-  
         </div>
         <div class="footer-right">
             <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram</a>
@@ -123,332 +125,359 @@
         </div>
     </footer>
 
-    <!-- === 3D LOGO & CYBERPUNK SCRIPT === -->
+    <!-- =====================================================================
+         SCRIPT 1: UI MOTION (runs first, so the page never stays hidden
+         even if the 3D script below fails)
+         ===================================================================== -->
     <script>
-        // --- 1. Cyberpunk Glitch Shader ---
-        const CyberpunkGlitchShader = {
-          uniforms: {
-            tDiffuse: { value: null },
-            amount: { value: 0.0 },
-            time: { value: 0.0 },
-            seed: { value: 0.0 }
-          },
-          vertexShader: `
-            varying vec2 vUv;
-            void main() {
-              vUv = uv;
-              gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-            }
-          `,
-          fragmentShader: `
-            uniform sampler2D tDiffuse;
-            uniform float amount;
-            uniform float time;
-            uniform float seed;
-            varying vec2 vUv;
-
-            float rand(vec2 co) {
-              return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
-            }
-
-            void main() {
-              if (amount <= 0.001) {
-                gl_FragColor = texture2D(tDiffuse, vUv);
-                return;
-              }
-
-              vec2 uv = vUv;
-              float sliceCount = 35.0;
-              float sliceY = floor(uv.y * sliceCount);
-              float sliceNoise = rand(vec2(sliceY, floor(time * 25.0) + seed));
-              
-              if (sliceNoise < amount * 0.85) {
-                float offset = (rand(vec2(sliceY, seed)) - 0.5) * 0.25 * amount;
-                uv.x += offset;
-              }
-
-              float splitOffset = 0.04 * amount * (rand(vec2(floor(time * 40.0), 1.0)) - 0.5);
-              vec4 rCol = texture2D(tDiffuse, uv + vec2(splitOffset, 0.0));
-              vec4 gCol = texture2D(tDiffuse, uv);
-              vec4 bCol = texture2D(tDiffuse, uv - vec2(splitOffset, 0.0));
-
-              float alpha = max(max(rCol.a, gCol.a), bCol.a);
-              if (alpha < 0.01) {
-                gl_FragColor = vec4(0.0);
-                return;
-              }
-
-              vec4 color = vec4(rCol.r, gCol.g, bCol.b, alpha);
-
-              float glitchNoise = rand(uv + time);
-              if (glitchNoise < amount * 0.3) {
-                color.r *= 0.2;
-                color.g += 0.5 * amount;
-                color.b += 0.8 * amount;
-              } else if (glitchNoise < amount * 0.4) {
-                color.r += 0.6 * amount; 
-                color.g *= 0.2;
-                color.b += 0.8 * amount; 
-              }
-
-              float scanline = sin(uv.y * 700.0) * 0.12 * amount;
-              color.rgb -= scanline;
-
-              vec2 blockUv = floor(uv * vec2(8.0, 60.0));
-              float blockRand = rand(blockUv + floor(time * 20.0));
-              if (blockRand < amount * 0.3) {
-                float colorPick = rand(blockUv + seed);
-                if (colorPick < 0.3) color.rgb = vec3(0.0, 0.3, 1.0);
-                else if (colorPick < 0.6) color.rgb = vec3(0.0, 0.9, 0.3);
-                else if (colorPick < 0.8) color.rgb = vec3(0.7, 0.0, 0.9);
-                else color.rgb = vec3(0.0, 0.0, 0.0);
-                color.rgb += rand(blockUv + seed) * 0.2; 
-              }
-
-              gl_FragColor = color;
-            }
-          `
-        };
-
-        // --- 2. Scene, Camera, and Container Setup ---
-        const heroSection = document.getElementById('hero');
-        const container = document.getElementById('canvas-container');
-        
-        let width = container.clientWidth || window.innerWidth;
-        let height = container.clientHeight || window.innerHeight;
-
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-        camera.position.set(0, 0, 5);
-
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(width, height);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        container.appendChild(renderer.domElement);
-
-        // --- 3. Post-Processing Pipeline ---
-        const composer = new THREE.EffectComposer(renderer);
-        const renderPass = new THREE.RenderPass(scene, camera);
-        composer.addPass(renderPass);
-
-        const glitchPass = new THREE.ShaderPass(CyberpunkGlitchShader);
-        composer.addPass(glitchPass);
-
-        // --- 4. Lights ---
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1.3);
-        scene.add(ambientLight);
-
-        const dirLight1 = new THREE.DirectionalLight(0xffffff, 2.2);
-        dirLight1.position.set(5, 5, 5);
-        scene.add(dirLight1);
-
-        const dirLight2 = new THREE.DirectionalLight(0x9a88ff, 1.5);
-        dirLight2.position.set(-5, -5, -2);
-        scene.add(dirLight2);
-
-        // --- 5. Pivot & Object Management ---
-        const pivotGroup = new THREE.Group();
-        scene.add(pivotGroup);
-
-        let targetObject = null;
-        let mainModel = null;
-        let modelWidth = 1;
-
-        const targetRotation = { x: 0, y: 0 };
-        const mouse = { x: 0, y: 0 };
-
-        function updateResponsiveScale() {
-          if (!targetObject || !modelWidth) return;
-
-          const vFovRad = (camera.fov * Math.PI) / 180;
-          const visibleHeight = 2 * Math.tan(vFovRad / 2) * camera.position.z;
-          const visibleWidth = visibleHeight * camera.aspect;
-
-          const fillPercentage = camera.aspect < 1.0 ? 0.82 : 0.65;
-          const targetWidth = Math.min(visibleWidth * fillPercentage, 4.2);
-
-          const finalScale = targetWidth / modelWidth;
-          targetObject.scale.set(finalScale, finalScale, finalScale);
-        }
-
-        function setupModel(model) {
-          const box = new THREE.Box3().setFromObject(model);
-          const center = box.getCenter(new THREE.Vector3());
-          const size = box.getSize(new THREE.Vector3());
-
-          model.position.sub(center);
-          modelWidth = size.x;
-          pivotGroup.add(model);
-          targetObject = pivotGroup;
-
-          updateResponsiveScale();
-        }
-
-        // --- 6. Load 3D Asset ---
-        const loader = new THREE.GLTFLoader();
-        loader.load(
-          'assets/Unwisegeniuslogowhite.glb', 
-          (gltf) => {
-            mainModel = gltf.scene;
-            setupModel(mainModel);
-          },
-          undefined,
-          (error) => {
-            console.warn('Local glTF file not found. Initializing fallback geometry.', error);
-            const fallbackGeo = new THREE.IcosahedronGeometry(1.2, 0);
-            const fallbackMat = new THREE.MeshStandardMaterial({
-              color: 0xffffff,
-              roughness: 0.3,
-              metalness: 0.7,
-            });
-            mainModel = new THREE.Mesh(fallbackGeo, fallbackMat);
-            setupModel(mainModel);
-          }
-        );
-
-        // --- 7. Pointer Movement ---
-        function onPointerMove(event) {
-          const touch = event.touches ? event.touches[0] : null;
-          const clientX = touch ? touch.clientX : event.clientX;
-          const clientY = touch ? touch.clientY : event.clientY;
-
-          mouse.x = (clientX / window.innerWidth) * 2 - 1;
-          mouse.y = -(clientY / window.innerHeight) * 2 + 1;
-
-          targetRotation.y = mouse.x * (Math.PI / 4.5);
-          targetRotation.x = -mouse.y * (Math.PI / 4.5);
-        }
-
-        window.addEventListener('mousemove', onPointerMove);
-        window.addEventListener('touchmove', onPointerMove, { passive: true });
-
-        // --- 8. Glitch Animation Trigger (Scoped to Hero) ---
-        let isGlitching = false;
-        let glitchProgress = 0;
-        const glitchDuration = 0.85; 
-
-        function triggerCyberpunkGlitch() {
-          isGlitching = true;
-          glitchProgress = 0;
-        }
-
-        heroSection.addEventListener('click', triggerCyberpunkGlitch);
-
-        // --- 9. Resize Handling based on Container ---
-        function onResize() {
-          width = container.clientWidth;
-          height = container.clientHeight;
-          camera.aspect = width / height;
-          camera.updateProjectionMatrix();
-          renderer.setSize(width, height);
-          composer.setSize(width, height);
-          updateResponsiveScale();
-        }
-
-        window.addEventListener('resize', onResize);
-
-        // --- 10. Animation Loop ---
-        const clock = new THREE.Clock();
-
-        function animate() {
-          requestAnimationFrame(animate);
-
-          const delta = clock.getDelta();
-          const elapsedTime = clock.getElapsedTime();
-
-          if (targetObject) {
-            targetObject.rotation.y += (targetRotation.y - targetObject.rotation.y) * 0.055;
-            targetObject.rotation.x += (targetRotation.x - targetObject.rotation.x) * 0.055;
-
-            const hoverWaveY = Math.sin(elapsedTime * 1.8) * 0.08;
-            const hoverWaveX = Math.cos(elapsedTime * 1.2) * 0.04;
-
-            targetObject.position.x += ((mouse.x * 0.28 + hoverWaveX) - targetObject.position.x) * 0.05;
-            targetObject.position.y += ((mouse.y * 0.28 + hoverWaveY) - targetObject.position.y) * 0.05;
-          }
-
-          if (isGlitching) {
-            glitchProgress += delta;
-            const normTime = glitchProgress / glitchDuration;
-
-            if (normTime >= 1.0) {
-              isGlitching = false;
-              glitchPass.uniforms.amount.value = 0.0;
-            } else {
-              const flicker = Math.sin(normTime * Math.PI * 18) * 1 + 1;
-              const fadeOut = Math.pow(1.0 - normTime, 1.2);
-              
-              glitchPass.uniforms.amount.value = (1.00 + flicker * 1.00) * fadeOut;
-              glitchPass.uniforms.time.value = elapsedTime;
-              glitchPass.uniforms.seed.value = Math.random();
-            }
-          }
-
-          composer.render();
-        }
-
-        animate();
-
-        // --- 11. Decryption Text Scramble Effect ---
+        // --- Text scramble (spaces preserved) ---
         const GLYPHS = "!/<>[]-_=+*^?#_0101";
 
         function scrambleElement(element) {
-          const originalText = element.getAttribute("data-original") || element.innerText;
-          element.setAttribute("data-original", originalText);
-          let iteration = 0;
-          
-          clearInterval(element._scrambleInterval);
-          element._scrambleInterval = setInterval(() => {
-            element.innerText = originalText
-              .split("")
-              .map((letter, index) => {
-                if (letter === " ") return " ";
-                if (index < iteration) return originalText[index];
-                return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
-              })
-              .join("");
+            const originalText = element.getAttribute("data-original") || element.innerText;
+            element.setAttribute("data-original", originalText);
+            let iteration = 0;
 
-            if (iteration >= originalText.length) {
-              clearInterval(element._scrambleInterval);
-            }
-            iteration += 1 / 3;
-          }, 30);
+            clearInterval(element._scrambleInterval);
+            element._scrambleInterval = setInterval(() => {
+                element.innerText = originalText
+                    .split("")
+                    .map((letter, index) => {
+                        if (letter === " ") return " ";
+                        if (index < iteration) return originalText[index];
+                        return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+                    })
+                    .join("");
+
+                if (iteration >= originalText.length) {
+                    clearInterval(element._scrambleInterval);
+                    element.innerText = originalText;
+                }
+                iteration += 1 / 3;
+            }, 30);
         }
 
         document.querySelectorAll(".scramble-heading").forEach(h => {
-          h.addEventListener("mouseenter", () => scrambleElement(h));
+            h.addEventListener("mouseenter", () => scrambleElement(h));
         });
 
-        // --- 12. Intersection Observer for Scroll Reveals ---
-        const observer = new IntersectionObserver((entries, obs) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("visible");
-              const heading = entry.target.querySelector(".scramble-heading");
-              if (heading) scrambleElement(heading);
-              obs.unobserve(entry.target);
+        // --- Scroll reveal ---
+        if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                        const heading = entry.target.querySelector(".scramble-heading");
+                        if (heading) scrambleElement(heading);
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.18 });
+
+            document.querySelectorAll(".reveal-section").forEach(sec => observer.observe(sec));
+        } else {
+            // Very old browsers: just show everything
+            document.querySelectorAll(".reveal-section").forEach(sec => sec.classList.add("visible"));
+        }
+
+        // --- 3D card tilt ---
+        document.querySelectorAll(".tilt-card").forEach(card => {
+            card.addEventListener("mousemove", (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                card.style.transform =
+                    `perspective(1000px) scale3d(1.03, 1.03, 1.03) rotateX(${-y / 15}deg) rotateY(${x / 15}deg)`;
+            });
+
+            card.addEventListener("mouseleave", () => {
+                card.style.transform = "perspective(1000px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg)";
+            });
+        });
+    </script>
+
+    <!-- =====================================================================
+         SCRIPT 2: 3D LOGO + CYBERPUNK GLITCH
+         ===================================================================== -->
+    <script>
+        (function () {
+            const heroSection = document.getElementById("hero");
+            const container = document.getElementById("canvas-container");
+
+            // Bail out cleanly if a CDN script didn't load
+            if (typeof THREE === "undefined" || !THREE.GLTFLoader ||
+                !THREE.EffectComposer || !THREE.RenderPass || !THREE.ShaderPass) {
+                console.warn("Three.js or one of its add-ons failed to load. Skipping 3D hero.");
+                return;
             }
-          });
-        }, { threshold: 0.2 });
 
-        document.querySelectorAll(".reveal-section").forEach(sec => observer.observe(sec));
+            try {
+                // --- 1. Glitch shader ---
+                const CyberpunkGlitchShader = {
+                    uniforms: {
+                        tDiffuse: { value: null },
+                        amount: { value: 0.0 },
+                        time: { value: 0.0 },
+                        seed: { value: 0.0 }
+                    },
+                    vertexShader: `
+                        varying vec2 vUv;
+                        void main() {
+                            vUv = uv;
+                            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                        }
+                    `,
+                    fragmentShader: `
+                        uniform sampler2D tDiffuse;
+                        uniform float amount;
+                        uniform float time;
+                        uniform float seed;
+                        varying vec2 vUv;
 
-        // --- 13. High-Performance 3D Card Tilt ---
-        const cards = document.querySelectorAll('.tilt-card');
-        
-        cards.forEach(card => {
-          card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
+                        float rand(vec2 co) {
+                            return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
+                        }
 
-            card.style.transform = `perspective(1000px) scale3d(1.03, 1.03, 1.03) rotateX(${-y / 15}deg) rotateY(${x / 15}deg)`;
-          });
+                        void main() {
+                            if (amount <= 0.001) {
+                                gl_FragColor = texture2D(tDiffuse, vUv);
+                                return;
+                            }
 
-          card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg)';
-          });
-        });
+                            vec2 uv = vUv;
+                            float sliceCount = 35.0;
+                            float sliceY = floor(uv.y * sliceCount);
+                            float sliceNoise = rand(vec2(sliceY, floor(time * 25.0) + seed));
+
+                            if (sliceNoise < amount * 0.85) {
+                                float offset = (rand(vec2(sliceY, seed)) - 0.5) * 0.25 * amount;
+                                uv.x += offset;
+                            }
+
+                            float splitOffset = 0.04 * amount * (rand(vec2(floor(time * 40.0), 1.0)) - 0.5);
+                            vec4 rCol = texture2D(tDiffuse, uv + vec2(splitOffset, 0.0));
+                            vec4 gCol = texture2D(tDiffuse, uv);
+                            vec4 bCol = texture2D(tDiffuse, uv - vec2(splitOffset, 0.0));
+
+                            float alpha = max(max(rCol.a, gCol.a), bCol.a);
+                            if (alpha < 0.01) {
+                                gl_FragColor = vec4(0.0);
+                                return;
+                            }
+
+                            vec4 color = vec4(rCol.r, gCol.g, bCol.b, alpha);
+
+                            float glitchNoise = rand(uv + time);
+                            if (glitchNoise < amount * 0.3) {
+                                color.r *= 0.2;
+                                color.g += 0.5 * amount;
+                                color.b += 0.8 * amount;
+                            } else if (glitchNoise < amount * 0.4) {
+                                color.r += 0.6 * amount;
+                                color.g *= 0.2;
+                                color.b += 0.8 * amount;
+                            }
+
+                            float scanline = sin(uv.y * 700.0) * 0.12 * amount;
+                            color.rgb -= scanline;
+
+                            vec2 blockUv = floor(uv * vec2(8.0, 60.0));
+                            float blockRand = rand(blockUv + floor(time * 20.0));
+                            if (blockRand < amount * 0.3) {
+                                float colorPick = rand(blockUv + seed);
+                                if (colorPick < 0.3) color.rgb = vec3(0.0, 0.3, 1.0);
+                                else if (colorPick < 0.6) color.rgb = vec3(0.0, 0.9, 0.3);
+                                else if (colorPick < 0.8) color.rgb = vec3(0.7, 0.0, 0.9);
+                                else color.rgb = vec3(0.0, 0.0, 0.0);
+                                color.rgb += rand(blockUv + seed) * 0.2;
+                            }
+
+                            gl_FragColor = color;
+                        }
+                    `
+                };
+
+                // --- 2. Scene, camera, renderer (sized to the hero container) ---
+                let width = container.clientWidth || window.innerWidth;
+                let height = container.clientHeight || window.innerHeight;
+
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+                camera.position.set(0, 0, 5);
+
+                const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+                renderer.setSize(width, height);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                container.appendChild(renderer.domElement);
+
+                // --- 3. Post-processing ---
+                const composer = new THREE.EffectComposer(renderer);
+                composer.addPass(new THREE.RenderPass(scene, camera));
+                const glitchPass = new THREE.ShaderPass(CyberpunkGlitchShader);
+                composer.addPass(glitchPass);
+
+                // --- 4. Lights ---
+                scene.add(new THREE.AmbientLight(0xffffff, 1.3));
+
+                const dirLight1 = new THREE.DirectionalLight(0xffffff, 2.2);
+                dirLight1.position.set(5, 5, 5);
+                scene.add(dirLight1);
+
+                const dirLight2 = new THREE.DirectionalLight(0x9a88ff, 1.5);
+                dirLight2.position.set(-5, -5, -2);
+                scene.add(dirLight2);
+
+                // --- 5. Pivot & model management ---
+                const pivotGroup = new THREE.Group();
+                scene.add(pivotGroup);
+
+                let targetObject = null;
+                let modelWidth = 1;
+
+                const targetRotation = { x: 0, y: 0 };
+                const mouse = { x: 0, y: 0 };
+
+                function updateResponsiveScale() {
+                    if (!targetObject || !modelWidth) return;
+
+                    const vFovRad = (camera.fov * Math.PI) / 180;
+                    const visibleHeight = 2 * Math.tan(vFovRad / 2) * camera.position.z;
+                    const visibleWidth = visibleHeight * camera.aspect;
+
+                    const fillPercentage = camera.aspect < 1.0 ? 0.82 : 0.65;
+                    const targetWidth = Math.min(visibleWidth * fillPercentage, 4.2);
+
+                    const finalScale = targetWidth / modelWidth;
+                    targetObject.scale.set(finalScale, finalScale, finalScale);
+                }
+
+                function setupModel(model) {
+                    const box = new THREE.Box3().setFromObject(model);
+                    const center = box.getCenter(new THREE.Vector3());
+                    const size = box.getSize(new THREE.Vector3());
+
+                    model.position.sub(center);
+                    modelWidth = size.x || 1;
+                    pivotGroup.add(model);
+                    targetObject = pivotGroup;
+
+                    updateResponsiveScale();
+                }
+
+                function useFallback() {
+                    const fallbackGeo = new THREE.IcosahedronGeometry(1.2, 0);
+                    const fallbackMat = new THREE.MeshStandardMaterial({
+                        color: 0xffffff,
+                        roughness: 0.3,
+                        metalness: 0.7
+                    });
+                    setupModel(new THREE.Mesh(fallbackGeo, fallbackMat));
+                }
+
+                // --- 6. Load the model (tries both filename casings; GitHub Pages is case-sensitive) ---
+                const loader = new THREE.GLTFLoader();
+                const modelPaths = [
+                    "assets/Unwisegeniuslogowhite.glb",
+                    "assets/UnwiseGeniusLogowhite.glb"
+                ];
+
+                function tryLoad(index) {
+                    if (index >= modelPaths.length) {
+                        console.warn("No .glb found at any known path. Using fallback geometry.");
+                        useFallback();
+                        return;
+                    }
+                    loader.load(
+                        modelPaths[index],
+                        (gltf) => setupModel(gltf.scene),
+                        undefined,
+                        () => tryLoad(index + 1)
+                    );
+                }
+                tryLoad(0);
+
+                // --- 7. Pointer movement ---
+                function onPointerMove(event) {
+                    const touch = event.touches ? event.touches[0] : null;
+                    const clientX = touch ? touch.clientX : event.clientX;
+                    const clientY = touch ? touch.clientY : event.clientY;
+
+                    mouse.x = (clientX / window.innerWidth) * 2 - 1;
+                    mouse.y = -(clientY / window.innerHeight) * 2 + 1;
+
+                    targetRotation.y = mouse.x * (Math.PI / 4.5);
+                    targetRotation.x = -mouse.y * (Math.PI / 4.5);
+                }
+
+                window.addEventListener("mousemove", onPointerMove);
+                window.addEventListener("touchmove", onPointerMove, { passive: true });
+
+                // --- 8. Glitch trigger (hero only) ---
+                let isGlitching = false;
+                let glitchProgress = 0;
+                const glitchDuration = 0.85;
+
+                heroSection.addEventListener("click", () => {
+                    isGlitching = true;
+                    glitchProgress = 0;
+                });
+
+                // --- 9. Resize based on the hero container ---
+                window.addEventListener("resize", () => {
+                    width = container.clientWidth || window.innerWidth;
+                    height = container.clientHeight || window.innerHeight;
+                    camera.aspect = width / height;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(width, height);
+                    composer.setSize(width, height);
+                    updateResponsiveScale();
+                });
+
+                // --- 10. Animation loop ---
+                const clock = new THREE.Clock();
+
+                function animate() {
+                    requestAnimationFrame(animate);
+
+                    const delta = clock.getDelta();
+                    const elapsedTime = clock.getElapsedTime();
+
+                    if (targetObject) {
+                        targetObject.rotation.y += (targetRotation.y - targetObject.rotation.y) * 0.055;
+                        targetObject.rotation.x += (targetRotation.x - targetObject.rotation.x) * 0.055;
+
+                        const hoverWaveY = Math.sin(elapsedTime * 1.8) * 0.08;
+                        const hoverWaveX = Math.cos(elapsedTime * 1.2) * 0.04;
+
+                        targetObject.position.x += ((mouse.x * 0.28 + hoverWaveX) - targetObject.position.x) * 0.05;
+                        targetObject.position.y += ((mouse.y * 0.28 + hoverWaveY) - targetObject.position.y) * 0.05;
+                    }
+
+                    if (isGlitching) {
+                        glitchProgress += delta;
+                        const normTime = glitchProgress / glitchDuration;
+
+                        if (normTime >= 1.0) {
+                            isGlitching = false;
+                            glitchPass.uniforms.amount.value = 0.0;
+                        } else {
+                            const flicker = Math.sin(normTime * Math.PI * 18) + 1;
+                            const fadeOut = Math.pow(1.0 - normTime, 1.2);
+
+                            glitchPass.uniforms.amount.value = (1.0 + flicker) * fadeOut;
+                            glitchPass.uniforms.time.value = elapsedTime;
+                            glitchPass.uniforms.seed.value = Math.random();
+                        }
+                    }
+
+                    composer.render();
+                }
+
+                animate();
+            } catch (err) {
+                console.warn("3D hero failed to start (WebGL unavailable?):", err);
+            }
+        })();
     </script>
 </body>
 </html>
