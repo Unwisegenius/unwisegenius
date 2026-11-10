@@ -9,7 +9,7 @@
 
 html, body {
     width: 100%;
-    font-family: 'Stozl', 'Stolzl', sans-serif;
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     font-weight: 400;
     background-color: #ffffff;
     color: #111;
@@ -19,26 +19,26 @@ html, body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* Headings H1 & H2: Grotesk Bold */
+/* Headings H1 & H2 */
 h1, h2 {
-    font-family: 'Grotesk', 'Space Grotesk', -apple-system, sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
     font-weight: 700;
 }
 
-/* Headings H3: Stozl / Stolzl Bold */
+/* Headings H3 */
 h3 {
-    font-family: 'Stozl', 'Stolzl', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
     font-weight: 700;
 }
 
-/* Selection Color (Cyberpunk Neon) */
+/* Selection Color */
 ::selection {
     background-color: #CFFF04;
     color: #4D04FF;
 }
 
 /* ==========================================================================
-   HEADER / NAVIGATION (Rajdhani Bold)
+   HEADER / NAVIGATION
    ========================================================================== */
 header {
     position: absolute;
@@ -57,7 +57,6 @@ header {
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .brain-icon {
@@ -96,7 +95,6 @@ header {
     letter-spacing: 0.5px;
 }
 
-/* Navigation Links with Bracket Decoupling */
 .top-right {
     display: flex;
     gap: clamp(18px, 2.8vw, 38px);
@@ -156,7 +154,7 @@ header {
    HERO SECTION
    ========================================================================== */
 #hero {
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     background-color: #4D04FF;
     position: relative;
@@ -192,7 +190,7 @@ header {
    ABOUT SECTION
    ========================================================================== */
 #about {
-    background-color: #CFFF04; /* Bright Lime Green */
+    background-color: #CFFF04;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -214,11 +212,9 @@ header {
     letter-spacing: -1.5px;
     line-height: 1.05;
     margin-bottom: 25px;
-    cursor: default;
 }
 
 .about-content .lead-text {
-    font-family: 'Stozl', 'Stolzl', sans-serif;
     font-weight: 700;
     font-size: clamp(1.4rem, 2vw, 2rem);
     line-height: 1.3;
@@ -226,16 +222,12 @@ header {
 }
 
 .about-content p {
-    font-family: 'Stozl', 'Stolzl', sans-serif;
-    font-weight: 400;
     font-size: clamp(1.15rem, 1.5vw, 1.55rem);
     line-height: 1.45;
     margin-bottom: 28px;
 }
 
-/* Cyber Link Animation */
 .cyber-btn {
-    font-family: 'Stozl', 'Stolzl', sans-serif;
     font-weight: 700;
     font-size: clamp(1.05rem, 1.3vw, 1.4rem);
     color: #111;
@@ -262,7 +254,6 @@ header {
     transform: translateX(6px);
 }
 
-/* Avatar Levitation & Shadow */
 .about-image {
     max-width: 44%;
     display: flex;
@@ -280,7 +271,6 @@ header {
     height: auto;
     image-rendering: pixelated;
     animation: avatarFloat 4.2s ease-in-out infinite alternate;
-    will-change: transform;
 }
 
 @keyframes avatarFloat {
@@ -290,7 +280,7 @@ header {
 }
 
 /* ==========================================================================
-   PROJECTS SECTION (3D Tilt & Glow Effects)
+   PROJECTS SECTION
    ========================================================================== */
 #portfolio {
     background-color: #ffffff;
@@ -304,13 +294,10 @@ header {
 .portfolio-header h2 {
     font-size: clamp(2.4rem, 3.8vw, 3.4rem);
     letter-spacing: -1px;
-    cursor: default;
 }
 
 .portfolio-header p {
-    font-family: 'Stozl', 'Stolzl', sans-serif;
     font-size: 1.2rem;
-    font-weight: 400;
     color: #444;
     margin-top: 8px;
 }
@@ -326,8 +313,7 @@ header {
     flex-direction: column;
     cursor: pointer;
     transform-style: preserve-3d;
-    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: transform;
+    transition: transform 0.15s ease-out;
 }
 
 .project-img {
@@ -339,7 +325,7 @@ header {
     overflow: hidden;
     margin-bottom: 22px;
     position: relative;
-    border-radius: 2px;
+    border-radius: 4px;
     transition: box-shadow 0.4s ease;
 }
 
@@ -350,7 +336,7 @@ header {
 .project-img img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     display: block;
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -359,7 +345,6 @@ header {
     transform: scale(1.05);
 }
 
-/* Luminous Cyber Scanline Sweep */
 .scanline-sweep {
     position: absolute;
     top: -120%;
@@ -373,7 +358,6 @@ header {
         transparent 100%
     );
     pointer-events: none;
-    transition: none;
 }
 
 .project-card:hover .scanline-sweep {
@@ -396,14 +380,13 @@ header {
 }
 
 .project-info p {
-    font-family: 'Stozl', 'Stolzl', sans-serif;
     font-size: 0.95rem;
     line-height: 1.55;
     color: #333;
 }
 
 /* ==========================================================================
-   FOOTER (Rajdhani Bold)
+   FOOTER
    ========================================================================== */
 footer {
     background-color: #2b2b2b;
@@ -425,12 +408,11 @@ footer {
     width: auto;
     object-fit: contain;
     display: block;
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+    transition: transform 0.3s ease;
 }
 
 .footer-logo:hover {
     transform: scale(1.08) rotate(-1deg);
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
 }
 
 .footer-left span {
@@ -516,27 +498,6 @@ footer {
         padding: 20px 4vw;
     }
 
-    .brain-icon {
-        width: 34px;
-    }
-
-    .folder-icon {
-        width: 48px;
-    }
-
-    .folder-text {
-        font-size: 0.8rem;
-    }
-
-    .top-right {
-        gap: 14px;
-        margin-top: 5px;
-    }
-
-    .top-right a {
-        font-size: 0.85rem;
-    }
-
     #hero {
         height: 82vh;
     }
@@ -559,15 +520,6 @@ footer {
         padding: 55px 5vw;
     }
 
-    .portfolio-header {
-        margin-bottom: 30px;
-    }
-
-    .portfolio-header h2 {
-        font-size: 2.2rem;
-    }
-
-    /* Vertical Footer Stacking */
     footer {
         flex-direction: column;
         align-items: center;
@@ -581,18 +533,10 @@ footer {
         gap: 10px;
     }
 
-    .footer-left span {
-        font-size: 1.25rem;
-    }
-
     .footer-right {
         flex-wrap: wrap;
         justify-content: center;
         gap: 20px;
-    }
-
-    .footer-right a {
-        font-size: 1rem;
     }
 }
 
@@ -607,7 +551,6 @@ footer {
 
     .top-right a {
         font-size: 0.78rem;
-        letter-spacing: 0.2px;
     }
 
     #hero {
@@ -624,182 +567,5 @@ footer {
 
     #portfolio {
         padding: 45px 5vw;
-    }
-}
-/* ==========================================================================
-   ABOUT PAGE SPECIFIC STYLES
-   ========================================================================== */
-
-/* Top Section (White) */
-#about-top {
-    padding: 160px 8vw 100px 8vw; /* Extra top padding for header */
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    min-height: 80vh;
-    background-color: #ffffff;
-}
-
-.about-top-content {
-    max-width: 50%;
-    display: flex;
-    flex-direction: column;
-}
-
-.text-purple {
-    color: #4D04FF;
-}
-
-#about-top h1 {
-    font-size: clamp(3.5rem, 5.5vw, 5.5rem);
-    letter-spacing: -2px;
-    margin-bottom: 30px;
-    line-height: 1;
-}
-
-#about-top .lead-text {
-    font-weight: 700;
-    font-size: clamp(1.2rem, 1.6vw, 1.6rem);
-    line-height: 1.4;
-    margin-bottom: 25px;
-    color: #111;
-}
-
-#about-top p {
-    font-size: clamp(1.1rem, 1.4vw, 1.4rem);
-    line-height: 1.5;
-    margin-bottom: 30px;
-    color: #222;
-}
-
-.location-block {
-    margin-top: 20px;
-}
-
-.location-block h2 {
-    font-size: clamp(2rem, 3vw, 3rem);
-    margin-bottom: 10px;
-    letter-spacing: -1px;
-}
-
-.location-block p {
-    font-weight: 700;
-    margin-bottom: 0;
-}
-
-.about-top-image {
-    max-width: 42%;
-    display: flex;
-    justify-content: center;
-}
-
-.portrait-wrapper {
-    width: 100%;
-    max-width: 480px;
-    border-radius: 12px;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-}
-
-.portrait-wrapper img {
-    width: 100%;
-    height: auto;
-    display: block;
-    filter: grayscale(100%) contrast(1.1); /* Matches your B&W design */
-    transition: filter 0.5s ease;
-}
-
-.portrait-wrapper:hover img {
-    filter: grayscale(0%) contrast(1.05); /* Optional: Reveal color on hover */
-}
-
-/* Design Philosophy Section (Pink) */
-#philosophy {
-    background-color: #FB4CD1; /* Exact pink from the mockup */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 120px 8vw;
-    color: #ffffff;
-}
-
-.philosophy-content {
-    max-width: 55%;
-    display: flex;
-    flex-direction: column;
-}
-
-#philosophy h2 {
-    font-size: clamp(3rem, 4.5vw, 4.5rem);
-    letter-spacing: -1.5px;
-    margin-bottom: 40px;
-}
-
-#philosophy p {
-    font-size: clamp(1.1rem, 1.4vw, 1.35rem);
-    line-height: 1.6;
-    margin-bottom: 25px;
-    color: #ffffff;
-}
-
-.philosophy-image {
-    max-width: 40%;
-    display: flex;
-    justify-content: center;
-}
-
-.philosophy-image img {
-    width: 100%;
-    max-width: 400px;
-    height: auto;
-    filter: drop-shadow(15px 15px 0px rgba(0,0,0,0.2));}
-
-/* ==========================================================================
-   ABOUT PAGE RESPONSIVE
-   ========================================================================== */
-@media (max-width: 1024px) {
-    #about-top, #philosophy {
-        flex-direction: column;
-        padding: 140px 6vw 80px 6vw;
-        gap: 60px;
-    }
-    
-    #philosophy {
-        padding: 100px 6vw;
-    }
-
-    .about-top-content, .philosophy-content {
-        max-width: 100%;
-    }
-
-    .about-top-image, .philosophy-image {
-        max-width: 100%;
-        margin: 0 auto;
-    }
-}
-
-@media (max-width: 768px) {
-    #about-top {
-        padding: 120px 5vw 60px 5vw;
-        gap: 40px;
-    }
-
-    #about-top h1 {
-        font-size: 3rem;
-    }
-
-    .location-block h2 {
-        font-size: 2.2rem;
-    }
-
-    #philosophy {
-        padding: 80px 5vw;
-        gap: 50px;
-    }
-
-    #philosophy h2 {
-        font-size: 2.5rem;
-        margin-bottom: 25px;
     }
 }
