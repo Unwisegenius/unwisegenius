@@ -36,7 +36,6 @@
             --cs-purple: #4D04FF;
             --cs-lime:   #CFFF04;
             --cs-pink:   #FB4CD1;
-            --cs-label:  #FF4DD2;
         }
 
         body { background-color: #ffffff; }
@@ -76,6 +75,12 @@
             margin-bottom: clamp(16px, 2vw, 28px);
         }
 
+        /* Sub-headings inside a section (Brand in use, Brand guidelines, Prototype...) */
+        .cs-band h3 {
+            font-size: clamp(1.3rem, 1.9vw, 1.8rem);
+            margin: clamp(36px, 4.5vw, 64px) 0 clamp(14px, 1.6vw, 22px);
+        }
+
         .cs-band p {
             font-size: clamp(1.05rem, 1.35vw, 1.3rem);
             line-height: 1.6;
@@ -86,6 +91,15 @@
 
         section[id] { scroll-margin-top: 24px; }
 
+        /* Description under every image */
+        .cs-caption {
+            display: block;
+            margin-top: 0.75rem;
+            font-size: clamp(0.9rem, 1.05vw, 1rem);
+            line-height: 1.45;
+            opacity: 0.85;
+        }
+
         /* --- HERO --- */
         .cs-hero {
             background-color: var(--cs-purple);
@@ -93,16 +107,24 @@
             padding: clamp(40px, 6vw, 88px) 0 clamp(48px, 6vw, 96px);
         }
 
-        .cs-pill {
-            display: inline-block;
-            background-color: var(--cs-label);
-            color: #ffffff;
+        /* Plain text label (not a pill, so it doesn't read as a button) */
+        .cs-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8em;
+            font-family: 'Rajdhani', sans-serif;
             font-weight: 700;
-            font-size: clamp(0.85rem, 1.2vw, 1.1rem);
-            padding: 0.6em 1.4em;
-            border-radius: 14px;
-            margin-bottom: clamp(16px, 2vw, 28px);
-            user-select: none;
+            font-size: clamp(0.95rem, 1.3vw, 1.2rem);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin-bottom: clamp(14px, 1.8vw, 24px);
+        }
+
+        .cs-eyebrow::before {
+            content: "";
+            width: 2.4em;
+            height: 3px;
+            background-color: var(--cs-lime);
         }
 
         .cs-title {
@@ -113,23 +135,30 @@
             cursor: default;
         }
 
+        /* Focus areas as a slash-separated line of text, so they don't look like buttons */
         .cs-tags {
             list-style: none;
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 0.35rem 0;
             margin-bottom: clamp(28px, 4vw, 56px);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: clamp(1rem, 1.35vw, 1.25rem);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.85);
         }
 
-        .cs-tags li {
-            border: 2px solid rgba(255, 255, 255, 0.75);
-            border-radius: 999px;
-            padding: 0.35em 1em;
-            font-size: clamp(0.85rem, 1.1vw, 1rem);
+        .cs-tags li + li::before {
+            content: "/";
+            margin: 0 0.9em;
+            color: var(--cs-lime);
         }
 
-        /* The hero GIF keeps its natural proportions (the old fixed 21:9 box cropped it) */
+        /* Hero banner: a still image that fades in with the rest of the hero */
         .cs-hero-media {
+            position: relative;
             border-radius: clamp(10px, 1.2vw, 18px);
             overflow: hidden;
             background-color: rgba(255, 255, 255, 0.08);
@@ -140,6 +169,11 @@
             width: 100%;
             height: auto;
             display: block;
+        }
+
+        .cs-hero-media:hover .cs-scan {
+            top: 120%;
+            transition: top 0.75s ease-in-out;
         }
 
         /* --- SUMMARY / CONTENTS / SPECS --- */
@@ -196,16 +230,18 @@
         .cs-contents a:hover::before,
         .cs-contents a:hover::after { opacity: 1; }
 
+        /* Specs: every row is one or two lines and the same height, so the spacing is even */
         .cs-specs {
             list-style: none;
             display: grid;
-            gap: 1.25rem;
+            gap: 1rem;
         }
 
         .cs-spec {
             display: flex;
             align-items: center;
             gap: 1rem;
+            min-height: 3.5rem;
         }
 
         .cs-spec-icon {
@@ -222,7 +258,7 @@
 
         .cs-spec-icon svg { width: 55%; height: 55%; }
 
-        .cs-band .cs-spec p { margin: 0; }
+        .cs-band .cs-spec p { margin: 0; line-height: 1.4; }
 
         /* --- IMAGES: tilt + scanline sweep (same effect as the homepage cards) --- */
         .cs-media {
@@ -278,6 +314,9 @@
             font-weight: 700;
         }
 
+        .cs-ideation { margin: 0 0 clamp(24px, 3vw, 44px); }
+
+        /* Text first, image second (stacks the same way on mobile) */
         .cs-split {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -287,13 +326,11 @@
 
         .cs-grid {
             display: grid;
-            gap: clamp(12px, 1.6vw, 24px);
-            align-items: center;
-            margin-bottom: clamp(12px, 1.6vw, 24px);
+            gap: clamp(20px, 2.4vw, 36px) clamp(12px, 1.6vw, 24px);
+            align-items: start;
         }
 
         .cs-grid--3 { grid-template-columns: repeat(3, 1fr); }
-        .cs-grid--2 { grid-template-columns: repeat(2, 1fr); margin-bottom: clamp(28px, 3vw, 44px); }
 
         /* --- LISTS --- */
         .cs-bullets {
@@ -321,92 +358,417 @@
             filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
         }
 
-        /* --- DEVELOPMENT IMAGE CYCLER --- */
-        .cs-cycler {
+        /* --- DEVELOPMENT CAROUSEL: swipe, drag, press the left/right edges, or use the arrow keys --- */
+        .cs-stage {
+            transition: height 0.45s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            border-radius: clamp(10px, 1.2vw, 18px);
             overflow: hidden;
+            border-radius: clamp(10px, 1.2vw, 18px);
             background-color: rgba(0, 0, 0, 0.22);
+            touch-action: pan-y;
+            cursor: grab;
+            outline-offset: 4px;
+        }
+
+        .cs-stage:active { cursor: grabbing; }
+        .cs-stage:focus-visible { outline: 2px solid var(--cs-lime); }
+
+        .cs-track {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform;
         }
 
         .cs-slide {
+            flex: 0 0 100%;
+            margin: 0;
+            display: block;
+        }
+
+        /* Each slide takes its image's own proportions, so the whole image shows with no bars and no cropping */
+        .cs-slide img {
+            width: 100%;
+            height: auto;
+            display: block;
+            -webkit-user-drag: none;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .cs-edge {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 20%;
+            padding: 0 clamp(10px, 1.6vw, 24px);
+            border: 0;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            z-index: 3;
+            color: #111111;
+            cursor: pointer;
+            transition: background-color 0.3s ease, opacity 0.3s ease;
+        }
+
+        .cs-edge--prev { left: 0;  justify-content: flex-start; background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.28), transparent); background-color: transparent; opacity: 0; }
+        .cs-edge--next { right: 0; justify-content: flex-end;   background-image: linear-gradient(270deg, rgba(0, 0, 0, 0.28), transparent); background-color: transparent; opacity: 0; }
+
+        .cs-edge:hover,
+        .cs-edge:focus-visible { opacity: 1; }
+        .cs-edge:disabled { cursor: default; opacity: 0 !important; }
+
+        .cs-edge-arrow {
+            width: clamp(40px, 4vw, 54px);
+            height: clamp(40px, 4vw, 54px);
+            border-radius: 50%;
+            background-color: var(--cs-lime);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+
+        /* Touch screens have no hover, so keep the edge arrows visible */
+        @media (hover: none) {
+            .cs-edge { opacity: 0.9; background-image: none; }
+        }
+
+        .cs-carousel-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 14px 0 0;
+        }
+
+        .cs-progress {
+            display: flex;
+            flex: 1;
+            gap: 6px;
+        }
+
+        .cs-progress span {
+            flex: 1;
+            height: 4px;
+            border-radius: 2px;
+            background-color: rgba(255, 255, 255, 0.3);
+            transition: background-color 0.3s ease;
+        }
+
+        .cs-progress span.is-on { background-color: var(--cs-lime); }
+
+        .cs-count {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .cs-hint {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.9rem;
+            opacity: 0.75;
+        }
+
+        /* --- FLIPPABLE BRAND GUIDELINES: a 3D booklet mockup (click a page, drag/swipe, arrows, scrub bar or arrow keys) --- */
+        .cs-book-stage {
+            position: relative;
+            margin-top: clamp(8px, 1vw, 16px);
+            padding: clamp(8px, 2vw, 28px) 0 0;
+        }
+
+        .cs-book {
+            --spread: 8 / 5;                 /* set automatically from your first page image */
+            --book-w: 900px;
+            position: relative;
+            z-index: 1;
+            width: min(var(--book-w), 100%);
+            margin: 0 auto;
+            perspective: 2600px;
+            cursor: pointer;
+            outline-offset: 12px;
+            touch-action: pan-y;
+        }
+
+        .cs-book:focus-visible { outline: 2px solid var(--cs-purple); }
+
+        /* The whole booklet leans slightly towards the pointer */
+        .cs-book-tilt {
+            transform-style: preserve-3d;
+            transform: rotateX(6deg);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cs-book-inner {
+            position: relative;
+            width: 100%;
+            aspect-ratio: var(--spread);
+            transform-style: preserve-3d;
+            transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* A closed book sits centred instead of leaving an empty half */
+        .cs-book.is-front .cs-book-inner { transform: translateX(-25%); }
+        .cs-book.is-back  .cs-book-inner { transform: translateX(25%); }
+
+        .cs-leaf {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            transform-origin: left center;
+            transform-style: preserve-3d;
+            transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cs-leaf.is-flipped { transform: rotateY(-180deg); }
+
+        .cs-face {
             position: absolute;
             inset: 0;
+            overflow: hidden;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            background-color: #ffffff;
+        }
+
+        .cs-face img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* whole image visible, never cropped */
-            object-position: center;
+            object-fit: contain;
+            display: block;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* Moving shade across the page while it turns */
+        .cs-face::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
             opacity: 0;
-            transition: opacity 0.9s ease-in-out;
+            transition: opacity 0.45s ease;
         }
+        .cs-front::after { background: linear-gradient(90deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0) 70%); }
+        .cs-back::after  { background: linear-gradient(270deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0) 70%); }
+        .cs-leaf.is-turning .cs-face::after { opacity: 1; }
 
-        .cs-slide.is-active {
-            opacity: 1;
-            z-index: 2;
-        }
-
-        .cs-dots {
+        /* A missing page file shows a neat blank page instead of a broken icon */
+        .cs-face.is-missing img { visibility: hidden; }
+        .cs-face.is-missing::before {
+            content: "Page " attr(data-page);
+            position: absolute;
+            inset: 0;
             display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 10px;
-            margin: 16px 0 clamp(28px, 3vw, 44px);
+            color: #999999;
+            font-weight: 700;
         }
 
-        .cs-dot {
-            width: 12px;
-            height: 12px;
-            padding: 0;
-            border: 2px solid #ffffff;
+        /* Spine side shading + a thin page edge on the outside */
+        .cs-front { box-shadow: inset 12px 0 18px -10px rgba(0, 0, 0, 0.3), inset -1px 0 0 rgba(0, 0, 0, 0.08); }
+        .cs-back  { transform: rotateY(180deg); box-shadow: inset -12px 0 18px -10px rgba(0, 0, 0, 0.3), inset 1px 0 0 rgba(0, 0, 0, 0.08); }
+
+        /* Shadow on the "table" that follows the book as it opens and closes */
+        .cs-book-floor {
+            position: absolute;
+            left: 50%;
+            bottom: -26px;
+            width: 92%;
+            height: 34px;
+            transform: translateX(-50%);
+            background: radial-gradient(ellipse at center, rgba(40, 0, 50, 0.45), rgba(40, 0, 50, 0) 70%);
+            filter: blur(7px);
+            pointer-events: none;
+            transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), width 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .cs-book.is-front .cs-book-floor,
+        .cs-book.is-back  .cs-book-floor { width: 52%; }
+
+        .cs-book-controls {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: clamp(34px, 4vw, 52px);
+        }
+
+        .cs-book-btn {
+            width: clamp(40px, 4vw, 54px);
+            height: clamp(40px, 4vw, 54px);
+            border: 0;
             border-radius: 50%;
+            background-color: var(--cs-lime);
+            color: #111111;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .cs-book-btn:hover:not(:disabled) { background-color: #111111; color: var(--cs-lime); transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25); }
+        .cs-book-btn:disabled { opacity: 0.35; cursor: default; }
+        .cs-book-btn:focus-visible { outline: 2px solid #ffffff; outline-offset: 3px; }
+
+        .cs-book-label {
+            min-width: 9em;
+            text-align: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+
+        .cs-book-scrub {
+            position: relative;
+            z-index: 1;
+            display: block;
+            width: min(420px, 80%);
+            margin: 20px auto 0;
+            height: 20px;
             background: transparent;
             cursor: pointer;
-            transition: background-color 0.25s ease, transform 0.25s ease;
+            -webkit-appearance: none;
+            appearance: none;
         }
 
-        .cs-dot:hover { transform: scale(1.2); }
-        .cs-dot[aria-current="true"] { background-color: var(--cs-lime); border-color: var(--cs-lime); }
-        .cs-dot:focus-visible { outline: 2px solid var(--cs-lime); outline-offset: 3px; }
+        .cs-book-scrub::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: rgba(255, 255, 255, 0.45); }
+        .cs-book-scrub::-moz-range-track              { height: 4px; border-radius: 2px; background: rgba(255, 255, 255, 0.45); }
+        .cs-book-scrub::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; margin-top: -7px; border-radius: 50%; border: 0; background: var(--cs-lime); box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.25); }
+        .cs-book-scrub::-moz-range-thumb     { width: 18px; height: 18px; border-radius: 50%; border: 0; background: var(--cs-lime); box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.25); }
+        .cs-book-scrub:focus-visible { outline: 2px solid #ffffff; outline-offset: 6px; }
 
-        /* --- FIGMA LAPTOP (the base now stays inside its box, so nothing gets cut off on small screens) --- */
-        .cs-laptop {
+        .cs-book-hint {
             position: relative;
-            width: min(980px, 100%);
-            margin: clamp(24px, 3vw, 48px) auto 0;
-            padding: 0 3% 28px;
+            z-index: 1;
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.85;
         }
 
-        .cs-laptop-screen {
-            position: relative;
-            aspect-ratio: 16 / 10;
-            border: clamp(8px, 1.2vw, 14px) solid #1a1a1e;
-            border-radius: 14px 14px 0 0;
-            background-color: #000000;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+        .cs-band .cs-center { text-align: center; margin: clamp(24px, 3vw, 40px) auto 0; }
+
+        /* --- PROTOTYPES: the mockups are already in the Figma files, so these are plain rounded rectangles --- */
+        .cs-band h3.cs-proto-title { margin-top: clamp(48px, 6vw, 88px); }
+        .cs-proto h3.cs-proto-title { margin-top: 0; }
+        .cs-proto { margin-top: clamp(16px, 2vw, 28px); }
+
+        .cs-proto-frame {
+            --ratio: 16 / 9;                 /* change this to match the Figma frame if you see bars */
+            width: min(var(--w, 1000px), 100%);
+            aspect-ratio: var(--ratio);
+            margin: clamp(20px, 2.4vw, 36px) auto 0;
+            border-radius: clamp(12px, 1.6vw, 22px);
+            overflow: hidden;
+            background-color: #ffffff;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
         }
 
-        .cs-laptop-screen iframe {
+        .cs-proto-frame--tall { --ratio: 9 / 16; --w: min(380px, 80vw); margin-top: 0; }
+        .cs-proto-frame--wide    { --ratio: 16 / 10; --w: 1000px; }
+        .cs-proto-frame--monitor { --ratio: 16 / 9;  --w: 1000px; }
+
+        .cs-proto-frame iframe {
             width: 100%;
             height: 100%;
             border: 0;
             display: block;
-            background-color: #ffffff;
         }
 
-        .cs-laptop::after {
-            content: "";
+        /* Loading screen shown over each Figma prototype until it has loaded: spinning brain + Loading... */
+        .cs-proto-frame { position: relative; }
+
+        .cs-loader {
             position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 6px;
-            height: 22px;
-            background-color: #d9d9de;
-            border-radius: 0 0 16px 16px;
-            box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0.08);
+            inset: 0;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(10px, 1.6vw, 18px);
+            background-color: var(--cs-purple);
+            color: var(--cs-lime);
+            transition: opacity 0.6s ease, visibility 0.6s ease;
         }
 
-        .cs-band .cs-center { text-align: center; margin: clamp(24px, 3vw, 40px) auto 0; }
+        .cs-loader.is-done { opacity: 0; visibility: hidden; pointer-events: none; }
+
+        .cs-loader-spin {
+            width: clamp(90px, 13vw, 150px);
+            perspective: 600px;
+        }
+
+        /* Fallback brain (flat image that spins) is used only if the 3D model can't load */
+        .cs-loader-spin img {
+            display: block;
+            width: 70%;
+            height: auto;
+            margin: 0 auto;
+            filter: drop-shadow(0 0 14px rgba(207, 255, 4, 0.45));
+            animation: csBrainSpin 2.4s linear infinite;
+        }
+
+        /* 3D lo-fi brain (3dbrainlogo.glb), drawn from one shared WebGL renderer */
+        .cs-loader-canvas {
+            display: none;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1;
+        }
+
+        .cs-loader-spin.has-3d img { display: none; }
+        .cs-loader-spin.has-3d .cs-loader-canvas { display: block; }
+
+        @keyframes csBrainSpin {
+            from { transform: rotateY(0deg); }
+            to   { transform: rotateY(360deg); }
+        }
+
+        .cs-loader-text {
+            display: flex;
+            align-items: baseline;
+            gap: 0.15em;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1rem, 1.5vw, 1.4rem);
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+        }
+
+        .cs-loader-text .dot {
+            display: inline-block;
+            font-size: 1.4em;
+            line-height: 0.6;
+            animation: csLoadDot 1.2s ease-in-out infinite;
+        }
+        .cs-loader-text .dot:nth-child(3) { animation-delay: 0.2s; }
+        .cs-loader-text .dot:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes csLoadDot {
+            0%, 70%, 100% { opacity: 0.2; transform: translateY(0); }
+            35%           { opacity: 1;   transform: translateY(-4px); }
+        }
+
+        /* --- HERO SHOT (closes the case study) --- */
+        .cs-hero-shot img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: clamp(10px, 1.2vw, 18px);
+        }
 
         /* --- RISE UP --- */
         .cs-rise {
@@ -456,17 +818,18 @@
         @media (max-width: 820px) {
             .cs-split { grid-template-columns: 1fr; }
             .cs-duo   { grid-template-columns: 1fr; }
+            .cs-grid--3 { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 640px) {
-            .cs-grid--3,
-            .cs-grid--2 { grid-template-columns: 1fr; }
-            .cs-cycler { aspect-ratio: 4 / 3; }
+            .cs-grid--3 { grid-template-columns: 1fr; }
+            .cs-edge { width: 26%; }
         }
 
         @media (prefers-reduced-motion: reduce) {
             .fade-up, .fade-in, .fade-right, .fade-left { opacity: 1; transform: none; transition: none; }
-            .cs-media, .cs-slide { transition: none; }
+            .cs-media, .cs-track, .cs-leaf, .cs-book-inner, .cs-book-tilt, .cs-book-floor { transition: none; }
+            .cs-loader-spin img, .cs-loader-text .dot { animation: none; }
         }
     </style>
 </head>
@@ -492,7 +855,7 @@
         <!-- === HERO === -->
         <section class="cs-hero">
             <div class="cs-wrap">
-                <span class="cs-pill fade-up observe">Case Study</span>
+                <span class="cs-eyebrow fade-up observe">Case Study</span>
                 <h1 class="cs-title scramble-heading fade-up observe stagger-1">XP Bank</h1>
 
                 <ul class="cs-tags fade-up observe stagger-2" aria-label="Project focus">
@@ -504,11 +867,9 @@
                     <li>Motion</li>
                 </ul>
 
-                <div class="cs-hero-media fade-up observe stagger-3" data-label="XP Bank motion hero">
-                    <picture>
-                        <source srcset="assets/xpbank-still.jpg" media="(prefers-reduced-motion: reduce)">
-                        <img src="assets/xpbank.gif" alt="XP Bank motion hero" decoding="async">
-                    </picture>
+                <div class="cs-hero-media fade-up observe stagger-3" data-label="XP Bank banner">
+                    <img src="assets/xpbanner.png" alt="XP Bank banner" decoding="async" fetchpriority="high">
+                    <span class="cs-scan" aria-hidden="true"></span>
                 </div>
             </div>
         </section>
@@ -517,7 +878,7 @@
         <section id="summary" class="cs-band cs-band--lime">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">Summary Of Project</h2>
-                <p class="fade-up observe stagger-1">I wanted to design a bank that felt approachable and supportive for first-time and early-career users who often feel let down by both traditional and modern banks. By looking at Trustpilot reviews of Nationwide and Monzo, I consistently identified the same issues: long waiting times, overcomplicated verification, and a lack of effective support when something went wrong.</p>
+                <p class="fade-up observe stagger-1">XP Bank is a bank designed to feel approachable and supportive for first-time and early-career users who often feel let down by both traditional and modern banks.</p>
                 <a href="https://jaredrussell.notion.site/Bank-Brand-XP-18a9a122e2e0806a8619e67c19ba4506" target="_blank" rel="noopener" class="cyber-btn fade-up observe stagger-2">
                     <span>Read this project's notes on Notion</span>
                     <span class="arrow">&nearr;</span>
@@ -543,25 +904,25 @@
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12"/><path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2"/><path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4"/></svg>
                                 </span>
-                                <p>The time it took for this project was <strong>9 – 12 Weeks</strong>.</p>
+                                <p>The project ran for <strong>12 weeks</strong>.</p>
                             </li>
                             <li class="cs-spec fade-left observe stagger-2">
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                                 </span>
-                                <p>Software used for this project: <strong>Figma</strong>, <strong>Blender</strong>, and <strong>After Effects</strong>.</p>
+                                <p>Software: <strong>Figma</strong>, <strong>Blender</strong> and <strong>After Effects</strong>.</p>
                             </li>
                             <li class="cs-spec fade-left observe stagger-3">
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 6h11"/><path d="M11.5 12h11"/><path d="M11.5 18h11"/><path d="M4 6l1.5 1.5L8 5"/><path d="M4 12l1.5 1.5L8 11"/><path d="M4 18l1.5 1.5L8 17"/></svg>
                                 </span>
-                                <p>This was a branding project that created an identity for a <strong>modern bank</strong>.</p>
+                                <p>Creating an identity for a <strong>modern bank</strong>.</p>
                             </li>
                             <li class="cs-spec fade-left observe stagger-4">
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21a8 8 0 1 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>
                                 </span>
-                                <p>The target audience was <strong>16–25 year olds</strong>.</p>
+                                <p>Target audience: <strong>16–25 year olds</strong>.</p>
                             </li>
                         </ul>
                     </div>
@@ -569,38 +930,34 @@
             </div>
         </section>
 
-        <!-- === THE BRIEF === -->
+        <!-- === THE BRIEF (text first, then the image) === -->
         <section id="brief" class="cs-band cs-band--white">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">The Brief</h2>
                 <div class="cs-split">
                     <div class="fade-right observe">
+                        <p>We were tasked with creating a commercial bank brand aimed at 16–25-year-olds. We could either rebrand an existing bank or create a new one.</p>
+                        <p>XP Bank was built as a new brand from the ground up, so it could be shaped entirely around the needs, behaviours, and expectations of that age group.</p>
+                    </div>
+                    <figure class="fade-left observe">
                         <div class="cs-media tilt-card" data-label="Person holding money">
                             <img src="assets/brief-money.png" alt="Person holding money" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                    </div>
-                    <div class="fade-left observe">
-                        <p>We were tasked with creating a commercial bank brand aimed at 16–25-year-olds. We could either rebrand an existing bank or create a new one.</p>
-                        <p>I chose to build a new brand from the ground up so it could be shaped entirely around the needs, behaviours, and expectations of the chosen age group (16-25).</p>
-                    </div>
+                        <figcaption class="cs-caption">Money and everyday spending: the world XP Bank is designed for.</figcaption>
+                    </figure>
                 </div>
             </div>
         </section>
 
-        <!-- === RESEARCH === -->
+        <!-- === RESEARCH (text first, then the image) === -->
         <section id="research" class="cs-band cs-band--pink">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">Research</h2>
                 <div class="cs-split">
                     <div class="fade-right observe">
-                        <div class="cs-media tilt-card" data-label="XP Bank phone and cards">
-                            <img src="assets/research-cards.png" alt="XP Bank Phone and Cards" loading="lazy" decoding="async">
-                            <span class="cs-scan" aria-hidden="true"></span>
-                        </div>
-                    </div>
-                    <div class="fade-left observe">
-                        <p>I began by creating user personas that represented both the younger and older ends of the 16–25 age range, created through my research. These personas helped define XP Bank’s five core values:</p>
+                        <p>Trustpilot reviews of Nationwide and Monzo repeatedly raised the same issues: long waiting times, overcomplicated verification, and a lack of effective support when something went wrong.</p>
+                        <p>User personas covering the younger and older ends of the 16–25 range turned this research into five core values for XP Bank:</p>
                         <ul class="cs-bullets">
                             <li>Human rights: fairness, inclusion, no discrimination</li>
                             <li>Responsible banking: helping users save, invest and grow</li>
@@ -609,100 +966,250 @@
                             <li>Innovation &amp; feedback: the bank evolves through user input</li>
                         </ul>
                     </div>
+                    <figure class="fade-left observe">
+                        <!-- Tip: swap this for your personas / Trustpilot findings so the image matches the text -->
+                        <div class="cs-media tilt-card" data-label="Reviews of Nationwide & Monzo Bank">
+                            <img src="assets/bankreviews.png" alt="Reviews of Nationwide & Monzo Bank" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">Trustpilot reviews of Nationwide & Monzo Bank</figcaption>
+                    </figure>
                 </div>
             </div>
         </section>
 
-        <!-- === IDEATION === -->
+        <!-- === IDEATION (text first, then sketches) === -->
         <section id="ideation" class="cs-band cs-band--white">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">Ideation</h2>
 
-                <div class="cs-grid cs-grid--3">
-                    <figure class="fade-up observe stagger-1">
-                        <div class="cs-media tilt-card" data-label="Website mockups">
-                            <img src="assets/xplandingpagecard.png" alt="Website mockups" loading="lazy" decoding="async">
-                            <span class="cs-scan" aria-hidden="true"></span>
-                        </div>
-                    </figure>
-                    <figure class="fade-up observe stagger-2">
-                        <div class="cs-media tilt-card" data-label="Brand guidelines booklet">
-                            <img src="assets/xp-bank-6.jpg" alt="Brand guidelines booklet" loading="lazy" decoding="async">
-                            <span class="cs-scan" aria-hidden="true"></span>
-                        </div>
-                    </figure>
-                    <figure class="fade-up observe stagger-3">
-                        <div class="cs-media tilt-card" data-label="Components library">
-                            <img src="assets/xp-bank-5.jpg" alt="Components library" loading="lazy" decoding="async">
-                            <span class="cs-scan" aria-hidden="true"></span>
-                        </div>
-                    </figure>
-                </div>
+                <!-- One large image: mind map and logo iterations (assets/IdeationXP.png) -->
+                <figure class="cs-ideation fade-up observe">
+                    <div class="cs-media tilt-card" data-label="Mind map and logo iterations">
+                        <img src="assets/IdeationXP.png" alt="XP Bank mind map and logo iterations" loading="lazy" decoding="async">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">Mind map and logo iterations exploring the XP Bank identity.</figcaption>
+                </figure>
 
-                <div class="cs-grid cs-grid--2">
-                    <figure class="fade-up observe stagger-1">
-                        <div class="cs-media tilt-card" data-label="App on device">
-                            <img src="assets/xp-bank-1.jpg" alt="App on device" loading="lazy" decoding="async">
-                            <span class="cs-scan" aria-hidden="true"></span>
-                        </div>
-                    </figure>
-                    <figure class="fade-up observe stagger-2">
-                        <div class="cs-media tilt-card" data-label="Stationery set">
-                            <img src="assets/xp-bank-3.jpg" alt="Stationery set" loading="lazy" decoding="async">
-                            <span class="cs-scan" aria-hidden="true"></span>
-                        </div>
-                    </figure>
-                </div>
-
-                <p class="fade-up observe">Using real user pain points to shape the brand identity, I realised that users struggle most during moments of stress, such as scams, locked accounts, or unexpected issues. In response, I prioritised visible security actions, simplified user flows, and created a dedicated help area to make the experience feel more reassuring and less intimidating.</p>
-                <p class="fade-up observe">Initially, I wanted a cyberpunk-inspired UI influenced by my interest in Cyberpunk 2077 and Blade Runner 2049. However, through critique and reflection, it became clear that this approach was too niche and risked harming accessibility. I refined the visual direction into a more restrained, brutalist style that retained personality while significantly improving clarity and usability.</p>
+                <p class="fade-up observe">Real user pain points shaped the brand identity. Users struggle most during moments of stress, such as scams, locked accounts, or unexpected issues, so the design prioritises visible security actions, simplified user flows, and a dedicated help area that feels reassuring rather than intimidating.</p>
+                <p class="fade-up observe">The first visual direction was cyberpunk-inspired, influenced by Cyberpunk 2077 and Blade Runner 2049. Critique and reflection showed it was too niche and risked harming accessibility, so it was refined into a more restrained, brutalist style that kept its personality while significantly improving clarity and usability.</p>
             </div>
         </section>
 
-        <!-- === DEVELOPMENT === -->
+        <!-- === DEVELOPMENT (text first, then a swipeable carousel) === -->
         <section id="development" class="cs-band cs-band--purple">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">Development</h2>
 
-                <!-- Fading image cycler: every image is shown in full (object-fit: contain), with dots to jump between them -->
-                <div class="cs-cycler fade-in observe" id="cycler" role="group" aria-label="Development images">
-                    <img src="assets/xpcredit&debitcards.png"      class="cs-slide is-active" alt="Debit Cards">
-                    <img src="assets/Billboards.png"      class="cs-slide" alt="Billboards" loading="lazy">
-                    <img src="assets/ipadmockup.png"      class="cs-slide" alt="iPad Mockup" loading="lazy">
-                    <img src="assets/credit%20copy.gif"   class="cs-slide" alt="Credit Copy" loading="lazy">
-                    <img src="assets/xpfilebinder.png"      class="cs-slide" alt="File Binder" loading="lazy">
-                    <img src="assets/xplandingpage.png"        class="cs-slide" alt="Laptop XP" loading="lazy">
-                </div>
-                <div class="cs-dots" id="cycler-dots"></div>
+                <p class="fade-up observe">The project ran for 12 weeks (February–May 2025) and covered brand guidelines, mobile app screens, and a marketing landing page. Work was built primarily in Figma, with After Effects and Blender used for motion.</p>
+                <p class="fade-up observe">To push the project further, professional examples such as Wise’s design system were studied. This led to an interactive design system website instead of a static PDF, showing how the brand, components, and patterns scale consistently across contexts.</p>
+                <p class="fade-up observe">In the end, I created 5 Deliverables for the project, A 55 Page Brand Guidelines, A Component Library, A Landing Page for Web & a Mobile App and a Design System Prototype. All of which are shown below.</p>
+                <!-- Carousel: swipe or drag, press the left/right edges, or use the arrow keys.
+                     Process comes first (wireframes), polished work after.
+                     Any image that doesn't exist yet is skipped automatically. -->
+                <div class="fade-in observe" data-hide-if-empty>
+                    <div class="cs-stage" id="carousel" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Development process">
+                        <div class="cs-track">
+                            <figure class="cs-slide" data-caption="Brand Guidelines for XP Bank.">
+                                <img src="assets/xpbrandguidelines.png" alt="Brand Guidelines for XP Bank." draggable="false">
+                            </figure>
+                            <figure class="cs-slide" data-caption="Component library built in Figma.">
+                                <img src="assets/Component%20Library.png" alt="Component library" draggable="false">
+                            </figure>
+                            <figure class="cs-slide" data-caption="Landing Page for XP Bank's Website">
+                                <img src="assets/Landing%20PageXP.png" alt="Landing Page for XP Bank's Website" draggable="false">
+                            </figure>
+                            <figure class="cs-slide" data-caption="Mobile App for XP Bank.">
+                                <img src="assets/MobiledeviceXP.png" alt="Mobile App for XP Bank." draggable="false">
+                            </figure>
+                            <figure class="cs-slide" data-caption="Design System for XP Bank.">
+                              <img src="assets/Design%20System%20Page.png" alt="Design System for XP Bank." draggable="false">
+                          </figure>
+                        </div>
+                        <button type="button" class="cs-edge cs-edge--prev" aria-label="Previous image"><span class="cs-edge-arrow" aria-hidden="true">&larr;</span></button>
+                        <button type="button" class="cs-edge cs-edge--next" aria-label="Next image"><span class="cs-edge-arrow" aria-hidden="true">&rarr;</span></button>
+                    </div>
 
-                <p class="fade-up observe">This project ran for approximately 9–12 weeks (February–May 2025) and covered a wide scope, including brand guidelines, mobile app screens, and a marketing landing page. I primarily worked in Figma, with After Effects and Blender used for motion work.</p>
-                <p class="fade-up observe">Wanting to push the project further, I looked at professional examples such as Wise’s design system. This encouraged me to move beyond a static PDF and create a fully interactive design system website, allowing me to demonstrate how the brand, components, and patterns scale consistently across different contexts.</p>
+                    <div class="cs-carousel-meta">
+                        <div class="cs-progress" id="carousel-progress" aria-hidden="true"></div>
+                        <span class="cs-count" id="carousel-count">1 / 1</span>
+                    </div>
+                    <span class="cs-caption" id="carousel-caption" aria-live="polite"></span>
+                    <span class="cs-hint">Swipe, drag or press the edges to move through the work.</span>
+                </div>
             </div>
         </section>
 
-        <!-- === FINAL PRODUCT === -->
+        <!-- === FINAL PRODUCT (text first, then the work) === -->
         <section id="final-product" class="cs-band cs-band--white">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">Final Product</h2>
                 <p class="fade-up observe stagger-1">The final outcome included a 55-page brand guideline, a structured component library, 11 mobile app screens, a multi-page landing website, and a fully prototyped design system.</p>
-                <p class="fade-up observe stagger-2">Below is the interactive Figma Prototype of all of my deliverables:</p>
+                <p class="fade-up observe stagger-2">The identity was applied across physical and digital touchpoints, from cards and billboards to tablet screens and stationery.</p>
 
-                <div class="cs-laptop fade-up observe stagger-3">
-                    <div class="cs-laptop-screen">
-                        <iframe
-                            src="https://embed.figma.com/design/XYmJCC8mQ6QbNA2ymcIGWA/XP-Bank?node-id=0-1&amp;embed-host=share"
-                            allowfullscreen
-                            loading="lazy"
-                            title="XP Bank Interactive Prototype">
-                        </iframe>
+                <h3 class="fade-up observe">Brand in use</h3>
+                <div class="cs-grid cs-grid--3">
+                  
+                    <figure class="fade-up observe stagger-2">
+                        <div class="cs-media tilt-card" data-label="Credit and debit cards">
+                            <img src="assets/xpcredit%26debitcards.png" alt="Credit and debit cards" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">Credit and debit cards.</figcaption>
+                    </figure>
+                    <figure class="fade-up observe stagger-1">
+                      <div class="cs-media tilt-card" data-label="Billboards">
+                          <img src="assets/Billboards.png" alt="Billboard campaign" loading="lazy" decoding="async">
+                          <span class="cs-scan" aria-hidden="true"></span>
+                      </div>
+                      <figcaption class="cs-caption">Billboard campaign.</figcaption>
+                  </figure>
+                    <figure class="fade-up observe stagger-3">
+                        <div class="cs-media tilt-card" data-label="Animated credit card">
+                            <img src="assets/credit%20copy.gif" alt="Animated credit card" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">Animated credit card.</figcaption>
+                    </figure>
+                    <figure class="fade-up observe stagger-1">
+                      <div class="cs-media tilt-card" data-label="Marketing landing page">
+                          <img src="assets/xplandingpagecard.png" alt="Marketing landing page" loading="lazy" decoding="async">
+                          <span class="cs-scan" aria-hidden="true"></span>
+                      </div>
+                      <figcaption class="cs-caption">Marketing landing page.</figcaption>
+                  </figure>
+                  
+                    <!-- ATM mockup: add assets/xp-atm.jpg (ideally with a person using it) and it appears automatically -->
+                    <figure class="fade-up observe stagger-2" data-optional>
+                        <div class="cs-media tilt-card" data-label="XP Bank ATM">
+                            <img src="assets/xp-atm.jpg" alt="XP Bank ATM" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">XP Bank ATM.</figcaption>
+                    </figure>
+                    <figure class="fade-up observe stagger-3">
+                        <div class="cs-media tilt-card" data-label="Tablet app">
+                            <img src="assets/XPipadmockup.png" alt="XP Bank app on a tablet" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">The XP Bank app on a tablet.</figcaption>
+                    </figure>
+                    <figure class="fade-up observe stagger-1">
+                        <div class="cs-media tilt-card" data-label="App on device">
+                            <img src="assets/xp-bank-1.jpg" alt="XP Bank app on a phone" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">The XP Bank app on a phone.</figcaption>
+                    </figure>
+                    <figure class="fade-up observe stagger-2">
+                        <div class="cs-media tilt-card" data-label="XP Merch">
+                            <img src="assets/personwearingXPmerch.png" alt="Person wearing XP Bank merchandise" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">Merchandising</figcaption>
+                    </figure>
+                    <figure class="fade-up observe stagger-3">
+                        <div class="cs-media tilt-card" data-label="Brand guidelines file binder">
+                            <img src="assets/xpfilebinder.png" alt="Brand guidelines file binder" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">XP Bank Branded File binder.</figcaption>
+                    </figure>
+                    <figure class="fade-up observe stagger-3">
+                      <div class="cs-media tilt-card" data-label="Someone using the XP Bank Portal">
+                          <img src="assets/manusingxpsite.png" alt="Someone using the XP Bank Portal" loading="lazy" decoding="async">
+                          <span class="cs-scan" aria-hidden="true"></span>
+                      </div>
+                      <figcaption class="cs-caption">A user using the XP Bank Portal.</figcaption>
+                  </figure>
+                </div>
+
+                <!-- Flippable brand guidelines booklet. Pages are assets/XPBANKGUIDELINES/XPBG1.png ... XPBG56.png
+                     (1 = front cover, 56 = back cover). The pages are added by the script at the bottom of this file. -->
+            </div>
+        </section>
+
+        <!-- === BRAND GUIDELINES (its own band, like every other section) === -->
+        <section id="guidelines" class="cs-band cs-band--pink">
+            <div class="cs-wrap">
+                    <h2 class="scramble-heading fade-up observe">Brand Guidelines</h2>
+                    <p class="fade-up observe">Flip through the full guidelines like a booklet. Click a page, drag or swipe, use the arrows, or press the arrow keys.</p>
+
+                    <div class="cs-book-stage fade-up observe">
+                        <div class="cs-book" id="book" tabindex="0" role="group" aria-label="Flippable brand guidelines booklet"
+                             data-folder="assets/XPBANKGUIDELINES/" data-prefix="XPBG" data-ext=".png" data-pages="56">
+                            <div class="cs-book-tilt">
+                                <div class="cs-book-inner"></div>
+                            </div>
+                            <div class="cs-book-floor" aria-hidden="true"></div>
+                        </div>
+
+                        <div class="cs-book-controls">
+                            <button type="button" class="cs-book-btn" id="book-prev" aria-label="Previous page">&larr;</button>
+                            <span class="cs-book-label" id="book-label" aria-live="polite">Cover</span>
+                            <button type="button" class="cs-book-btn" id="book-next" aria-label="Next page">&rarr;</button>
+                        </div>
+                        <input type="range" class="cs-book-scrub" id="book-scrub" min="0" max="1" value="0" step="1" aria-label="Jump through the booklet">
+                        <span class="cs-book-hint">Click, drag or use the slider to turn the pages.</span>
+                    </div>
+            </div>
+        </section>
+
+        <!-- === INTERACTIVE PROTOTYPES === -->
+        <section id="prototypes" class="cs-band cs-band--white">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Interactive Prototypes</h2>
+                <p class="fade-up observe">Every deliverable is live below. Tap, scroll and click through each prototype just as a customer would.</p>
+
+                <!-- Mobile app: iPhone 15 mockup running the Figma prototype -->
+                <div class="cs-split cs-proto">
+                    <div class="fade-right observe">
+                        <h3 class="cs-proto-title">Mobile app</h3>
+                        <p>The XP Bank app, shown as a full-height mobile prototype. Tap through the screens to see sign-up, spending, support and security in action.</p>
+                        <p><a href="https://www.figma.com/proto/XYmJCC8mQ6QbNA2ymcIGWA/XP-Bank?node-id=1-1392&amp;p=f&amp;scaling=scale-down&amp;content-scaling=fixed&amp;starting-point-node-id=1%3A1211&amp;page-id=1%3A714" target="_blank" rel="noopener" class="cyber-btn">
+                            <span>Open the app prototype in Figma</span>
+                            <span class="arrow">&nearr;</span>
+                        </a></p>
+                    </div>
+                    <div class="fade-left observe">
+                        <div class="cs-proto-frame cs-proto-frame--tall">
+                            <iframe src="https://embed.figma.com/proto/XYmJCC8mQ6QbNA2ymcIGWA/XP-Bank?node-id=1-1392&amp;p=f&amp;scaling=scale-down&amp;content-scaling=fixed&amp;starting-point-node-id=1%3A1211&amp;page-id=1%3A714&amp;hide-ui=1&amp;embed-host=share" allowfullscreen loading="lazy" title="XP Bank mobile app prototype"></iframe>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Landing page: laptop mockup -->
+                <h3 class="cs-proto-title fade-up observe">Landing page</h3>
+                <p class="fade-up observe">The multi-page marketing website. Scroll and click through it live.</p>
+                <div class="cs-proto-frame cs-proto-frame--wide fade-up observe stagger-1">
+                    <iframe src="https://embed.figma.com/proto/XYmJCC8mQ6QbNA2ymcIGWA/XP-Bank?node-id=1-1678&amp;p=f&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=1%3A1655&amp;hide-ui=1&amp;embed-host=share" allowfullscreen loading="lazy" title="XP Bank landing page prototype"></iframe>
+                </div>
+                <p class="cs-center fade-up observe">
+                    <a href="https://www.figma.com/proto/XYmJCC8mQ6QbNA2ymcIGWA/XP-Bank?node-id=1-1678&amp;p=f&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=1%3A1655" target="_blank" rel="noopener" class="cyber-btn">
+                            <span>Open the landing page in Figma</span>
+                            <span class="arrow">&nearr;</span>
+                        </a>
+                </p>
+
+                <!-- Design system: desktop monitor mockup -->
+                <h3 class="cs-proto-title fade-up observe">Design system</h3>
+                <p class="fade-up observe">The interactive design system website shows how the brand, components and patterns scale consistently.</p>
+                <div class="cs-proto-frame cs-proto-frame--monitor fade-up observe stagger-1">
+                    <iframe src="https://embed.figma.com/proto/XYmJCC8mQ6QbNA2ymcIGWA/XP-Bank?node-id=1-2246&amp;p=f&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=1%3A2223&amp;hide-ui=1&amp;embed-host=share" allowfullscreen loading="lazy" title="XP Bank design system prototype"></iframe>
+                </div>
+                <p class="cs-center fade-up observe">
+                    <a href="https://www.figma.com/proto/XYmJCC8mQ6QbNA2ymcIGWA/XP-Bank?node-id=1-2246&amp;p=f&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=1%3A2223" target="_blank" rel="noopener" class="cyber-btn">
+                            <span>Open the design system in Figma</span>
+                            <span class="arrow">&nearr;</span>
+                        </a>
+                </p>
+
                 <p class="cs-center fade-up observe">
                     <a href="https://www.figma.com/design/XYmJCC8mQ6QbNA2ymcIGWA/XP-Bank?node-id=0-1" target="_blank" rel="noopener" class="cyber-btn">
-                        <span>Open the prototype in Figma</span>
-                        <span class="arrow">&nearr;</span>
-                    </a>
+                            <span>View the full XP Bank file in Figma</span>
+                            <span class="arrow">&nearr;</span>
+                        </a>
                 </p>
             </div>
         </section>
@@ -711,7 +1218,18 @@
         <section id="reflection" class="cs-band cs-band--lime">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">Reflection</h2>
-                <p class="fade-up observe">This project significantly changed how I approach design. If I were to develop it further, I would conduct structured usability testing and a full UX audit to refine accessibility, interaction accuracy, and edge cases. While feedback initially challenged my design direction, it ultimately helped me grow and respond more confidently to critique. Most importantly, I learnt how to embed values into design decisions, prioritise real user problems over purely visual ideas, and adapt my work when feedback leads to a better outcome.</p>
+                <p class="fade-up observe">This project significantly changed the approach to design. With further development, structured usability testing and a full UX audit would refine accessibility, interaction accuracy, and edge cases. Feedback initially challenged the design direction, but ultimately built confidence in responding to critique. Most importantly, it showed how to embed values into design decisions, prioritise real user problems over purely visual ideas, and adapt the work when feedback leads to a better outcome.</p>
+            </div>
+        </section>
+
+        <!-- === HERO SHOT (ends the case study). Add assets/xp-hero-shot.jpg, ideally with a person in the mockup;
+             until the file exists this section is hidden. === -->
+        <section class="cs-band cs-band--purple" data-hide-if-empty>
+            <div class="cs-wrap">
+                <figure class="cs-hero-shot fade-up observe" data-optional>
+                    <img src="assets/xp-hero-shot.jpg" alt="XP Bank in everyday use" loading="lazy" decoding="async">
+                    <figcaption class="cs-caption">XP Bank in everyday life.</figcaption>
+                </figure>
             </div>
         </section>
 
@@ -737,6 +1255,10 @@
             <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">Youtube</a>
         </div>
     </footer>
+
+    <!-- Three.js (for the 3D brain in the prototype loaders) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 
     <script>
         const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -779,7 +1301,70 @@
         });
 
         /* ==================================================================
-           2. SCROLL REVEAL (fires once per element; headings decrypt as they appear)
+           2. MISSING FILES: optional images are skipped, empty blocks are hidden
+           ================================================================== */
+        function pruneEmpty() {
+            document.querySelectorAll("[data-hide-if-empty]").forEach(box => {
+                if (!box.querySelector("[data-optional], .cs-slide, figure")) box.remove();
+            });
+        }
+
+        function handleBroken(t) {
+            if (!t || t.tagName !== "IMG") return;
+
+            // Booklet: a missing page becomes a blank page; if the cover itself is missing, hide the booklet
+            if (t.closest(".cs-book")) {
+                console.warn("Brand guidelines page not found:", t.getAttribute("src"));
+                const face = t.closest(".cs-face");
+                if (face && face.dataset.page !== "1") {
+                    face.classList.add("is-missing");
+                } else {
+                    const g = document.getElementById("guidelines");
+                    if (g) g.remove();
+                }
+                return;
+            }
+
+            // Carousel: drop the slide and update the counter
+            const slide = t.closest(".cs-slide");
+            if (slide) {
+                slide.remove();
+                pruneEmpty();
+                window.dispatchEvent(new Event("cs:slides"));
+                return;
+            }
+
+            // Optional figures (sketches, ATM, hero shot): skip quietly
+            const optional = t.closest("[data-optional]");
+            if (optional) {
+                optional.remove();
+                pruneEmpty();
+                return;
+            }
+
+            // Anything else: neat tile with the description instead of a broken icon
+            const box = t.closest(".cs-media, .cs-hero-media");
+            if (box) {
+                box.classList.add("is-missing");
+                if (!box.dataset.label) box.dataset.label = t.alt || "";
+                t.remove();
+            }
+        }
+
+        document.addEventListener("error", (e) => {
+            const t = e.target;
+            if (!t) return;
+
+            handleBroken(t);
+        }, true);
+
+        // Catch images that already failed before this script ran
+        document.querySelectorAll("img").forEach(img => {
+            if (img.getAttribute("src") && img.complete && img.naturalWidth === 0) handleBroken(img);
+        });
+
+        /* ==================================================================
+           3. SCROLL REVEAL (fires once per element; headings decrypt as they appear)
            ================================================================== */
         const toAnimate = document.querySelectorAll(".observe");
 
@@ -801,7 +1386,7 @@
         }
 
         /* ==================================================================
-           3. 3D TILT ON IMAGES (same as the homepage cards)
+           4. 3D TILT ON IMAGES (same as the homepage cards)
            ================================================================== */
         if (!reduceMotion && canHover) {
             document.addEventListener("mousemove", (e) => {
@@ -823,54 +1408,411 @@
         }
 
         /* ==================================================================
-           4. DEVELOPMENT IMAGE CYCLER (auto-fades, dots to jump, pauses on hover)
+           6. DEVELOPMENT CAROUSEL (swipe, drag, press the edges, arrow keys)
            ================================================================== */
         (function () {
-            const stage = document.getElementById("cycler");
-            const dotsWrap = document.getElementById("cycler-dots");
-            if (!stage || !dotsWrap) return;
+            const stage = document.getElementById("carousel");
+            if (!stage) return;
 
-            const slides = Array.from(stage.querySelectorAll(".cs-slide"));
-            if (slides.length < 2) return;
+            const track    = stage.querySelector(".cs-track");
+            const prevBtn  = stage.querySelector(".cs-edge--prev");
+            const nextBtn  = stage.querySelector(".cs-edge--next");
+            const capEl    = document.getElementById("carousel-caption");
+            const countEl  = document.getElementById("carousel-count");
+            const progress = document.getElementById("carousel-progress");
 
             let index = 0;
-            let timer = null;
+            let dragging = false;
+            let startX = 0;
+            let dx = 0;
+            let moved = false;
+            let suppressClick = false;
 
-            const dots = slides.map((slide, i) => {
-                const dot = document.createElement("button");
-                dot.type = "button";
-                dot.className = "cs-dot";
-                dot.setAttribute("aria-label", "Show image " + (i + 1) + ": " + slide.alt);
-                dot.addEventListener("click", () => { show(i); restart(); });
-                dotsWrap.appendChild(dot);
-                return dot;
-            });
+            const slides = () => Array.from(track.children);
 
-            function show(i) {
-                slides[index].classList.remove("is-active");
-                dots[index].removeAttribute("aria-current");
-                index = i;
-                slides[index].classList.add("is-active");
-                dots[index].setAttribute("aria-current", "true");
+            // Match the stage height to the visible slide's image
+            function fit() {
+                const cur = slides()[index];
+                if (!cur) return;
+                const h = cur.getBoundingClientRect().height;
+                if (h > 0) stage.style.height = h + "px";
             }
 
-            function next() { show((index + 1) % slides.length); }
-            function start() { if (!reduceMotion && !timer) timer = setInterval(next, 3500); }
-            function stop()  { clearInterval(timer); timer = null; }
-            function restart() { stop(); start(); }
+            function update() {
+                const list = slides();
+                const n = list.length;
+                if (!n) return;
 
-            dots[0].setAttribute("aria-current", "true");
+                index = Math.max(0, Math.min(index, n - 1));
 
-            stage.addEventListener("mouseenter", stop);
-            stage.addEventListener("mouseleave", start);
-            dotsWrap.addEventListener("focusin", stop);
-            dotsWrap.addEventListener("focusout", start);
+                track.style.transition = "";
+                track.style.transform = `translateX(${-index * 100}%)`;
 
-            start();
+                list.forEach((s, i) => s.setAttribute("aria-hidden", i === index ? "false" : "true"));
+
+                fit();
+                capEl.textContent = list[index].dataset.caption || "";
+                countEl.textContent = (index + 1) + " / " + n;
+                prevBtn.disabled = index === 0;
+                nextBtn.disabled = index === n - 1;
+
+                if (progress.children.length !== n) {
+                    progress.innerHTML = "";
+                    for (let i = 0; i < n; i++) progress.appendChild(document.createElement("span"));
+                }
+                Array.from(progress.children).forEach((bar, i) => bar.classList.toggle("is-on", i <= index));
+            }
+
+            prevBtn.addEventListener("click", () => { if (suppressClick) return; index--; update(); });
+            nextBtn.addEventListener("click", () => { if (suppressClick) return; index++; update(); });
+
+            // Drag (mouse) and swipe (touch) share the same pointer handling
+            stage.addEventListener("pointerdown", (e) => {
+                if (e.pointerType === "mouse" && e.button !== 0) return;
+                dragging = true;
+                moved = false;
+                startX = e.clientX;
+                dx = 0;
+                track.style.transition = "none";
+            });
+
+            window.addEventListener("pointermove", (e) => {
+                if (!dragging) return;
+                dx = e.clientX - startX;
+                if (Math.abs(dx) > 6) moved = true;
+                track.style.transform = `translateX(calc(${-index * 100}% + ${dx}px))`;
+            });
+
+            function endDrag() {
+                if (!dragging) return;
+                dragging = false;
+                const threshold = Math.min(120, stage.clientWidth * 0.15);
+                if (dx < -threshold) index++;
+                else if (dx > threshold) index--;
+                if (moved) {
+                    suppressClick = true;
+                    setTimeout(() => { suppressClick = false; }, 0);
+                }
+                update();
+            }
+
+            window.addEventListener("pointerup", endDrag);
+            window.addEventListener("pointercancel", endDrag);
+
+            stage.addEventListener("keydown", (e) => {
+                if (e.key === "ArrowLeft")  { index--; update(); e.preventDefault(); }
+                if (e.key === "ArrowRight") { index++; update(); e.preventDefault(); }
+            });
+
+            // Re-fit when images finish loading or the window resizes
+            stage.querySelectorAll("img").forEach(img => img.addEventListener("load", fit));
+            window.addEventListener("resize", fit);
+
+            // A slide was removed because its file is missing
+            window.addEventListener("cs:slides", update);
+
+            update();
         })();
 
         /* ==================================================================
-           5. RISE UP (smooth scroll to top)
+           7. FLIPPABLE BRAND GUIDELINES (3D booklet built from XPBG1..XPBG56)
+           ================================================================== */
+        (function () {
+            const book = document.getElementById("book");
+            if (!book) return;
+
+            const inner  = book.querySelector(".cs-book-inner");
+            const tilt   = book.querySelector(".cs-book-tilt");
+            const prev   = document.getElementById("book-prev");
+            const next   = document.getElementById("book-next");
+            const label  = document.getElementById("book-label");
+            const scrub  = document.getElementById("book-scrub");
+
+            const folder = book.dataset.folder;
+            const prefix = book.dataset.prefix;
+            const ext    = book.dataset.ext;
+            const total  = parseInt(book.dataset.pages, 10) || 2;
+            const n      = Math.ceil(total / 2);   // each leaf has a front and a back page
+            let flipped  = 0;                      // how many leaves are turned
+
+            // Build the leaves: leaf i holds page 2i+1 (front) and page 2i+2 (back)
+            function face(pageNo, cls) {
+                const d = document.createElement("div");
+                d.className = "cs-face " + cls;
+                d.dataset.page = pageNo;
+                if (pageNo > total) return d;       // odd page count: blank back
+                const img = document.createElement("img");
+                img.src = folder + prefix + pageNo + ext;
+                img.alt = pageNo === 1 ? "Brand guidelines cover"
+                        : pageNo === total ? "Brand guidelines back cover"
+                        : "Brand guidelines page " + pageNo;
+                img.draggable = false;
+                img.decoding = "async";
+                if (pageNo > 6) img.loading = "lazy";
+                d.appendChild(img);
+                return d;
+            }
+
+            const leaves = [];
+            for (let i = 0; i < n; i++) {
+                const leaf = document.createElement("div");
+                leaf.className = "cs-leaf";
+                leaf.appendChild(face(2 * i + 1, "cs-front"));
+                leaf.appendChild(face(2 * i + 2, "cs-back"));
+                inner.appendChild(leaf);
+                leaves.push(leaf);
+            }
+
+            scrub.max = n;
+
+            // Match the booklet's proportions to your page images
+            const probe = new Image();
+            probe.onload = function () {
+                if (!probe.naturalWidth || !probe.naturalHeight) return;
+                const ratio = probe.naturalWidth / probe.naturalHeight;
+                book.style.setProperty("--spread", (2 * probe.naturalWidth) + " / " + probe.naturalHeight);
+                if (ratio > 1) book.style.setProperty("--book-w", "1100px"); // landscape pages get more room
+            };
+            probe.src = folder + prefix + "1" + ext;
+
+            function settleLayers() {
+                leaves.forEach((leaf, i) => {
+                    leaf.style.zIndex = i < flipped ? i + 1 : n - i;
+                });
+            }
+
+            function render() {
+                leaves.forEach((leaf, i) => leaf.classList.toggle("is-flipped", i < flipped));
+                book.classList.toggle("is-front", flipped === 0);
+                book.classList.toggle("is-back", flipped === n);
+                prev.disabled = flipped === 0;
+                next.disabled = flipped === n;
+                scrub.value = flipped;
+
+                if (flipped === 0) label.textContent = "Cover";
+                else if (flipped === n) label.textContent = "Back cover";
+                else label.textContent = "Pages " + (2 * flipped) + "\u2013" + (2 * flipped + 1) + " of " + total;
+            }
+
+            function go(target) {
+                target = Math.max(0, Math.min(n, target));
+                if (target === flipped) { render(); return; }
+
+                // Every leaf that turns sits on top and gets a moving shade while it moves
+                const from = Math.min(flipped, target);
+                const to   = Math.max(flipped, target);
+                for (let i = from; i < to; i++) {
+                    leaves[i].style.zIndex = 100 + (target > flipped ? i : n - i);
+                    leaves[i].classList.add("is-turning");
+                }
+                flipped = target;
+                render();
+                setTimeout(() => {
+                    leaves.forEach(l => l.classList.remove("is-turning"));
+                    settleLayers();
+                }, reduceMotion ? 0 : 900);
+            }
+
+            prev.addEventListener("click", (e) => { e.stopPropagation(); go(flipped - 1); });
+            next.addEventListener("click", (e) => { e.stopPropagation(); go(flipped + 1); });
+            scrub.addEventListener("input", () => go(parseInt(scrub.value, 10)));
+
+            // Click: left half = back, right half = forward. Drag/swipe: left = forward, right = back.
+            let downX = 0, downY = 0, swiped = false;
+
+            book.addEventListener("pointerdown", (e) => {
+                downX = e.clientX; downY = e.clientY; swiped = false;
+            });
+
+            book.addEventListener("pointerup", (e) => {
+                const dx = e.clientX - downX;
+                const dy = e.clientY - downY;
+                if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+                    swiped = true;
+                    go(flipped + (dx < 0 ? 1 : -1));
+                }
+            });
+
+            book.addEventListener("click", (e) => {
+                if (swiped) { swiped = false; return; }
+                const rect = book.getBoundingClientRect();
+                const onRight = (e.clientX - rect.left) > rect.width / 2;
+                if (flipped === 0) go(1);
+                else if (flipped === n) go(n - 1);
+                else go(onRight ? flipped + 1 : flipped - 1);
+            });
+
+            book.addEventListener("keydown", (e) => {
+                if (e.key === "ArrowRight") { go(flipped + 1); e.preventDefault(); }
+                if (e.key === "ArrowLeft")  { go(flipped - 1); e.preventDefault(); }
+            });
+
+            // Lean towards the pointer (mouse only)
+            if (!reduceMotion && canHover) {
+                book.addEventListener("mousemove", (e) => {
+                    const r = book.getBoundingClientRect();
+                    const x = (e.clientX - r.left) / r.width - 0.5;
+                    const y = (e.clientY - r.top) / r.height - 0.5;
+                    tilt.style.transform = "rotateX(" + (6 - y * 10) + "deg) rotateY(" + (x * 14) + "deg)";
+                });
+                book.addEventListener("mouseleave", () => { tilt.style.transform = ""; });
+            }
+
+            settleLayers();
+            render();
+        })();
+
+        /* ==================================================================
+           7b. FIGMA PROTOTYPE LOADERS: the lo-fi 3D brain (assets/3dbrainlogo.glb) spins with "Loading..." below it
+           until each prototype has loaded. One shared WebGL renderer feeds every loader, and it stops when they are all done.
+           If the 3D model can't load, a spinning flat brain image is used instead.
+           ================================================================== */
+        (function () {
+            const frames = Array.from(document.querySelectorAll(".cs-proto-frame"));
+            if (!frames.length) return;
+
+            const active = [];   // { canvas, ctx, done }
+
+            // --- Build a loader over every prototype ---
+            frames.forEach(frame => {
+                const iframe = frame.querySelector("iframe");
+                if (!iframe) return;
+
+                const loader = document.createElement("div");
+                loader.className = "cs-loader";
+                loader.setAttribute("role", "status");
+                loader.setAttribute("aria-live", "polite");
+                loader.innerHTML =
+                    '<div class="cs-loader-spin">' +
+                        '<img src="assets/brain-180.png" alt="" aria-hidden="true">' +
+                        '<canvas class="cs-loader-canvas" width="300" height="300" aria-hidden="true"></canvas>' +
+                    '</div>' +
+                    '<div class="cs-loader-text"><span>Loading</span><span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></div>';
+                frame.appendChild(loader);
+
+                const canvas = loader.querySelector("canvas");
+                const entry = { canvas: canvas, ctx: canvas.getContext("2d"), spin: loader.querySelector(".cs-loader-spin"), done: false };
+                active.push(entry);
+
+                let finished = false;
+                const finish = () => {
+                    if (finished) return;
+                    finished = true;
+                    setTimeout(() => {
+                        loader.classList.add("is-done");
+                        setTimeout(() => { entry.done = true; }, 700);
+                    }, 500); // brief pause so Figma can draw its first screen
+                };
+
+                iframe.addEventListener("load", finish, { once: true });
+                setTimeout(finish, 30000); // safety net: never leave the loader up forever
+            });
+
+            // --- Shared 3D brain ---
+            if (typeof THREE === "undefined" || !THREE.GLTFLoader) {
+                console.warn("Three.js not available; loaders use the flat spinning brain.");
+                return;
+            }
+
+            try {
+                const SIZE = 300;
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
+                camera.position.set(0, 0, 5.5);
+
+                const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+                renderer.setSize(SIZE, SIZE, false);
+                renderer.setPixelRatio(1);
+
+                scene.add(new THREE.AmbientLight(0x2a1a50, 1.1));
+
+                const l1 = new THREE.DirectionalLight(0xffffff, 1.4); l1.position.set(5, 6, 4);   scene.add(l1);
+                const l2 = new THREE.DirectionalLight(0x8a4fff, 1.5); l2.position.set(-5, -4, -2); scene.add(l2);
+                const l3 = new THREE.DirectionalLight(0xffffff, 0.6); l3.position.set(0, 4, -5);   scene.add(l3);
+
+                const pivot = new THREE.Group();
+                scene.add(pivot);
+
+                // Same PS1 chalk material as the contact page
+                const material = new THREE.MeshStandardMaterial({
+                    color: 0xdddddf,
+                    roughness: 0.85,
+                    metalness: 0.05,
+                    flatShading: true
+                });
+
+                let ready = false;
+                let rafId = 0;
+                const clock = new THREE.Clock();
+
+                function frame() {
+                    rafId = requestAnimationFrame(frame);
+
+                    const live = active.filter(e => !e.done);
+                    if (!live.length) {               // every loader is finished: stop and free the GPU
+                        cancelAnimationFrame(rafId);
+                        renderer.dispose();
+                        return;
+                    }
+
+                    const delta = clock.getDelta();
+                    const t = clock.getElapsedTime();
+
+                    if (!reduceMotion) {
+                        pivot.rotation.y += delta * 0.75;
+                        pivot.position.y = Math.sin(t * 1.8) * 0.12;
+                    }
+
+                    renderer.render(scene, camera);
+
+                    live.forEach(e => {
+                        e.ctx.clearRect(0, 0, SIZE, SIZE);
+                        e.ctx.drawImage(renderer.domElement, 0, 0, SIZE, SIZE);
+                    });
+                }
+
+                function show(model, width) {
+                    const targetWidth = 3.4;
+                    const scale = targetWidth / (width || 1);
+                    pivot.scale.set(scale, scale, scale);
+                    pivot.rotation.x = 0.22;
+                    pivot.add(model);
+                    ready = true;
+                    active.forEach(e => e.spin.classList.add("has-3d"));
+                    frame();
+                }
+
+                new THREE.GLTFLoader().load(
+                    "assets/3dbrainlogo.glb",
+                    (gltf) => {
+                        const model = gltf.scene;
+                        model.traverse((child) => {
+                            if (child.isMesh) {
+                                if (child.geometry.index) child.geometry = child.geometry.toNonIndexed();
+                                child.geometry.computeVertexNormals();
+                                child.material = material;
+                            }
+                        });
+
+                        const box = new THREE.Box3().setFromObject(model);
+                        const center = box.getCenter(new THREE.Vector3());
+                        const size = box.getSize(new THREE.Vector3());
+                        model.position.sub(center);
+
+                        show(model, size.x);
+                    },
+                    undefined,
+                    (error) => {
+                        console.warn("3dbrainlogo.glb not found (check filename and capitalisation). Using the flat brain.", error);
+                    }
+                );
+            } catch (err) {
+                console.warn("3D brain failed to start (WebGL unavailable?). Using the flat brain.", err);
+            }
+        })();
+
+        /* ==================================================================
+           8. RISE UP (smooth scroll to top)
            ================================================================== */
         const rise = document.querySelector(".rise-up-btn");
         if (rise) {
@@ -879,20 +1821,6 @@
                 window.scrollTo({ top: 0, behavior: "smooth" });
             });
         }
-
-        /* ==================================================================
-           6. MISSING IMAGE? Show a neat tile with its description instead of a broken icon
-           ================================================================== */
-        document.addEventListener("error", (e) => {
-            const img = e.target;
-            if (!img || img.tagName !== "IMG") return;
-            const box = img.closest(".cs-media, .cs-hero-media");
-            if (box) {
-                box.classList.add("is-missing");
-                if (!box.dataset.label) box.dataset.label = img.alt || "";
-                img.remove();
-            }
-        }, true);
     </script>
 </body>
 </html>
