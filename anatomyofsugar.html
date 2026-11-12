@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Anatomy of Sugar | Case Study</title>
+    <title>The Anatomy of Sugar</title>
     <link rel="icon" type="image/x-icon" href="/assets/faviconbrain.png">
 
     <!-- Favicon -->
@@ -576,6 +576,16 @@
 
         .cs-book-fallback[hidden] { display: none; }
 
+        .cs-pdf-embed {
+            display: block;
+            width: 100%;
+            height: min(80vh, 760px);
+            margin-top: 1rem;
+            border: 0;
+            border-radius: 10px;
+            background: #fff;
+        }
+
         .cs-face canvas {
             width: 100%;
             height: 100%;
@@ -665,7 +675,7 @@
         <!-- === HERO === -->
         <section class="cs-hero">
             <div class="cs-wrap">
-                <span class="cs-eyebrow fade-up observe">Case Study</span>
+                <span class="cs-eyebrow fade-up observe">Graphic Design</span>
                 <h1 class="cs-title cs-title--long scramble-heading fade-up observe stagger-1">The Anatomy of Sugar</h1>
 
                 <ul class="cs-tags fade-up observe stagger-2" aria-label="Project focus">
@@ -714,13 +724,13 @@
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12"/><path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2"/><path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4"/></svg>
                                 </span>
-                                <p>The project ran for about <strong>1 month</strong>.</p>
+                                <p>The project ran for about <strong>2 months</strong>.</p>
                             </li>
                             <li class="cs-spec fade-left observe stagger-2">
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                                 </span>
-                                <p>Software: <strong>InDesign</strong>, <strong>Photoshop</strong> and <strong>Gemini</strong>.</p>
+                                <p>Software used: <strong>InDesign</strong>, <strong>Photoshop</strong> and <strong>Gemini</strong>.</p>
                             </li>
                             <li class="cs-spec fade-left observe stagger-3">
                                 <span class="cs-spec-icon" aria-hidden="true">
@@ -1026,8 +1036,17 @@
             const book = document.getElementById("book");
             if (!book) return;
 
-            const PDFJS  = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
-            const WORKER = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+            // pdf.js is tried from three CDNs in turn (the "legacy" build also runs on older browsers)
+            const LIBS = [
+                { js: "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/legacy/build/pdf.min.js",
+                  worker: "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/legacy/build/pdf.worker.min.js" },
+                { js: "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js",
+                  worker: "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js" },
+                { js: "https://unpkg.com/pdfjs-dist@3.11.174/legacy/build/pdf.min.js",
+                  worker: "https://unpkg.com/pdfjs-dist@3.11.174/legacy/build/pdf.worker.min.js" }
+            ];
+            // The PDF is looked for in assets/ first, then next to this page
+            const PDF_PATHS = [book.dataset.pdf, book.dataset.pdf.replace(/^assets\//, "")];
 
             const stage    = document.getElementById("book-stage");
             const fallback = document.getElementById("book-fallback");
@@ -1047,7 +1066,17 @@
             function fail(err) {
                 console.warn("Catalogue viewer could not load:", err);
                 if (stage) stage.hidden = true;
-                if (fallback) fallback.hidden = false;
+                if (fallback) {
+                    fallback.hidden = false;
+                    // Last resort: let the browser show the PDF itself
+                    if (!fallback.querySelector("object")) {
+                        const o = document.createElement("object");
+                        o.data = PDF_PATHS[0];
+                        o.type = "application/pdf";
+                        o.className = "cs-pdf-embed";
+                        fallback.appendChild(o);
+                    }
+                }
             }
 
             function loadScript(src) {
@@ -1171,13 +1200,29 @@
                 }
             }
 
+            async function openPdf() {
+                let lastErr = null;
+                for (const lib of LIBS) {
+                    if (!window.pdfjsLib) {
+                        try { await loadScript(lib.js); } catch (e) { lastErr = e; continue; }
+                    }
+                    if (!window.pdfjsLib) continue;
+                    pdfjsLib.GlobalWorkerOptions.workerSrc = lib.worker;
+                    for (const path of PDF_PATHS) {
+                        try {
+                            return await pdfjsLib.getDocument({ url: path }).promise;
+                        } catch (e) { lastErr = e; }
+                    }
+                    break;   // the library loaded but no PDF path worked, so another CDN won't help
+                }
+                throw lastErr || new Error("pdf.js could not be loaded");
+            }
+
             async function start() {
                 if (started) return;
                 started = true;
                 try {
-                    await loadScript(PDFJS);
-                    pdfjsLib.GlobalWorkerOptions.workerSrc = WORKER;
-                    pdf = await pdfjsLib.getDocument(book.dataset.pdf).promise;
+                    pdf = await openPdf();
                     total = pdf.numPages;
                     n = Math.ceil(total / 2);   // each leaf has a front and a back page
 
