@@ -1,250 +1,1503 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/brain-16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/brain-180.png">
-  <meta name="theme-color" content="#4A00FF">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scran: The Sustainable Cooking App for Kids | Case Study | Jared Russell</title>
+    <meta name="description" content="Case study: Scran, a playful baking app that teaches 8–14 year olds to reduce food waste, designed around the UN's Zero Hunger goal. Research, a mid-project pivot, style guide and prototype. By Jared Russell.">
+    <link rel="icon" type="image/x-icon" href="/assets/faviconbrain.png">
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Scran — Case Study | Jared Russell // UnwiseGenius</title>
-  <link rel="stylesheet" href="style.css" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/brain-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/brain-180.png">
+    <meta name="theme-color" content="#4D04FF">
+
+    <!-- Google Fonts: Rajdhani & Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Adobe Fonts (Typekit): Stolzl Regular 400 + Bold 700. Must load BEFORE style.css -->
+    <link rel="stylesheet" href="https://use.typekit.net/inw8ngx.css">
+
+    <!-- Global CSS (keep this ?v= number in sync with the other pages) -->
+    <link rel="stylesheet" href="style.css?v=5">
+
+    <!-- If JavaScript is off, show everything instead of leaving content faded out -->
+    <noscript>
+        <style>
+            .fade-up, .fade-in, .fade-right, .fade-left { opacity: 1 !important; transform: none !important; }
+        </style>
+    </noscript>
+
+    <!-- Case study styles (all prefixed cs- so they never clash with style.css) -->
+    <style>
+        :root {
+            --cs-purple: #4D04FF;
+            --cs-lime:   #CFFF04;
+            --cs-pink:   #FB4CD1;
+        }
+
+        body { background-color: #ffffff; }
+
+        /* Links take the colour of their section; .cyber-btn and the specific link styles below still win */
+        main a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Links inside running text keep an underline, so they're not shown by colour alone */
+        main a.cs-inline-link {
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 3px;
+            font-weight: 700;
+        }
+
+        /* --- LAYOUT --- */
+        .cs-wrap {
+            width: min(1100px, 86vw);
+            margin: 0 auto;
+        }
+
+        .cs-band {
+            padding: clamp(56px, 7vw, 104px) 0;
+        }
+
+        .cs-band--white  { background-color: #ffffff;         color: #111111; }
+        .cs-band--lime   { background-color: var(--cs-lime);   color: #111111; }
+        /* Dark text on pink: #111 on #FB4CD1 is about 6.3:1 (white was 2.98:1 and failed WCAG AA) */
+        .cs-band--pink   { background-color: var(--cs-pink);   color: #111111; }
+        .cs-band--purple { background-color: var(--cs-purple); color: #ffffff; }
+
+        .cs-band h2 {
+            font-size: clamp(2.2rem, 4vw, 3.6rem);
+            letter-spacing: -1.5px;
+            line-height: 1.05;
+            margin-bottom: clamp(20px, 2.4vw, 36px);
+            cursor: default;
+        }
+
+        .cs-band h2.cs-sub {
+            font-size: clamp(1.6rem, 2.6vw, 2.3rem);
+            letter-spacing: -1px;
+            margin-bottom: clamp(16px, 2vw, 28px);
+        }
+
+        /* Sub-headings inside a section (Brand in use, Brand guidelines, Prototype...) */
+        .cs-band h3 {
+            font-size: clamp(1.3rem, 1.9vw, 1.8rem);
+            margin: clamp(36px, 4.5vw, 64px) 0 clamp(14px, 1.6vw, 22px);
+        }
+
+        .cs-band p {
+            font-size: clamp(1.05rem, 1.35vw, 1.3rem);
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+
+        .cs-band strong { font-weight: 700; }
+
+        section[id] { scroll-margin-top: 24px; }
+
+        /* Description under every image */
+        .cs-caption {
+            display: block;
+            margin-top: 0.75rem;
+            font-size: clamp(0.9rem, 1.05vw, 1rem);
+            line-height: 1.45;
+            opacity: 0.85;
+        }
+
+        /* --- HERO --- */
+        .cs-hero {
+            background-color: var(--cs-purple);
+            color: #ffffff;
+            padding: clamp(40px, 6vw, 88px) 0 clamp(48px, 6vw, 96px);
+        }
+
+        /* Plain text label (not a pill, so it doesn't read as a button) */
+        .cs-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8em;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: clamp(0.95rem, 1.3vw, 1.2rem);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin-bottom: clamp(14px, 1.8vw, 24px);
+        }
+
+        .cs-eyebrow::before {
+            content: "";
+            width: 2.4em;
+            height: 3px;
+            background-color: var(--cs-lime);
+        }
+
+        .cs-title {
+            font-size: clamp(3.5rem, 10vw, 9rem);
+            letter-spacing: -0.02em;
+            line-height: 0.95;
+            margin-bottom: clamp(16px, 2vw, 28px);
+            cursor: default;
+        }
+
+        /* Focus areas as a slash-separated line of text, so they don't look like buttons */
+        .cs-tags {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem 0;
+            margin-bottom: clamp(28px, 4vw, 56px);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: clamp(1rem, 1.35vw, 1.25rem);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .cs-tags li + li::before {
+            content: "/";
+            margin: 0 0.9em;
+            color: var(--cs-lime);
+        }
+
+        /* Hero banner: a still image that fades in with the rest of the hero */
+        .cs-hero-media {
+            position: relative;
+            border-radius: clamp(10px, 1.2vw, 18px);
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .cs-hero-media img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .cs-hero-media:hover .cs-scan {
+            top: 120%;
+            transition: top 0.75s ease-in-out;
+        }
+
+        /* --- SUMMARY / CONTENTS / SPECS --- */
+        .cs-duo {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: clamp(32px, 5vw, 80px);
+            margin-top: clamp(40px, 5vw, 72px);
+        }
+
+        .cs-contents {
+            list-style: none;
+            display: grid;
+            gap: 0.5rem;
+            justify-items: start;
+        }
+
+        .cs-contents a {
+            position: relative;
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.8em;
+            padding: 0.2em 0.7em;
+            font-weight: 700;
+            font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+            transition: color 0.25s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cs-contents .cs-num {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8em;
+            opacity: 0.6;
+        }
+
+        /* Same [ bracket ] hover as the nav links */
+        .cs-contents a::before,
+        .cs-contents a::after {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            color: var(--cs-purple);
+            transition: opacity 0.25s ease;
+        }
+
+        .cs-contents a::before { content: '['; left: 0; }
+        .cs-contents a::after  { content: ']'; right: 0; }
+
+        .cs-contents a:hover {
+            color: var(--cs-purple);
+            transform: translateX(6px);
+        }
+
+        .cs-contents a:hover::before,
+        .cs-contents a:hover::after { opacity: 1; }
+
+        /* Specs: every row is one or two lines and the same height, so the spacing is even */
+        .cs-specs {
+            list-style: none;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .cs-spec {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            min-height: 3.5rem;
+        }
+
+        .cs-spec-icon {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            border: 3px solid #111111;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #111111;
+        }
+
+        .cs-spec-icon svg { width: 55%; height: 55%; }
+
+        .cs-band .cs-spec p { margin: 0; line-height: 1.4; }
+
+        /* --- IMAGES: tilt + scanline sweep (same effect as the homepage cards) --- */
+        .cs-media {
+            position: relative;
+            overflow: hidden;
+            border-radius: clamp(8px, 1vw, 14px);
+            will-change: transform;
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+        }
+
+        .cs-media:hover {
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22), 0 0 25px rgba(77, 4, 255, 0.18);
+        }
+
+        /* Full image always shown, never cropped */
+        .cs-media img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .cs-scan {
+            position: absolute;
+            top: -120%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.25) 50%, transparent 100%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .cs-media:hover .cs-scan {
+            top: 120%;
+            transition: top 0.75s ease-in-out;
+        }
+
+        /* If an image file is missing, show a neat tile with its description instead of a broken icon */
+        .cs-media.is-missing,
+        .cs-hero-media.is-missing {
+            min-height: 200px;
+            background-color: rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .cs-media.is-missing::after,
+        .cs-hero-media.is-missing::after {
+            content: attr(data-label);
+            font-weight: 700;
+        }
+
+        .cs-ideation { margin: 0 0 clamp(24px, 3vw, 44px); }
+
+        /* Text first, image second (stacks the same way on mobile) */
+        .cs-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(24px, 4vw, 64px);
+            align-items: center;
+        }
+
+        .cs-grid {
+            display: grid;
+            gap: clamp(20px, 2.4vw, 36px) clamp(12px, 1.6vw, 24px);
+            align-items: start;
+        }
+
+        .cs-grid--3 { grid-template-columns: repeat(3, 1fr); }
+
+        /* --- LISTS --- */
+        .cs-bullets {
+            list-style: none;
+            margin-bottom: 1.25rem;
+        }
+
+        .cs-bullets li {
+            position: relative;
+            padding-left: 2em;
+            margin-bottom: 0.7rem;
+            font-size: clamp(1.05rem, 1.35vw, 1.3rem);
+            line-height: 1.5;
+        }
+
+        /* Brain icon bullet (same artwork as the favicon) */
+        .cs-bullets li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.1em;
+            width: 1.3em;
+            height: 1.3em;
+            background: url("assets/faviconbrain.png") center / contain no-repeat;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+        }
+
+        .cs-band .cs-center { text-align: center; margin: clamp(24px, 3vw, 40px) auto 0; }
+
+        /* --- ANATOMY OF SUGAR additions --- */
+        .cs-subtitle {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.2rem, 2.2vw, 2rem);
+            letter-spacing: -0.5px;
+            color: var(--cs-lime);
+            margin-bottom: clamp(14px, 1.8vw, 22px);
+        }
+
+        .cs-grid--2 { grid-template-columns: repeat(2, 1fr); }
+
+        /* A figure that sits under a paragraph at full width */
+        .cs-fig {
+            margin: clamp(20px, 3vw, 40px) 0;
+        }
+
+        .cs-media video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* --- NEXT PROJECT / BACK TO WORK (no dead ends at the end of a case study) --- */
+        .cs-next {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px 32px;
+        }
+
+        .cs-next-link {
+            display: inline-flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            text-decoration: none;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cs-next-link:hover,
+        .cs-next-link:focus-visible { transform: translateX(6px); }
+
+        .cs-next-link--back:hover,
+        .cs-next-link--back:focus-visible { transform: translateX(-6px); }
+
+        .cs-next-kicker {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            opacity: 0.85;
+        }
+
+        .cs-next-title {
+            font-weight: 700;
+            font-size: clamp(1.6rem, 3vw, 2.6rem);
+            letter-spacing: -1px;
+            text-decoration: underline;
+            text-decoration-thickness: 3px;
+            text-underline-offset: 6px;
+            text-decoration-color: var(--cs-lime);
+        }
+
+        .cs-next-link--next { text-align: right; margin-left: auto; }
+
+        /* --- RISE UP --- */
+        .cs-rise {
+            text-align: center;
+            padding: clamp(56px, 8vw, 120px) 0;
+        }
+
+        .rise-up-btn {
+            display: inline-block;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .rise-up-btn h2 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            letter-spacing: -2px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin: 0;
+            transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .rise-up-btn:hover h2 {
+            color: var(--cs-purple);
+            transform: skewX(-12deg);
+            text-shadow: 6px 6px 0 var(--cs-lime);
+        }
+
+        /* --- SCROLL REVEAL --- */
+        .fade-up, .fade-in, .fade-right, .fade-left {
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-up    { transform: translateY(40px); }
+        .fade-right { transform: translateX(-40px); }
+        .fade-left  { transform: translateX(40px); }
+
+        .is-visible { opacity: 1; transform: none; }
+
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        .stagger-4 { transition-delay: 0.4s; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 820px) {
+            .cs-split { grid-template-columns: 1fr; }
+            .cs-duo   { grid-template-columns: 1fr; }
+            .cs-grid--3 { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 640px) {
+            .cs-grid--3, .cs-grid--2 { grid-template-columns: 1fr; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .fade-up, .fade-in, .fade-right, .fade-left { opacity: 1; transform: none; transition: none; }
+            .cs-media, .cs-leaf, .cs-book-inner, .cs-book-tilt, .cs-book-floor { transition: none; }
+        }
+
+        /* --- FLIPPABLE BRAND GUIDELINES: a 3D booklet mockup (click a page, drag/swipe, arrows, scrub bar or arrow keys) --- */
+        .cs-book-stage {
+            position: relative;
+            margin-top: clamp(8px, 1vw, 16px);
+            padding: clamp(8px, 2vw, 28px) 0 0;
+        }
+
+        .cs-book {
+            --spread: 8 / 5;                 /* set automatically from your first page image */
+            --book-w: 900px;
+            position: relative;
+            z-index: 1;
+            width: min(var(--book-w), 100%);
+            margin: 0 auto;
+            perspective: 2600px;
+            cursor: pointer;
+            outline-offset: 12px;
+            touch-action: pan-y;
+        }
+
+        .cs-book:focus-visible { outline: 2px solid var(--cs-purple); }
+
+        /* The whole booklet leans slightly towards the pointer */
+        .cs-book-tilt {
+            transform-style: preserve-3d;
+            transform: rotateX(6deg);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cs-book-inner {
+            position: relative;
+            width: 100%;
+            aspect-ratio: var(--spread);
+            transform-style: preserve-3d;
+            transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* A closed book sits centred instead of leaving an empty half */
+        .cs-book.is-front .cs-book-inner { transform: translateX(-25%); }
+        .cs-book.is-back  .cs-book-inner { transform: translateX(25%); }
+
+        .cs-leaf {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            transform-origin: left center;
+            transform-style: preserve-3d;
+            transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cs-leaf.is-flipped { transform: rotateY(-180deg); }
+
+        .cs-face {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            background-color: #ffffff;
+        }
+
+        .cs-face img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* Moving shade across the page while it turns */
+        .cs-face::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.45s ease;
+        }
+        .cs-front::after { background: linear-gradient(90deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0) 70%); }
+        .cs-back::after  { background: linear-gradient(270deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0) 70%); }
+        .cs-leaf.is-turning .cs-face::after { opacity: 1; }
+
+        /* A missing page file shows a neat blank page instead of a broken icon */
+        .cs-face.is-missing img { visibility: hidden; }
+        .cs-face.is-missing::before {
+            content: "Page " attr(data-page);
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999999;
+            font-weight: 700;
+        }
+
+        /* Spine side shading + a thin page edge on the outside */
+        .cs-front { box-shadow: inset 12px 0 18px -10px rgba(0, 0, 0, 0.3), inset -1px 0 0 rgba(0, 0, 0, 0.08); }
+        .cs-back  { transform: rotateY(180deg); box-shadow: inset -12px 0 18px -10px rgba(0, 0, 0, 0.3), inset 1px 0 0 rgba(0, 0, 0, 0.08); }
+
+        /* Shadow on the "table" that follows the book as it opens and closes */
+        .cs-book-floor {
+            position: absolute;
+            left: 50%;
+            bottom: -26px;
+            width: 92%;
+            height: 34px;
+            transform: translateX(-50%);
+            background: radial-gradient(ellipse at center, rgba(40, 0, 50, 0.45), rgba(40, 0, 50, 0) 70%);
+            filter: blur(7px);
+            pointer-events: none;
+            transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), width 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .cs-book.is-front .cs-book-floor,
+        .cs-book.is-back  .cs-book-floor { width: 52%; }
+
+        .cs-book-controls {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: clamp(34px, 4vw, 52px);
+        }
+
+        .cs-book-btn {
+            width: clamp(40px, 4vw, 54px);
+            height: clamp(40px, 4vw, 54px);
+            border: 0;
+            border-radius: 50%;
+            background-color: var(--cs-lime);
+            color: #111111;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .cs-book-btn:hover:not(:disabled) { background-color: #111111; color: var(--cs-lime); transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25); }
+        .cs-book-btn:disabled { opacity: 0.35; cursor: default; }
+        .cs-book-btn:focus-visible { outline: 2px solid #ffffff; outline-offset: 3px; }
+
+        .cs-book-label {
+            min-width: 9em;
+            text-align: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+
+        .cs-book-scrub {
+            position: relative;
+            z-index: 1;
+            display: block;
+            width: min(420px, 80%);
+            margin: 20px auto 0;
+            height: 20px;
+            background: transparent;
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .cs-book-scrub::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: rgba(255, 255, 255, 0.45); }
+        .cs-book-scrub::-moz-range-track              { height: 4px; border-radius: 2px; background: rgba(255, 255, 255, 0.45); }
+        .cs-book-scrub::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; margin-top: -7px; border-radius: 50%; border: 0; background: var(--cs-lime); box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.25); }
+        .cs-book-scrub::-moz-range-thumb     { width: 18px; height: 18px; border-radius: 50%; border: 0; background: var(--cs-lime); box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.25); }
+        .cs-book-scrub:focus-visible { outline: 2px solid #ffffff; outline-offset: 6px; }
+
+        /* On the pink band, booklet controls switch to dark so they stay visible */
+        .cs-band--pink .cs-book-scrub::-webkit-slider-runnable-track { background: rgba(17, 17, 17, 0.35); }
+        .cs-band--pink .cs-book-scrub::-moz-range-track              { background: rgba(17, 17, 17, 0.35); }
+        .cs-band--pink .cs-book-scrub:focus-visible,
+        .cs-band--pink .cs-book-btn:focus-visible { outline-color: #111111; }
+
+        .cs-book-hint {
+            position: relative;
+            z-index: 1;
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.85;
+        }
+
+        /* Scran: the label names the pages you're looking at, so it can be a little wider */
+        .cs-book-label { min-width: 12em; }
+        .cs-book-stage[hidden] { display: none !important; }
+        #guidelines { margin-bottom: clamp(24px, 3vw, 44px); }
+
+        /* --- GRUB / SCRAN additions --- */
+        .cs-title--long { font-size: clamp(2.4rem, 6.6vw, 6rem); }
+
+        /* Videos of each microinteraction: whole frame shown, never cropped */
+        .cs-media video { background-color: #000000; }
+
+        .cs-proto-frame {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 10;          /* change this to match the Figma frame if you see bars */
+            margin: clamp(20px, 2.4vw, 36px) auto 0;
+            border-radius: clamp(12px, 1.6vw, 22px);
+            overflow: hidden;
+            background-color: #f2f2f2;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+        }
+
+        .cs-proto-frame iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Prototype: a widescreen website frame. The embeds use scaling=scale-down-width, so Figma
+           fits each screen to the full width of the frame and you scroll down it, instead of
+           shrinking the whole tall page to fit the height (which left empty bars at the sides). */
+        .cs-proto-frame--site  { aspect-ratio: 16 / 9; }
+
+        /* Case study essay: a long scrolling document, so a tall reading window instead */
+        .cs-proto-frame--essay {
+            aspect-ratio: auto;
+            height: min(85vh, 900px);
+            max-width: 900px;
+        }
+
+        .cs-band h3.cs-question { margin-top: clamp(48px, 6vw, 88px); }
+
+        /* Persona quote */
+        .cs-quote {
+            margin: clamp(20px, 3vw, 40px) 0;
+            padding-left: clamp(16px, 2vw, 28px);
+            border-left: 4px solid var(--cs-lime);
+            font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 640px) {
+            .cs-proto-frame--site  { aspect-ratio: 4 / 3; }
+            .cs-proto-frame--essay { height: 75vh; }
+        }
+    </style>
 </head>
 
-<body class="page-portfolio">
-  <!-- Header -->
-  <header class="nav">
-    <a href="index.html" class="logo">
-      <img src="assets/brain2.png" alt="Brain logo" />
-      <span>Jared<br>Russell</span>
-    </a>
-    <nav>
-      <a href="about.html">ABOUT ME</a>
-      <a href="portfolio.html" class="active">PORTFOLIO</a>
-      <a href="contact.html">GET IN TOUCH!</a>
-    </nav>
-  </header>
+<body id="top">
 
-  <!-- CASE STUDY (new layout) -->
-  <main class="cs">
-    <!-- Hero -->
-    <section class="cs-hero">
-      <picture>
-        <img class="cs-hero-media" src="assets/SCRANLONG.png" alt="Scran — homepage visual">
-      </picture>
-    </section>
- <!-- Specs -->
- <section class="cs-section" id="specs">
-  <h2 class="case-title2">PROJECT SPECIFICATIONS</h2>
-  <div class="cs-body">
-    <ul class="specs-list" role="list">
-      <li class="spec-line">
-        <span class="spec-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-               stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 2h12M6 22h12" />
-            <path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2" />
-            <path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4" />
-          </svg>
-        </span>
-        <p class="case-copy">The time it took for this project was <strong> 9-12 Weeks</strong>.</p>
-      </li>
-
-      <li class="spec-line">
-        <span class="spec-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-               stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 20h9" />
-            <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-          </svg>
-        </span>
-        <p class="case-copy">
-          Software used for this project:
-          <strong>Figma</strong> and <strong>After Effects</strong>
-        </p>
-      </li>
-
-      <li class="spec-line">
-        <span class="spec-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-               stroke-linecap="round" stroke-linejoin="round">
-            <path d="M11.5 6h11" />
-            <path d="M11.5 12h11" />
-            <path d="M11.5 18h11" />
-            <path d="M4 6l1.5 1.5L8 5" />
-            <path d="M4 12l1.5 1.5L8 11" />
-            <path d="M4 18l1.5 1.5L8 17" />
-          </svg>
-        </span>
-        <p class="case-copy">
-          This was a Figma based project, I had to create a <strong> working Prototype</strong>.
-        </p>
-      </li>
-      <li class="spec-line">
-        <span class="spec-icon" aria-hidden="true">
-          <!-- user -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round">
-            <path d="M20 21a8 8 0 1 0-16 0" />
-            <circle cx="12" cy="7" r="4" />
-          </svg>
-        </span>
-        <p class="case-copy">The target audience was <strong>8-14 year olds</strong>.</p>
-      </li>
-    </ul>
-  </div>
-</section>
-      
-</section>
-    <!-- Synopsis -->
-    <section class="cs-section" id="synopsis">
-      <div class="cs-sticky"><h2>The Brief</h2></div>
-      <div class="cs-body">
-        <p>
-          The brief was to design an interactive digital experience that communicates one or more of the United Nations Sustainable Development Goals (SDGs) in a clear, engaging way. For this project we had to create the following
-        </p>
-        <ul class="cs-bullets">
-          <li>A Branded home screen</li>
-          <li>One SDG chosen that was designed specifically for a 10-year-old audience
-          </li>
-          <li>A Style Guide</li>
-          <li>A working prototype, made in Figma</li>
-        
-        </ul>
-        
-        </p>
-      </div>
-    </section>
-
-   <!-- Research -->
-<section class="cs-section" id="research">
-    <div class="cs-sticky"><h2>The Problem</h2></div>
-    <div class="cs-body">
-      <p>
-        The SDGs contain important yet complex, text-heavy information that is aimed primarily at adults. This causes a gap to be created for younger audiences. Specifically children, who struggle to engage with or understand sustainability meaningfully. This is important because early education affects long term behaviour. if children can learn to be more sustainable, and develop healthy habits through interaction, rather than through dense content, SDGs like Zero Hunger can become more practical, relatable and memorable rather than be hard to understand or care for. 
-      </p>
-  
-
-     
-  
-      <!-- Supporting layout exploration (2-column) -->
-     
-    </div>
-  </section>
-  
-
-    <!-- Ideation -->
-    <section class="cs-section" id="ideation">
-      <div class="cs-sticky"><h2>CONSTRAINTS</h2></div>
-      <div class="cs-body">
-        <p>
-          This project was to have a brand, a home screen, an SDG specifically aimed towards children which proved to be the hardest part, as it was something I’ve never had to do as a designer, so this project pushed me out of my comfort zone. I also had to create a style guide, and a functioning prototype on Figma. The deliverables needed to show sustainability based content to a younger audience, with the assumption of Adult supervision, whilst remaining practical, within the project scope.
-        </p>
-
-        <div class="cs-wide">
-          <img src="assets/Front Cover.png" alt="Scran Style Guide">
+    <!-- === HEADER / NAVIGATION (same as every other page) === -->
+    <header>
+        <div class="top-left">
+            <a href="index.html">
+                <img src="assets/brain-180.png" alt="Home" class="brain-icon" width="38">
+            </a>
         </div>
-      </div>
-    </section>
+        <nav class="top-right">
+            <a href="about.html" class="cyber-nav-link" data-text="About Me">About Me</a>
+            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio">Portfolio</a>
+            <a href="contact.html" class="cyber-nav-link" data-text="Get in Touch!">Get in Touch!</a>
+        </nav>
+    </header>
 
-    <!-- Identity -->
-    <section class="cs-section" id="identity">
-      <div class="cs-sticky"><h2>Process</h2></div>
-      <div class="cs-body">
-        <p>
-          After learning what the project was asking me, I did some research and explored multiple SDG Concepts, before eventually deciding on Zero Hunger, As food waste is an issue that children can be taught to stop doing at home. I looked into popular cookbook apps like BBC Good Food and Gousto, To Identify features such as ingredient filtering, step by step recipes, and portion calculators. These features help my design by informing me of decisions such as large imagery, minimal text and clear task progression to reduce cognitive load
-        </p>
+    <main>
 
-      <!-- Font image -->
-      <div class="cs-wide">
-        <img src="assets/HomeFood.png" alt="Gousto Home Screen, a Cookbook app">
-      </div>
-      
-      <p>I then moved on to create a user persona with AI. This helped me to ground decisions around language, colour, interaction and the tone of voice, as I looked back to the persona throughout development. Design decisions were supported by feedback, for example. Nutritional data was changed to hide behind a dropdown after I had received some feedback highlighting the risk of overwhelming or inappropriate information, especially if it is aimed at children. I used micro-interactions like a bouncing loading icon, animated components, and visual cooking steps to engage with the user and to reinforce learning through play rather than instruction.</p>
-      <div class="cs-wide">
-        <img src="assets/Target Audience 2.png" alt="Sophie Baker, user persona">
-      </div>
-    </div>
-  </section>
-  
-      </div>
-    </section>
+        <!-- === HERO === -->
+        <section class="cs-hero">
+            <div class="cs-wrap">
+                <span class="cs-eyebrow fade-up observe">Case Study</span>
+                <h1 class="cs-title scramble-heading fade-up observe stagger-1">Scran</h1>
+                <p class="cs-subtitle fade-up observe stagger-1">The sustainable baking app for kids</p>
 
-    <!-- Mockups & Build -->
-  <!-- Mockups & Build -->
-<section class="cs-section" id="build">
-    <div class="cs-sticky"><h2>OUTCOME</h2></div>
-    <div class="cs-body">
-      <p>
-        In the end, the final outcome was Scran. A playful, illustrated baking app that teaches children how to reduce food waste through simple recipes like banana bread, The prototype includes a questionnaire based on your skills as a baker, recipes that are easy to follow, and an ingredient-reuse feature called Sue Chef. The design successfully balanced education and fun, but the app could be pushed further.
-      </p>
-      <div class="cs-grid cs-grid--2">
-        <figure class="cs-embed">
-          <iframe
-            src="https://embed.figma.com/design/ezsMsShPpMjb9xdAuSMIf0/Scran-Project---Jared?node-id=34-443&embed-host=share"
-            allowfullscreen
-            loading="lazy"
-            title="Scran Project Interactive Prototype">
-          </iframe>
-        </figure>
-      </div>      
-    </div>
-  </section>
-  
+                <ul class="cs-tags fade-up observe stagger-2" aria-label="Project focus">
+                    <li>Research</li>
+                    <li>Branding</li>
+                    <li>Design Systems</li>
+                    <li>Prototyping</li>
+                    <li>Motion</li>
+                </ul>
 
-    <!-- Critique & Outcome -->
-    <section class="cs-section" id="outcome">
-      <div class="cs-sticky"><h2>REFLECTION</h2></div>
-      <div class="cs-body">
-        <p>
-          I enjoyed this project. It was a challenge at the start, as I had never designed for a younger target audience before, but through research and feedback, I got there in the end. If I could continue the project, I would refine accessibility features, such as having a dyslexia-friendly font. This project helped me develop my approach to UX, making me prioritise the target audience's needs, safety and cognitive load earlier in the project.
-        </p>
-        
-      
-            <a class="case-link"
-               href="https://jaredrussell.notion.site/Sustainable-Development-Goals-2879a122e2e08058a279f627ccaee203"
-               target="_blank" rel="noopener">READ NOTES ON MY NOTION</a>
-          </p>
-      </div>
-    </section>
-  </main>
+                <div class="cs-hero-media fade-up observe stagger-3" data-label="Scran app screens">
+                    <img src="assets/SCRANLONG.png" alt="A row of Scran app screens: loading, home, recipe and Sue Chef" decoding="async" fetchpriority="high">
+                    <span class="cs-scan" aria-hidden="true"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- === SUMMARY + CONTENTS + SPECS === -->
+        <section id="summary" class="cs-band cs-band--lime">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Summary Of Project</h2>
+                <p class="fade-up observe stagger-1">Scran is a playful, illustrated baking app that helps children cut down on food waste. Built around the UN&rsquo;s Zero Hunger goal, it mixes simple recipes, a cheeky helper called Sue Chef, and a look inspired by The Great British Bake Off.</p>
+                <a href="https://jaredrussell.notion.site/Sustainable-Development-Goals-2879a122e2e08058a279f627ccaee203" target="_blank" rel="noopener" class="cyber-btn fade-up observe stagger-2">
+                    <span>Read my full project notes on Notion</span>
+                    <span class="arrow">&nearr;</span>
+                </a>
+
+                <div class="cs-duo">
+                    <div id="contents">
+                        <h2 class="cs-sub scramble-heading fade-up observe">Contents</h2>
+                        <ul class="cs-contents">
+                            <li class="fade-right observe stagger-1"><a href="#brief"><span class="cs-num">01</span>The Brief</a></li>
+                            <li class="fade-right observe stagger-2"><a href="#idea"><span class="cs-num">02</span>Finding the Idea</a></li>
+                            <li class="fade-right observe stagger-3"><a href="#research"><span class="cs-num">03</span>Research</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#pivot"><span class="cs-num">04</span>Designing for Children</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#style"><span class="cs-num">05</span>The Style Guide</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#screens"><span class="cs-num">06</span>Designing the Screens</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#redevelopment"><span class="cs-num">07</span>Redevelopment</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#outcome"><span class="cs-num">08</span>Outcome</a></li>
+                            <li class="fade-right observe stagger-4" data-needs-ai><a href="#ai"><span class="cs-num">09</span>AI Transparency</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num" data-num-after-ai>09</span>Reflection</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="specs">
+                        <h2 class="cs-sub scramble-heading fade-up observe">Project Specifications</h2>
+                        <ul class="cs-specs" role="list">
+                            <li class="cs-spec fade-left observe stagger-1">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12"/><path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2"/><path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4"/></svg>
+                                </span>
+                                <p><strong>9 weeks</strong> (autumn 2025), plus redevelopment afterwards.</p>
+                            </li>
+                            <li class="cs-spec fade-left observe stagger-2">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                                </span>
+                                <p>Software: <strong>Figma</strong>, <strong>Illustrator</strong> and <strong>After Effects</strong>.</p>
+                            </li>
+                            <li class="cs-spec fade-left observe stagger-3">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M11 18h2"/></svg>
+                                </span>
+                                <p>Designed for an <strong>11-inch iPad</strong>.</p>
+                            </li>
+                            <li class="cs-spec fade-left observe stagger-4">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21a8 8 0 1 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>
+                                </span>
+                                <p>Target audience: <strong>8&ndash;14 year olds</strong>, with adult supervision.</p>
+                            </li>
+                            <li class="cs-spec fade-left observe stagger-4">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                                </span>
+                                <p>UN goal: <strong>Zero Hunger</strong>, through reducing food waste.</p>
+                            </li>
+                            <li class="cs-spec fade-left observe stagger-4" data-needs-ai>
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4L12 3z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15z"/></svg>
+                                </span>
+                                <p>AI use: <a href="#ai" class="cs-inline-link">how AI was (and wasn&rsquo;t) used</a>.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === THE BRIEF === -->
+        <section id="brief" class="cs-band cs-band--white">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">The Brief</h2>
+                <p class="fade-up observe">In 2015, every UN member state adopted the 2030 Agenda for Sustainable Development. At its heart are 17 Sustainable Development Goals (SDGs), an urgent call for countries to work together on everything from clean water to climate action.</p>
+                <p class="fade-up observe">Our brief was to design an interactive digital experience that communicates one or more of these goals in a clear, engaging way. Over nine weeks, we had to deliver:</p>
+                <ul class="cs-bullets fade-up observe">
+                    <li>A branded home screen</li>
+                    <li>One SDG, designed specifically for a 10-year-old audience</li>
+                    <li>A style guide</li>
+                    <li>A working prototype, made in Figma</li>
+                </ul>
+                <p class="fade-up observe">The catch? The SDGs are written for adults. They&rsquo;re text-heavy and abstract, which leaves out children, the people who will be living with these goals the longest. Habits formed early tend to stick, so if kids can learn sustainable habits through play rather than walls of text, a goal like Zero Hunger becomes something they can actually act on.</p>
+            </div>
+        </section>
+
+        <!-- === FINDING THE IDEA === -->
+        <section id="idea" class="cs-band cs-band--pink">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Finding the Idea</h2>
+                <p class="fade-up observe">After reading the brief and looking through a few examples, I jotted down some quick ideas, each tackling a different goal:</p>
+                <ul class="cs-bullets fade-up observe">
+                    <li><strong>Zero Hunger:</strong> a cookbook app that shows how to prevent food waste, such as turning onion scraps into seasoning.</li>
+                    <li><strong>Sustainable Cities and Communities:</strong> a city-planner game that reviews how sustainable your city is and explains why. Fun, but scanning a whole city would have been a nightmare to build in Figma.</li>
+                    <li><strong>No Poverty:</strong> a stockbroker game where your decisions affect both the world and your wallet.</li>
+                </ul>
+                <p class="fade-up observe">In the end, the cookbook won. There was room for a great brand, and I could genuinely see it growing into a real app that promotes sustainability.</p>
+            </div>
+        </section>
+
+        <!-- === RESEARCH === -->
+        <section id="research" class="cs-band cs-band--white">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Research</h2>
+                <h3 class="fade-up observe">Cookbook apps</h3>
+                <p class="fade-up observe">Off to the App Store I went. After downloading the highest-rated cookbook apps, I screenshotted every feature I liked:</p>
+                <ul class="cs-bullets fade-up observe">
+                    <li><strong>BBC Good Food:</strong> saving recipes for later, and filtering out vegetables you dislike (I&rsquo;ll admit, I hate cauliflower). Small, but genuinely accessible.</li>
+                    <li><strong>Gousto:</strong> a picture for every ingredient, a portion calculator, nutritional facts, and tags like &ldquo;gluten free&rdquo; that make searching easy.</li>
+                    <li><strong>Tasty:</strong> an onboarding questionnaire (are you vegetarian?), video recipes, and a calculator that tells you exactly how much to buy, so less food goes to waste.</li>
+                </ul>
+                <figure class="cs-fig fade-up observe">
+                    <div class="cs-media tilt-card" data-label="The Gousto app home screen">
+                        <img src="assets/HomeFood.png" alt="The Gousto app home screen" loading="lazy" decoding="async">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">Gousto&rsquo;s home screen: big imagery, ingredient pictures and clear tags.</figcaption>
+                </figure>
+                <h3 class="fade-up observe">A similar case study</h3>
+                <p class="fade-up observe">While researching, I came across a UX case study by Rebecca that tackled sustainable eating through vegan alternatives, whereas Scran focuses on food waste. She clearly did her homework: a target audience sheet before designing, wireframes before screens, and a carbon footprint calculator that motivated users with positive statistics. The first two went straight into my own process.</p>
+                <h3 class="fade-up observe">Naming the app</h3>
+                <p class="fade-up observe">Naming the app took a long list, from FoodCycle and Loop Kitchen to ReHeat and Savethepeels. One stood out straight away: <strong>Scran</strong>, slang for food, and only one letter away from &ldquo;scrap&rdquo;. I really love that one.</p>
+                <figure class="cs-fig fade-up observe" data-optional>
+                    <div class="cs-media tilt-card" data-label="Mind map of Scran ideas">
+                        <img src="assets/scran-mindmap.png" alt="Mind map of Scran ideas" loading="lazy" decoding="async">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">My mind map of features and ideas for the app.</figcaption>
+                </figure>
+                <figure class="cs-fig fade-up observe" data-optional>
+                    <div class="cs-media tilt-card" data-label="Lo-fi sketches of Scran features">
+                        <img src="assets/scran-sketches.png" alt="Lo-fi sketches of Scran features" loading="lazy" decoding="async">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">Early lo-fi sketches: leftover-ingredient ideas and a carbon footprint tracker.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- === DESIGNING FOR CHILDREN === -->
+        <section id="pivot" class="cs-band cs-band--purple">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Designing for Children</h2>
+                <p class="fade-up observe">Then came a curveball. Rereading the brief in class, I noticed the audience was children, and everything I had planned was built for adults: a retro style aimed at young adults, and recipes that involved frying and sharp knives.</p>
+                <p class="fade-up observe">Scrapping the cookbook was tempting, but after talking it through with Kyle, I kept the idea and changed three things:</p>
+                <ul class="cs-bullets fade-up observe">
+                    <li><strong>Baking, not frying.</strong> Banana bread is far safer for a 10-year-old than frying an egg.</li>
+                    <li><strong>A new visual style,</strong> inspired by The Great British Bake Off&rsquo;s illustrations, Paddy Donnelly&rsquo;s children&rsquo;s books, Cath Kidston&rsquo;s patterns and the cookbook <em>Kids Can Bake</em>.</li>
+                    <li><strong>More research,</strong> added on top of what I had, rather than starting again.</li>
+                </ul>
+                <p class="fade-up observe">Drawing every illustration by hand would have taken ages, so to get that Bake Off look, I photographed the food and ran it through Illustrator&rsquo;s Image Trace on low-fidelity settings.</p>
+                <figure class="cs-fig fade-up observe" data-optional>
+                    <div class="cs-media tilt-card" data-label="Pages from the Kids Can Bake cookbook">
+                        <img src="assets/scran-kidscanbake.png" alt="Pages from the Kids Can Bake cookbook" loading="lazy" decoding="async">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption"><em>Kids Can Bake</em>: exactly the feel I wanted, just in app form.</figcaption>
+                </figure>
+                <h3 class="fade-up observe">Meet Sophie Baker</h3>
+                <p class="fade-up observe">To keep every decision grounded in the audience, I wrote a persona for Sophie Baker (get it?), a 10-year-old from Northern Ireland who loves The Great British Bake Off.</p>
+                <ul class="cs-bullets fade-up observe">
+                    <li><strong>Goals:</strong> bake simple recipes like banana bread on her own, and use up leftovers.</li>
+                    <li><strong>Frustrations:</strong> cooking apps with complicated text, dangerous steps, and plain, boring visuals.</li>
+                    <li><strong>Needs:</strong> bright illustrations, step-by-step visual guides, safe baking tasks, and encouragement when she finishes a recipe.</li>
+                </ul>
+                <blockquote class="cs-quote fade-up observe">&ldquo;I love baking cakes like the ones on Bake Off! It&rsquo;s fun when I can do it myself and help the planet too.&rdquo;</blockquote>
+                <figure class="cs-fig fade-up observe">
+                    <div class="cs-media tilt-card" data-label="The Sophie Baker user persona sheet">
+                        <img src="assets/Target%20Audience%202.png" alt="The Sophie Baker user persona sheet" loading="lazy" decoding="async">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">Sophie Baker&rsquo;s persona sheet, which I checked my decisions against throughout.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- === THE STYLE GUIDE (brand guidelines booklet first, then the write-up) === -->
+        <section id="style" class="cs-band cs-band--pink">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">The Style Guide</h2>
+                <!-- Flippable booklet of the brand guidelines (like XP Bank).
+                     Pages come from assets/scranbrandguidelines/, in the order listed in data-files
+                     (separated by |). The first file is the front cover and the last (Tone of voice) is the back page.
+                     It sits at the top of the Style Guide section, just below the title.
+                     If the front cover file is missing, this block hides itself. -->
+                <div id="guidelines">
+                    <div class="cs-book-stage fade-up observe">
+                        <div class="cs-book" id="book" tabindex="0" role="group" aria-label="Flippable Scran brand guidelines booklet"
+                             data-folder="assets/scranbrandguidelines/"
+                             data-files="Front Cover.png|Intro.png|Colours.png|Typography.png|Iconography.png|Components.png|Components 2.png|Tone of voice.png">
+                            <div class="cs-book-tilt">
+                                <div class="cs-book-inner"></div>
+                            </div>
+                            <div class="cs-book-floor" aria-hidden="true"></div>
+                        </div>
+
+                        <div class="cs-book-controls">
+                            <button type="button" class="cs-book-btn" id="book-prev" aria-label="Previous page">&larr;</button>
+                            <span class="cs-book-label" id="book-label" aria-live="polite">Front Cover</span>
+                            <button type="button" class="cs-book-btn" id="book-next" aria-label="Next page">&rarr;</button>
+                        </div>
+                        <input type="range" class="cs-book-scrub" id="book-scrub" min="0" max="1" value="0" step="1" aria-label="Jump through the brand guidelines">
+                        <span class="cs-book-hint">Flip through the Scran brand guidelines: click a page, drag or swipe, use the arrows or slider, or press the arrow keys.</span>
+                    </div>
+                </div>
+
+                <h3 class="fade-up observe">Colour</h3>
+                <p class="fade-up observe">The palette comes straight from the Bake Off set and its illustrations: warm, friendly colours that feel like a kitchen.</p>
+                <h3 class="fade-up observe">Typography</h3>
+                <p class="fade-up observe">For the logo and headings, I chose <strong>Bayon</strong>. It only comes in uppercase, which sounds like a flaw, but bold capitals are actually easier for children who are still learning to read. Comic Sans was genuinely tempting for the body text, but adults use the app too, so I settled on <strong>Comic Neue</strong>: still playful, but far more readable. OpenDyslexic is also noted as an option for readers with dyslexia.</p>
+                <h3 class="fade-up observe">Logo</h3>
+                <p class="fade-up observe">My first logo sketches crammed in far too many icons, so I simplified to one icon beside the wordmark. The three alternatives could even swap in as a loading animation.</p>
+                <h3 class="fade-up observe">Components and tone of voice</h3>
+                <p class="fade-up observe">Using Gousto and BBC Good Food as a guide, I rebuilt the components I&rsquo;d need in Figma, with proper click animations and variants in portrait and landscape for an 11-inch iPad. The tone of voice is warm, playful and educational, and the guide itself is written for the designers who would use it.</p>
+                <figure class="cs-fig fade-up observe" data-optional>
+                    <div class="cs-media tilt-card" data-label="Scran Figma components">
+                        <img src="assets/scran-components.png" alt="Scran Figma components" loading="lazy" decoding="async">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">Components rebuilt in Figma, with click animations and variants.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- === DESIGNING THE SCREENS === -->
+        <section id="screens" class="cs-band cs-band--purple">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Designing the Screens</h2>
+                <p class="fade-up observe">Before designing anything, I mapped out the user flow as a wireframe, then sketched each screen in more detail.</p>
+                <figure class="cs-fig fade-up observe" data-optional>
+                    <div class="cs-media tilt-card" data-label="Scran user flow wireframe">
+                        <img src="assets/scran-flow.png" alt="Scran user flow wireframe" loading="lazy" decoding="async">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">The user flow, from loading screen to recipe.</figcaption>
+                </figure>
+                <h3 class="fade-up observe">Loading screen</h3>
+                <p class="fade-up observe">Remember the loading screens on children&rsquo;s PS2 games, where the text pulsed and bounced? I borrowed that. The Scran icon jumps up and down while the background colour and icon change.</p>
+                <figure class="cs-fig fade-up observe" data-optional>
+                    <div class="cs-media" data-label="The Scran loading screen animation">
+                        <video src="assets/scran-loading.mp4#t=0.1" muted loop playsinline preload="metadata" controls aria-label="The Scran loading screen animation"></video>
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">The loading screen: a bouncing icon with changing colours.</figcaption>
+                </figure>
+                <h3 class="fade-up observe">Sign-up and questionnaire</h3>
+                <p class="fade-up observe">My first sign-up page was boring enough to depress any child, so I spiced it up with a background video, cut together from stock footage of families baking. It took ages, and it still feels a little mature, so it&rsquo;s a screen I&rsquo;d revisit with some illustrations.</p>
+                <p class="fade-up observe">The questionnaire asks just three things: your name, your baking level and the food you like. If a long form puts me off, it&rsquo;s even worse for a child, so it takes 5 to 10 seconds, with a little animation each time you answer.</p>
+                <figure class="cs-fig fade-up observe" data-optional>
+                    <div class="cs-media" data-label="The Scran questionnaire animation">
+                        <video src="assets/scran-questionnaire.mp4#t=0.1" muted loop playsinline preload="metadata" controls aria-label="The Scran questionnaire animation"></video>
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">The questionnaire: three quick questions, each with an answer animation.</figcaption>
+                </figure>
+                <h3 class="fade-up observe">Home screen</h3>
+                <p class="fade-up observe">Looking back at my first draft of the home screen, I made the tags tappable, made the recipes scroll horizontally, and added the button I&rsquo;d forgotten: the ingredient manager.</p>
+                <h3 class="fade-up observe">Sue Chef</h3>
+                <p class="fade-up observe">The ingredient manager needed a better name. Children type in the leftovers they have at home, and the app suggests recipes that use them up: the heart of the Zero Hunger idea. Meet <strong>Sue Chef</strong>. Yes, it should be &ldquo;sous&rdquo;, and yes, he has a moustache, a nod to an old Johnny Cash song. In my opinion, it&rsquo;s funny. Hover over him and he even winks.</p>
+                <figure class="cs-fig fade-up observe" data-optional>
+                    <div class="cs-media tilt-card" data-label="Sue Chef icon designs">
+                        <img src="assets/scran-suechef.png" alt="Sue Chef icon designs" loading="lazy" decoding="async">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">Sue Chef: icon designs, with the final white-hat version.</figcaption>
+                </figure>
+                <h3 class="fade-up observe">Recipes and cooking steps</h3>
+                <p class="fade-up observe">The recipe screen takes inspiration from BBC Good Food and Gousto, with tags that help adults judge time, difficulty and allergens. Nutritional information sits behind a drop-down, because calorie counts can be too much for children. The cooking steps looked a little plain at first, so I added an icon for each stage, like a whisk for mixing: a kid-friendly reminder of where you are.</p>
+                <figure class="cs-fig fade-up observe" data-optional>
+                    <div class="cs-media tilt-card" data-label="Scran cooking step screens with stage icons">
+                        <img src="assets/scran-cooking-steps.png" alt="Scran cooking step screens with stage icons" loading="lazy" decoding="async">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">Cooking steps, with an icon for each stage.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- === REDEVELOPMENT === -->
+        <section id="redevelopment" class="cs-band cs-band--white">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Redevelopment</h2>
+                <p class="fade-up observe">By late November, Scran was essentially finished, but I wasn&rsquo;t ready to let it go just yet. I really like the idea, so I kept developing it alongside my other projects:</p>
+                <ul class="cs-bullets fade-up observe">
+                    <li><strong>This Week in Review:</strong> a screen showing how sustainable you were this week, with encouraging explanations of why it helps the planet. I left out stars and emojis to stay on brand.</li>
+                    <li><strong>A focaccia recipe:</strong> a second full recipe, proving the system works beyond banana bread.</li>
+                    <li><strong>A bigger role for Sue Chef:</strong> teaching more about sustainability, and appearing across the app, a little like Microsoft&rsquo;s Clippy.</li>
+                    <li><strong>An icon page</strong> in the style guide.</li>
+                </ul>
+                <figure class="cs-fig fade-up observe" data-optional>
+                    <div class="cs-media tilt-card" data-label="The This Week in Review screen">
+                        <img src="assets/scran-week-review.png" alt="The This Week in Review screen" loading="lazy" decoding="async">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">This Week in Review: positive statistics, no stars or emojis.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- === OUTCOME === -->
+        <section id="outcome" class="cs-band cs-band--pink">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Outcome</h2>
+                <p class="fade-up observe">The final Scran prototype takes a child from a bouncing loading screen through a three-question setup to a seasonal home screen. Recipes are broken into big, illustrated, swipeable steps, and Sue Chef turns leftovers into recipe ideas.</p>
+                <p class="fade-up observe">Every major decision traces back to Sophie: safe baking tasks, readable type, bright illustrations, encouraging messages, and nutritional details tucked away for adults.</p>
+                <figure class="cs-fig fade-up observe" data-optional>
+                    <div class="cs-media" data-label="A video walkthrough of the Scran prototype">
+                        <video src="assets/scran-walkthrough.mp4#t=0.1" muted loop playsinline preload="metadata" controls aria-label="A video walkthrough of the Scran prototype"></video>
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">A walkthrough of the final prototype.</figcaption>
+                </figure>
+                <div class="cs-proto-frame fade-up observe">
+                    <iframe src="https://embed.figma.com/design/ezsMsShPpMjb9xdAuSMIf0/Scran-Project---Jared?node-id=34-443&amp;embed-host=share" allowfullscreen loading="lazy" title="The Scran Figma file"></iframe>
+                </div>
+                <p class="cs-center fade-up observe">
+                    <a href="https://www.figma.com/design/ezsMsShPpMjb9xdAuSMIf0/Scran-Project---Jared?node-id=34-443" target="_blank" rel="noopener" class="cyber-btn">
+                        <span>Open the Scran file in Figma</span>
+                        <span class="arrow">&nearr;</span>
+                    </a>
+                </p>
+            </div>
+        </section>
+
+        <!-- === AI TRANSPARENCY ===
+             TO DO: check every sentence of this draft, then DELETE the word "hidden" below.
+             Your old Scran page said the persona was made "with AI", but your Notion notes say you wrote it
+             yourself. Keep whichever is true and name the tool if you used one.
+             While this section is hidden, its Contents entry and spec row hide too. -->
+        <section id="ai" class="cs-band cs-band--purple" hidden>
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">AI Transparency</h2>
+                <p class="fade-up observe">I used AI to help draft the Sophie Baker persona, then edited it and checked my decisions against it throughout the project.</p>
+                <p class="fade-up observe">The illustrated look was not AI-generated: I made it from photographs using Illustrator&rsquo;s Image Trace. Sue Chef is an AI feature within the app concept, not a tool I used to design it.</p>
+            </div>
+        </section>
+
+        <!-- === REFLECTION === -->
+        <section id="reflection" class="cs-band cs-band--lime">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Reflection</h2>
+                <p class="fade-up observe">Scran changed how I approach design problems. Instead of starting with a visual style, I started with the user&rsquo;s needs, which made the outcome more purposeful. Pivoting from adults to children mid-project taught me that lesson the hard way.</p>
+                <p class="fade-up observe">Research shaped almost every screen. Studying real cookbook apps and designing within realistic constraints made Scran feel like a legitimate product. It also showed me that good UX is usually about removing friction, not adding features, which matters even more when the user is ten.</p>
+                <p class="fade-up observe">It also sharpened my eye for hierarchy, spacing and content order. My early drafts were fun but cluttered, and refining them gave Scran consistent, readable layouts that flow far better.</p>
+                <p class="fade-up observe">If I could take it further, I&rsquo;d run user testing with children in the age group, design a landscape layout, and add a dyslexia-friendly font option such as OpenDyslexic. Overall, I&rsquo;m really happy with how Scran turned out.</p>
+            </div>
+        </section>
+
+        <!-- === NEXT PROJECT / BACK TO WORK === -->
+        <nav class="cs-band cs-band--purple" aria-label="More projects">
+            <div class="cs-wrap cs-next">
+                <a href="portfolio.html" class="cs-next-link cs-next-link--back">
+                    <span class="cs-next-kicker">&larr; Back to</span>
+                    <span class="cs-next-title">All my work</span>
+                </a>
+                <!-- Change this to whichever case study you want next -->
+                <a href="XPBANK.html" class="cs-next-link cs-next-link--next">
+                    <span class="cs-next-kicker">Next project &rarr;</span>
+                    <span class="cs-next-title">XP Bank</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- === RISE UP (scroll to top) === -->
+        <section class="cs-rise fade-in observe">
+            <a href="#top" class="rise-up-btn" aria-label="Scroll to top of page">
+                <h2>Rise Up!</h2>
+            </a>
+        </section>
+
+    </main>
+
+    <!-- === FOOTER (same as every other page) === -->
+    <footer id="contact">
+        <div class="footer-left">
+            <a href="index.html" class="footer-logo-link">
+                <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo" class="footer-logo" height="38">
+            </a>
+        </div>
+        <div class="footer-right">
+            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram</a>
+            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
+            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">Youtube</a>
+        </div>
+    </footer>
+
+    <script>
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const canHover     = window.matchMedia("(hover: hover)").matches;
+
+        /* ==================================================================
+           1. TEXT SCRAMBLE (same decryption effect as the other pages)
+           ================================================================== */
+        const GLYPHS = "!/<>[]-_=+*^?#_0101";
+
+        function scrambleElement(element) {
+            if (!element || reduceMotion) return;
+            const originalText = element.getAttribute("data-original") || element.innerText;
+            element.setAttribute("data-original", originalText);
+
+            const step = Math.max(1 / 3, originalText.length / 20);
+            let iteration = 0;
+
+            clearInterval(element._scrambleInterval);
+            element._scrambleInterval = setInterval(() => {
+                element.innerText = originalText
+                    .split("")
+                    .map((letter, index) => {
+                        if (letter === " ") return " ";
+                        if (index < iteration) return originalText[index];
+                        return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+                    })
+                    .join("");
+
+                if (iteration >= originalText.length) {
+                    clearInterval(element._scrambleInterval);
+                    element.innerText = originalText;
+                }
+                iteration += step;
+            }, 30);
+        }
+
+        document.querySelectorAll(".scramble-heading").forEach(h => {
+            h.addEventListener("mouseenter", () => scrambleElement(h));
+        });
+
+        /* ==================================================================
+           2. MISSING FILES: optional images are skipped, empty blocks are hidden
+           ================================================================== */
+        function handleBroken(t) {
+            if (!t) return;
+
+            // Booklet: a missing page becomes a blank page; if the cover itself is missing, hide the section
+            if (t.tagName === "IMG" && t.closest(".cs-book")) {
+                console.warn("Style guide page not found:", t.getAttribute("src"));
+                const face = t.closest(".cs-face");
+                if (face && face.dataset.page !== "1") {
+                    face.classList.add("is-missing");
+                } else {
+                    const g = document.getElementById("guidelines");
+                    if (g) g.remove();
+                }
+                return;
+            }
+
+            // Optional visuals (files not uploaded yet) are removed completely, so nothing looks broken
+            const optional = t.closest && t.closest("[data-optional]");
+            if (optional) { optional.remove(); return; }
+
+            // A video whose file is missing gets the same labelled tile, not an empty black player
+            if (t.tagName === "VIDEO" || t.tagName === "SOURCE") {
+                const vid = t.tagName === "VIDEO" ? t : t.closest("video");
+                const vbox = vid && vid.closest(".cs-media");
+                if (vbox) {
+                    vbox.classList.add("is-missing");
+                    vid.remove();
+                }
+                return;
+            }
+
+            if (t.tagName !== "IMG") return;
+
+            // Neat tile with the description instead of a broken icon
+            const box = t.closest(".cs-media, .cs-hero-media");
+            if (box) {
+                box.classList.add("is-missing");
+                if (!box.dataset.label) box.dataset.label = t.alt || "";
+                t.remove();
+            }
+        }
+
+        document.addEventListener("error", (e) => {
+            if (e.target) handleBroken(e.target);
+        }, true);
+
+        // Catch images that already failed before this script ran
+        document.querySelectorAll("img").forEach(img => {
+            if (img.getAttribute("src") && img.complete && img.naturalWidth === 0) handleBroken(img);
+        });
+
+        // Videos that already failed before this script ran
+        document.querySelectorAll(".cs-media video").forEach(v => {
+            if (v.error || v.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) handleBroken(v);
+        });
+
+        /* ==================================================================
+           2b. AI SECTION: until it's filled in (no "hidden" attribute), hide its Contents entry and spec row
+           ================================================================== */
+        (function () {
+            const ai = document.getElementById("ai");
+            if (ai && !ai.hidden) {
+                const n = document.querySelector("[data-num-after-ai]");
+                if (n) n.textContent = "10";
+                return;
+            }
+            document.querySelectorAll("[data-needs-ai]").forEach(el => el.remove());
+        })();
+
+        /* ==================================================================
+           3. SCROLL REVEAL (fires once per element; headings decrypt as they appear)
+           ================================================================== */
+        const toAnimate = document.querySelectorAll(".observe");
+
+        if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add("is-visible");
+                    if (entry.target.classList.contains("scramble-heading")) {
+                        scrambleElement(entry.target);
+                    }
+                    obs.unobserve(entry.target);
+                });
+            // Reveal slightly before an element reaches the screen, so fast scrolling never shows empty white bands
+            }, { threshold: 0, rootMargin: "0px 0px 15% 0px" });
+
+            toAnimate.forEach(el => observer.observe(el));
+        } else {
+            toAnimate.forEach(el => el.classList.add("is-visible"));
+        }
+
+        /* ==================================================================
+           4. 3D TILT ON IMAGES (same as the homepage cards)
+           ================================================================== */
+        if (!reduceMotion && canHover) {
+            document.addEventListener("mousemove", (e) => {
+                const card = e.target.closest && e.target.closest(".tilt-card");
+                if (!card) return;
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                card.style.transform =
+                    `perspective(1000px) scale3d(1.02, 1.02, 1.02) rotateX(${-y / 25}deg) rotateY(${x / 25}deg)`;
+            });
+
+            document.addEventListener("mouseout", (e) => {
+                const card = e.target.closest && e.target.closest(".tilt-card");
+                if (card && !card.contains(e.relatedTarget)) {
+                    card.style.transform = "";
+                }
+            });
+        }
+
+        /* ==================================================================
+           5. FLIPPABLE STYLE GUIDE (3D booklet built from the files listed in data-files)
+           ================================================================== */
+        (function () {
+            const book = document.getElementById("book");
+            if (!book) return;
+
+            const inner  = book.querySelector(".cs-book-inner");
+            const tilt   = book.querySelector(".cs-book-tilt");
+            const prev   = document.getElementById("book-prev");
+            const next   = document.getElementById("book-next");
+            const label  = document.getElementById("book-label");
+            const scrub  = document.getElementById("book-scrub");
+
+            const folder = book.dataset.folder;
+            const files  = book.dataset.files.split("|").map(f => f.trim()).filter(Boolean);
+            // A real booklet ends with the back cover on its own. With an odd number of pages, a blank
+            // inside page goes just before the back cover so it lands on the back of the last leaf.
+            if (files.length % 2 === 1 && files.length > 2) files.splice(files.length - 1, 0, "");
+            const names  = files.map(f => f.replace(/\.[a-z0-9]+$/i, ""));   // "Tone of voice.png" -> "Tone of voice"
+            const total  = files.length;
+            const n      = Math.ceil(total / 2);   // each leaf has a front and a back page
+            let flipped  = 0;                      // how many leaves are turned
+
+            const src = (i) => folder + encodeURIComponent(files[i]);   // spaces in filenames become %20
+
+            // Build the leaves: leaf i holds page 2i+1 (front) and page 2i+2 (back)
+            function face(pageNo, cls) {
+                const d = document.createElement("div");
+                d.className = "cs-face " + cls;
+                d.dataset.page = pageNo;
+                if (pageNo > total || !files[pageNo - 1]) return d;   // blank page
+                const img = document.createElement("img");
+                img.src = src(pageNo - 1);
+                img.alt = "Scran style guide: " + names[pageNo - 1];
+                img.draggable = false;
+                img.decoding = "async";
+                if (pageNo > 4) img.loading = "lazy";
+                d.appendChild(img);
+                return d;
+            }
+
+            const leaves = [];
+            for (let i = 0; i < n; i++) {
+                const leaf = document.createElement("div");
+                leaf.className = "cs-leaf";
+                leaf.appendChild(face(2 * i + 1, "cs-front"));
+                leaf.appendChild(face(2 * i + 2, "cs-back"));
+                inner.appendChild(leaf);
+                leaves.push(leaf);
+            }
+
+            scrub.max = n;
+
+            // Match the booklet's proportions to the page images
+            const probe = new Image();
+            probe.onload = function () {
+                if (!probe.naturalWidth || !probe.naturalHeight) return;
+                const ratio = probe.naturalWidth / probe.naturalHeight;
+                book.style.setProperty("--spread", (2 * probe.naturalWidth) + " / " + probe.naturalHeight);
+                if (ratio > 1) book.style.setProperty("--book-w", "1100px"); // landscape pages get more room
+            };
+            probe.src = src(0);
+
+            function settleLayers() {
+                leaves.forEach((leaf, i) => { leaf.style.zIndex = i < flipped ? i + 1 : n - i; });
+            }
+
+            function render() {
+                leaves.forEach((leaf, i) => leaf.classList.toggle("is-flipped", i < flipped));
+                book.classList.toggle("is-front", flipped === 0);
+                book.classList.toggle("is-back", flipped === n);
+                prev.disabled = flipped === 0;
+                next.disabled = flipped === n;
+                scrub.value = flipped;
+
+                // Name the pages on show, e.g. "Colours & Typography"
+                if (flipped === 0) label.textContent = names[0];
+                else if (flipped === n) label.textContent = names[total - 1];
+                else {
+                    const shown = [names[2 * flipped - 1], names[2 * flipped]].filter(Boolean);   // skip blank pages
+                    label.textContent = shown.join(" & ");
+                }
+            }
+
+            function go(target) {
+                target = Math.max(0, Math.min(n, target));
+                if (target === flipped) { render(); return; }
+                const from = Math.min(flipped, target);
+                const to   = Math.max(flipped, target);
+                for (let i = from; i < to; i++) {
+                    leaves[i].style.zIndex = 100 + (target > flipped ? i : n - i);
+                    leaves[i].classList.add("is-turning");
+                }
+                flipped = target;
+                render();
+                setTimeout(() => {
+                    leaves.forEach(l => l.classList.remove("is-turning"));
+                    settleLayers();
+                }, reduceMotion ? 0 : 900);
+            }
+
+            prev.addEventListener("click", (e) => { e.stopPropagation(); go(flipped - 1); });
+            next.addEventListener("click", (e) => { e.stopPropagation(); go(flipped + 1); });
+            scrub.addEventListener("input", () => go(parseInt(scrub.value, 10)));
+
+            // Click: left half = back, right half = forward. Drag/swipe: left = forward, right = back.
+            let downX = 0, downY = 0, swiped = false;
+            book.addEventListener("pointerdown", (e) => { downX = e.clientX; downY = e.clientY; swiped = false; });
+            book.addEventListener("pointerup", (e) => {
+                const dx = e.clientX - downX, dy = e.clientY - downY;
+                if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+                    swiped = true;
+                    go(flipped + (dx < 0 ? 1 : -1));
+                }
+            });
+            book.addEventListener("click", (e) => {
+                if (swiped) { swiped = false; return; }
+                const rect = book.getBoundingClientRect();
+                const onRight = (e.clientX - rect.left) > rect.width / 2;
+                if (flipped === 0) go(1);
+                else if (flipped === n) go(n - 1);
+                else go(onRight ? flipped + 1 : flipped - 1);
+            });
+            book.addEventListener("keydown", (e) => {
+                if (e.key === "ArrowRight") { go(flipped + 1); e.preventDefault(); }
+                if (e.key === "ArrowLeft")  { go(flipped - 1); e.preventDefault(); }
+            });
+
+            // Lean towards the pointer (mouse only)
+            if (!reduceMotion && canHover) {
+                book.addEventListener("mousemove", (e) => {
+                    const r = book.getBoundingClientRect();
+                    const x = (e.clientX - r.left) / r.width - 0.5;
+                    const y = (e.clientY - r.top) / r.height - 0.5;
+                    tilt.style.transform = "rotateX(" + (6 - y * 10) + "deg) rotateY(" + (x * 14) + "deg)";
+                });
+                book.addEventListener("mouseleave", () => { tilt.style.transform = ""; });
+            }
+
+            settleLayers();
+            render();
+        })();
+
+        /* ==================================================================
+           7. VIDEO: plays only while it is on screen
+           ================================================================== */
+        document.querySelectorAll(".cs-media video").forEach(v => {
+            if (reduceMotion || !("IntersectionObserver" in window)) return;
+            new IntersectionObserver(entries => {
+                entries.forEach(en => {
+                    if (en.isIntersecting) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+                    else v.pause();
+                });
+            }, { threshold: 0.4 }).observe(v);
+        });
+
+        /* ==================================================================
+           8. RISE UP (smooth scroll to top)
+           ================================================================== */
+        const rise = document.querySelector(".rise-up-btn");
+        if (rise) {
+            rise.addEventListener("click", (e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+        }
+    </script>
 </body>
-<script>
-  /* Page reveal on load (CSS uses html.body-ready to avoid flash) */
-  document.documentElement.classList.add('body-ready');
-  
-  /* Intercept internal links for a graceful exit, then navigate.
-     Uses View Transitions API when available; falls back to CSS fade. */
-  (function () {
-    const isInternal = (a) => (
-      a &&
-      a.origin === window.location.origin &&
-      !a.hasAttribute('download') &&
-      a.getAttribute('target') !== '_blank' &&
-      !a.getAttribute('href')?.startsWith('#')
-    );
-  
-    addEventListener('click', (e) => {
-      const a = e.target.closest('a');
-      if (!isInternal(a)) return;
-  
-      e.preventDefault();
-      const go = () => location.href = a.href;
-  
-      if (document.startViewTransition) {
-        // Native View Transition (Chrome/Edge/Arc)
-        document.startViewTransition(() => {
-          document.body.classList.add('leaving');
-        }).finished.then(go);
-      } else {
-        // CSS fallback
-        document.body.classList.add('leaving');
-        setTimeout(go, 250);
-      }
-    }, { capture: true });
-  })();
-  </script>
-  
 </html>

@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Microinteractions Support the User Journey | Grub Case Study | Jared Russell</title>
+    <meta name="description" content="Case study: Grub, a food ordering prototype with four Figma microinteractions, exploring how motion supports the user journey. By Jared Russell.">
+    <link rel="icon" type="image/x-icon" href="/assets/faviconbrain.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/brain-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/brain-180.png">
+    <meta name="theme-color" content="#4D04FF">
+
+    <!-- Google Fonts: Rajdhani & Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Adobe Fonts (Typekit): Stolzl Regular 400 + Bold 700. Must load BEFORE style.css -->
+    <link rel="stylesheet" href="https://use.typekit.net/inw8ngx.css">
+
+    <!-- Global CSS (keep this ?v= number in sync with the other pages) -->
+    <link rel="stylesheet" href="style.css?v=5">
+
+    <!-- If JavaScript is off, show everything instead of leaving content faded out -->
+    <noscript>
+        <style>
+            .fade-up, .fade-in, .fade-right, .fade-left { opacity: 1 !important; transform: none !important; }
+        </style>
+    </noscript>
+
+    <!-- Case study styles (all prefixed cs- so they never clash with style.css) -->
+    <style>
+        :root {
+            --cs-purple: #4D04FF;
+            --cs-lime:   #CFFF04;
+            --cs-pink:   #FB4CD1;
+        }
+
+        body { background-color: #ffffff; }
+
+        /* Links take the colour of their section; .cyber-btn and the specific link styles below still win */
+        main a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Links inside running text keep an underline, so they're not shown by colour alone */
+        main a.cs-inline-link {
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 3px;
+            font-weight: 700;
+        }
+
+        /* --- LAYOUT --- */
+        .cs-wrap {
+            width: min(1100px, 86vw);
+            margin: 0 auto;
+        }
+
+        .cs-band {
+            padding: clamp(56px, 7vw, 104px) 0;
+        }
+
+        .cs-band--white  { background-color: #ffffff;         color: #111111; }
+        .cs-band--lime   { background-color: var(--cs-lime);   color: #111111; }
+        /* Dark text on pink: #111 on #FB4CD1 is about 6.3:1 (white was 2.98:1 and failed WCAG AA) */
+        .cs-band--pink   { background-color: var(--cs-pink);   color: #111111; }
+        .cs-band--purple { background-color: var(--cs-purple); color: #ffffff; }
+
+        .cs-band h2 {
+            font-size: clamp(2.2rem, 4vw, 3.6rem);
+            letter-spacing: -1.5px;
+            line-height: 1.05;
+            margin-bottom: clamp(20px, 2.4vw, 36px);
+            cursor: default;
+        }
+
+        .cs-band h2.cs-sub {
+            font-size: clamp(1.6rem, 2.6vw, 2.3rem);
+            letter-spacing: -1px;
+            margin-bottom: clamp(16px, 2vw, 28px);
+        }
+
+        /* Sub-headings inside a section (Brand in use, Brand guidelines, Prototype...) */
+        .cs-band h3 {
+            font-size: clamp(1.3rem, 1.9vw, 1.8rem);
+            margin: clamp(36px, 4.5vw, 64px) 0 clamp(14px, 1.6vw, 22px);
+        }
+
+        .cs-band p {
+            font-size: clamp(1.05rem, 1.35vw, 1.3rem);
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+
+        .cs-band strong { font-weight: 700; }
+
+        section[id] { scroll-margin-top: 24px; }
+
+        /* Description under every image */
+        .cs-caption {
+            display: block;
+            margin-top: 0.75rem;
+            font-size: clamp(0.9rem, 1.05vw, 1rem);
+            line-height: 1.45;
+            opacity: 0.85;
+        }
+
+        /* --- HERO --- */
+        .cs-hero {
+            background-color: var(--cs-purple);
+            color: #ffffff;
+            padding: clamp(40px, 6vw, 88px) 0 clamp(48px, 6vw, 96px);
+        }
+
+        /* Plain text label (not a pill, so it doesn't read as a button) */
+        .cs-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8em;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: clamp(0.95rem, 1.3vw, 1.2rem);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin-bottom: clamp(14px, 1.8vw, 24px);
+        }
+
+        .cs-eyebrow::before {
+            content: "";
+            width: 2.4em;
+            height: 3px;
+            background-color: var(--cs-lime);
+        }
+
+        .cs-title {
+            font-size: clamp(3.5rem, 10vw, 9rem);
+            letter-spacing: -0.02em;
+            line-height: 0.95;
+            margin-bottom: clamp(16px, 2vw, 28px);
+            cursor: default;
+        }
+
+        /* Focus areas as a slash-separated line of text, so they don't look like buttons */
+        .cs-tags {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem 0;
+            margin-bottom: clamp(28px, 4vw, 56px);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: clamp(1rem, 1.35vw, 1.25rem);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .cs-tags li + li::before {
+            content: "/";
+            margin: 0 0.9em;
+            color: var(--cs-lime);
+        }
+
+        /* Hero banner: a still image that fades in with the rest of the hero */
+        .cs-hero-media {
+            position: relative;
+            border-radius: clamp(10px, 1.2vw, 18px);
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .cs-hero-media img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .cs-hero-media:hover .cs-scan {
+            top: 120%;
+            transition: top 0.75s ease-in-out;
+        }
+
+        /* --- SUMMARY / CONTENTS / SPECS --- */
+        .cs-duo {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: clamp(32px, 5vw, 80px);
+            margin-top: clamp(40px, 5vw, 72px);
+        }
+
+        .cs-contents {
+            list-style: none;
+            display: grid;
+            gap: 0.5rem;
+            justify-items: start;
+        }
+
+        .cs-contents a {
+            position: relative;
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.8em;
+            padding: 0.2em 0.7em;
+            font-weight: 700;
+            font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+            transition: color 0.25s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cs-contents .cs-num {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8em;
+            opacity: 0.6;
+        }
+
+        /* Same [ bracket ] hover as the nav links */
+        .cs-contents a::before,
+        .cs-contents a::after {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            color: var(--cs-purple);
+            transition: opacity 0.25s ease;
+        }
+
+        .cs-contents a::before { content: '['; left: 0; }
+        .cs-contents a::after  { content: ']'; right: 0; }
+
+        .cs-contents a:hover {
+            color: var(--cs-purple);
+            transform: translateX(6px);
+        }
+
+        .cs-contents a:hover::before,
+        .cs-contents a:hover::after { opacity: 1; }
+
+        /* Specs: every row is one or two lines and the same height, so the spacing is even */
+        .cs-specs {
+            list-style: none;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .cs-spec {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            min-height: 3.5rem;
+        }
+
+        .cs-spec-icon {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            border: 3px solid #111111;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #111111;
+        }
+
+        .cs-spec-icon svg { width: 55%; height: 55%; }
+
+        .cs-band .cs-spec p { margin: 0; line-height: 1.4; }
+
+        /* --- IMAGES: tilt + scanline sweep (same effect as the homepage cards) --- */
+        .cs-media {
+            position: relative;
+            overflow: hidden;
+            border-radius: clamp(8px, 1vw, 14px);
+            will-change: transform;
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+        }
+
+        .cs-media:hover {
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22), 0 0 25px rgba(77, 4, 255, 0.18);
+        }
+
+        /* Full image always shown, never cropped */
+        .cs-media img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .cs-scan {
+            position: absolute;
+            top: -120%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.25) 50%, transparent 100%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .cs-media:hover .cs-scan {
+            top: 120%;
+            transition: top 0.75s ease-in-out;
+        }
+
+        /* If an image file is missing, show a neat tile with its description instead of a broken icon */
+        .cs-media.is-missing,
+        .cs-hero-media.is-missing {
+            min-height: 200px;
+            background-color: rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .cs-media.is-missing::after,
+        .cs-hero-media.is-missing::after {
+            content: attr(data-label);
+            font-weight: 700;
+        }
+
+        .cs-ideation { margin: 0 0 clamp(24px, 3vw, 44px); }
+
+        /* Text first, image second (stacks the same way on mobile) */
+        .cs-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(24px, 4vw, 64px);
+            align-items: center;
+        }
+
+        .cs-grid {
+            display: grid;
+            gap: clamp(20px, 2.4vw, 36px) clamp(12px, 1.6vw, 24px);
+            align-items: start;
+        }
+
+        .cs-grid--3 { grid-template-columns: repeat(3, 1fr); }
+
+        /* --- LISTS --- */
+        .cs-bullets {
+            list-style: none;
+            margin-bottom: 1.25rem;
+        }
+
+        .cs-bullets li {
+            position: relative;
+            padding-left: 2em;
+            margin-bottom: 0.7rem;
+            font-size: clamp(1.05rem, 1.35vw, 1.3rem);
+            line-height: 1.5;
+        }
+
+        /* Brain icon bullet (same artwork as the favicon) */
+        .cs-bullets li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.1em;
+            width: 1.3em;
+            height: 1.3em;
+            background: url("assets/faviconbrain.png") center / contain no-repeat;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+        }
+
+        .cs-band .cs-center { text-align: center; margin: clamp(24px, 3vw, 40px) auto 0; }
+
+        /* --- ANATOMY OF SUGAR additions --- */
+        .cs-subtitle {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.2rem, 2.2vw, 2rem);
+            letter-spacing: -0.5px;
+            color: var(--cs-lime);
+            margin-bottom: clamp(14px, 1.8vw, 22px);
+        }
+
+        .cs-grid--2 { grid-template-columns: repeat(2, 1fr); }
+
+        /* A figure that sits under a paragraph at full width */
+        .cs-fig {
+            margin: clamp(20px, 3vw, 40px) 0;
+        }
+
+        .cs-media video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* --- NEXT PROJECT / BACK TO WORK (no dead ends at the end of a case study) --- */
+        .cs-next {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px 32px;
+        }
+
+        .cs-next-link {
+            display: inline-flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            text-decoration: none;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cs-next-link:hover,
+        .cs-next-link:focus-visible { transform: translateX(6px); }
+
+        .cs-next-link--back:hover,
+        .cs-next-link--back:focus-visible { transform: translateX(-6px); }
+
+        .cs-next-kicker {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            opacity: 0.85;
+        }
+
+        .cs-next-title {
+            font-weight: 700;
+            font-size: clamp(1.6rem, 3vw, 2.6rem);
+            letter-spacing: -1px;
+            text-decoration: underline;
+            text-decoration-thickness: 3px;
+            text-underline-offset: 6px;
+            text-decoration-color: var(--cs-lime);
+        }
+
+        .cs-next-link--next { text-align: right; margin-left: auto; }
+
+        /* --- RISE UP --- */
+        .cs-rise {
+            text-align: center;
+            padding: clamp(56px, 8vw, 120px) 0;
+        }
+
+        .rise-up-btn {
+            display: inline-block;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .rise-up-btn h2 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            letter-spacing: -2px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin: 0;
+            transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .rise-up-btn:hover h2 {
+            color: var(--cs-purple);
+            transform: skewX(-12deg);
+            text-shadow: 6px 6px 0 var(--cs-lime);
+        }
+
+        /* --- SCROLL REVEAL --- */
+        .fade-up, .fade-in, .fade-right, .fade-left {
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-up    { transform: translateY(40px); }
+        .fade-right { transform: translateX(-40px); }
+        .fade-left  { transform: translateX(40px); }
+
+        .is-visible { opacity: 1; transform: none; }
+
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        .stagger-4 { transition-delay: 0.4s; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 820px) {
+            .cs-split { grid-template-columns: 1fr; }
+            .cs-duo   { grid-template-columns: 1fr; }
+            .cs-grid--3 { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 640px) {
+            .cs-grid--3, .cs-grid--2 { grid-template-columns: 1fr; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .fade-up, .fade-in, .fade-right, .fade-left { opacity: 1; transform: none; transition: none; }
+            .cs-media { transition: none; }
+        }
+
+        /* --- GRUB additions --- */
+        .cs-title--long { font-size: clamp(2.4rem, 6.6vw, 6rem); }
+
+        /* Videos of each microinteraction: whole frame shown, never cropped */
+        .cs-media video { background-color: #000000; }
+
+        .cs-proto-frame {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 10;          /* change this to match the Figma frame if you see bars */
+            margin: clamp(20px, 2.4vw, 36px) auto 0;
+            border-radius: clamp(12px, 1.6vw, 22px);
+            overflow: hidden;
+            background-color: #f2f2f2;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+        }
+
+        .cs-proto-frame iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Prototype: a widescreen website frame. The embeds use scaling=scale-down-width, so Figma
+           fits each screen to the full width of the frame and you scroll down it, instead of
+           shrinking the whole tall page to fit the height (which left empty bars at the sides). */
+        .cs-proto-frame--site  { aspect-ratio: 16 / 9; }
+
+        /* Case study essay: a long scrolling document, so a tall reading window instead */
+        .cs-proto-frame--essay {
+            aspect-ratio: auto;
+            height: min(85vh, 900px);
+            max-width: 900px;
+        }
+
+        .cs-band h3.cs-question { margin-top: clamp(48px, 6vw, 88px); }
+
+        @media (max-width: 640px) {
+            .cs-proto-frame--site  { aspect-ratio: 4 / 3; }
+            .cs-proto-frame--essay { height: 75vh; }
+        }
+    </style>
+</head>
+
+<body id="top">
+
+    <!-- === HEADER / NAVIGATION (same as every other page) === -->
+    <header>
+        <div class="top-left">
+            <a href="index.html">
+                <img src="assets/brain-180.png" alt="Home" class="brain-icon" width="38">
+            </a>
+        </div>
+        <nav class="top-right">
+            <a href="about.html" class="cyber-nav-link" data-text="About Me">About Me</a>
+            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio">Portfolio</a>
+            <a href="contact.html" class="cyber-nav-link" data-text="Get in Touch!">Get in Touch!</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- === HERO === -->
+        <section class="cs-hero">
+            <div class="cs-wrap">
+                <span class="cs-eyebrow fade-up observe">Case Study</span>
+                <h1 class="cs-title cs-title--long scramble-heading fade-up observe stagger-1">How Microinteractions Support the User Journey</h1>
+                <p class="cs-subtitle fade-up observe stagger-1">Grub: a food ordering prototype</p>
+
+                <ul class="cs-tags fade-up observe stagger-2" aria-label="Project focus">
+                    <li>Microinteractions</li>
+                    <li>Motion</li>
+                    <li>Prototyping</li>
+                    <li>Research</li>
+                    <li>Figma</li>
+                </ul>
+
+                <div class="cs-hero-media fade-up observe stagger-3" data-label="The Grub logo">
+                    <img src="assets/grubbanner.png" alt="The Grub logo" decoding="async" fetchpriority="high">
+                    <span class="cs-scan" aria-hidden="true"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- === SUMMARY + CONTENTS + SPECS === -->
+        <section id="summary" class="cs-band cs-band--lime">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Summary Of Project</h2>
+                <p class="fade-up observe stagger-1">Grub is a fake food delivery service I branded and prototyped to answer one question: how do microinteractions support the user journey when ordering food?</p>
+                <a href="https://www.figma.com/proto/BFzJrg65yPNboy6ACGnpZa/Micro-Interactions-Project---Jared-Russell?node-id=308-624&amp;viewport=60%2C264%2C0.36&amp;t=mUNRV2QLWXAQDi95-1&amp;scaling=scale-down-width&amp;content-scaling=fixed&amp;page-id=308%3A521" target="_blank" rel="noopener" class="cyber-btn fade-up observe stagger-2">
+                    <span>Open the prototype in Figma</span>
+                    <span class="arrow">&nearr;</span>
+                </a>
+
+                <div class="cs-duo">
+                    <div id="contents">
+                        <h2 class="cs-sub scramble-heading fade-up observe">Contents</h2>
+                        <ul class="cs-contents">
+                            <li class="fade-right observe stagger-1"><a href="#brief"><span class="cs-num">01</span>The Brief</a></li>
+                            <li class="fade-right observe stagger-2"><a href="#ideation"><span class="cs-num">02</span>Ideation</a></li>
+                            <li class="fade-right observe stagger-3"><a href="#development"><span class="cs-num">03</span>Development</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#prototype"><span class="cs-num">04</span>Prototype</a></li>
+                            <li class="fade-right observe stagger-4" data-needs-ai><a href="#ai"><span class="cs-num">05</span>AI Transparency</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num" data-num-after-ai>05</span>Reflection</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="specs">
+                        <h2 class="cs-sub scramble-heading fade-up observe">Project Specifications</h2>
+                        <ul class="cs-specs" role="list">
+                            <li class="cs-spec fade-left observe stagger-1">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12"/><path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2"/><path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4"/></svg>
+                                </span>
+                                <p>The project ran for <strong>5 weeks</strong>.</p>
+                            </li>
+                            <li class="cs-spec fade-left observe stagger-2">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                                </span>
+                                <p>Software: <strong>Figma</strong> (Smart Animate).</p>
+                            </li>
+                            <li class="cs-spec fade-left observe stagger-3">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 6h11"/><path d="M11.5 12h11"/><path d="M11.5 18h11"/><path d="M4 6l1.5 1.5L8 5"/><path d="M4 12l1.5 1.5L8 11"/><path d="M4 18l1.5 1.5L8 17"/></svg>
+                                </span>
+                                <p><strong>4 microinteractions</strong>, each with multiple states.</p>
+                            </li>
+                            <li class="cs-spec fade-left observe stagger-4">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                </span>
+                                <p>Each runs for <strong>0.5&ndash;3 seconds</strong> at <strong>30fps</strong> or more.</p>
+                            </li>
+                            <li class="cs-spec fade-left observe stagger-4" data-needs-ai>
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4L12 3z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15z"/></svg>
+                                </span>
+                                <p>AI use: <a href="#ai" class="cs-inline-link">how AI was (and wasn&rsquo;t) used</a>.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === THE BRIEF === -->
+        <section id="brief" class="cs-band cs-band--white">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">The Brief</h2>
+                <p class="fade-up observe">The brief tasked me with a five-week project to design three distinct, prototype-ready micro-animations that enhance user feedback and interaction flow across digital interfaces. I chose from a set list of core UI components, such as CTA buttons, loading states and form validation. Each interaction had to have multiple functional states, run for between 0.5 and 3 seconds, and hold at least 30fps in a single prototyping tool like Figma.</p>
+                <p class="fade-up observe">Beyond creating smooth visuals, the core requirement was to show purposeful motion design and usability: lightweight performance, a consistent visual style across all three animations, and accessible reduced-motion alternatives, supported by a clear rationale for timing and easing decisions.</p>
+            </div>
+        </section>
+
+        <!-- === IDEATION === -->
+        <section id="ideation" class="cs-band cs-band--pink">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Ideation</h2>
+                <p class="fade-up observe">Originally, I planned to make three examples to support my statement: an airline service, a gaming service and a food service. I found that was too much and too hard to implement well, so I decided to focus on one service, food, which gave me more time to brand everything.</p>
+                <p class="fade-up observe">I started by researching food delivery services like Uber Eats, and then I came up with my own fake brand, called Grub.</p>
+                <figure class="cs-fig fade-up observe">
+                    <div class="cs-media tilt-card" data-label="The Grub user interface">
+                        <img src="assets/grubui.png" alt="The Grub user interface" loading="lazy" decoding="async">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">The Grub interface: my fake food delivery brand, built in Figma.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- === DEVELOPMENT === -->
+        <section id="development" class="cs-band cs-band--purple">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Development</h2>
+
+                <h3 class="fade-up observe">1. The payment button</h3>
+                <p class="fade-up observe">The first microinteraction I made was the payment button. I wanted a payment button that was fun, but that also reduced panic purchases. When you go to pay for your food, you have the option to cancel, because you may look at your order at the last second and see you&rsquo;ve forgotten something. I then used Smart Animate in Figma to bring it to life.</p>
+                <figure class="cs-fig fade-up observe">
+                    <div class="cs-media tilt-card" data-label="Process work for the payment button">
+                        <img src="assets/car%20process.png" alt="Process work for the payment button" loading="lazy" decoding="async">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">Process work for the payment button and its states.</figcaption>
+                </figure>
+                <figure class="cs-fig fade-up observe">
+                    <div class="cs-media" data-label="The payment button microinteraction">
+                        <video src="assets/continuetopayment.mov#t=0.1" muted loop playsinline preload="metadata" controls aria-label="The payment button microinteraction"></video>
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">The payment button: continue to payment, with the option to cancel.</figcaption>
+                </figure>
+
+                <h3 class="fade-up observe">2. The drop-down menu</h3>
+                <p class="fade-up observe">I then moved on to more microinteractions. I created a drop-down menu to fix the clutter the website was facing.</p>
+                <figure class="cs-fig fade-up observe">
+                    <div class="cs-media" data-label="The drop-down menu microinteraction">
+                        <video src="assets/dropdownmenu.mov#t=0.1" muted loop playsinline preload="metadata" controls aria-label="The drop-down menu microinteraction"></video>
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">The drop-down menu, tidying away options until they&rsquo;re needed.</figcaption>
+                </figure>
+
+                <h3 class="fade-up observe">3. The delivery and pickup toggle</h3>
+                <p class="fade-up observe">I noticed something on a lot of food service websites: you can switch between delivery and pickup. That switch is a microinteraction in itself, giving the user the choice between collecting the order and having it delivered, so it needed to be built in too. I used Smart Animate in Figma to transition between the two and make it clear which option you were picking.</p>
+                <figure class="cs-fig fade-up observe">
+                    <div class="cs-media" data-label="The delivery and pickup toggle microinteraction">
+                        <video src="assets/toggledelivery.mov#t=0.1" muted loop playsinline preload="metadata" controls aria-label="The delivery and pickup toggle microinteraction"></video>
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">The delivery and pickup toggle, making the chosen option clear.</figcaption>
+                </figure>
+
+                <h3 class="fade-up observe">4. The savings notification</h3>
+                <p class="fade-up observe">Finally, I made a notification that appears when you open the prototype, telling the user they saved some money!</p>
+                <figure class="cs-fig fade-up observe">
+                    <div class="cs-media" data-label="The savings notification microinteraction">
+                        <video src="assets/NotificationGrub.mov#t=0.1" muted loop playsinline preload="metadata" controls aria-label="The savings notification microinteraction"></video>
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">The notification that greets you with your savings.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- === PROTOTYPE === -->
+        <section id="prototype" class="cs-band cs-band--white">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Prototype</h2>
+                <p class="fade-up observe">Here is the final version of the prototype. Click through it below, or open it full screen in Figma.</p>
+                <div class="cs-proto-frame cs-proto-frame--site fade-up observe">
+                    <iframe src="https://embed.figma.com/proto/BFzJrg65yPNboy6ACGnpZa/Micro-Interactions-Project---Jared-Russell?node-id=308-624&amp;viewport=60%2C264%2C0.36&amp;scaling=scale-down-width&amp;content-scaling=fixed&amp;page-id=308%3A521&amp;embed-host=share" allowfullscreen loading="lazy" title="Grub food ordering prototype in Figma"></iframe>
+                </div>
+                <p class="cs-center fade-up observe">
+                    <a href="https://www.figma.com/proto/BFzJrg65yPNboy6ACGnpZa/Micro-Interactions-Project---Jared-Russell?node-id=308-624&amp;viewport=60%2C264%2C0.36&amp;t=mUNRV2QLWXAQDi95-1&amp;scaling=scale-down-width&amp;content-scaling=fixed&amp;page-id=308%3A521" target="_blank" rel="noopener" class="cyber-btn">
+                        <span>Open the prototype in Figma</span>
+                        <span class="arrow">&nearr;</span>
+                    </a>
+                </p>
+
+                <h3 class="cs-question fade-up observe">So, how do microinteractions support the user journey when ordering food?</h3>
+                <p class="fade-up observe">I wrote an entire essay on this, but for the sake of time, I&rsquo;ll sum it up.</p>
+                <p class="fade-up observe">Microinteractions reduce cognitive load, establish a clear visual hierarchy and build trust. In online food delivery, where clarity and reassurance matter, microinteractions lift the Grub platform from a simple ordering tool to an engaging, accessible and seamless experience that supports the user journey when ordering food.</p>
+                <p class="fade-up observe">If you want the full version, the essay is below. Scroll inside the window to read it.</p>
+                <div class="cs-proto-frame cs-proto-frame--essay fade-up observe">
+                    <iframe src="https://embed.figma.com/proto/BFzJrg65yPNboy6ACGnpZa/Micro-Interactions-Project---Jared-Russell?node-id=220-34&amp;p=f&amp;viewport=-126%2C-7942%2C1.41&amp;scaling=scale-down-width&amp;content-scaling=fixed&amp;starting-point-node-id=220%3A34&amp;page-id=220%3A33&amp;embed-host=share" allowfullscreen loading="lazy" title="Case study essay: how microinteractions support the user journey, in Figma"></iframe>
+                </div>
+                <p class="cs-center fade-up observe">
+                    <a href="https://www.figma.com/proto/BFzJrg65yPNboy6ACGnpZa/Micro-Interactions-Project---Jared-Russell?node-id=220-34&amp;p=f&amp;viewport=-126%2C-7942%2C1.41&amp;t=eVR2mRTcCj06f4aJ-1&amp;scaling=scale-down-width&amp;content-scaling=fixed&amp;starting-point-node-id=220%3A34&amp;page-id=220%3A33" target="_blank" rel="noopener" class="cyber-btn">
+                        <span>Read the full essay in Figma</span>
+                        <span class="arrow">&nearr;</span>
+                    </a>
+                </p>
+            </div>
+        </section>
+
+        <!-- === AI TRANSPARENCY ===
+             TO DO: write 1–3 sentences in your own words, then DELETE the word "hidden" below.
+             If you used no AI on Grub (or only for research or the essay), say so plainly.
+             While this section is hidden, its Contents entry and spec row hide too. -->
+        <section id="ai" class="cs-band cs-band--purple" hidden>
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">AI Transparency</h2>
+                <p class="fade-up observe">WRITE YOUR AI STATEMENT HERE.</p>
+            </div>
+        </section>
+
+        <!-- === REFLECTION === -->
+        <section id="reflection" class="cs-band cs-band--lime">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Reflection</h2>
+                <p class="fade-up observe">I loved this project. Designing a fake food service portal and creating a brand identity were a lot of fun, and working with motion was the best part. I wish I could push this project further and create a fully fledged food service app or website, but I&rsquo;d need a budget, more research and more experience to do so, which is totally okay.</p>
+                <p class="fade-up observe">I loved making this project, and I hope you enjoy it too!</p>
+            </div>
+        </section>
+
+        <!-- === NEXT PROJECT / BACK TO WORK === -->
+        <nav class="cs-band cs-band--purple" aria-label="More projects">
+            <div class="cs-wrap cs-next">
+                <a href="portfolio.html" class="cs-next-link cs-next-link--back">
+                    <span class="cs-next-kicker">&larr; Back to</span>
+                    <span class="cs-next-title">All my work</span>
+                </a>
+                <!-- Change this to whichever case study you want next -->
+                <a href="Scran.html" class="cs-next-link cs-next-link--next">
+                    <span class="cs-next-kicker">Next project &rarr;</span>
+                    <span class="cs-next-title">Scran</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- === RISE UP (scroll to top) === -->
+        <section class="cs-rise fade-in observe">
+            <a href="#top" class="rise-up-btn" aria-label="Scroll to top of page">
+                <h2>Rise Up!</h2>
+            </a>
+        </section>
+
+    </main>
+
+    <!-- === FOOTER (same as every other page) === -->
+    <footer id="contact">
+        <div class="footer-left">
+            <a href="index.html" class="footer-logo-link">
+                <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo" class="footer-logo" height="38">
+            </a>
+        </div>
+        <div class="footer-right">
+            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram</a>
+            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
+            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">Youtube</a>
+        </div>
+    </footer>
+
+    <script>
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const canHover     = window.matchMedia("(hover: hover)").matches;
+
+        /* ==================================================================
+           1. TEXT SCRAMBLE (same decryption effect as the other pages)
+           ================================================================== */
+        const GLYPHS = "!/<>[]-_=+*^?#_0101";
+
+        function scrambleElement(element) {
+            if (!element || reduceMotion) return;
+            const originalText = element.getAttribute("data-original") || element.innerText;
+            element.setAttribute("data-original", originalText);
+
+            const step = Math.max(1 / 3, originalText.length / 20);
+            let iteration = 0;
+
+            clearInterval(element._scrambleInterval);
+            element._scrambleInterval = setInterval(() => {
+                element.innerText = originalText
+                    .split("")
+                    .map((letter, index) => {
+                        if (letter === " ") return " ";
+                        if (index < iteration) return originalText[index];
+                        return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+                    })
+                    .join("");
+
+                if (iteration >= originalText.length) {
+                    clearInterval(element._scrambleInterval);
+                    element.innerText = originalText;
+                }
+                iteration += step;
+            }, 30);
+        }
+
+        document.querySelectorAll(".scramble-heading").forEach(h => {
+            h.addEventListener("mouseenter", () => scrambleElement(h));
+        });
+
+        /* ==================================================================
+           2. MISSING FILES: optional images are skipped, empty blocks are hidden
+           ================================================================== */
+        function handleBroken(t) {
+            if (!t) return;
+
+            // A video whose file is missing gets the same labelled tile, not an empty black player
+            if (t.tagName === "VIDEO" || t.tagName === "SOURCE") {
+                const vid = t.tagName === "VIDEO" ? t : t.closest("video");
+                const vbox = vid && vid.closest(".cs-media");
+                if (vbox) {
+                    vbox.classList.add("is-missing");
+                    vid.remove();
+                }
+                return;
+            }
+
+            if (t.tagName !== "IMG") return;
+
+            // Neat tile with the description instead of a broken icon
+            const box = t.closest(".cs-media, .cs-hero-media");
+            if (box) {
+                box.classList.add("is-missing");
+                if (!box.dataset.label) box.dataset.label = t.alt || "";
+                t.remove();
+            }
+        }
+
+        document.addEventListener("error", (e) => {
+            if (e.target) handleBroken(e.target);
+        }, true);
+
+        // Catch images that already failed before this script ran
+        document.querySelectorAll("img").forEach(img => {
+            if (img.getAttribute("src") && img.complete && img.naturalWidth === 0) handleBroken(img);
+        });
+
+        // Videos that already failed before this script ran
+        document.querySelectorAll(".cs-media video").forEach(v => {
+            if (v.error || v.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) handleBroken(v);
+        });
+
+        /* ==================================================================
+           2b. AI SECTION: until it's filled in (no "hidden" attribute), hide its Contents entry and spec row
+           ================================================================== */
+        (function () {
+            const ai = document.getElementById("ai");
+            if (ai && !ai.hidden) {
+                const n = document.querySelector("[data-num-after-ai]");
+                if (n) n.textContent = "06";
+                return;
+            }
+            document.querySelectorAll("[data-needs-ai]").forEach(el => el.remove());
+        })();
+
+        /* ==================================================================
+           3. SCROLL REVEAL (fires once per element; headings decrypt as they appear)
+           ================================================================== */
+        const toAnimate = document.querySelectorAll(".observe");
+
+        if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add("is-visible");
+                    if (entry.target.classList.contains("scramble-heading")) {
+                        scrambleElement(entry.target);
+                    }
+                    obs.unobserve(entry.target);
+                });
+            // Reveal slightly before an element reaches the screen, so fast scrolling never shows empty white bands
+            }, { threshold: 0, rootMargin: "0px 0px 15% 0px" });
+
+            toAnimate.forEach(el => observer.observe(el));
+        } else {
+            toAnimate.forEach(el => el.classList.add("is-visible"));
+        }
+
+        /* ==================================================================
+           4. 3D TILT ON IMAGES (same as the homepage cards)
+           ================================================================== */
+        if (!reduceMotion && canHover) {
+            document.addEventListener("mousemove", (e) => {
+                const card = e.target.closest && e.target.closest(".tilt-card");
+                if (!card) return;
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                card.style.transform =
+                    `perspective(1000px) scale3d(1.02, 1.02, 1.02) rotateX(${-y / 25}deg) rotateY(${x / 25}deg)`;
+            });
+
+            document.addEventListener("mouseout", (e) => {
+                const card = e.target.closest && e.target.closest(".tilt-card");
+                if (card && !card.contains(e.relatedTarget)) {
+                    card.style.transform = "";
+                }
+            });
+        }
+
+        /* ==================================================================
+           7. VIDEO: plays only while it is on screen
+           ================================================================== */
+        document.querySelectorAll(".cs-media video").forEach(v => {
+            if (reduceMotion || !("IntersectionObserver" in window)) return;
+            new IntersectionObserver(entries => {
+                entries.forEach(en => {
+                    if (en.isIntersecting) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+                    else v.pause();
+                });
+            }, { threshold: 0.4 }).observe(v);
+        });
+
+        /* ==================================================================
+           8. RISE UP (smooth scroll to top)
+           ================================================================== */
+        const rise = document.querySelector(".rise-up-btn");
+        if (rise) {
+            rise.addEventListener("click", (e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+        }
+    </script>
+</body>
+</html>

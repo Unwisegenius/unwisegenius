@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XP Bank | Case Study</title>
+    <title>XP Bank | Case Study | Jared Russell</title>
+    <meta name="description" content="Case study: XP Bank, a bank brand, mobile app, landing page and design system for 16–25 year olds, by Jared Russell.">
     <link rel="icon" type="image/x-icon" href="/assets/faviconbrain.png">
 
     <!-- Favicon -->
@@ -46,6 +47,14 @@
             text-decoration: none;
         }
 
+        /* Links inside running text keep an underline, so they're not shown by colour alone */
+        main a.cs-inline-link {
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 3px;
+            font-weight: 700;
+        }
+
         /* --- LAYOUT --- */
         .cs-wrap {
             width: min(1100px, 86vw);
@@ -58,7 +67,8 @@
 
         .cs-band--white  { background-color: #ffffff;         color: #111111; }
         .cs-band--lime   { background-color: var(--cs-lime);   color: #111111; }
-        .cs-band--pink   { background-color: var(--cs-pink);   color: #ffffff; }
+        /* Dark text on pink: #111 on #FB4CD1 is about 6.3:1 (white was 2.98:1 and failed WCAG AA) */
+        .cs-band--pink   { background-color: var(--cs-pink);   color: #111111; }
         .cs-band--purple { background-color: var(--cs-purple); color: #ffffff; }
 
         .cs-band h2 {
@@ -648,6 +658,12 @@
         .cs-book-scrub::-moz-range-thumb     { width: 18px; height: 18px; border-radius: 50%; border: 0; background: var(--cs-lime); box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.25); }
         .cs-book-scrub:focus-visible { outline: 2px solid #ffffff; outline-offset: 6px; }
 
+        /* On the pink band, booklet controls switch to dark so they stay visible */
+        .cs-band--pink .cs-book-scrub::-webkit-slider-runnable-track { background: rgba(17, 17, 17, 0.35); }
+        .cs-band--pink .cs-book-scrub::-moz-range-track              { background: rgba(17, 17, 17, 0.35); }
+        .cs-band--pink .cs-book-scrub:focus-visible,
+        .cs-band--pink .cs-book-btn:focus-visible { outline-color: #111111; }
+
         .cs-book-hint {
             position: relative;
             z-index: 1;
@@ -761,6 +777,50 @@
             0%, 70%, 100% { opacity: 0.2; transform: translateY(0); }
             35%           { opacity: 1;   transform: translateY(-4px); }
         }
+
+        /* --- NEXT PROJECT / BACK TO WORK (no dead ends at the end of a case study) --- */
+        .cs-next {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px 32px;
+        }
+
+        .cs-next-link {
+            display: inline-flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            text-decoration: none;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cs-next-link:hover,
+        .cs-next-link:focus-visible { transform: translateX(6px); }
+
+        .cs-next-link--back:hover,
+        .cs-next-link--back:focus-visible { transform: translateX(-6px); }
+
+        .cs-next-kicker {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            opacity: 0.85;
+        }
+
+        .cs-next-title {
+            font-weight: 700;
+            font-size: clamp(1.6rem, 3vw, 2.6rem);
+            letter-spacing: -1px;
+            text-decoration: underline;
+            text-decoration-thickness: 3px;
+            text-underline-offset: 6px;
+            text-decoration-color: var(--cs-lime);
+        }
+
+        .cs-next-link--next { text-align: right; margin-left: auto; }
 
         /* --- HERO SHOT (closes the case study) --- */
         .cs-hero-shot img {
@@ -893,7 +953,8 @@
                             <li class="fade-right observe stagger-3"><a href="#ideation"><span class="cs-num">03</span>Ideation</a></li>
                             <li class="fade-right observe stagger-4"><a href="#development"><span class="cs-num">04</span>Development</a></li>
                             <li class="fade-right observe stagger-4"><a href="#final-product"><span class="cs-num">05</span>Final Product</a></li>
-                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num">06</span>Reflection</a></li>
+                            <li class="fade-right observe stagger-4" data-needs-ai><a href="#ai"><span class="cs-num">06</span>AI Transparency</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num" data-num-after-ai>06</span>Reflection</a></li>
                         </ul>
                     </div>
 
@@ -924,6 +985,10 @@
                                 </span>
                                 <p>Target audience: <strong>16–25 year olds</strong>.</p>
                             </li>
+                          
+                                <!-- CHECK: change this if anyone else worked on XP Bank, and credit them by name -->
+                               
+                          
                         </ul>
                     </div>
                 </div>
@@ -972,7 +1037,7 @@
                             <img src="assets/bankreviews.png" alt="Reviews of Nationwide & Monzo Bank" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">Trustpilot reviews of Nationwide & Monzo Bank</figcaption>
+                        <figcaption class="cs-caption">Trustpilot reviews of Nationwide and Monzo.</figcaption>
                     </figure>
                 </div>
             </div>
@@ -1003,27 +1068,27 @@
                 <h2 class="scramble-heading fade-up observe">Development</h2>
 
                 <p class="fade-up observe">The project ran for 12 weeks (February–May 2025) and covered brand guidelines, mobile app screens, and a marketing landing page. Work was built primarily in Figma, with After Effects and Blender used for motion.</p>
-                <p class="fade-up observe">To push the project further, professional examples such as Wise’s design system were studied. This led to an interactive design system website instead of a static PDF, showing how the brand, components, and patterns scale consistently across contexts.</p>
-                <p class="fade-up observe">In the end, I created 5 Deliverables for the project, A 55 Page Brand Guidelines, A Component Library, A Landing Page for Web & a Mobile App and a Design System Prototype. All of which are shown below.</p>
+                <p class="fade-up observe">To push the project further, I studied professional examples such as Wise’s design system. This led to an interactive design system website instead of a static PDF, showing how the brand, components, and patterns scale consistently across contexts.</p>
+                <p class="fade-up observe">In the end, I created five deliverables: a 55-page brand guideline, a component library, a landing page for the web, a mobile app and a design system prototype, all of which are shown below.</p>
                 <!-- Carousel: swipe or drag, press the left/right edges, or use the arrow keys.
                      Process comes first (wireframes), polished work after.
                      Any image that doesn't exist yet is skipped automatically. -->
                 <div class="fade-in observe" data-hide-if-empty>
                     <div class="cs-stage" id="carousel" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Development process">
                         <div class="cs-track">
-                            <figure class="cs-slide" data-caption="Brand Guidelines for XP Bank.">
+                            <figure class="cs-slide" data-caption="XP Bank brand guidelines.">
                                 <img src="assets/xpbrandguidelines.png" alt="Brand Guidelines for XP Bank." draggable="false">
                             </figure>
                             <figure class="cs-slide" data-caption="Component library built in Figma.">
                                 <img src="assets/Component%20Library.png" alt="Component library" draggable="false">
                             </figure>
-                            <figure class="cs-slide" data-caption="Landing Page for XP Bank's Website">
+                            <figure class="cs-slide" data-caption="Landing page for the XP Bank website.">
                                 <img src="assets/Landing%20PageXP.png" alt="Landing Page for XP Bank's Website" draggable="false">
                             </figure>
-                            <figure class="cs-slide" data-caption="Mobile App for XP Bank.">
+                            <figure class="cs-slide" data-caption="The XP Bank mobile app.">
                                 <img src="assets/MobiledeviceXP.png" alt="Mobile App for XP Bank." draggable="false">
                             </figure>
-                            <figure class="cs-slide" data-caption="Design System for XP Bank.">
+                            <figure class="cs-slide" data-caption="The XP Bank design system.">
                               <img src="assets/Design%20System%20Page.png" alt="Design System for XP Bank." draggable="false">
                           </figure>
                         </div>
@@ -1107,14 +1172,14 @@
                             <img src="assets/personwearingXPmerch.png" alt="Person wearing XP Bank merchandise" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">Merchandising</figcaption>
+                        <figcaption class="cs-caption">XP Bank merchandise.</figcaption>
                     </figure>
                     <figure class="fade-up observe stagger-3">
                         <div class="cs-media tilt-card" data-label="Brand guidelines file binder">
                             <img src="assets/xpfilebinder.png" alt="Brand guidelines file binder" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">XP Bank Branded File binder.</figcaption>
+                        <figcaption class="cs-caption">An XP Bank-branded file binder.</figcaption>
                     </figure>
                     <figure class="fade-up observe stagger-3">
                       <div class="cs-media tilt-card" data-label="Someone using the XP Bank Portal">
@@ -1214,11 +1279,23 @@
             </div>
         </section>
 
+        <!-- === AI TRANSPARENCY ===
+             TO DO: write 2–4 sentences in your own words, then DELETE the word "hidden" below.
+             Say which tools you used (or that you used none), for what (research summaries, personas,
+             copy, mockup images, code...) and what you changed by hand. While this section is hidden,
+             its Contents entry and spec row hide too. -->
+        <section id="ai" class="cs-band cs-band--purple" hidden>
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">AI Transparency</h2>
+                <p class="fade-up observe">WRITE YOUR AI STATEMENT HERE.</p>
+            </div>
+        </section>
+
         <!-- === REFLECTION === -->
         <section id="reflection" class="cs-band cs-band--lime">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">Reflection</h2>
-                <p class="fade-up observe">This project significantly changed the approach to design. With further development, structured usability testing and a full UX audit would refine accessibility, interaction accuracy, and edge cases. Feedback initially challenged the design direction, but ultimately built confidence in responding to critique. Most importantly, it showed how to embed values into design decisions, prioritise real user problems over purely visual ideas, and adapt the work when feedback leads to a better outcome.</p>
+                <p class="fade-up observe">This project significantly changed my approach to design. With further development, I would run structured usability testing and a full UX audit to refine accessibility, interaction accuracy and edge cases. Feedback initially challenged my design direction, but it ultimately built my confidence in responding to critique. Most importantly, it showed me how to embed values into design decisions, prioritise real user problems over purely visual ideas, and adapt the work when feedback leads to a better outcome.</p>
             </div>
         </section>
 
@@ -1232,6 +1309,21 @@
                 </figure>
             </div>
         </section>
+
+        <!-- === NEXT PROJECT / BACK TO WORK === -->
+        <nav class="cs-band cs-band--purple" aria-label="More projects">
+            <div class="cs-wrap cs-next">
+                <a href="portfolio.html" class="cs-next-link cs-next-link--back">
+                    <span class="cs-next-kicker">&larr; Back to</span>
+                    <span class="cs-next-title">All my work</span>
+                </a>
+                <!-- Change this to whichever case study you want next -->
+                <a href="anatomyofsugar.html" class="cs-next-link cs-next-link--next">
+                    <span class="cs-next-kicker">Next project &rarr;</span>
+                    <span class="cs-next-title">The Anatomy of Sugar</span>
+                </a>
+            </div>
+        </nav>
 
         <!-- === RISE UP (scroll to top) === -->
         <section class="cs-rise fade-in observe">
@@ -1364,6 +1456,19 @@
         });
 
         /* ==================================================================
+           2b. AI SECTION: until it's filled in (no "hidden" attribute), hide its Contents entry and spec row
+           ================================================================== */
+        (function () {
+            const ai = document.getElementById("ai");
+            if (ai && !ai.hidden) {
+                const n = document.querySelector("[data-num-after-ai]");
+                if (n) n.textContent = "07";
+                return;
+            }
+            document.querySelectorAll("[data-needs-ai]").forEach(el => el.remove());
+        })();
+
+        /* ==================================================================
            3. SCROLL REVEAL (fires once per element; headings decrypt as they appear)
            ================================================================== */
         const toAnimate = document.querySelectorAll(".observe");
@@ -1378,7 +1483,8 @@
                     }
                     obs.unobserve(entry.target);
                 });
-            }, { threshold: 0.1, rootMargin: "0px 0px -6% 0px" });
+            // Reveal slightly before an element reaches the screen, so fast scrolling never shows empty white bands
+            }, { threshold: 0, rootMargin: "0px 0px 15% 0px" });
 
             toAnimate.forEach(el => observer.observe(el));
         } else {
