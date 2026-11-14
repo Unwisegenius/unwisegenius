@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
+    <title>Portfolio | Jared Russell | UnwiseGenius</title>
+    <meta name="description" content="Ten case studies by Jared Russell (UnwiseGenius), a Digital Design student at Ulster University: UI/UX, branding, motion and graphic design.">
     <!-- Favicon: the brain with no background (assets/faviconbrain.png) -->
     <link rel="icon" type="image/png" href="assets/faviconbrain.png">
     <link rel="apple-touch-icon" href="assets/faviconbrain.png">
@@ -19,20 +20,27 @@
     <link rel="stylesheet" href="https://use.typekit.net/inw8ngx.css">
 
     <!-- Global CSS (keep this ?v= number in sync with the other pages) -->
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="style.css?v=6">
 
     <!-- Portfolio page styles (all prefixed pf- so they never clash with style.css) -->
     <style>
         :root {
             --pf-purple: #4D04FF;
             --pf-lime:   #CFFF04;
-            --pf-red:    #F5001E;
+            /* Red and violet are a touch deeper than before so white text passes WCAG AA:
+               red #E0001D = 5.0:1 (was #F5001E, 4.3:1), violet #9B30D9 = 5.5:1 (was #B44AE8, 4.1:1) */
+            --pf-red:    #E0001D;
             --pf-blue:   #0066FF;
-            --pf-violet: #B44AE8;
+            --pf-violet: #9B30D9;
             --pf-pink:   #FF4DD2;
         }
 
         body { background-color: #ffffff; }
+
+        /* No short last lines: browsers rebalance the wrap at any width.
+           (Once style.css has this rule site-wide, you can delete it here.) */
+        p, li { text-wrap: pretty; }
+        h2, h3 { text-wrap: balance; }
 
         .sr-only {
             position: absolute;
@@ -41,6 +49,26 @@
             clip: rect(0 0 0 0);
             white-space: nowrap;
         }
+
+        /* "Skip to content" link that appears when you press Tab */
+        .skip-link {
+            position: absolute;
+            left: 16px;
+            top: -60px;
+            z-index: 1000;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background-color: #CFFF04;
+            color: #111111;
+            font-family: "Rajdhani", sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: top 0.2s ease;
+        }
+
+        .skip-link:focus { top: 12px; }
 
         /* --- MAIN: background colour changes with the active filter --- */
         .pf-main {
@@ -52,7 +80,7 @@
             transition: background-color 0.5s ease;
         }
 
-        .pf-main[data-filter="case-studies"]   { --pf-bg: var(--pf-violet); }
+        .pf-main[data-filter="digital-design"] { --pf-bg: var(--pf-violet); }
         .pf-main[data-filter="graphic-design"] { --pf-bg: var(--pf-red); }
         .pf-main[data-filter="favourites"]     { --pf-bg: var(--pf-blue); }
 
@@ -109,10 +137,15 @@
             }
         }
 
+        /* Tabs spread across the same width as the giant title: the first lines up with the "P",
+           the last with the final "o", and the gaps between labels are all equal
+           (equal-width columns left big gaps round "All" and squashed the long labels together). */
         .pf-tabs {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            margin: 0 -2vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;              /* on phones the long labels wrap to two lines; "All" sits centred beside them */
+            gap: 0.5em;
+            margin: 0 -0.2em;                 /* cancels the tabs' own side padding, so the text sits flush */
             padding-top: clamp(10px, 1.8vw, 28px);
             text-align: center;
             position: relative;
@@ -155,7 +188,7 @@
 
         .pf-band--2026 { background-color: var(--pf-purple); color: #ffffff; }
         .pf-band--2025 { background-color: var(--pf-lime);   color: #111111; }
-        .pf-band--misc { background-color: var(--pf-red);    color: #ffffff; }
+        .pf-band--old  { background-color: var(--pf-red);    color: #ffffff; }
 
         .pf-year {
             font-family: "stolzl", sans-serif;
@@ -297,7 +330,7 @@
             display: inline-block;
             margin-top: clamp(12px, 1.6vw, 26px);
             background-color: var(--pf-pink);
-            color: #ffffff;
+            color: #111111;                 /* dark on pink = 6.5:1 (white was 2.9:1 and failed WCAG AA) */
             font-family: "stolzl", sans-serif;
             font-weight: 700;
             font-size: clamp(0.8rem, 1.2vw, 1.2rem);
@@ -332,11 +365,13 @@
 </head>
 <body>
 
+    <a class="skip-link" href="#pf-main">Skip to content</a>
+
     <!-- === NAV === -->
     <header>
         <div class="top-left">
             <a href="index.html">
-                <img src="assets/brain-180.png" alt="Home" class="brain-icon" width="38">
+                <img src="assets/brain-180.png" alt="UnwiseGenius home" class="brain-icon" width="38" height="38">
             </a>
         </div>
         <nav class="top-right">
@@ -350,11 +385,12 @@
 
         <!-- === HERO: title + filters === -->
         <section class="pf-hero">
-            <!-- Pressing the title shows every project again (clears Case Studies / Graphic Design / My Favourites) -->
+            <!-- Pressing the title (or "All") shows every project again -->
             <h1 class="pf-title" id="pf-title"><button type="button" class="pf-title-btn" id="pf-title-btn" aria-label="Portfolio: show all projects"><span>Portfolio</span></button></h1>
 
             <div class="pf-tabs" role="group" aria-label="Filter projects">
-                <button type="button" class="pf-tab" data-filter="case-studies"   aria-pressed="false" aria-label="Case Studies"><span class="pf-tab-label">Case Studies</span></button>
+                <button type="button" class="pf-tab" data-filter="all"            aria-pressed="true"  aria-label="All projects"><span class="pf-tab-label">All</span></button>
+                <button type="button" class="pf-tab" data-filter="digital-design" aria-pressed="false" aria-label="Digital Design"><span class="pf-tab-label">Digital Design</span></button>
                 <button type="button" class="pf-tab" data-filter="graphic-design" aria-pressed="false" aria-label="Graphic Design"><span class="pf-tab-label">Graphic Design</span></button>
                 <button type="button" class="pf-tab" data-filter="favourites"     aria-pressed="false" aria-label="My Favourites"><span class="pf-tab-label">My Favourites</span></button>
             </div>
@@ -374,9 +410,9 @@
         </a>
     </div>
         <div class="footer-right">
-            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram</a>
-            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
-            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">Youtube</a>
+            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">YouTube<span class="sr-only"> (opens in a new tab)</span></a>
         </div>
     </footer>
 
@@ -393,89 +429,77 @@
             sugar: {
                 title: "The Anatomy of Sugar",
                 img: "assets/theanatomyofsugar.png", tile: "#D96BD8", ink: "#111111",
-                desc: "A project in which I had to create a catalogue that would sell a product. I took photographs of 30 different kinds of Sweets and presented them in a Saul Bass design style in this catalogue",
+                desc: "A project in which I had to create a catalogue that would sell a product. I photographed 30 different kinds of sweets and presented them in a Saul Bass design style.",
                 caseStudy: "anatomyofsugar.html"
             },
             bite: {
                 title: "Bite – Spray Painting Project",
                 img: "assets/blackoutline.MOV", tile: "#6F93C4", ink: "#111111",
-                desc: "A spray-painting project at CMU. In which we had to steal an artist’s alphabet and replicate their style in a word of our choosing, which in this case was <strong>LUCKY.</strong>",
+                desc: "A spray-painting project at CMU, in which we had to steal an artist’s alphabet and replicate their style in a word of our choosing: in my case, <strong>LUCKY</strong>.",
                 caseStudy: "bite.html"
             },
             shining: {
-                title: "Title Sequence Refresh for the Shining",
+                title: "Title Sequence Refresh for The Shining",
                 img: "assets/theshiningtitlesequence.mp4", tile: "#2F6FB2", ink: "#ffffff",
-                desc: "A CMU project in which I refreshed a chosen title sequence for a movie/show, to appeal to a younger demographic. For this I chose The Shining.",
+                desc: "A CMU project in which I refreshed a chosen title sequence for a movie or show, to appeal to a younger demographic. For this, I chose The Shining.",
                 caseStudy: "theshining.html"
             },
             mousepad: {
-                title: "Mousepad Competition For CMU",
+                title: "Mousepad Competition for CMU",
                 img: "assets/johnmousemockup.png", tile: "#0AA7D6", ink: "#ffffff",
-                desc: "A design competition held in the first few weeks of my study abroad program at CMU.",
+                desc: "A design competition held in the first few weeks of my study abroad programme at CMU.",
                 caseStudy: "mousepad.html"
             },
             orion: {
                 title: "Orion – A VR System without the Headset",
                 img: "assets/OrionCard.png", tile: "#FFFFFF", ink: "#0A84FF",
-                desc: "A smart home project that focused on Research, Prototyping, Motion, Products &amp; Design Systems. I created a conceptual 3D Projector that you could interact with and do everyday tasks with.",
+                desc: "A smart home project that focused on Research, Prototyping, Motion, Products &amp; Design Systems. I created a conceptual 3D projector that you could interact with and do everyday tasks with.",
                 caseStudy: "orion.html"
             },
             grub: {
                 title: "How Microinteractions Support the User Journey",
                 img: "assets/grublogo.png", tile: "#F5EBE4", ink: "#D01C30",
-                desc: "A food service prototype that focused on Prototyping, Research, &amp; Motion. I was tasked to write an essay on how micro interactions support the user journey, with a prototype to support the essay",
+                desc: "A food service prototype that focused on Prototyping, Research &amp; Motion. I was tasked with writing an essay on how microinteractions support the user journey, with a prototype to back it up.",
                 caseStudy: "grub.html"
             },
             scran: {
                 title: "Scran – The Sustainable Cooking App for Kids!",
                 img: "assets/Scran.png", tile: "#DC0A14", ink: "#ffffff",
-                desc: "A cookbook app that focused on Prototyping, Research, Products &amp; Motion. And how you could design for an audience of children while also promoting sustainable habits.",
+                desc: "A cookbook app that focused on Prototyping, Research, Products &amp; Motion, and on how to design for an audience of children while also promoting sustainable habits.",
                 caseStudy: "Scran.html"
             },
             xp: {
-                title: "XP Bank – The Bank made for young people",
+                title: "XP Bank – The Bank Made for Young People",
                 img: "assets/xp-bank-cover.jpg", tile: "#6A35FF", ink: "#ffffff",
-                desc: "A bank branding project that focused on Branding, Design Systems, Research, Prototyping, Products &amp; Motion. And how they could appeal to a younger target audience",
+                desc: "A bank branding project that focused on Branding, Design Systems, Research, Prototyping, Products &amp; Motion, and on how a bank could appeal to a younger audience.",
                 caseStudy: "XPBANK.html"
             },
             ava: {
                 title: "AVA – The Smartwatch Assistant",
                 img: "assets/ava-app.jpg", tile: "#111111", ink: "#ffffff",
-                desc: "A smartwatch concept that focused on Prototyping, Products &amp; Motion. And how you could design under the constraint of a small screen",
+                desc: "A smartwatch concept that focused on Prototyping, Products &amp; Motion, and on how to design within the constraint of a small screen.",
                 caseStudy: "AVA.html"
             },
             pioneers: {
                 title: "The Pioneers of Web Design",
                 img: "assets/macicon.png", tile: "#0000E6", ink: "#ffffff",
-                desc: "A group project that focused on Research, Presentation, &amp; Design Systems. Our task was to give a talk on the people who helped build the World Wide Web &amp; its design system",
+                desc: "A group project that focused on Research, Presentation &amp; Design Systems. Our task was to give a talk on the people who helped build the World Wide Web and its design system.",
                 caseStudy: "pioneersofwebdesign.html"
-            },
-            flix: {
-                title: "Flik Multiplex – A Branding Concept",
-                img: "assets/FlixMultiplexCard.png", tile: "#A30B26", ink: "#ffffff",
-                desc: "After working in a cinema for many years, it felt right after leaving (for the third time) to make a conceptual cinema brand to post online!",
-                caseStudy: "flik.html"
-            },
-            roasters: {
-                title: "Roasters",
-                img: "assets/RoastersCard.png", tile: "#FFFFFF", ink: "#111111",
-                desc: "A summer project I set myself to explore branding. A brand identity for a fictional Belfast coffee company, brought to life across cups, packaging, menus, signage &amp; merch",
-                caseStudy: "roasters.html"
             }
         };
 
         // "All" view: grouped by year, in this order
         const GROUPS = [
-            { key: "2026", label: "2026", ids: ["sugar", "bite", "shining", "mousepad", "orion", "grub"] },
-            { key: "2025", label: "2025", ids: ["scran", "ava", "xp"] },
-            { key: "misc", label: "Misc", ids: ["pioneers", "flix", "roasters"] }
+            { key: "2026", label: "2026",         ids: ["sugar", "bite", "shining", "mousepad", "orion", "grub"] },
+            { key: "2025", label: "2025",         ids: ["scran", "ava", "xp"] },
+            { key: "old",  label: "Old Projects", ids: ["pioneers"] }
         ];
 
         // Filtered views: which projects show, and in what order.
-        // (Projects in "case-studies" also get the pink "Case Study" label in every view.)
+        // Every project above is a full case study, so every card gets the pink "Case Study" label.
         const FILTERS = {
-            "case-studies":   ["orion", "grub", "scran", "ava", "xp"],
-            "graphic-design": ["sugar", "bite", "shining", "mousepad", "flix", "roasters", "pioneers"],
+            "digital-design": ["orion", "grub", "scran", "ava", "xp"],
+            "graphic-design": ["sugar", "bite", "shining", "mousepad", "pioneers"],
             "favourites":     ["xp", "grub", "bite", "shining", "scran"]
         };
 
@@ -502,6 +526,8 @@
             if (!element || reduceMotion) return;
             const originalText = element.getAttribute("data-original") || element.innerText;
             element.setAttribute("data-original", originalText);
+            // Screen readers read the real text, never the scrambled glyphs
+            if (!element.hasAttribute("aria-label")) element.setAttribute("aria-label", originalText);
 
             // Long titles reveal faster so they never take more than ~0.6s
             const step = Math.max(1 / 3, originalText.length / 20);
@@ -589,9 +615,9 @@
                 ? `<h3><a class="pf-title-link" href="${url}">${p.title}</a></h3>`
                 : `<h3>${p.title}</h3>`;
 
-            // Pink "Case Study" label under every project listed in FILTERS["case-studies"].
+            // Pink "Case Study" label on every project with a case study page.
             // It is a label only (not a link); the card and title do the linking.
-            const pill = FILTERS["case-studies"].includes(id)
+            const pill = url
                 ? `<span class="pf-pill">Case Study</span>`
                 : "";
 
@@ -629,7 +655,7 @@
                     </div>`;
             }
 
-            status.textContent = count + " projects shown";
+            status.textContent = count + (count === 1 ? " project shown" : " projects shown");
 
             // Hook up scroll reveal + video playback for the freshly rendered nodes
             if (revealObserver) revealObserver.disconnect();
@@ -687,8 +713,8 @@
         }
 
         /* ==================================================================
-           FILTER TABS + URL HASH (#case-studies, #graphic-design, #favourites)
-           Clicking the active tab again returns to the full "All" view.
+           FILTER TABS + URL HASH (#digital-design, #graphic-design, #favourites)
+           "All", the giant title, or clicking the active tab again returns to the full view.
            ================================================================== */
         function filterFromHash() {
             const name = location.hash.replace("#", "");

@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://use.typekit.net/inw8ngx.css">
 
     <!-- External CSS (keep this ?v= number in sync with index.html) -->
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="style.css?v=6">
 
     <!-- If JavaScript is off, show every section instead of leaving them faded out -->
     <noscript>
@@ -69,6 +69,11 @@
             background-color: #ffffff;
         }
 
+        /* No short last lines: browsers rebalance the wrap at any width.
+           (Once style.css has this rule site-wide, you can delete it here.) */
+        p, li, figcaption { text-wrap: pretty; }
+        h1, h2, h3 { text-wrap: balance; }
+
         /* Adjust top padding on content section to account for static purple nav */
         #about-top {
             padding-top: 80px;
@@ -76,9 +81,23 @@
 
         /* Keeps the portrait area from collapsing if the image is missing */
         .portrait-wrapper {
+            position: relative;
             background-color: #e9e9e9;
             min-height: 200px;
+            cursor: pointer;
         }
+
+        /* Glitch layer: sits exactly over the photo and only shows while it glitches */
+        .portrait-glitch {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .portrait-glitch.is-on { opacity: 1; }
+
+        .portrait-wrapper .scanline-sweep { z-index: 2; }
 
         /* Dark text on pink: #111 on #FB4CD1 is about 6.3:1 (white was 2.98:1 and failed WCAG AA) */
         #philosophy,
@@ -162,6 +181,8 @@
             .floating-avatar { animation: none !important; }
             .ab-btn, .portrait-wrapper img { transition: none !important; }
             .ab-btn:hover { transform: none; }
+            .portrait-wrapper { cursor: default; }
+            .portrait-glitch { display: none; }
         }
     </style>
 </head>
@@ -192,13 +213,13 @@
 
             <p class="lead-text">Hi, I'm Jared Russell, a Digital Design student at Ulster University.</p>
 
-            <p>I'm passionate about user interaction and branding, and I'm looking for a role in design that prioritises creativity and innovation.</p>
+            <p>User interaction and branding are what I'm most passionate about, and I'm looking for a design role that prioritises creativity and innovation.</p>
 
             <p>Apart from designing, I love researching design trends, exploring digital spaces and enjoying a good cup of coffee.</p>
 
             <div class="location-block">
                 <h2 class="scramble-heading text-purple">Location</h2>
-                <p>Based in Belfast, and open to opportunities anywhere!</p>
+                <p>Belfast is home, but I'm open to opportunities anywhere!</p>
             </div>
         </div>
 
@@ -216,13 +237,13 @@
         <div class="philosophy-content">
             <h2 class="scramble-heading">Design Philosophy</h2>
 
-            <p>I'm still learning and growing, both as a designer and as a person, so my design philosophy will keep growing with me.</p>
+            <p>As I keep learning, both as a designer and as a person, my design philosophy will evolve with me.</p>
 
-            <p>Right now, I believe design should be accessible to everyone. I always push my work further by asking: how can I improve this, and what did I learn?</p>
+            <p>Right now, I believe design should be accessible to everyone. With every project, I push the work further by asking: how can I improve this, and what did I learn?</p>
 
-            <p>I believe every project, specifically in UI/UX design, should be backed by research, with constant feedback and ideation throughout.</p>
+            <p>Every project, especially in UI/UX design, should be backed by research, with constant feedback and ideation throughout.</p>
 
-            <p>I also enjoy working with others. Collaboration pushes a designer to do their best, and keeps the work accountable and high quality.</p>
+            <p>Working with others matters to me too. Collaboration pushes designers to do their best and keeps the work accountable and high quality.</p>
         </div>
 
         <div class="philosophy-image">
@@ -294,6 +315,8 @@
         }
 
         document.querySelectorAll(".scramble-heading").forEach(h => {
+            // Screen readers read the real heading, never the scrambled glyphs
+            h.setAttribute("aria-label", h.textContent.trim());
             h.addEventListener("mouseenter", () => scrambleElement(h));
         });
 
@@ -346,6 +369,225 @@
                 card.style.transform = "";
             });
         });
+
+        // 5. Glitching portrait: the same glitch shader as the 3D logo on the home page,
+        //    run with plain WebGL so this page doesn't need to load Three.js.
+        //    Fires when the photo scrolls into view, on hover, on click or tap,
+        //    and now and then on its own. Off entirely for people who prefer less motion.
+        //    The flicker is slower than the home page's, so it stays under 3 flashes a second.
+        (function () {
+            const wrap = document.querySelector(".portrait-wrapper");
+            const img = wrap && wrap.querySelector("img");
+            if (!img || reduceMotion) return;
+
+            const canvas = document.createElement("canvas");
+            canvas.className = "portrait-glitch";
+            canvas.setAttribute("aria-hidden", "true");
+            const gl = canvas.getContext("webgl", { premultipliedAlpha: false });
+            if (!gl) return;   // No WebGL: the plain photo stays as it is
+
+            const vertexSrc = `
+                attribute vec2 position;
+                varying vec2 vUv;
+                void main() {
+                    vUv = position * 0.5 + 0.5;
+                    gl_Position = vec4(position, 0.0, 1.0);
+                }
+            `;
+
+            const fragmentSrc = `
+                precision mediump float;
+                uniform sampler2D tDiffuse;
+                uniform float amount;
+                uniform float time;
+                uniform float seed;
+                uniform vec2 uvScale;
+                uniform vec2 uvOffset;
+                varying vec2 vUv;
+
+                float rand(vec2 co) {
+                    return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
+                }
+
+                // Matches the photo's object-fit crop, so the glitch lines up with the image
+                vec4 photo(vec2 uv) {
+                    return texture2D(tDiffuse, clamp(uv * uvScale + uvOffset, 0.0, 1.0));
+                }
+
+                void main() {
+                    vec2 uv = vUv;
+                    if (amount <= 0.001) { gl_FragColor = photo(uv); return; }
+
+                    float sliceCount = 35.0;
+                    float sliceY = floor(uv.y * sliceCount);
+                    float sliceNoise = rand(vec2(sliceY, floor(time * 12.0) + seed));
+                    if (sliceNoise < amount * 0.85) {
+                        uv.x += (rand(vec2(sliceY, seed)) - 0.5) * 0.25 * amount;
+                    }
+
+                    float splitOffset = 0.04 * amount * (rand(vec2(floor(time * 20.0), 1.0)) - 0.5);
+                    vec4 rCol = photo(uv + vec2(splitOffset, 0.0));
+                    vec4 gCol = photo(uv);
+                    vec4 bCol = photo(uv - vec2(splitOffset, 0.0));
+                    vec4 color = vec4(rCol.r, gCol.g, bCol.b, 1.0);
+
+                    float glitchNoise = rand(uv + time);
+                    if (glitchNoise < amount * 0.3) {
+                        color.r *= 0.2; color.g += 0.5 * amount; color.b += 0.8 * amount;
+                    } else if (glitchNoise < amount * 0.4) {
+                        color.r += 0.6 * amount; color.g *= 0.2; color.b += 0.8 * amount;
+                    }
+
+                    color.rgb -= sin(uv.y * 700.0) * 0.12 * amount;
+
+                    vec2 blockUv = floor(uv * vec2(8.0, 60.0));
+                    if (rand(blockUv + floor(time * 10.0)) < amount * 0.3) {
+                        float pick = rand(blockUv + seed);
+                        if (pick < 0.3) color.rgb = vec3(0.0, 0.3, 1.0);
+                        else if (pick < 0.6) color.rgb = vec3(0.0, 0.9, 0.3);
+                        else if (pick < 0.8) color.rgb = vec3(0.7, 0.0, 0.9);
+                        else color.rgb = vec3(0.0);
+                        color.rgb += rand(blockUv + seed) * 0.2;
+                    }
+
+                    gl_FragColor = color;
+                }
+            `;
+
+            function compile(type, src) {
+                const s = gl.createShader(type);
+                gl.shaderSource(s, src);
+                gl.compileShader(s);
+                return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null;
+            }
+
+            const vs = compile(gl.VERTEX_SHADER, vertexSrc);
+            const fs = compile(gl.FRAGMENT_SHADER, fragmentSrc);
+            if (!vs || !fs) return;
+
+            const program = gl.createProgram();
+            gl.attachShader(program, vs);
+            gl.attachShader(program, fs);
+            gl.linkProgram(program);
+            if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+            gl.useProgram(program);
+
+            // One rectangle covering the canvas
+            gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+            const posLoc = gl.getAttribLocation(program, "position");
+            gl.enableVertexAttribArray(posLoc);
+            gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+            const u = {};
+            ["amount", "time", "seed", "uvScale", "uvOffset"].forEach(n => { u[n] = gl.getUniformLocation(program, n); });
+
+            let ready = false;
+
+            function setup() {
+                try {
+                    const tex = gl.createTexture();
+                    gl.bindTexture(gl.TEXTURE_2D, tex);
+                    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+                    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+                } catch (err) {
+                    return;   // e.g. opened from a local file: keep the plain photo
+                }
+                wrap.insertBefore(canvas, img.nextSibling);
+                ready = true;
+                layout();
+                watch();
+            }
+
+            // Place the canvas exactly over the photo and copy its crop
+            function layout() {
+                const w = img.offsetWidth, h = img.offsetHeight;
+                if (!w || !h) return;
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                canvas.style.left = img.offsetLeft + "px";
+                canvas.style.top = img.offsetTop + "px";
+                canvas.style.width = w + "px";
+                canvas.style.height = h + "px";
+                canvas.width = Math.round(w * dpr);
+                canvas.height = Math.round(h * dpr);
+                gl.viewport(0, 0, canvas.width, canvas.height);
+
+                let sx = 1, sy = 1;
+                if (getComputedStyle(img).objectFit === "cover") {
+                    const boxRatio = w / h;
+                    const imgRatio = img.naturalWidth / img.naturalHeight;
+                    if (imgRatio > boxRatio) sx = boxRatio / imgRatio;
+                    else sy = imgRatio / boxRatio;
+                }
+                gl.uniform2f(u.uvScale, sx, sy);
+                gl.uniform2f(u.uvOffset, (1 - sx) / 2, (1 - sy) / 2);
+            }
+
+            window.addEventListener("resize", () => { if (ready) layout(); });
+
+            // The glitch itself: 0.85s, two strong pulses, then fades out
+            const duration = 0.85;
+            let start = 0, running = false;
+
+            function frame(now) {
+                const t = (now - start) / 1000;
+                const norm = t / duration;
+                if (norm >= 1) {
+                    running = false;
+                    canvas.classList.remove("is-on");
+                    return;
+                }
+                const flicker = Math.sin(norm * Math.PI * 4) + 1;
+                const fadeOut = Math.pow(1 - norm, 1.2);
+                gl.uniform1f(u.amount, (1 + flicker) * fadeOut);
+                gl.uniform1f(u.time, now / 1000);
+                gl.uniform1f(u.seed, Math.random());
+                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+                requestAnimationFrame(frame);
+            }
+
+            function glitch() {
+                if (!ready || running) return;
+                layout();
+                running = true;
+                start = performance.now();
+                canvas.classList.add("is-on");
+                requestAnimationFrame(frame);
+            }
+
+            function watch() {
+                let onScreen = false;
+
+                if ("IntersectionObserver" in window) {
+                    let firstTime = true;
+                    new IntersectionObserver(entries => {
+                        onScreen = entries[0].isIntersecting;
+                        if (onScreen && firstTime) {
+                            firstTime = false;
+                            setTimeout(glitch, 400);
+                        }
+                    }, { threshold: 0.5 }).observe(wrap);
+                }
+
+                if (canHover) wrap.addEventListener("mouseenter", glitch);
+                wrap.addEventListener("click", glitch);
+
+                // Every 6–11 seconds while the photo is on screen
+                (function idle() {
+                    setTimeout(() => {
+                        if (onScreen && document.visibilityState === "visible") glitch();
+                        idle();
+                    }, 6000 + Math.random() * 5000);
+                })();
+            }
+
+            if (img.complete && img.naturalWidth) setup();
+            else img.addEventListener("load", setup, { once: true });
+        })();
     </script>
 </body>
 </html>

@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://use.typekit.net/inw8ngx.css">
 
     <!-- Global CSS (keep this ?v= number in sync with the other pages) -->
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="style.css?v=6">
 
     <!-- If JavaScript is off, show everything instead of leaving content faded out -->
     <noscript>
@@ -38,6 +38,30 @@
         }
 
         body { background-color: #ffffff; }
+
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+        .skip-link {
+            position: absolute;
+            left: 16px;
+            top: -60px;
+            z-index: 1000;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background-color: #CFFF04;
+            color: #111111;
+            font-family: "Rajdhani", sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: top 0.2s ease;
+        }
+
+        .skip-link:focus { top: 12px; }
+
+        .cs-hero-fig { margin: 0; }
+        .cs-hero-fig .cs-caption { color: rgba(255, 255, 255, 0.95); opacity: 1; margin-top: 1rem; }
 
         /* Links take the colour of their section; .cyber-btn and the specific link styles below still win */
         main a {
@@ -158,7 +182,9 @@
             color: rgba(255, 255, 255, 0.85);
         }
 
-        .cs-tags li + li::before {
+        /* The slash sits after each item, so when the line wraps on a phone
+           the new line starts with a word, not a "/" */
+        .cs-tags li:not(:last-child)::after {
             content: "/";
             margin: 0 0.9em;
             color: var(--cs-lime);
@@ -499,11 +525,13 @@
 
 <body id="top">
 
+    <a class="skip-link" href="#main">Skip to content</a>
+
     <!-- === HEADER / NAVIGATION (same as every other page) === -->
     <header>
         <div class="top-left">
             <a href="index.html">
-                <img src="assets/brain-180.png" alt="Home" class="brain-icon" width="38">
+                <img src="assets/brain-180.png" alt="UnwiseGenius home" class="brain-icon" width="38">
             </a>
         </div>
         <nav class="top-right">
@@ -513,12 +541,12 @@
         </nav>
     </header>
 
-    <main>
+    <main id="main">
 
         <!-- === HERO === -->
         <section class="cs-hero">
             <div class="cs-wrap">
-                <span class="cs-eyebrow fade-up observe">Graphic Design</span>
+                <span class="cs-eyebrow fade-up observe">Case Study</span>
                 <h1 class="cs-title scramble-heading fade-up observe stagger-1">Bite</h1>
                 <p class="cs-subtitle fade-up observe stagger-1">Spray Painting Project</p>
 
@@ -530,10 +558,13 @@
                     <li>Photoshop</li>
                 </ul>
 
-                <div class="cs-hero-media fade-up observe stagger-3" data-label="The finished LUCKY piece">
-                    <img src="assets/luckypainted.png" alt="The finished LUCKY spray painting" decoding="async" fetchpriority="high">
-                    <span class="cs-scan" aria-hidden="true"></span>
-                </div>
+                <figure class="cs-hero-fig fade-up observe stagger-3">
+                    <div class="cs-hero-media" data-label="The finished LUCKY piece">
+                        <img src="assets/luckypainted.png" alt="The finished LUCKY spray painting: chunky mint green and light blue letters with a black outline, in ESOW&rsquo;s style" decoding="async" fetchpriority="high">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">My first ever spray painting: LUCKY, in a Japanese artist&rsquo;s alphabet, five colours and one week on the wall.</figcaption>
+                </figure>
             </div>
         </section>
 
@@ -550,8 +581,8 @@
                             <li class="fade-right observe stagger-1"><a href="#task"><span class="cs-num">01</span>The Task</a></li>
                             <li class="fade-right observe stagger-2"><a href="#planning"><span class="cs-num">02</span>Sketching and Planning</a></li>
                             <li class="fade-right observe stagger-3"><a href="#spraying"><span class="cs-num">03</span>Spraying &amp; Painting</a></li>
-                            <li class="fade-right observe stagger-4" data-needs-ai><a href="#ai"><span class="cs-num">04</span>AI Transparency</a></li>
-                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num" data-num-after-ai>04</span>Reflection</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#ai"><span class="cs-num">04</span>AI Transparency</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num">05</span>Reflection</a></li>
                         </ul>
                     </div>
 
@@ -582,11 +613,11 @@
                                 </span>
                                 <p>Sprayed between <strong>21st and 28th October</strong>.</p>
                             </li>
-                            <li class="cs-spec fade-left observe stagger-4" data-needs-ai>
+                            <li class="cs-spec fade-left observe stagger-4">
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4L12 3z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15z"/></svg>
                                 </span>
-                                <p>AI use: <a href="#ai" class="cs-inline-link">how AI was (and wasn&rsquo;t) used</a>.</p>
+                                <p>AI use: <a href="#ai" class="cs-inline-link"><strong>none</strong></a>.</p>
                             </li>
                         </ul>
                     </div>
@@ -613,7 +644,7 @@
                         <img src="assets/esowsalphabet.png" alt="ESOW alphabet" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">ESOW&rsquo;s alphabet, as supplied for the project.</figcaption>
+                    <figcaption class="cs-caption">ESOW&rsquo;s alphabet: chunky, rounded letters with little characters living inside them. Those characters were the part I most wanted to keep.</figcaption>
                 </figure>
 
                 <p class="fade-up observe">When I first saw it, I was very excited, as I felt it was a fun and very expressive typeface. With that, I did a sketch of what the word would look like. The chosen word was LUCKY.</p>
@@ -622,7 +653,7 @@
                         <img src="assets/luckysketch.png" alt="Sketch of the word LUCKY" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">My first sketch of LUCKY in ESOW&rsquo;s style.</figcaption>
+                    <figcaption class="cs-caption">The first sketch: working out how the five letters lock together before any paint was involved.</figcaption>
                 </figure>
 
                 <p class="fade-up observe">After the sketch was done, I made a digital painting in Photoshop, and then placed it on the wall to get a visual reference of what it should look like.</p>
@@ -631,10 +662,10 @@
                         <img src="assets/digitalpaintingoflucky.png" alt="Digital painting of LUCKY on the wall" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">The digital painting of LUCKY, placed on the wall as a visual reference.</figcaption>
+                    <figcaption class="cs-caption">The Photoshop plan on a photo of the wall, so I could check the size and colours before buying a single can.</figcaption>
                 </figure>
 
-                <p class="fade-up observe">Then the project came to a bit of a standstill, as it was a class project and not a solo one. I had to wait a month before I was allowed to spray and paint, which I did from 21st to 28th October.</p>
+                <p class="fade-up observe">Then the project came to a bit of a standstill. The piece was mine, but the wall time was booked for the whole class, so I had to wait a month before I was allowed to spray, which I did from 21st to 28th October.</p>
             </div>
         </section>
 
@@ -645,10 +676,10 @@
                 <p class="fade-up observe">On the Saturday, when the weather was good, I woke up around 9am to start spraying my piece. I started by doing a black outline of the shape of the word LUCKY.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="Spraying the black outline">
-                        <video src="assets/blackoutline.MOV#t=0.1" muted loop playsinline preload="metadata" controls></video>
+                        <video src="assets/blackoutline.MOV#t=0.1" muted loop playsinline preload="metadata" controls aria-label="Video of me spraying the black outline of LUCKY"></video>
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">Spraying the black outline of LUCKY.</figcaption>
+                    <figcaption class="cs-caption">The black outline went on first, giving me a frame to fill and a guide for every colour after it.</figcaption>
                 </figure>
 
                 <p class="fade-up observe">I then started to paint inside the outline. I chose a mint green and a light blue with a grey gradient in the middle to separate them, as I felt it worked best with the word and the artist&rsquo;s style. I also wanted to challenge myself: instead of using one colour, I wanted to use five. The colours were max green, costa brava blue, black, white and sputnik grey.</p>
@@ -657,27 +688,24 @@
                         <img src="assets/spraycans.png" alt="The spray cans used" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">The five colours: max green, costa brava blue, black, white and sputnik grey.</figcaption>
+                    <figcaption class="cs-caption">The five colours: max green, costa brava blue, black, white and sputnik grey. Five instead of one was a deliberate challenge.</figcaption>
                 </figure>
 
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="The finished LUCKY piece">
-                        <img src="assets/luckypainted.png" alt="The finished LUCKY piece" loading="lazy" decoding="async">
+                        <img src="assets/luckypainted.png" alt="The finished LUCKY piece on the wall" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">The finished LUCKY piece.</figcaption>
+                    <figcaption class="cs-caption">The finished piece. Compared with the Photoshop plan, the details inside the letters grew bigger, and the grey gradient is the part I&rsquo;d redo.</figcaption>
                 </figure>
             </div>
         </section>
 
-        <!-- === AI TRANSPARENCY ===
-             TO DO: write 1–3 sentences in your own words, then DELETE the word "hidden" below.
-             If you used no AI on Bite, say so plainly (that still counts as transparency).
-             While this section is hidden, its Contents entry and spec row hide too. -->
-        <section id="ai" class="cs-band cs-band--white" hidden>
+        <!-- === AI TRANSPARENCY === -->
+        <section id="ai" class="cs-band cs-band--white">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">AI Transparency</h2>
-                <p class="fade-up observe">WRITE YOUR AI STATEMENT HERE.</p>
+                <p class="fade-up observe">I didn&rsquo;t use AI at any stage of Bite. The sketch, the Photoshop plan, the colour choices and the spraying were all done by hand, and so was this write-up.</p>
             </div>
         </section>
 
@@ -723,9 +751,9 @@
             </a>
         </div>
         <div class="footer-right">
-            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram</a>
-            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
-            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">Youtube</a>
+            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">YouTube<span class="sr-only"> (opens in a new tab)</span></a>
         </div>
     </footer>
 
@@ -766,6 +794,8 @@
         }
 
         document.querySelectorAll(".scramble-heading").forEach(h => {
+            // Screen readers read the real heading, never the scrambled glyphs
+            h.setAttribute("aria-label", h.textContent.trim());
             h.addEventListener("mouseenter", () => scrambleElement(h));
         });
 
@@ -808,21 +838,8 @@
 
         // Videos that already failed before this script ran
         document.querySelectorAll(".cs-media video").forEach(v => {
-            if (v.error || v.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) handleBroken(v);
+            if (v.error) handleBroken(v);
         });
-
-        /* ==================================================================
-           2b. AI SECTION: until it's filled in (no "hidden" attribute), hide its Contents entry and spec row
-           ================================================================== */
-        (function () {
-            const ai = document.getElementById("ai");
-            if (ai && !ai.hidden) {
-                const n = document.querySelector("[data-num-after-ai]");
-                if (n) n.textContent = "05";
-                return;
-            }
-            document.querySelectorAll("[data-needs-ai]").forEach(el => el.remove());
-        })();
 
         /* ==================================================================
            3. SCROLL REVEAL (fires once per element; headings decrypt as they appear)

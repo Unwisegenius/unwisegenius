@@ -74,6 +74,11 @@
             background-color: #ffffff;
         }
 
+        /* No short last lines: browsers rebalance the wrap at any width.
+           (Once style.css has this rule site-wide, you can delete it here.) */
+        p, li { text-wrap: pretty; }
+        h1, h2, h3 { text-wrap: balance; }
+
         /* --- SECTION 1: HERO / LET'S TALK --- */
         #contact-hero {
             background-color: #4D04FF;
@@ -496,7 +501,7 @@
             <form id="contact-form" action="https://formspree.io/f/xyegvkjo" method="POST" novalidate>
                 <!-- Honeypot: real people never see or fill this -->
                 <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
-                <input type="hidden" name="_subject" value="New message from jaredrussell portfolio">
+                <input type="hidden" name="_subject" value="New message from the UnwiseGenius portfolio">
 
                 <div class="form-row">
                     <div class="form-group">
@@ -537,8 +542,13 @@
                 <span class="arrow-icon" aria-hidden="true">&#x2197;</span>
             </a>
 
-            <a href="https://www.linkedin.com/in/jared-russell-09bb63334/" target="_blank" rel="noopener" class="social-row">
+            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="social-row">
                 <span>LinkedIn<span class="sr-only"> (opens in a new tab)</span></span>
+                <span class="arrow-icon" aria-hidden="true">&#x2197;</span>
+            </a>
+
+            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="social-row">
+                <span>YouTube<span class="sr-only"> (opens in a new tab)</span></span>
                 <span class="arrow-icon" aria-hidden="true">&#x2197;</span>
             </a>
 
@@ -619,6 +629,8 @@
         }
 
         document.querySelectorAll(".scramble-heading").forEach(h => {
+            // Screen readers read the real heading, never the scrambled glyphs
+            h.setAttribute("aria-label", h.textContent.trim());
             h.addEventListener("mouseenter", () => scrambleElement(h));
         });
 

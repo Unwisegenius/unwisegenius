@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://use.typekit.net/inw8ngx.css">
 
     <!-- Global CSS (keep this ?v= number in sync with the other pages) -->
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="style.css?v=6">
 
     <!-- If JavaScript is off, show everything instead of leaving content faded out -->
     <noscript>
@@ -38,6 +38,31 @@
         }
 
         body { background-color: #ffffff; }
+
+        /* No short last lines: browsers rebalance the wrap at any width.
+           (Once style.css has this rule site-wide, you can delete it here.) */
+        p, li, figcaption { text-wrap: pretty; }
+        h1, h2, h3 { text-wrap: balance; }
+
+        /* "Skip to content" link that appears when you press Tab */
+        .skip-link {
+            position: absolute;
+            left: 16px;
+            top: -60px;
+            z-index: 1000;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background-color: #CFFF04;
+            color: #111111;
+            font-family: "Rajdhani", sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: top 0.2s ease;
+        }
+
+        .skip-link:focus { top: 12px; }
 
         /* Links take the colour of their section; .cyber-btn and the specific link styles below still win */
         main a {
@@ -158,7 +183,9 @@
             color: rgba(255, 255, 255, 0.85);
         }
 
-        .cs-tags li + li::before {
+        /* The slash sits after each item, so when the line wraps on a phone
+           the new line starts with a word, not a "/" */
+        .cs-tags li:not(:last-child)::after {
             content: "/";
             margin: 0 0.9em;
             color: var(--cs-lime);
@@ -178,6 +205,9 @@
             height: auto;
             display: block;
         }
+
+        .cs-hero-fig { margin: 0; }
+        .cs-hero-fig .cs-caption { color: rgba(255, 255, 255, 0.95); opacity: 1; margin-top: 1rem; }
 
         .cs-hero-media:hover .cs-scan {
             top: 120%;
@@ -563,11 +593,13 @@
 
 <body id="top">
 
+    <a class="skip-link" href="#main">Skip to content</a>
+
     <!-- === HEADER / NAVIGATION (same as every other page) === -->
     <header>
         <div class="top-left">
             <a href="index.html">
-                <img src="assets/brain-180.png" alt="Home" class="brain-icon" width="38">
+                <img src="assets/brain-180.png" alt="UnwiseGenius home" class="brain-icon" width="38" height="38">
             </a>
         </div>
         <nav class="top-right">
@@ -577,7 +609,7 @@
         </nav>
     </header>
 
-    <main>
+    <main id="main">
 
         <!-- === HERO === -->
         <section class="cs-hero">
@@ -594,10 +626,13 @@
                     <li>Figma</li>
                 </ul>
 
-                <div class="cs-hero-media fade-up observe stagger-3" data-label="The Grub logo">
-                    <img src="assets/grubbanner.png" alt="The Grub logo" decoding="async" fetchpriority="high">
-                    <span class="cs-scan" aria-hidden="true"></span>
-                </div>
+                <figure class="cs-hero-fig fade-up observe stagger-3">
+                    <div class="cs-hero-media" data-label="The Grub logo">
+                        <img src="assets/grubbanner.png" alt="The Grub logo" decoding="async" fetchpriority="high">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">Grub, the fake food delivery brand I created so the microinteractions had a real-feeling service to live in.</figcaption>
+                </figure>
             </div>
         </section>
 
@@ -651,6 +686,12 @@
                                 </span>
                                 <p>Each runs for <strong>0.5&ndash;3 seconds</strong> at <strong>30fps</strong> or more.</p>
                             </li>
+                            <li class="cs-spec fade-left observe stagger-4">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg>
+                                </span>
+                                <p>Role: <strong>solo project</strong> (branding, UI, motion and the essay).</p>
+                            </li>
                             <li class="cs-spec fade-left observe stagger-4" data-needs-ai>
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4L12 3z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15z"/></svg>
@@ -683,7 +724,7 @@
                         <img src="assets/grubui.png" alt="The Grub user interface" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">The Grub interface: my fake food delivery brand, built in Figma.</figcaption>
+                    <figcaption class="cs-caption">The Grub interface, built in Figma after researching services like Uber Eats. Focusing on one service left time to brand it properly.</figcaption>
                 </figure>
             </div>
         </section>
@@ -697,27 +738,27 @@
                 <p class="fade-up observe">The first microinteraction I made was the payment button. I wanted a payment button that was fun, but that also reduced panic purchases. When you go to pay for your food, you have the option to cancel, because you may look at your order at the last second and see you&rsquo;ve forgotten something. I then used Smart Animate in Figma to bring it to life.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="Process work for the payment button">
-                        <img src="assets/car%20process.png" alt="Process work for the payment button" loading="lazy" decoding="async">
+                        <img src="assets/car%20process.png" alt="Figma frames showing each state of the payment button" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">Process work for the payment button and its states.</figcaption>
+                    <figcaption class="cs-caption">Process work for the payment button: each state laid out as its own frame, ready for Smart Animate to move between them.</figcaption>
                 </figure>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media" data-label="The payment button microinteraction">
                         <video src="assets/continuetopayment.mov#t=0.1" muted loop playsinline preload="metadata" controls aria-label="The payment button microinteraction"></video>
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">The payment button: continue to payment, with the option to cancel.</figcaption>
+                    <figcaption class="cs-caption">The payment button: continue to payment, with a cancel option so a last-second &ldquo;I forgot something&rdquo; never turns into a panic purchase.</figcaption>
                 </figure>
 
                 <h3 class="fade-up observe">2. The drop-down menu</h3>
-                <p class="fade-up observe">I then moved on to more microinteractions. I created a drop-down menu to fix the clutter the website was facing.</p>
+                <p class="fade-up observe">I then moved on to more microinteractions. I created a drop-down menu to tidy up the clutter on the page.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media" data-label="The drop-down menu microinteraction">
                         <video src="assets/dropdownmenu.mov#t=0.1" muted loop playsinline preload="metadata" controls aria-label="The drop-down menu microinteraction"></video>
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">The drop-down menu, tidying away options until they&rsquo;re needed.</figcaption>
+                    <figcaption class="cs-caption">The drop-down menu, tidying options away until they&rsquo;re needed, so the page stays clear.</figcaption>
                 </figure>
 
                 <h3 class="fade-up observe">3. The delivery and pickup toggle</h3>
@@ -727,7 +768,7 @@
                         <video src="assets/toggledelivery.mov#t=0.1" muted loop playsinline preload="metadata" controls aria-label="The delivery and pickup toggle microinteraction"></video>
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">The delivery and pickup toggle, making the chosen option clear.</figcaption>
+                    <figcaption class="cs-caption">The delivery and pickup toggle: the motion shows which way you&rsquo;ve switched, so there&rsquo;s no doubt how your food is arriving.</figcaption>
                 </figure>
 
                 <h3 class="fade-up observe">4. The savings notification</h3>
@@ -737,7 +778,7 @@
                         <video src="assets/NotificationGrub.mov#t=0.1" muted loop playsinline preload="metadata" controls aria-label="The savings notification microinteraction"></video>
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">The notification that greets you with your savings.</figcaption>
+                    <figcaption class="cs-caption">The notification that greets you with your savings the moment the prototype opens: a small reward before you&rsquo;ve even ordered.</figcaption>
                 </figure>
             </div>
         </section>
@@ -773,14 +814,11 @@
             </div>
         </section>
 
-        <!-- === AI TRANSPARENCY ===
-             TO DO: write 1–3 sentences in your own words, then DELETE the word "hidden" below.
-             If you used no AI on Grub (or only for research or the essay), say so plainly.
-             While this section is hidden, its Contents entry and spec row hide too. -->
-        <section id="ai" class="cs-band cs-band--purple" hidden>
+        <!-- === AI TRANSPARENCY === -->
+        <section id="ai" class="cs-band cs-band--purple">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">AI Transparency</h2>
-                <p class="fade-up observe">WRITE YOUR AI STATEMENT HERE.</p>
+                <p class="fade-up observe"><strong>No AI was used on Grub.</strong> The research, the Grub brand, the Figma screens, all four microinteractions and the essay are my own work.</p>
             </div>
         </section>
 
@@ -789,7 +827,7 @@
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">Reflection</h2>
                 <p class="fade-up observe">I loved this project. Designing a fake food service portal and creating a brand identity were a lot of fun, and working with motion was the best part. I wish I could push this project further and create a fully fledged food service app or website, but I&rsquo;d need a budget, more research and more experience to do so, which is totally okay.</p>
-                <p class="fade-up observe">I loved making this project, and I hope you enjoy it too!</p>
+                <p class="fade-up observe">I hope you enjoy it as much as I enjoyed making it!</p>
                 <a class="cs-btn fade-up observe" href="https://jaredrussell.notion.site/Micro-Interactions-2f89a122e2e080a59490d12e7dfd1cf2" target="_blank" rel="noopener">Read my notes on Notion<span class="sr-only"> (opens in a new tab)</span></a>
             </div>
         </section>
@@ -826,9 +864,9 @@
             </a>
         </div>
         <div class="footer-right">
-            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram</a>
-            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
-            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">Youtube</a>
+            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">YouTube<span class="sr-only"> (opens in a new tab)</span></a>
         </div>
     </footer>
 
@@ -869,6 +907,8 @@
         }
 
         document.querySelectorAll(".scramble-heading").forEach(h => {
+            // Screen readers read the real heading, never the scrambled glyphs
+            h.setAttribute("aria-label", h.textContent.trim());
             h.addEventListener("mouseenter", () => scrambleElement(h));
         });
 
@@ -909,9 +949,11 @@
             if (img.getAttribute("src") && img.complete && img.naturalWidth === 0) handleBroken(img);
         });
 
-        // Videos that already failed before this script ran
+        // Videos that already failed before this script ran.
+        // Only a real error counts: a video that simply hasn't started loading yet
+        // also reports "no source" at this point, which used to remove every video on the page.
         document.querySelectorAll(".cs-media video").forEach(v => {
-            if (v.error || v.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) handleBroken(v);
+            if (v.error) handleBroken(v);
         });
 
         /* ==================================================================

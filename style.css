@@ -47,6 +47,70 @@ h3 {
 }
 
 /* ==========================================================================
+   SITE-WIDE ACCESSIBILITY & TYPESETTING
+   ========================================================================== */
+
+/* No short last lines at any screen width: paragraphs avoid ending on a single word,
+   headings split into even lines (e.g. "The Pioneers of Web / Design" becomes two balanced lines) */
+p, li, figcaption, blockquote { text-wrap: pretty; }
+h1, h2, h3 { text-wrap: balance; }
+
+/* Text only screen readers hear, e.g. "(opens in a new tab)" */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* "Skip to content" link: hidden until you press Tab */
+.skip-link {
+    position: absolute;
+    left: 16px;
+    top: -60px;
+    z-index: 1000;
+    padding: 10px 18px;
+    border-radius: 999px;
+    background-color: #CFFF04;
+    color: #111111;
+    font-family: "Rajdhani", sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: top 0.2s ease;
+}
+
+.skip-link:focus { top: 12px; }
+
+/* A clear keyboard focus ring everywhere (lime on the purple nav and dark footer) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #4D04FF;
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+/* On purple or dark backgrounds the ring switches to lime so it stays visible */
+header a:focus-visible,
+footer a:focus-visible,
+#hero a:focus-visible,
+#contact-hero a:focus-visible,
+#about-cta a:focus-visible,
+.cs-hero a:focus-visible,
+.cs-band--purple a:focus-visible,
+.cs-band--purple button:focus-visible,
+.pf-main a:focus-visible,
+.pf-main button:focus-visible { outline-color: #CFFF04; }
+
+/* ==========================================================================
    HEADER / NAVIGATION (Rajdhani Bold)
    ========================================================================== */
 /* One shared nav bar for every page (same height, padding and position everywhere) */
@@ -643,7 +707,7 @@ footer {
     }
 
     .top-right a {
-        font-size: 0.78rem;
+        font-size: 0.85rem;             /* was 0.78rem (12.5px): too small to read comfortably */
         letter-spacing: 0.2px;
     }
 
@@ -754,14 +818,15 @@ footer {
     filter: grayscale(0%) contrast(1.05); /* Reveal color on hover */
 }
 
-/* Design Philosophy Section (Pink) */
+/* Design Philosophy Section (Pink)
+   Dark text on pink: #111 on #FB4CD1 is about 6.3:1 (white was 2.98:1 and failed WCAG AA) */
 #philosophy {
     background-color: #FB4CD1;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 120px 8vw;
-    color: #ffffff;
+    color: #111111;
 }
 
 .philosophy-content {
@@ -780,7 +845,7 @@ footer {
     font-size: clamp(1.1rem, 1.4vw, 1.35rem);
     line-height: 1.6;
     margin-bottom: 25px;
-    color: #ffffff;
+    color: #111111;
 }
 
 .philosophy-image {
@@ -843,4 +908,44 @@ footer {
         font-size: 2.5rem;
         margin-bottom: 25px;
     }
+}
+/* ==========================================================================
+   TOUCH SCREENS: nav links big enough to tap (at least 44px tall)
+   ========================================================================== */
+@media (pointer: coarse) {
+    .cyber-nav-link {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+    }
+}
+
+/* ==========================================================================
+   REDUCED MOTION: for people who've asked their device for less movement
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    html, body { scroll-behavior: auto; }
+
+    .reveal-section {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .floating-avatar { animation: none; }
+
+    .folder-group,
+    .cyber-nav-link,
+    .cyber-btn,
+    .cyber-btn .arrow,
+    .project-card,
+    .project-img img,
+    .footer-logo,
+    .portrait-wrapper img { transition: none; }
+
+    .folder-group:hover,
+    .cyber-btn:hover,
+    .cyber-btn:hover .arrow,
+    .project-card:hover .project-img img,
+    .footer-logo:hover { transform: none; }
 }

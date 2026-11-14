@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://use.typekit.net/inw8ngx.css">
 
     <!-- Global CSS (keep this ?v= number in sync with the other pages) -->
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="style.css?v=6">
 
     <!-- If JavaScript is off, show everything instead of leaving content faded out -->
     <noscript>
@@ -158,7 +158,9 @@
             color: rgba(255, 255, 255, 0.85);
         }
 
-        .cs-tags li + li::before {
+        /* The slash sits after each item, so when the line wraps on a phone
+           the new line starts with a word, not a "/" */
+        .cs-tags li:not(:last-child)::after {
             content: "/";
             margin: 0 0.9em;
             color: var(--cs-lime);
@@ -794,6 +796,9 @@
             max-height: 70vh;
         }
 
+        .cs-hero-fig { margin: 0; }
+        .cs-hero-fig .cs-caption { color: rgba(255, 255, 255, 0.95); opacity: 1; margin-top: 1rem; text-align: center; }
+
         /* Full-width figure that is never cropped or capped in height (the in-use photo collage) */
         .cs-fig--full { width: 100%; max-width: 100%; }
         .cs-fig--full .cs-media img {
@@ -853,11 +858,13 @@
 
 <body id="top">
 
+    <a class="skip-link" href="#main">Skip to content</a>
+
     <!-- === HEADER / NAVIGATION (same as every other page) === -->
     <header>
         <div class="top-left">
             <a href="index.html">
-                <img src="assets/brain-180.png" alt="Home" class="brain-icon" width="38">
+                <img src="assets/brain-180.png" alt="UnwiseGenius home" class="brain-icon" width="38" height="38">
             </a>
         </div>
         <nav class="top-right">
@@ -867,12 +874,12 @@
         </nav>
     </header>
 
-    <main>
+    <main id="main">
 
         <!-- === HERO === -->
         <section class="cs-hero">
             <div class="cs-wrap">
-                <span class="cs-eyebrow fade-up observe">Graphic Design</span>
+                <span class="cs-eyebrow fade-up observe">Case Study</span>
                 <h1 class="cs-title cs-title--long scramble-heading fade-up observe stagger-1">Mousepad Competition</h1>
                 <p class="cs-subtitle fade-up observe stagger-1">John Mouse: a winning design for the CMU art building</p>
 
@@ -884,10 +891,13 @@
                     <li>Photoshop</li>
                 </ul>
 
-                <div class="cs-hero-media cs-hero-media--bare fade-up observe stagger-3" data-label="The final John Mouse mousepad design">
-                    <img src="assets/johnmousebanner.png" alt="The final John Mouse mousepad design" decoding="async" fetchpriority="high">
-                    <span class="cs-scan" aria-hidden="true"></span>
-                </div>
+                <figure class="cs-hero-fig fade-up observe stagger-3">
+                    <div class="cs-hero-media cs-hero-media--bare" data-label="The final John Mouse mousepad design">
+                        <img src="assets/johnmousebanner.png" alt="The final John Mouse mousepad design" decoding="async" fetchpriority="high">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">John Mouse, the student-voted winner, now on desks across the whole CMU art building.</figcaption>
+                </figure>
             </div>
         </section>
 
@@ -906,7 +916,8 @@
                             <li class="fade-right observe stagger-2"><a href="#ideation"><span class="cs-num">03</span>Ideation</a></li>
                             <li class="fade-right observe stagger-3"><a href="#development"><span class="cs-num">04</span>Development</a></li>
                             <li class="fade-right observe stagger-4"><a href="#winner"><span class="cs-num">05</span>The Winner</a></li>
-                            <li class="fade-right observe stagger-4" data-needs="reflection"><a href="#reflection"><span class="cs-num">06</span>Reflection</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#ai"><span class="cs-num">06</span>AI Transparency</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num">07</span>Reflection</a></li>
                         </ul>
                     </div>
 
@@ -936,6 +947,18 @@
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12"/><path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2"/><path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4"/></svg>
                                 </span>
                                 <p>Printed <strong>2 months</strong> after the vote.</p>
+                            </li>
+                            <li class="cs-spec fade-left observe stagger-4">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                                </span>
+                                <p>Designed in my <strong>first weeks</strong> at CMU.</p>
+                            </li>
+                            <li class="cs-spec fade-left observe stagger-4">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg>
+                                </span>
+                                <p>Role: <strong>solo entry</strong>. AI use: <a href="#ai" class="cs-inline-link">none</a>.</p>
                             </li>
                         </ul>
                     </div>
@@ -984,7 +1007,7 @@
                         <img src="assets/sketchesofmousepad.png" alt="Pencil sketches of pun and reminder ideas for the mousepad" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">My first sketches: puns and reminders, ready to be narrowed down.</figcaption>
+                    <figcaption class="cs-caption">My first sketches: puns and reminders. Pencil first meant lots of ideas fast, before choosing which deserved screen time.</figcaption>
                 </figure>
             </div>
         </section>
@@ -1000,7 +1023,7 @@
                         <img src="assets/mousepadsfirstdraft.png" alt="Three first-draft mousepad designs, including Carpal Tunnel and John Mouse" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">The three first-draft designs that went to the vote.</figcaption>
+                    <figcaption class="cs-caption">The three first drafts that went to the vote. Carpal Tunnel was my favourite; the voters picked John Mouse.</figcaption>
                 </figure>
                 <h3 class="fade-up observe">The vote</h3>
                 <p class="fade-up observe">Which one would you vote for? Personally, I really loved the Carpal Tunnel one, but sometimes we don&rsquo;t get what we want. Everyone voted for John Mouse, which is cool!</p>
@@ -1029,7 +1052,7 @@
                         <img src="assets/johnmousemockup.png" alt="The final John Mouse mousepad design" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">The final John Mouse design, with texture, a moustache and bold lettering.</figcaption>
+                    <figcaption class="cs-caption">The final John Mouse: texture fixes the flatness, the moustache adds personality and the bold lettering makes the name read from across a desk.</figcaption>
                 </figure>
                 <h3 class="fade-up observe">John Mouse in the wild</h3>
                 <p class="fade-up observe">Then came the wait. Two months later, they were finally printed and put out across the art building. Not just my class, the entire building! Enjoy these photos.</p>
@@ -1038,22 +1061,26 @@
                         <img src="assets/collageofjohnmouse.png" alt="Photos of the printed John Mouse mousepads on desks across the Colorado Mesa University art building" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">The printed John Mouse mousepads, out on desks across the CMU art building.</figcaption>
+                    <figcaption class="cs-caption">The printed John Mouse mousepads in use across the CMU art building: a design people now see every single day.</figcaption>
                 </figure>
             </div>
         </section>
 
-        <!-- === REFLECTION ===
-             TO DO: your instructor marks down case studies without a reflection, so write 3–5 sentences,
-             then DELETE the word "hidden" below. Some prompts:
-             - How did it feel to see your design in use across the building?
-             - What did designing for a real competition, judged by other people, teach you?
-             - Why do you think John Mouse beat Carpal Tunnel, and what would you change now?
-             While this section is hidden, its Contents entry hides too. -->
-        <section id="reflection" class="cs-band cs-band--lime" data-todo hidden>
+        <!-- === AI TRANSPARENCY === -->
+        <section id="ai" class="cs-band cs-band--purple">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">AI Transparency</h2>
+                <p class="fade-up observe"><strong>No AI was used on this project.</strong> The sketches, the three designs in InDesign and Photoshop, and the final polish on John Mouse are all my own work.</p>
+            </div>
+        </section>
+
+        <!-- === REFLECTION === -->
+        <section id="reflection" class="cs-band cs-band--lime">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">Reflection</h2>
-                <p class="fade-up observe">WRITE YOUR REFLECTION HERE.</p>
+                <p class="fade-up observe">This was the first time I designed for an audience that would actually vote on my work and then live with it every day, rather than for a grade. That changed how I chose ideas: the question stopped being &ldquo;what do I like?&rdquo; and became &ldquo;what will people smile at every time they reach for their mouse?&rdquo;</p>
+                <p class="fade-up observe">It also taught me to let go of favourites. I loved Carpal Tunnel, but the voters chose John Mouse, and they were right to. A design that connects with its audience beats the one its designer is attached to.</p>
+                <p class="fade-up observe">If I did it again, I&rsquo;d push the illustration further and give John Mouse more character, maybe even a small set of mousepads with him in different situations.</p>
             </div>
         </section>
 
@@ -1089,9 +1116,9 @@
             </a>
         </div>
         <div class="footer-right">
-            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram</a>
-            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
-            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">Youtube</a>
+            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">YouTube<span class="sr-only"> (opens in a new tab)</span></a>
         </div>
     </footer>
 
@@ -1132,6 +1159,8 @@
         }
 
         document.querySelectorAll(".scramble-heading").forEach(h => {
+            // Screen readers read the real heading, never the scrambled glyphs
+            h.setAttribute("aria-label", h.textContent.trim());
             h.addEventListener("mouseenter", () => scrambleElement(h));
         });
 
@@ -1189,9 +1218,11 @@
             if (img.getAttribute("src") && img.complete && img.naturalWidth === 0) handleBroken(img);
         });
 
-        // Videos that already failed before this script ran
+        // Videos that already failed before this script ran.
+        // Only a real error counts: a video that simply hasn't started loading yet
+        // also reports "no source" at this point, which used to remove every video on the page.
         document.querySelectorAll(".cs-media video").forEach(v => {
-            if (v.error || v.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) handleBroken(v);
+            if (v.error) handleBroken(v);
         });
 
         /* ==================================================================

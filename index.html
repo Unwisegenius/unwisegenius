@@ -14,7 +14,8 @@
     <!-- Link previews (when the site is shared on social media or in messages) -->
     <meta property="og:title" content="Jared Russell | UnwiseGenius">
     <meta property="og:description" content="Digital Design student at Ulster University: UI/UX, branding, research and accessible design.">
-    <meta property="og:image" content="assets/xp-bank-cover.jpg">
+    <!-- Link previews need a full web address for the image, not a relative path -->
+    <meta property="og:image" content="https://unwisegenius.com/assets/xp-bank-cover.jpg">
 
     <!-- Google Fonts: Rajdhani & Space Grotesk -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,8 +25,8 @@
     <!-- Adobe Fonts (Typekit): Stolzl Regular 400 + Bold 700. Must load BEFORE style.css -->
     <link rel="stylesheet" href="https://use.typekit.net/inw8ngx.css">
 
-    <!-- External CSS (?v=4 busts stale caches; bump it whenever you change style.css) -->
-    <link rel="stylesheet" href="style.css?v=5">
+    <!-- External CSS (the ?v= number busts stale caches; bump it whenever you change style.css) -->
+    <link rel="stylesheet" href="style.css?v=6">
 
     <!-- Three.js, Loaders & Post-Processing -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -128,6 +129,36 @@
 
         .hp-role strong { color: #CFFF04; font-weight: 700; }
 
+        /* The one primary action in the first screen: go to the work.
+           Lime fill on the purple hero, dark text = 15:1 contrast. */
+        .hp-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6em;
+            margin-top: clamp(14px, 1.8vw, 22px);
+            padding: 0.9em 1.7em;
+            border-radius: 999px;
+            background-color: #CFFF04;
+            color: #111111;
+            font-family: "Rajdhani", sans-serif;
+            font-weight: 700;
+            font-size: clamp(1rem, 1.3vw, 1.2rem);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+            transition: background-color 0.25s ease, transform 0.25s ease;
+        }
+
+        .hp-cta:hover { background-color: #ffffff; transform: translateY(-2px); }
+        .hp-cta span[aria-hidden] { transition: transform 0.25s ease; }
+        .hp-cta:hover span[aria-hidden] { transform: translateX(4px); }
+
+        /* No short last lines: browsers rebalance the wrap at any width.
+           (Once style.css has this rule site-wide, you can delete it here.) */
+        p, li { text-wrap: pretty; }
+        h1, h2, h3 { text-wrap: balance; }
+
         /* Small "scroll" cue in the bottom-right of the hero */
         .hp-scroll {
             position: absolute;
@@ -225,7 +256,9 @@
         @media (prefers-reduced-motion: reduce) {
             .reveal-section { opacity: 1 !important; transform: none !important; transition: none !important; }
             .floating-avatar, .hp-scroll span[aria-hidden] { animation: none !important; }
-            .project-card, .project-img, .project-img img, .hp-card-cta { transition: none !important; }
+            .project-card, .project-img, .project-img img, .hp-card-cta,
+            .hp-cta, .hp-cta span[aria-hidden] { transition: none !important; }
+            .hp-cta:hover, .hp-cta:hover span[aria-hidden] { transform: none !important; }
         }
     </style>
 </head>
@@ -265,9 +298,10 @@
             <p class="hp-kicker">Digital Designer</p>
             <h1 class="hp-name scramble-heading" id="hp-name">Jared Russell</h1>
             <p class="hp-role">Digital Design student at Ulster University, focused on <strong>UI/UX</strong>, <strong>branding</strong>, <strong>research</strong> and <strong>accessible design</strong>.</p>
+            <a href="portfolio.html" class="hp-cta">View my work <span aria-hidden="true">&rarr;</span></a>
         </div>
 
-        <a href="#portfolio" class="hp-scroll">Featured work <span aria-hidden="true">&darr;</span></a>
+        <a href="#about" class="hp-scroll">Want to know a bit more? <span aria-hidden="true">&darr;</span></a>
     </section>
 
     <!-- === ABOUT SECTION === -->
@@ -275,7 +309,7 @@
         <div class="about-content">
             <h2 class="scramble-heading">A Bit about Me</h2>
             <p class="lead-text">Hello, I'm Jared.</p>
-            <p>I'm a student currently studying Digital Design at Ulster University. My focus is in UI/UX, Branding, Research &amp; Accessible Design.</p>
+            <p>I study Digital Design at Ulster University, with a focus on UI/UX, branding, research and accessible design.</p>
             <a href="about.html" class="more-link cyber-btn">
                 <span>Want to know more?</span>
                 <span class="arrow">&rarr;</span>
@@ -400,6 +434,8 @@
         }
 
         document.querySelectorAll(".scramble-heading").forEach(h => {
+            // Screen readers read the real heading, never the scrambled glyphs
+            h.setAttribute("aria-label", h.textContent.trim());
             h.addEventListener("mouseenter", () => scrambleElement(h));
         });
 
@@ -531,7 +567,7 @@
                             color.rgb -= scanline;
 
                             vec2 blockUv = floor(uv * vec2(8.0, 60.0));
-                            float blockRand = rand(blockUv + floor(time * 20.0));
+                            float blockRand = rand(blockUv + floor(time * 10.0));
                             if (blockRand < amount * 0.3) {
                                 float colorPick = rand(blockUv + seed);
                                 if (colorPick < 0.3) color.rgb = vec3(0.0, 0.3, 1.0);
@@ -583,6 +619,11 @@
                 let targetObject = null;
                 let modelWidth = 1;
 
+                // How far the logo sits above the centre of the hero, as a share of the visible height.
+                // Raise for higher, 0 = dead centre.
+                const LOGO_LIFT = 0.12;
+                let liftY = 0;
+
                 const targetRotation = { x: 0, y: 0 };
                 const mouse = { x: 0, y: 0 };
 
@@ -592,6 +633,8 @@
                     const vFovRad = (camera.fov * Math.PI) / 180;
                     const visibleHeight = 2 * Math.tan(vFovRad / 2) * camera.position.z;
                     const visibleWidth = visibleHeight * camera.aspect;
+
+                    liftY = visibleHeight * LOGO_LIFT;
 
                     const fillPercentage = camera.aspect < 1.0 ? 0.82 : 0.65;
                     const targetWidth = Math.min(visibleWidth * fillPercentage, 4.2);
@@ -709,7 +752,7 @@
                         const hoverWaveX = reduceMotion ? 0 : Math.cos(elapsedTime * 1.2) * 0.04;
 
                         targetObject.position.x += ((mouse.x * 0.28 + hoverWaveX) - targetObject.position.x) * 0.05;
-                        targetObject.position.y += ((mouse.y * 0.28 + hoverWaveY) - targetObject.position.y) * 0.05;
+                        targetObject.position.y += ((mouse.y * 0.28 + hoverWaveY + liftY) - targetObject.position.y) * 0.05;
                     }
 
                     if (isGlitching) {
@@ -720,7 +763,9 @@
                             isGlitching = false;
                             glitchPass.uniforms.amount.value = 0.0;
                         } else {
-                            const flicker = Math.sin(normTime * Math.PI * 18) + 1;
+                            // Two strong pulses, not nine: keeps the glitch under 3 flashes a second (WCAG 2.3.1),
+                            // which matters because the logo fills most of the screen
+                            const flicker = Math.sin(normTime * Math.PI * 4) + 1;
                             const fadeOut = Math.pow(1.0 - normTime, 1.2);
 
                             glitchPass.uniforms.amount.value = (1.0 + flicker) * fadeOut;

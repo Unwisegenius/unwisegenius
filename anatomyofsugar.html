@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://use.typekit.net/inw8ngx.css">
 
     <!-- Global CSS (keep this ?v= number in sync with the other pages) -->
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="style.css?v=6">
 
     <!-- If JavaScript is off, show everything instead of leaving content faded out -->
     <noscript>
@@ -38,6 +38,36 @@
         }
 
         body { background-color: #ffffff; }
+
+        /* No short last lines: browsers rebalance the wrap at any width.
+           (Once style.css has this rule site-wide, you can delete it here.) */
+        p, li, figcaption { text-wrap: pretty; }
+        h1, h2, h3 { text-wrap: balance; }
+
+        /* Screen-reader-only text, and a "Skip to content" link that appears when you press Tab */
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+        }
+
+        .skip-link {
+            position: absolute;
+            left: 16px;
+            top: -60px;
+            z-index: 1000;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background-color: #CFFF04;
+            color: #111111;
+            font-family: "Rajdhani", sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: top 0.2s ease;
+        }
+
+        .skip-link:focus { top: 12px; }
 
         /* Links take the colour of their section; .cyber-btn and the specific link styles below still win */
         main a {
@@ -158,7 +188,9 @@
             color: rgba(255, 255, 255, 0.85);
         }
 
-        .cs-tags li + li::before {
+        /* The slash sits after each item, so when the line wraps on a phone
+           the new line starts with a word, not a "/" */
+        .cs-tags li:not(:last-child)::after {
             content: "/";
             margin: 0 0.9em;
             color: var(--cs-lime);
@@ -178,6 +210,9 @@
             height: auto;
             display: block;
         }
+
+        .cs-hero-fig { margin: 0; }
+        .cs-hero-fig .cs-caption { color: rgba(255, 255, 255, 0.95); opacity: 1; margin-top: 1rem; }
 
         .cs-hero-media:hover .cs-scan {
             top: 120%;
@@ -716,11 +751,13 @@
 
 <body id="top">
 
+    <a class="skip-link" href="#main">Skip to content</a>
+
     <!-- === HEADER / NAVIGATION (same as every other page) === -->
     <header>
         <div class="top-left">
             <a href="index.html">
-                <img src="assets/brain-180.png" alt="Home" class="brain-icon" width="38">
+                <img src="assets/brain-180.png" alt="UnwiseGenius home" class="brain-icon" width="38" height="38">
             </a>
         </div>
         <nav class="top-right">
@@ -730,12 +767,12 @@
         </nav>
     </header>
 
-    <main>
+    <main id="main">
 
         <!-- === HERO === -->
         <section class="cs-hero">
             <div class="cs-wrap">
-                <span class="cs-eyebrow fade-up observe">Graphic Design</span>
+                <span class="cs-eyebrow fade-up observe">Case Study</span>
                 <h1 class="cs-title cs-title--long scramble-heading fade-up observe stagger-1">The Anatomy of Sugar</h1>
 
                 <ul class="cs-tags fade-up observe stagger-2" aria-label="Project focus">
@@ -747,10 +784,13 @@
                     <li>InDesign</li>
                 </ul>
 
-                <div class="cs-hero-media fade-up observe stagger-3" data-label="The Anatomy of Sugar product shot">
-                    <img src="assets/anatomyofsugarproductshot.jpeg" alt="The Anatomy of Sugar catalogue product shot" decoding="async" fetchpriority="high">
-                    <span class="cs-scan" aria-hidden="true"></span>
-                </div>
+                <figure class="cs-hero-fig fade-up observe stagger-3">
+                    <div class="cs-hero-media" data-label="The Anatomy of Sugar product shot">
+                        <img src="assets/anatomyofsugarproductshot.jpeg" alt="The finished Anatomy of Sugar catalogue" decoding="async" fetchpriority="high">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">The finished catalogue: every category of sweets reimagined in a Saul Bass style, with the imagery doing the selling.</figcaption>
+                </figure>
             </div>
         </section>
 
@@ -770,7 +810,8 @@
                             <li class="fade-right observe stagger-3"><a href="#designing"><span class="cs-num">03</span>Designing the Catalogue</a></li>
                             <li class="fade-right observe stagger-4"><a href="#imagery"><span class="cs-num">04</span>Generating the Imagery</a></li>
                             <li class="fade-right observe stagger-4"><a href="#catalogue"><span class="cs-num">05</span>The (Digital) Catalogue</a></li>
-                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num">06</span>Reflection</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#ai"><span class="cs-num">06</span>AI Transparency</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num">07</span>Reflection</a></li>
                         </ul>
                     </div>
 
@@ -801,7 +842,18 @@
                                 </span>
                                 <p>Style inspired by <strong>Saul Bass</strong>.</p>
                             </li>
-                        
+                            <li class="cs-spec fade-left observe stagger-4">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg>
+                                </span>
+                                <p>Role: <strong>solo project</strong> (photography, art direction, layout and image editing).</p>
+                            </li>
+                            <li class="cs-spec fade-left observe stagger-4">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9z"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg>
+                                </span>
+                                <p>AI use: <a href="#ai" class="cs-inline-link">how Gemini was used</a>.</p>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -825,19 +877,19 @@
         <section id="photoshoot" class="cs-band cs-band--pink">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">Photoshoot</h2>
-                <p class="fade-up observe">Before this project, I had to take photos of different sweets, so off to City Market I went, where I bought $90 worth of sweets. I should note these photos were taken in the third week of me moving to Colorado for my year abroad, so that was definitely not the welcome I was expecting&hellip;</p>
+                <p class="fade-up observe">To start the project, I needed photos of the sweets, so off to City Market I went, where I bought $90 worth of them. I should note these photos were taken three weeks after I moved to Colorado for my year abroad, so that was definitely not the welcome I was expecting&hellip;</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="Sweets on a checkout counter">
-                        <img src="assets/sweetsonacheckout.png" alt="Sweets on a checkout counter" loading="lazy" decoding="async">
+                        <img src="assets/sweetsonacheckout.png" alt="Dozens of packets of sweets piled on a supermarket checkout counter" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">My $90 haul of sweets at the City Market checkout.</figcaption>
+                    <figcaption class="cs-caption">My $90 haul at the City Market checkout. Every sweet in the catalogue started here, photographed so the packaging could be reproduced accurately.</figcaption>
                 </figure>
 
                 <p class="fade-up observe">I then took a bunch of photos of the different packaging so I could get the highest quality when generating images using Gemini. (I know, I&rsquo;m so sorry.)</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="Video of the sweets">
-                        <video src="assets/videoofsweets.mp4" muted loop playsinline preload="metadata" controls></video>
+                        <video src="assets/videoofsweets.mp4" muted loop playsinline preload="metadata" controls aria-label="Video of the sweets and their packaging, filmed as reference for image generation"></video>
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">Video of the different sweets and their packaging, used as reference for image generation.</figcaption>
@@ -853,17 +905,17 @@
                 <div class="cs-grid cs-grid--2">
                     <figure class="fade-up observe stagger-1">
                         <div class="cs-media tilt-card" data-label="Two item parent page layout">
-                            <img src="assets/twoitemlayout.png" alt="Two item parent page layout" loading="lazy" decoding="async">
+                            <img src="assets/twoitemlayout.png" alt="InDesign parent page layout for two products" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">A two-item parent page layout.</figcaption>
+                        <figcaption class="cs-caption">A two-item parent page. As in every layout, the imagery leads and the text supports the sale.</figcaption>
                     </figure>
                     <figure class="fade-up observe stagger-2">
                         <div class="cs-media tilt-card" data-label="Single item parent page layout">
-                            <img src="assets/singleitemlayout.png" alt="Single item parent page layout" loading="lazy" decoding="async">
+                            <img src="assets/singleitemlayout.png" alt="InDesign parent page layout for a single product" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">A single-item parent page layout.</figcaption>
+                        <figcaption class="cs-caption">A single-item parent page, giving one product the whole page to sell itself.</figcaption>
                     </figure>
                 </div>
             </div>
@@ -876,32 +928,32 @@
                 <p class="fade-up observe">With Gemini, I generated a lot of images of these sweets in different Saul Bass styles. Each category was inspired by his work, so, for example, the peanuts were inspired by his poster for The Shining.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="The Shining inspired peanuts">
-                        <img src="assets/theshiningpeanutsinspiration.png" alt="The Shining inspired peanuts" loading="lazy" decoding="async">
+                        <img src="assets/theshiningpeanutsinspiration.png" alt="Peanut packets illustrated in the style of Saul Bass&rsquo;s poster for The Shining" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">Peanuts, inspired by Saul Bass&rsquo;s poster for The Shining.</figcaption>
+                    <figcaption class="cs-caption">Peanuts, inspired by Saul Bass&rsquo;s poster for The Shining. Each category borrows from a different piece of his work.</figcaption>
                 </figure>
 
-                <p class="fade-up observe">This process took a fair bit of time. I&rsquo;d say around 4 days of solid generation and editing to get each image colour corrected, with the correct packaging and details, and in the Saul Bass style I was going for. I was pleased with the results, even if I disagree with using AI to create art. As a student with a month to work on this, I wouldn&rsquo;t have had the time to create the sets for so many images, so AI cut the workload from possibly 3 to 4 months down to 1.</p>
+                <p class="fade-up observe">This process took a fair bit of time. I&rsquo;d say around 4 days of solid generation and editing to get each image colour corrected, with the correct packaging and details, and in the Saul Bass style I was going for. I was pleased with the results, even if I disagree with using AI to create art. Within a student deadline, I wouldn&rsquo;t have had time to build sets and shoot so many images by hand, and AI is what made the catalogue possible in the time I had.</p>
 
                 <h3 class="fade-up observe">The Twizzlers spread</h3>
-                <p class="fade-up observe">Take this spread of the Twizzlers. Making the halftone texture, the explosive shape and each hand-drawn Twizzler would have taken me hours, whereas with Gemini it took less than an hour and stayed consistent with the Roy Lichtenstein pop art style. I thought it would be fun to have the Twizzlers be their own advertisement in the catalogue, as I only bought one licorice product.</p>
+                <p class="fade-up observe">Take this spread of the Twizzlers. Making the halftone texture, the explosive shape and each hand-drawn Twizzler would have taken me hours, whereas with Gemini it took less than an hour and stayed consistent with the Roy Lichtenstein pop art style. I thought it would be fun to have the Twizzlers be their own advertisement in the catalogue, as I only bought one liquorice product.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="Twizzlers pop art spread">
-                        <img src="assets/twizzlersspread.png" alt="Twizzlers pop art spread" loading="lazy" decoding="async">
+                        <img src="assets/twizzlersspread.png" alt="A pop art spread of Twizzlers with halftone dots and an explosive burst shape" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">The Twizzlers spread, in the style of Roy Lichtenstein.</figcaption>
+                    <figcaption class="cs-caption">The Twizzlers spread, in the style of Roy Lichtenstein. My only liquorice product, so it got a full-page advert of its own.</figcaption>
                 </figure>
 
                 <h3 class="fade-up observe">So is AI okay to use?</h3>
-                <p class="fade-up observe">Maybe? I don&rsquo;t know. But I do know it is not a job stealer for designers, it is a tool, and I feel this project supports that claim, because I still had to do so much work for it to look good. To put the nail in the coffin, here is an example of the first prompt result compared with the final image once I had put my input in.</p>
+                <p class="fade-up observe">Maybe? I don&rsquo;t know. But I do know it isn&rsquo;t a job stealer for designers; it&rsquo;s a tool. I feel this project supports that claim, because I still had to do so much work for it to look good. To put the nail in the coffin, here is an example of the first prompt result compared with the final image once I had put my input in.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="Before and after my input">
-                        <img src="assets/before%26aftermyinput.png" alt="Before and after my input" loading="lazy" decoding="async">
+                        <img src="assets/before%26aftermyinput.png" alt="Gemini&rsquo;s first generated image beside the final edited version used in the catalogue" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">Before and after my input: the first prompt result next to the final image.</figcaption>
+                    <figcaption class="cs-caption">Before and after: Gemini&rsquo;s first result next to the final image. The gap between the two is the colour correction, packaging fixes and styling I did by hand.</figcaption>
                 </figure>
             </div>
         </section>
@@ -910,7 +962,7 @@
         <section id="catalogue" class="cs-band cs-band--pink">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">The (Digital) Catalogue</h2>
-                <p class="fade-up observe">It wouldn&rsquo;t be right to go without showing the final product. I&rsquo;ve coded the PDF of The Anatomy of Sugar to be interactive on this page, so you can flip through each page. If you want to print and cut it out yourself for a coffee table read, you&rsquo;re more than free to download the PDF too!</p>
+                <p class="fade-up observe">It wouldn&rsquo;t be right to go without showing the final product. I&rsquo;ve coded the PDF of The Anatomy of Sugar to be interactive on this page, so you can flip through each page. If you want to print and cut it out yourself for a coffee table read, you&rsquo;re more than welcome to download the PDF too!</p>
 
                 <div class="cs-book-stage fade-up observe" id="book-stage">
                     <div class="cs-book" id="book" tabindex="0" role="group" aria-label="Flippable catalogue booklet" data-pdf="assets/theanatomyofsugar.pdf">
@@ -935,7 +987,7 @@
 
                 <div class="cs-actions fade-up observe">
                     <a href="assets/theanatomyofsugar.pdf" download="The Anatomy of Sugar.pdf" class="cyber-btn" id="pdf-download">
-                        <span>Download the PDF</span>
+                        <span>Download the PDF <span class="sr-only">(38 MB)</span></span>
                         <span class="arrow">&darr;</span>
                     </a>
                     <a href="https://unwisegenius.com/catalogue.html" target="_blank" rel="noopener" class="cyber-btn">
@@ -946,11 +998,21 @@
             </div>
         </section>
 
+        <!-- === AI TRANSPARENCY === -->
+        <section id="ai" class="cs-band cs-band--purple">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">AI Transparency</h2>
+                <p class="fade-up observe"><strong>Where AI was used:</strong> Gemini generated the Saul Bass-style imagery for each sweet, using my own photos and video of the packaging as reference.</p>
+                <p class="fade-up observe"><strong>What I did by hand:</strong> I took all the reference photography, designed the catalogue&rsquo;s parent pages and layouts in InDesign, and edited every generated image in Photoshop, correcting the colours, fixing packaging details and pushing each one closer to the style. That took around 4 days of generating and editing.</p>
+                <p class="fade-up observe"><strong>Why:</strong> Building physical sets for 30+ products wasn&rsquo;t possible within the deadline. The before-and-after above shows how far the final images moved from Gemini&rsquo;s first results.</p>
+            </div>
+        </section>
+
         <!-- === REFLECTION === -->
         <section id="reflection" class="cs-band cs-band--lime">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">Reflection</h2>
-                <p class="fade-up observe">I&rsquo;m pleased with the end result of this project. If I were to develop it further, I would include more sweets from different countries and different types of sweets. I really would have liked to do a licorice section, and to take inspiration from Saul Bass&rsquo;s title sequences for movies such as Casino and Goodfellas.</p>
+                <p class="fade-up observe">I&rsquo;m pleased with the end result of this project. If I were to develop it further, I would include more sweets from different countries and different types of sweets. I really would have liked to do a liquorice section, and to take inspiration from Saul Bass&rsquo;s title sequences for movies such as Casino and Goodfellas.</p>
                 <p class="fade-up observe">This project helped develop my skills in InDesign, where I learned how to create parent pages and follow an established baseline grid. In Photoshop, I learned more about image and colour correction. And finally, with image generation as a whole, I feel more confident in getting what I want from a single prompt.</p>
             </div>
         </section>
@@ -986,9 +1048,9 @@
             </a>
         </div>
         <div class="footer-right">
-            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram</a>
-            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
-            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">Youtube</a>
+            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">YouTube<span class="sr-only"> (opens in a new tab)</span></a>
         </div>
     </footer>
 
@@ -1029,6 +1091,8 @@
         }
 
         document.querySelectorAll(".scramble-heading").forEach(h => {
+            // Screen readers read the real heading, never the scrambled glyphs
+            h.setAttribute("aria-label", h.textContent.trim());
             h.addEventListener("mouseenter", () => scrambleElement(h));
         });
 
@@ -1069,9 +1133,11 @@
             if (img.getAttribute("src") && img.complete && img.naturalWidth === 0) handleBroken(img);
         });
 
-        // Videos that already failed before this script ran
+        // Videos that already failed before this script ran.
+        // Only a real error counts: a video that simply hasn't started loading yet
+        // also reports "no source" at this point, which used to remove every video on the page.
         document.querySelectorAll(".cs-media video").forEach(v => {
-            if (v.error || v.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) handleBroken(v);
+            if (v.error) handleBroken(v);
         });
 
         /* ==================================================================

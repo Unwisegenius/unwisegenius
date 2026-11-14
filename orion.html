@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://use.typekit.net/inw8ngx.css">
 
     <!-- Global CSS (keep this ?v= number in sync with the other pages) -->
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="style.css?v=6">
 
     <!-- If JavaScript is off, show everything instead of leaving content faded out -->
     <noscript>
@@ -38,6 +38,28 @@
         }
 
         body { background-color: #ffffff; }
+
+        .skip-link {
+            position: absolute;
+            left: 16px;
+            top: -60px;
+            z-index: 1000;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background-color: #CFFF04;
+            color: #111111;
+            font-family: "Rajdhani", sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: top 0.2s ease;
+        }
+
+        .skip-link:focus { top: 12px; }
+
+        .cs-hero-fig { margin: 0; }
+        .cs-hero-fig .cs-caption { color: rgba(255, 255, 255, 0.95); opacity: 1; margin-top: 1rem; text-align: center; }
 
         /* Links take the colour of their section; .cyber-btn and the specific link styles below still win */
         main a {
@@ -158,7 +180,9 @@
             color: rgba(255, 255, 255, 0.85);
         }
 
-        .cs-tags li + li::before {
+        /* The slash sits after each item, so when the line wraps on a phone
+           the new line starts with a word, not a "/" */
+        .cs-tags li:not(:last-child)::after {
             content: "/";
             margin: 0 0.9em;
             color: var(--cs-lime);
@@ -915,11 +939,13 @@
 
 <body id="top">
 
+    <a class="skip-link" href="#main">Skip to content</a>
+
     <!-- === HEADER / NAVIGATION (same as every other page) === -->
     <header>
         <div class="top-left">
             <a href="index.html">
-                <img src="assets/brain-180.png" alt="Home" class="brain-icon" width="38">
+                <img src="assets/brain-180.png" alt="UnwiseGenius home" class="brain-icon" width="38">
             </a>
         </div>
         <nav class="top-right">
@@ -929,7 +955,7 @@
         </nav>
     </header>
 
-    <main>
+    <main id="main">
 
         <!-- === HERO === -->
         <section class="cs-hero">
@@ -946,10 +972,13 @@
                     <li>Motion</li>
                 </ul>
 
-                <div class="cs-hero-media cs-hero-media--bare fade-up observe stagger-3" data-label="Orion">
-                    <img src="assets/Orion.png" alt="Orion, a goggle-free VR system" decoding="async" fetchpriority="high">
-                    <span class="cs-scan" aria-hidden="true"></span>
-                </div>
+                <figure class="cs-hero-fig fade-up observe stagger-3">
+                    <div class="cs-hero-media cs-hero-media--bare" data-label="Orion">
+                        <img src="assets/Orion.png" alt="Orion, a goggle-free VR system" decoding="async" fetchpriority="high">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">Orion turns the room itself into the screen: one small device, no headset, no controllers.</figcaption>
+                </figure>
             </div>
         </section>
 
@@ -979,6 +1008,12 @@
                         <h2 class="cs-sub scramble-heading fade-up observe">Project Specifications</h2>
                         <ul class="cs-specs" role="list">
                             <!-- TO DO: add a timeline row here, e.g. "The project ran for X weeks." -->
+                            <li class="cs-spec fade-left observe stagger-1">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+                                </span>
+                                <p>My role: <strong>research, product, UI and campaign</strong>.</p>
+                            </li>
                             <li class="cs-spec fade-left observe stagger-1">
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
@@ -1058,7 +1093,7 @@
         <section id="principles" class="cs-band cs-band--purple">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">Design Principles</h2>
-                <p class="fade-up observe">The research boiled down to three rules for Orion:</p>
+                <p class="fade-up observe">The research boiled down to three pairs of rules for Orion: what it should always do, and what it should never do.</p>
                 <div class="cs-dodont fade-up observe">
                     <div class="do">
                         <h3>Do</h3>
@@ -1090,7 +1125,7 @@
                         <img src="assets/orionproduct.png" alt="The Orion device: a matte black cylindrical unit modelled in Blender" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">The final Orion device, modelled in Blender.</figcaption>
+                    <figcaption class="cs-caption">The final device: feedback on my bulky first sketches pushed me to one compact cylinder that looks at home next to a smart speaker.</figcaption>
                 </figure>
                 <ul class="cs-bullets fade-up observe">
                     <li><strong>Sketches and iteration:</strong> I started with rough digital sketches of a device that combined a camcorder and a sensor bar. Feedback challenged how bulky it was, pushing me towards a more compact, single form.</li>
@@ -1134,7 +1169,7 @@
                         <video src="assets/OrionRecording.mp4#t=0.1" muted loop playsinline preload="metadata" controls aria-label="The Orion product reel"></video>
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">The Orion product reel: the Blender model and Figma UI, composited in Premiere Pro.</figcaption>
+                    <figcaption class="cs-caption">The product reel: showing the hardware and the interface in one film sells the idea faster than either could alone.</figcaption>
                 </figure>
                 <h3 class="fade-up observe">The &ldquo;Day in the Life&rdquo; print campaign</h3>
                 <p class="fade-up observe">To show the human side, I designed five still adverts inspired by Apple&rsquo;s &ldquo;Relax, it&rsquo;s iPhone&rdquo; campaign, compositing stock photography with my Figma UI:</p>
@@ -1142,14 +1177,15 @@
                     <li><strong>Relax with Orion:</strong> Maya using the Calm app&rsquo;s meditation UI.</li>
                     <li><strong>Play with Orion:</strong> Jerry casting spells in Skyrim using only gestures.</li>
                     <li><strong>Work with Orion:</strong> a professional presenting with the Stats app.</li>
-                    <li><strong>Connect and Watch with Orion:</strong> moving seamlessly from a spatial video call to streaming a film on the living room sofa.</li>
+                    <li><strong>Connect with Orion:</strong> a spatial video call moved around the room with a hand gesture.</li>
+                    <li><strong>Watch with Orion:</strong> streaming a film from the living room sofa.</li>
                 </ul>
                 <figure class="cs-fig cs-fig--full fade-up observe">
                     <div class="cs-media" data-label="The With Orion print campaign adverts">
                         <img src="assets/withorion.png" alt="The With Orion print campaign adverts" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">The &ldquo;with Orion&rdquo; print campaign.</figcaption>
+                    <figcaption class="cs-caption">The &ldquo;with Orion&rdquo; campaign: real people in real rooms, so the technology fades into the background, which is the whole point of Zero UI.</figcaption>
                 </figure>
                 <p class="fade-up observe">Together, the hardware, interface and campaign showed that a goggle-free, ambient spatial system could realistically support work, play and wellbeing in a modern home.</p>
             </div>
@@ -1209,9 +1245,9 @@
             </a>
         </div>
         <div class="footer-right">
-            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram</a>
-            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
-            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">Youtube</a>
+            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">YouTube<span class="sr-only"> (opens in a new tab)</span></a>
         </div>
     </footer>
 
@@ -1252,6 +1288,8 @@
         }
 
         document.querySelectorAll(".scramble-heading").forEach(h => {
+            // Screen readers read the real heading, never the scrambled glyphs
+            h.setAttribute("aria-label", h.textContent.trim());
             h.addEventListener("mouseenter", () => scrambleElement(h));
         });
 
@@ -1311,7 +1349,7 @@
 
         // Videos that already failed before this script ran
         document.querySelectorAll(".cs-media video").forEach(v => {
-            if (v.error || v.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) handleBroken(v);
+            if (v.error) handleBroken(v);
         });
 
         /* ==================================================================

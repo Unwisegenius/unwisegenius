@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://use.typekit.net/inw8ngx.css">
 
     <!-- Global CSS (keep this ?v= number in sync with the other pages) -->
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="style.css?v=6">
 
     <!-- If JavaScript is off, show everything instead of leaving content faded out -->
     <noscript>
@@ -38,6 +38,28 @@
         }
 
         body { background-color: #ffffff; }
+
+        .skip-link {
+            position: absolute;
+            left: 16px;
+            top: -60px;
+            z-index: 1000;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background-color: #CFFF04;
+            color: #111111;
+            font-family: "Rajdhani", sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: top 0.2s ease;
+        }
+
+        .skip-link:focus { top: 12px; }
+
+        .cs-hero-fig { margin: 0; }
+        .cs-hero-fig .cs-caption { color: rgba(255, 255, 255, 0.95); opacity: 1; margin-top: 1rem; }
 
         /* Links take the colour of their section; .cyber-btn and the specific link styles below still win */
         main a {
@@ -158,7 +180,9 @@
             color: rgba(255, 255, 255, 0.85);
         }
 
-        .cs-tags li + li::before {
+        /* The slash sits after each item, so when the line wraps on a phone
+           the new line starts with a word, not a "/" */
+        .cs-tags li:not(:last-child)::after {
             content: "/";
             margin: 0 0.9em;
             color: var(--cs-lime);
@@ -914,11 +938,13 @@
 
 <body id="top">
 
+    <a class="skip-link" href="#main">Skip to content</a>
+
     <!-- === HEADER / NAVIGATION (same as every other page) === -->
     <header>
         <div class="top-left">
             <a href="index.html">
-                <img src="assets/brain-180.png" alt="Home" class="brain-icon" width="38">
+                <img src="assets/brain-180.png" alt="UnwiseGenius home" class="brain-icon" width="38">
             </a>
         </div>
         <nav class="top-right">
@@ -928,7 +954,7 @@
         </nav>
     </header>
 
-    <main>
+    <main id="main">
 
         <!-- === HERO === -->
         <section class="cs-hero">
@@ -941,14 +967,17 @@
                     <li>Design Systems</li>
                     <li>Research</li>
                     <li>Prototyping</li>
-                    <li>Products</li>
+                    <li>UI Design</li>
                     <li>Motion</li>
                 </ul>
 
-                <div class="cs-hero-media fade-up observe stagger-3" data-label="XP Bank banner">
-                    <img src="assets/xpbanner.png" alt="XP Bank banner" decoding="async" fetchpriority="high">
-                    <span class="cs-scan" aria-hidden="true"></span>
-                </div>
+                <figure class="cs-hero-fig fade-up observe stagger-3">
+                    <div class="cs-hero-media" data-label="XP Bank banner">
+                        <img src="assets/xpbanner.png" alt="The XP Bank banner, showing the brand&rsquo;s bold brutalist identity" decoding="async" fetchpriority="high">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">A bank for 16&ndash;25 year olds, built around the moments banks usually get wrong: scams, locked accounts and waiting for help.</figcaption>
+                </figure>
             </div>
         </section>
 
@@ -967,8 +996,8 @@
                             <li class="fade-right observe stagger-3"><a href="#ideation"><span class="cs-num">03</span>Ideation</a></li>
                             <li class="fade-right observe stagger-4"><a href="#development"><span class="cs-num">04</span>Development</a></li>
                             <li class="fade-right observe stagger-4"><a href="#final-product"><span class="cs-num">05</span>Final Product</a></li>
-                            <li class="fade-right observe stagger-4" data-needs-ai><a href="#ai"><span class="cs-num">06</span>AI Transparency</a></li>
-                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num" data-num-after-ai>06</span>Reflection</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#ai"><span class="cs-num">06</span>AI Transparency</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num">07</span>Reflection</a></li>
                         </ul>
                     </div>
 
@@ -999,11 +1028,11 @@
                                 </span>
                                 <p>Target audience: <strong>16–25 year olds</strong>.</p>
                             </li>
-                            <li class="cs-spec fade-left observe stagger-4" data-needs-ai>
+                            <li class="cs-spec fade-left observe stagger-4">
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4L12 3z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15z"/></svg>
                                 </span>
-                                <p>AI use: <a href="#ai" class="cs-inline-link">how AI was (and wasn&rsquo;t) used</a>.</p>
+                                <p>AI use: <a href="#ai" class="cs-inline-link"><strong>none</strong></a>.</p>
                             </li>
                         </ul>
                     </div>
@@ -1022,10 +1051,10 @@
                     </div>
                     <figure class="fade-left observe">
                         <div class="cs-media tilt-card" data-label="Person holding money">
-                            <img src="assets/brief-money.png" alt="Person holding money" loading="lazy" decoding="async">
+                            <img src="assets/brief-money.png" alt="A young person holding cash" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">Money and everyday spending: the world XP Bank is designed for.</figcaption>
+                        <figcaption class="cs-caption">Starting a brand from scratch, rather than rebranding, meant every decision could be made for this age group.</figcaption>
                     </figure>
                 </div>
             </div>
@@ -1048,12 +1077,11 @@
                         </ul>
                     </div>
                     <figure class="fade-left observe">
-                        <!-- Tip: swap this for your personas / Trustpilot findings so the image matches the text -->
                         <div class="cs-media tilt-card" data-label="Reviews of Nationwide & Monzo Bank">
-                            <img src="assets/bankreviews.png" alt="Reviews of Nationwide & Monzo Bank" loading="lazy" decoding="async">
+                            <img src="assets/bankreviews.png" alt="Trustpilot reviews of Nationwide and Monzo complaining about waiting times, verification and support" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">Trustpilot reviews of Nationwide and Monzo.</figcaption>
+                        <figcaption class="cs-caption">Trustpilot reviews of Nationwide and Monzo. The same three complaints kept coming up, and each one became a value XP Bank had to answer.</figcaption>
                     </figure>
                 </div>
             </div>
@@ -1070,7 +1098,7 @@
                         <img src="assets/IdeationXP.png" alt="XP Bank mind map and logo iterations" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">Mind map and logo iterations exploring the XP Bank identity.</figcaption>
+                    <figcaption class="cs-caption">The mind map and logo iterations. The early cyberpunk ideas are here too, before critique pushed the identity towards a clearer brutalist style.</figcaption>
                 </figure>
 
                 <p class="fade-up observe">Real user pain points shaped the brand identity. Users struggle most during moments of stress, such as scams, locked accounts, or unexpected issues, so the design prioritises visible security actions, simplified user flows, and a dedicated help area that feels reassuring rather than intimidating.</p>
@@ -1092,19 +1120,19 @@
                 <div class="fade-in observe" data-hide-if-empty>
                     <div class="cs-stage" id="carousel" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Development process">
                         <div class="cs-track">
-                            <figure class="cs-slide" data-caption="XP Bank brand guidelines.">
+                            <figure class="cs-slide" data-caption="The brand guidelines: 55 pages covering the logo, colour, type and tone of voice, so anyone can use the brand consistently.">
                                 <img src="assets/xpbrandguidelines.png" alt="Brand Guidelines for XP Bank." draggable="false">
                             </figure>
-                            <figure class="cs-slide" data-caption="Component library built in Figma.">
+                            <figure class="cs-slide" data-caption="The component library in Figma: every button, card and input built once, so the app, site and design system all match.">
                                 <img src="assets/Component%20Library.png" alt="Component library" draggable="false">
                             </figure>
-                            <figure class="cs-slide" data-caption="Landing page for the XP Bank website.">
+                            <figure class="cs-slide" data-caption="The landing page puts security and support up front, answering the biggest complaints from the research.">
                                 <img src="assets/Landing%20PageXP.png" alt="Landing Page for XP Bank's Website" draggable="false">
                             </figure>
-                            <figure class="cs-slide" data-caption="The XP Bank mobile app.">
+                            <figure class="cs-slide" data-caption="The mobile app: simple flows for sign-up, spending and getting help, with security actions always one tap away.">
                                 <img src="assets/MobiledeviceXP.png" alt="Mobile App for XP Bank." draggable="false">
                             </figure>
-                            <figure class="cs-slide" data-caption="The XP Bank design system.">
+                            <figure class="cs-slide" data-caption="The design system as a website instead of a PDF, inspired by Wise, so it can grow with the brand.">
                               <img src="assets/Design%20System%20Page.png" alt="Design System for XP Bank." draggable="false">
                           </figure>
                         </div>
@@ -1134,31 +1162,31 @@
                   
                     <figure class="fade-up observe stagger-2">
                         <div class="cs-media tilt-card" data-label="Credit and debit cards">
-                            <img src="assets/xpcredit%26debitcards.png" alt="Credit and debit cards" loading="lazy" decoding="async">
+                            <img src="assets/xpcredit%26debitcards.png" alt="XP Bank credit and debit cards" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">Credit and debit cards.</figcaption>
+                        <figcaption class="cs-caption">The cards: the brand at its most physical. It has to work at the size of your thumb.</figcaption>
                     </figure>
                     <figure class="fade-up observe stagger-1">
                       <div class="cs-media tilt-card" data-label="Billboards">
-                          <img src="assets/Billboards.png" alt="Billboard campaign" loading="lazy" decoding="async">
+                          <img src="assets/Billboards.png" alt="XP Bank billboard campaign" loading="lazy" decoding="async">
                           <span class="cs-scan" aria-hidden="true"></span>
                       </div>
-                      <figcaption class="cs-caption">Billboard campaign.</figcaption>
+                      <figcaption class="cs-caption">The billboard campaign: big, blunt type that reads from across the street.</figcaption>
                   </figure>
                     <figure class="fade-up observe stagger-3">
                         <div class="cs-media tilt-card" data-label="Animated credit card">
-                            <img src="assets/credit%20copy.gif" alt="Animated credit card" loading="lazy" decoding="async">
+                            <img src="assets/credit%20copy.gif" alt="Animated XP Bank credit card" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">Animated credit card.</figcaption>
+                        <figcaption class="cs-caption">The card animated in Blender and After Effects, so the brand also works in motion.</figcaption>
                     </figure>
                     <figure class="fade-up observe stagger-1">
                       <div class="cs-media tilt-card" data-label="Marketing landing page">
-                          <img src="assets/xplandingpagecard.png" alt="Marketing landing page" loading="lazy" decoding="async">
+                          <img src="assets/xplandingpagecard.png" alt="The XP Bank marketing landing page on a screen" loading="lazy" decoding="async">
                           <span class="cs-scan" aria-hidden="true"></span>
                       </div>
-                      <figcaption class="cs-caption">Marketing landing page.</figcaption>
+                      <figcaption class="cs-caption">The landing page on screen, carrying the same identity as the cards and billboards.</figcaption>
                   </figure>
                   
                     <!-- ATM mockup: add assets/xp-atm.jpg (ideally with a person using it) and it appears automatically -->
@@ -1167,42 +1195,42 @@
                             <img src="assets/xp-atm.jpg" alt="XP Bank ATM" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">XP Bank ATM.</figcaption>
+                        <figcaption class="cs-caption">The XP Bank ATM.</figcaption>
                     </figure>
                     <figure class="fade-up observe stagger-3">
                         <div class="cs-media tilt-card" data-label="Tablet app">
                             <img src="assets/XPipadmockup.png" alt="XP Bank app on a tablet" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">The XP Bank app on a tablet.</figcaption>
+                        <figcaption class="cs-caption">The app on a tablet: the components scale up without being redesigned.</figcaption>
                     </figure>
                     <figure class="fade-up observe stagger-1">
                         <div class="cs-media tilt-card" data-label="App on device">
                             <img src="assets/xp-bank-1.jpg" alt="XP Bank app on a phone" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">The XP Bank app on a phone.</figcaption>
+                        <figcaption class="cs-caption">The app on a phone, where most 16&ndash;25 year olds will actually meet the brand.</figcaption>
                     </figure>
                     <figure class="fade-up observe stagger-2">
                         <div class="cs-media tilt-card" data-label="XP Merch">
                             <img src="assets/personwearingXPmerch.png" alt="Person wearing XP Bank merchandise" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">XP Bank merchandise.</figcaption>
+                        <figcaption class="cs-caption">Merch: a bank brand young people might actually want to wear.</figcaption>
                     </figure>
                     <figure class="fade-up observe stagger-3">
                         <div class="cs-media tilt-card" data-label="Brand guidelines file binder">
-                            <img src="assets/xpfilebinder.png" alt="Brand guidelines file binder" loading="lazy" decoding="async">
+                            <img src="assets/xpfilebinder.png" alt="An XP Bank-branded file binder" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">An XP Bank-branded file binder.</figcaption>
+                        <figcaption class="cs-caption">Stationery: proof the identity holds up on everyday, unglamorous items.</figcaption>
                     </figure>
                     <figure class="fade-up observe stagger-3">
                       <div class="cs-media tilt-card" data-label="Someone using the XP Bank Portal">
-                          <img src="assets/manusingxpsite.png" alt="Someone using the XP Bank Portal" loading="lazy" decoding="async">
+                          <img src="assets/manusingxpsite.png" alt="Someone using the XP Bank portal on a computer" loading="lazy" decoding="async">
                           <span class="cs-scan" aria-hidden="true"></span>
                       </div>
-                      <figcaption class="cs-caption">A user using the XP Bank Portal.</figcaption>
+                      <figcaption class="cs-caption">The XP Bank portal in use, showing the brand in a real setting.</figcaption>
                   </figure>
                 </div>
 
@@ -1250,7 +1278,7 @@
                         <p>The XP Bank app, shown as a full-height mobile prototype. Tap through the screens to see sign-up, spending, support and security in action.</p>
                         <p><a href="https://www.figma.com/proto/XYmJCC8mQ6QbNA2ymcIGWA/XP-Bank?node-id=1-1392&amp;p=f&amp;scaling=scale-down&amp;content-scaling=fixed&amp;starting-point-node-id=1%3A1211&amp;page-id=1%3A714" target="_blank" rel="noopener" class="cyber-btn">
                             <span>Open the app prototype in Figma</span>
-                            <span class="arrow">&nearr;</span>
+                            <span class="arrow" aria-hidden="true">&nearr;</span><span class="sr-only"> (opens in a new tab)</span>
                         </a></p>
                     </div>
                     <div class="fade-left observe">
@@ -1269,7 +1297,7 @@
                 <p class="cs-center fade-up observe">
                     <a href="https://www.figma.com/proto/XYmJCC8mQ6QbNA2ymcIGWA/XP-Bank?node-id=1-1678&amp;p=f&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=1%3A1655" target="_blank" rel="noopener" class="cyber-btn">
                             <span>Open the landing page in Figma</span>
-                            <span class="arrow">&nearr;</span>
+                            <span class="arrow" aria-hidden="true">&nearr;</span><span class="sr-only"> (opens in a new tab)</span>
                         </a>
                 </p>
 
@@ -1282,28 +1310,24 @@
                 <p class="cs-center fade-up observe">
                     <a href="https://www.figma.com/proto/XYmJCC8mQ6QbNA2ymcIGWA/XP-Bank?node-id=1-2246&amp;p=f&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=1%3A2223" target="_blank" rel="noopener" class="cyber-btn">
                             <span>Open the design system in Figma</span>
-                            <span class="arrow">&nearr;</span>
+                            <span class="arrow" aria-hidden="true">&nearr;</span><span class="sr-only"> (opens in a new tab)</span>
                         </a>
                 </p>
 
                 <p class="cs-center fade-up observe">
                     <a href="https://www.figma.com/design/XYmJCC8mQ6QbNA2ymcIGWA/XP-Bank?node-id=0-1" target="_blank" rel="noopener" class="cyber-btn">
                             <span>View the full XP Bank file in Figma</span>
-                            <span class="arrow">&nearr;</span>
+                            <span class="arrow" aria-hidden="true">&nearr;</span><span class="sr-only"> (opens in a new tab)</span>
                         </a>
                 </p>
             </div>
         </section>
 
-        <!-- === AI TRANSPARENCY ===
-             TO DO: write 2–4 sentences in your own words, then DELETE the word "hidden" below.
-             Say which tools you used (or that you used none), for what (research summaries, personas,
-             copy, mockup images, code...) and what you changed by hand. While this section is hidden,
-             its Contents entry and spec row hide too. -->
-        <section id="ai" class="cs-band cs-band--purple" hidden>
+        <!-- === AI TRANSPARENCY === -->
+        <section id="ai" class="cs-band cs-band--purple">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">AI Transparency</h2>
-                <p class="fade-up observe">WRITE YOUR AI STATEMENT HERE.</p>
+                <p class="fade-up observe">I didn&rsquo;t use AI at any stage of XP Bank. The research, personas, logo, 55-page brand guidelines, component library, app screens, landing page, design system and motion were all made by me in Figma, Blender and After Effects.</p>
             </div>
         </section>
 
@@ -1334,10 +1358,9 @@
                     <span class="cs-next-kicker">&larr; Back to</span>
                     <span class="cs-next-title">All my work</span>
                 </a>
-                <!-- Change this to whichever case study you want next -->
-                <a href="anatomyofsugar.html" class="cs-next-link cs-next-link--next">
+                <a href="pioneersofwebdesign.html" class="cs-next-link cs-next-link--next">
                     <span class="cs-next-kicker">Next project &rarr;</span>
-                    <span class="cs-next-title">The Anatomy of Sugar</span>
+                    <span class="cs-next-title">The Pioneers of Web Design</span>
                 </a>
             </div>
         </nav>
@@ -1359,9 +1382,9 @@
             </a>
         </div>
         <div class="footer-right">
-            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram</a>
-            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
-            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">Youtube</a>
+            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">YouTube<span class="sr-only"> (opens in a new tab)</span></a>
         </div>
     </footer>
 
@@ -1406,6 +1429,8 @@
         }
 
         document.querySelectorAll(".scramble-heading").forEach(h => {
+            // Screen readers read the real heading, never the scrambled glyphs
+            h.setAttribute("aria-label", h.textContent.trim());
             h.addEventListener("mouseenter", () => scrambleElement(h));
         });
 
@@ -1475,15 +1500,7 @@
         /* ==================================================================
            2b. AI SECTION: until it's filled in (no "hidden" attribute), hide its Contents entry and spec row
            ================================================================== */
-        (function () {
-            const ai = document.getElementById("ai");
-            if (ai && !ai.hidden) {
-                const n = document.querySelector("[data-num-after-ai]");
-                if (n) n.textContent = "07";
-                return;
-            }
-            document.querySelectorAll("[data-needs-ai]").forEach(el => el.remove());
-        })();
+        /* (AI section is filled in, so nothing to hide here any more) */
 
         /* ==================================================================
            3. SCROLL REVEAL (fires once per element; headings decrypt as they appear)

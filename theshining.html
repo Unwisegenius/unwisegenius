@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://use.typekit.net/inw8ngx.css">
 
     <!-- Global CSS (keep this ?v= number in sync with the other pages) -->
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="style.css?v=6">
 
     <!-- If JavaScript is off, show everything instead of leaving content faded out -->
     <noscript>
@@ -38,6 +38,30 @@
         }
 
         body { background-color: #ffffff; }
+
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+        .skip-link {
+            position: absolute;
+            left: 16px;
+            top: -60px;
+            z-index: 1000;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background-color: #CFFF04;
+            color: #111111;
+            font-family: "Rajdhani", sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: top 0.2s ease;
+        }
+
+        .skip-link:focus { top: 12px; }
+
+        .cs-hero-fig { margin: 0; }
+        .cs-hero-fig .cs-caption { color: rgba(255, 255, 255, 0.95); opacity: 1; margin-top: 1rem; }
 
         /* Links take the colour of their section; .cyber-btn and the specific link styles below still win */
         main a {
@@ -158,7 +182,9 @@
             color: rgba(255, 255, 255, 0.85);
         }
 
-        .cs-tags li + li::before {
+        /* The slash sits after each item, so when the line wraps on a phone
+           the new line starts with a word, not a "/" */
+        .cs-tags li:not(:last-child)::after {
             content: "/";
             margin: 0 0.9em;
             color: var(--cs-lime);
@@ -511,11 +537,13 @@
 
 <body id="top">
 
+    <a class="skip-link" href="#main">Skip to content</a>
+
     <!-- === HEADER / NAVIGATION (same as every other page) === -->
     <header>
         <div class="top-left">
             <a href="index.html">
-                <img src="assets/brain-180.png" alt="Home" class="brain-icon" width="38">
+                <img src="assets/brain-180.png" alt="UnwiseGenius home" class="brain-icon" width="38">
             </a>
         </div>
         <nav class="top-right">
@@ -525,30 +553,29 @@
         </nav>
     </header>
 
-    <main>
+    <main id="main">
 
         <!-- === HERO === -->
         <section class="cs-hero">
             <div class="cs-wrap">
-                <span class="cs-eyebrow fade-up observe">Graphic Design</span>
+                <span class="cs-eyebrow fade-up observe">Case Study</span>
                 <h1 class="cs-title scramble-heading fade-up observe stagger-1">Title Sequence Refresh for The Shining</h1>
 
                 <ul class="cs-tags fade-up observe stagger-2" aria-label="Project focus">
                     <li>Title Sequence</li>
                     <li>Motion Design</li>
+                    <li>Film Research</li>
                     <li>Premiere Pro</li>
-                
                 </ul>
 
-                <div class="cs-hero-media fade-up observe stagger-3" data-label="The refreshed title sequence">
-                    <video muted loop playsinline autoplay preload="metadata">
-                        <source src="assets/Sequence%2001.mp4" type="video/mp4">
-                        <source src="Sequence%2001.mp4" type="video/mp4">
-                        <!-- Fallback: the final sequence, so the hero is never an empty box -->
-                        <source src="assets/theshiningtitlesequencerefresh.mp4" type="video/mp4">
-                    </video>
-                    <span class="cs-scan" aria-hidden="true"></span>
-                </div>
+                <figure class="cs-hero-fig fade-up observe stagger-3">
+                    <div class="cs-hero-media" data-label="The refreshed title sequence">
+                        <!-- Silent looping preview; the full sequence with controls is further down the page -->
+                        <video src="assets/theshiningtitlesequencerefresh.mp4" muted loop playsinline autoplay preload="metadata" aria-label="Silent preview of my refreshed title sequence for The Shining"></video>
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">Three minutes of slow aerial shots, cut to thirty seconds that hint at what&rsquo;s coming.</figcaption>
+                </figure>
             </div>
         </section>
 
@@ -626,13 +653,13 @@
                 <h2 class="scramble-heading fade-up observe">Researching The Shining</h2>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="Symbolism in The Shining">
-                        <img src="assets/symbolismintheshining.png" alt="Symbolism in The Shining" loading="lazy" decoding="async">
+                        <img src="assets/symbolismintheshining.png" alt="My research board on the symbolism in The Shining, including the Native American imagery and the hedge maze" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">Symbolism in The Shining.</figcaption>
+                    <figcaption class="cs-caption">My research on the film&rsquo;s symbolism. The maze and the burial ground became the ideas I wanted the new sequence to hint at.</figcaption>
                 </figure>
-                <p class="fade-up observe">I started by rewatching the movie, which, if you haven&rsquo;t seen it, I highly recommend. I picked up a few things while watching. There is a lot of hidden symbolism in the movie, specifically the Native American imagery. If you didn&rsquo;t know, the hotel the movie is set in was built on an Indian burial ground. The maze acts as a psychological trap and a loss of control, which is what happens to Jack.</p>
-                <p class="fade-up observe">What I found interesting was that Jack moved to Colorado, lived there for a month, and then decided to kill his entire family. At the time of writing this I&rsquo;ve lived in Colorado for 3 months, so when will I snap?</p>
+                <p class="fade-up observe">I started by rewatching the movie, which, if you haven&rsquo;t seen it, I highly recommend. I picked up a few things while watching. There is a lot of hidden symbolism in the movie, specifically the Native American imagery. If you didn&rsquo;t know, the hotel the movie is set in was built on a Native American burial ground. The maze acts as a psychological trap and a loss of control, which is what happens to Jack.</p>
+                <p class="fade-up observe">What struck me most was how quickly Jack unravels: about a month of isolation in the Colorado mountains is all it takes. That speed was something I wanted a shorter sequence to capture.</p>
             </div>
         </section>
 
@@ -643,14 +670,14 @@
                 <p class="fade-up observe">Before I show what I&rsquo;ve done, I feel I should remind you what the intro sequence for The Shining is, so please enjoy these next 3 minutes!</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media" data-label="The original title sequence">
-                        <video playsinline preload="metadata" controls>
+                        <video playsinline preload="metadata" controls aria-label="The original three-minute title sequence of The Shining">
                             <source src="assets/thecurrentshiningtitle.mp4#t=0.1" type="video/mp4">
                             <source src="thecurrentshiningtitle.mp4#t=0.1" type="video/mp4">
                             Your browser can&rsquo;t play this video.
                         </video>
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">The original title sequence.</figcaption>
+                    <figcaption class="cs-caption">The original: three minutes of aerial shots following the car to the hotel. Brilliantly tense, but slow for a younger audience.</figcaption>
                 </figure>
 
                 <p class="fade-up observe">Now that you&rsquo;ve watched it, what do you think? Too long? A bit boring? Filled you with dread? Did the aerial shots scare you? That&rsquo;s okay, that is how everyone I showed it to felt, and we agreed that it should be shorter and have some excitement.</p>
@@ -660,7 +687,7 @@
                         <img src="assets/collageoftheshining.png" alt="Collage of all the generated frames used in the project" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">A collage of all the frames generated for the project.</figcaption>
+                    <figcaption class="cs-caption">Every AI-generated frame made for the project. Each one foreshadows a moment from the film, so the sequence hints at the story without spoiling it.</figcaption>
                 </figure>
                 <p class="fade-up observe">I then went on to Premiere Pro and got to work editing and creating a title sequence that would fill you with dread whilst also keeping your attention.</p>
             </div>
@@ -672,26 +699,24 @@
                 <h2 class="scramble-heading fade-up observe">The Title Sequence</h2>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media" data-label="The refreshed title sequence">
-                        <video playsinline preload="metadata" controls>
+                        <video playsinline preload="metadata" controls aria-label="My refreshed 30-second title sequence for The Shining">
                             <source src="assets/theshiningtitlesequencerefresh.mp4" type="video/mp4">
                             Your browser can&rsquo;t play this video.
                         </video>
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">The final title sequence.</figcaption>
+                    <figcaption class="cs-caption">The final 30-second sequence: quicker cuts keep a younger audience watching, while the foreshadowing frames keep the dread.</figcaption>
                 </figure>
             </div>
         </section>
 
         <!-- === AI TRANSPARENCY ===
-             TO DO: write 2–4 sentences in your own words, then DELETE the word "hidden" below.
-             Name the tool you generated the frames with, what you gave it (stills from the film?),
-             and what you changed by hand in Premiere Pro. A before/after image like the one on
-             Anatomy of Sugar would make this section strong. While hidden, its Contents entry and spec row hide too. -->
-        <section id="ai" class="cs-band cs-band--purple" hidden>
+             TO DO: name the AI tool you used for the frames in the first sentence. -->
+        <section id="ai" class="cs-band cs-band--purple">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">AI Transparency</h2>
-                <p class="fade-up observe">WRITE YOUR AI STATEMENT HERE.</p>
+                <p class="fade-up observe">The frames in the collage were generated with AI, using frames from the film as the starting point. I chose which moments to foreshadow and which results to keep.</p>
+                <p class="fade-up observe">Everything else was mine: the research, the idea of cutting three minutes to thirty seconds, and the editing and pacing in Premiere Pro.</p>
             </div>
         </section>
 
@@ -712,10 +737,9 @@
                     <span class="cs-next-kicker">&larr; Back to</span>
                     <span class="cs-next-title">All my work</span>
                 </a>
-                <!-- Change this to the next case study once CEX Refresh is finished -->
-                <a href="XPBANK.html" class="cs-next-link cs-next-link--next">
+                <a href="mousepad.html" class="cs-next-link cs-next-link--next">
                     <span class="cs-next-kicker">Next project &rarr;</span>
-                    <span class="cs-next-title">XP Bank</span>
+                    <span class="cs-next-title">Mousepad</span>
                 </a>
             </div>
         </nav>
@@ -737,9 +761,9 @@
             </a>
         </div>
         <div class="footer-right">
-            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram</a>
-            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
-            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">Youtube</a>
+            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">YouTube<span class="sr-only"> (opens in a new tab)</span></a>
         </div>
     </footer>
 
@@ -780,6 +804,8 @@
         }
 
         document.querySelectorAll(".scramble-heading").forEach(h => {
+            // Screen readers read the real heading, never the scrambled glyphs
+            h.setAttribute("aria-label", h.textContent.trim());
             h.addEventListener("mouseenter", () => scrambleElement(h));
         });
 
@@ -826,9 +852,10 @@
             if (img.getAttribute("src") && img.complete && img.naturalWidth === 0) handleBroken(img);
         });
 
-        // Videos that already failed every source before this script ran
+        // Videos that already failed before this script ran (only a real error counts:
+        // a video that simply hasn't started loading yet must not be hidden)
         document.querySelectorAll(".cs-media video, .cs-hero-media video").forEach(v => {
-            if (v.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) markVideoMissing(v);
+            if (v.error) markVideoMissing(v);
         });
 
         /* ==================================================================
