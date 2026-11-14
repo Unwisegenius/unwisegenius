@@ -915,7 +915,7 @@
                 <p class="fade-up observe">It wouldn&rsquo;t be right to go without showing the final product. I&rsquo;ve coded the PDF of The Anatomy of Sugar to be interactive on this page, so you can flip through each page. If you want to print and cut it out yourself for a coffee table read, you&rsquo;re more than free to download the PDF too!</p>
 
                 <div class="cs-book-stage fade-up observe" id="book-stage">
-                    <div class="cs-book" id="book" tabindex="0" role="group" aria-label="Flippable catalogue booklet" data-pdf="assets/Theanatomyofsugar.pdf">
+                    <div class="cs-book" id="book" tabindex="0" role="group" aria-label="Flippable catalogue booklet" data-pdf="assets/theanatomyofsugar.pdf">
                         <div class="cs-book-tilt">
                             <div class="cs-book-inner"></div>
                         </div>
@@ -936,7 +936,7 @@
                 </div>
 
                 <div class="cs-actions fade-up observe">
-                    <a href="assets/Theanatomyofsugar.pdf" download="The Anatomy of Sugar.pdf" class="cyber-btn" id="pdf-download">
+                    <a href="assets/theanatomyofsugar.pdf" download="The Anatomy of Sugar.pdf" class="cyber-btn" id="pdf-download">
                         <span>Download the PDF</span>
                         <span class="arrow">&darr;</span>
                     </a>
@@ -1138,8 +1138,14 @@
                 { js: "https://unpkg.com/pdfjs-dist@3.11.174/legacy/build/pdf.min.js",
                   worker: "https://unpkg.com/pdfjs-dist@3.11.174/legacy/build/pdf.worker.min.js" }
             ];
-            // The PDF is looked for in assets/ first, then next to this page
-            const PDF_PATHS = [book.dataset.pdf, book.dataset.pdf.replace(/^assets\//, "")];
+            // The PDF is looked for in assets/ first, then next to this page.
+            // GitHub Pages is case-sensitive, so the old capitalised name is tried too, just in case.
+            const PDF_PATHS = [...new Set([
+                book.dataset.pdf,
+                "assets/theanatomyofsugar.pdf",
+                "assets/Theanatomyofsugar.pdf",
+                book.dataset.pdf.replace(/^assets\//, "")
+            ])];
 
             const stage    = document.getElementById("book-stage");
             const fallback = document.getElementById("book-fallback");
