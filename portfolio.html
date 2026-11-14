@@ -64,14 +64,14 @@
         }
 
         .pf-title {
-            --pf-stretch: 1.18;           /* vertical stretch: raise for taller, 1 = no stretch */
+            --pf-stretch: 1.35;           /* vertical stretch: raise for taller, 1 = no stretch (was 1.18) */
             position: relative;
             display: block;
             font-family: "Space Grotesk", "Grotesk", -apple-system, sans-serif;
             font-weight: 700;
             font-size: 18vw;              /* JS fits this exactly to the container width */
             line-height: 0.86;
-            letter-spacing: 0.01em;       /* was -0.04em (too tight); raise for looser, lower for tighter */
+            letter-spacing: -0.02em;      /* a little closer than before (was 0.01em); -0.04em was too tight */
             white-space: nowrap;
             color: #ffffff;
             cursor: pointer;
@@ -81,6 +81,27 @@
         }
 
         .pf-title span { display: inline-block; }
+
+        /* The giant title is also a button: pressing it goes back to the full "All" view */
+        .pf-title-btn {
+            display: block;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            background: none;
+            font: inherit;
+            color: inherit;
+            letter-spacing: inherit;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .pf-title-btn:focus-visible {
+            outline: 3px solid var(--pf-lime);
+            outline-offset: 6px;
+            border-radius: 6px;
+        }
 
         /* Hover = lime highlight. Pressing it drops back to the normal white state until the cursor leaves. */
         @media (hover: hover) {
@@ -331,7 +352,8 @@
 
         <!-- === HERO: title + filters === -->
         <section class="pf-hero">
-            <h1 class="pf-title" id="pf-title"><span>Portfolio</span></h1>
+            <!-- Pressing the title shows every project again (clears Case Studies / Graphic Design / My Favourites) -->
+            <h1 class="pf-title" id="pf-title"><button type="button" class="pf-title-btn" id="pf-title-btn" aria-label="Portfolio: show all projects"><span>Portfolio</span></button></h1>
 
             <div class="pf-tabs" role="group" aria-label="Filter projects">
                 <button type="button" class="pf-tab" data-filter="case-studies"   aria-pressed="false" aria-label="Case Studies"><span class="pf-tab-label">Case Studies</span></button>
@@ -396,9 +418,9 @@
             },
             orion: {
                 title: "Orion – A VR System without the Headset",
-                img: "assets/orion.png", tile: "#FFFFFF", ink: "#0A84FF",
+                img: "assets/OrionCard.png", tile: "#FFFFFF", ink: "#0A84FF",
                 desc: "A smart home project that focused on Research, Prototyping, Motion, Products &amp; Design Systems. I created a conceptual 3D Projector that you could interact with and do everyday tasks with.",
-                caseStudy: "case-studies/orion.html"
+                caseStudy: "orion.html"
             },
             grub: {
                 title: "How Microinteractions Support the User Journey",
@@ -418,6 +440,12 @@
                 desc: "A bank branding project that focused on Branding, Design Systems, Research, Prototyping, Products &amp; Motion. And how they could appeal to a younger target audience",
                 caseStudy: "XPBANK.html"
             },
+            ava: {
+                title: "AVA – The Smartwatch Assistant",
+                img: "assets/ava-app.jpg", tile: "#111111", ink: "#ffffff",
+                desc: "A smartwatch concept that focused on Prototyping, Products &amp; Motion. And how you could design under the constraint of a small screen",
+                caseStudy: "AVA.html"
+            },
             pioneers: {
                 title: "The Pioneers of Web Design",
                 img: "assets/macicon.png", tile: "#0000E6", ink: "#ffffff",
@@ -425,15 +453,15 @@
                 caseStudy: "pioneersofwebdesign.html"
             },
             flix: {
-                title: "Flix Multiplex – A Branding Concept",
+                title: "Flik Multiplex – A Branding Concept",
                 img: "assets/FlixMultiplexCard.png", tile: "#A30B26", ink: "#ffffff",
                 desc: "After working in a cinema for many years, it felt right after leaving (for the third time) to make a conceptual cinema brand to post online!",
-                caseStudy: "flixmultiplex.html"
+                caseStudy: "flik.html"
             },
             roasters: {
                 title: "Roasters",
                 img: "assets/RoastersCard.png", tile: "#FFFFFF", ink: "#111111",
-                desc: "A Smartwatch concept that focused on Prototyping, Products &amp; Motion. And how you could design under the constraint of a small screen",
+                desc: "A summer project I set myself to explore branding. A brand identity for a fictional Belfast coffee company, brought to life across cups, packaging, menus, signage &amp; merch",
                 caseStudy: "roasters.html"
             }
         };
@@ -441,14 +469,14 @@
         // "All" view: grouped by year, in this order
         const GROUPS = [
             { key: "2026", label: "2026", ids: ["sugar", "bite", "shining", "mousepad", "orion", "grub"] },
-            { key: "2025", label: "2025", ids: ["scran", "xp"] },
+            { key: "2025", label: "2025", ids: ["scran", "ava", "xp"] },
             { key: "misc", label: "Misc", ids: ["pioneers", "flix", "roasters"] }
         ];
 
         // Filtered views: which projects show, and in what order.
         // (Projects in "case-studies" also get the pink "Case Study" label in every view.)
         const FILTERS = {
-            "case-studies":   ["orion", "grub", "scran", "xp"],
+            "case-studies":   ["orion", "grub", "scran", "ava", "xp"],
             "graphic-design": ["sugar", "bite", "shining", "mousepad", "flix", "roasters", "pioneers"],
             "favourites":     ["xp", "grub", "bite", "shining", "scran"]
         };
@@ -696,7 +724,7 @@
            GIANT TITLE: fit to full width, stretch taller, lime on hover
            ================================================================== */
         function fitTitle() {
-            const span = title.firstElementChild;
+            const span = title.querySelector("span");
             const stretch = parseFloat(getComputedStyle(title).getPropertyValue("--pf-stretch")) || 1;
 
             title.style.fontSize = "100px";
@@ -720,6 +748,14 @@
         }
 
         // Press the title = back to the normal white state (until the cursor leaves and comes back)
+        // Press the title = back to the original "All" view, at the top of the list
+        document.getElementById("pf-title-btn").addEventListener("click", () => {
+            if (current !== "all") {
+                render("all");
+                setHash("all");
+            }
+        });
+
         title.addEventListener("pointerdown", () => title.classList.add("is-pressed"));
         title.addEventListener("pointerleave", () => title.classList.remove("is-pressed"));
         title.addEventListener("pointercancel", () => title.classList.remove("is-pressed"));

@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UnwiseGenius</title>
-    <link rel="icon" type="image/x-icon" href="/assets/faviconbrain.png">
+    <title>Jared Russell | UnwiseGenius | Digital Designer</title>
+    <meta name="description" content="The portfolio of Jared Russell (UnwiseGenius), a Digital Design student at Ulster University focused on UI/UX, branding, research and accessible design.">
+
+    <!-- Favicon (same set as every other page) -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/brain-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/brain-180.png">
+    <meta name="theme-color" content="#4D04FF">
+
+    <!-- Link previews (when the site is shared on social media or in messages) -->
+    <meta property="og:title" content="Jared Russell | UnwiseGenius">
+    <meta property="og:description" content="Digital Design student at Ulster University: UI/UX, branding, research and accessible design.">
+    <meta property="og:image" content="assets/xp-bank-cover.jpg">
 
     <!-- Google Fonts: Rajdhani & Space Grotesk -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,14 +35,210 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+
+    <!-- If JavaScript is off, show every section instead of leaving them faded out -->
+    <noscript>
+        <style>.reveal-section { opacity: 1 !important; transform: none !important; }</style>
+    </noscript>
+
+    <!-- Home page styles (all prefixed hp- or scoped to this page, so they never clash with style.css) -->
+    <style>
+        /* Screen-reader-only text, and a "Skip to content" link that appears when you press Tab */
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+        }
+
+        .hp-skip {
+            position: absolute;
+            left: 16px;
+            top: -60px;
+            z-index: 1000;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background-color: #CFFF04;
+            color: #111111;
+            font-family: "Rajdhani", sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: top 0.2s ease;
+        }
+
+        .hp-skip:focus { top: 12px; }
+
+        /* Clear keyboard focus on every link and button on the page */
+        a:focus-visible,
+        button:focus-visible {
+            outline: 3px solid #CFFF04;
+            outline-offset: 4px;
+            border-radius: 4px;
+        }
+
+        /* --- HERO: say who I am in the first screen, under the 3D logo --- */
+        .hp-intro {
+            position: absolute;
+            left: 6vw;
+            right: 6vw;
+            bottom: clamp(20px, 4vw, 48px);
+            z-index: 3;
+            color: #ffffff;
+            pointer-events: none;           /* clicks still reach the 3D logo (glitch effect) */
+        }
+
+        .hp-intro a { pointer-events: auto; }
+
+        .hp-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8em;
+            font-family: "Rajdhani", sans-serif;
+            font-weight: 700;
+            font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+        }
+
+        .hp-kicker::before {
+            content: "";
+            width: 2.4em;
+            height: 3px;
+            background-color: #CFFF04;
+        }
+
+        .hp-name {
+            font-family: "Space Grotesk", sans-serif;
+            font-weight: 700;
+            font-size: clamp(2rem, 4.6vw, 4.2rem);
+            line-height: 1;
+            letter-spacing: -0.02em;
+            margin: 0 0 0.35rem;
+            cursor: default;
+        }
+
+        .hp-role {
+            font-family: "stolzl", sans-serif;
+            font-weight: 400;
+            font-size: clamp(1rem, 1.4vw, 1.3rem);
+            line-height: 1.4;
+            max-width: 34em;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .hp-role strong { color: #CFFF04; font-weight: 700; }
+
+        /* Small "scroll" cue in the bottom-right of the hero */
+        .hp-scroll {
+            position: absolute;
+            right: 6vw;
+            bottom: clamp(20px, 4vw, 48px);
+            z-index: 3;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5em;
+            color: #ffffff;
+            font-family: "Rajdhani", sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+
+        .hp-scroll span[aria-hidden] {
+            display: inline-block;
+            animation: hpNudge 1.6s ease-in-out infinite;
+        }
+
+        .hp-scroll:hover { color: #CFFF04; }
+
+        @keyframes hpNudge {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(5px); }
+        }
+
+        /* --- FEATURED PROJECTS: each whole card is one link --- */
+        a.project-card {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .hp-card-kicker {
+            display: block;
+            margin-bottom: 0.35rem;
+            font-family: "Rajdhani", sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #4D04FF;
+        }
+
+        .hp-card-cta {
+            display: inline-block;
+            margin-top: 0.9rem;
+            font-family: "Rajdhani", sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.25s ease;
+        }
+
+        a.project-card:hover .hp-card-cta,
+        a.project-card:focus-visible .hp-card-cta {
+            color: #4D04FF;
+            transform: translateX(6px);
+        }
+
+        /* A missing cover image leaves the coloured tile and the title, never a broken icon */
+        .project-img.is-missing img { display: none; }
+
+        .hp-all {
+            display: flex;
+            justify-content: center;
+            margin-top: clamp(40px, 5vw, 64px);
+        }
+
+        /* Tablets: style.css stacks the cards in one column, which made each cover image huge.
+           Here each card sits side by side: cover on the left, text on the right. */
+        @media (min-width: 641px) and (max-width: 1024px) {
+            a.project-card {
+                flex-direction: row;
+                align-items: center;
+                gap: clamp(20px, 3vw, 36px);
+            }
+            a.project-card .project-img {
+                flex: 0 0 42%;
+                margin-bottom: 0;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hp-scroll { display: none; }
+            .hp-intro { bottom: 20px; }
+        }
+
+        /* --- REDUCED MOTION: no floating, nudging, sliding or tilting --- */
+        @media (prefers-reduced-motion: reduce) {
+            .reveal-section { opacity: 1 !important; transform: none !important; transition: none !important; }
+            .floating-avatar, .hp-scroll span[aria-hidden] { animation: none !important; }
+            .project-card, .project-img, .project-img img, .hp-card-cta { transition: none !important; }
+        }
+    </style>
 </head>
 <body>
+
+    <a class="hp-skip" href="#main">Skip to content</a>
 
     <!-- === HEADER / NAVIGATION === -->
     <header>
         <div class="top-left">
             <a href="index.html">
-                <img src="assets/brain-180.png" alt="Home" class="brain-icon" width="38">
+                <img src="assets/brain-180.png" alt="UnwiseGenius home" class="brain-icon" width="38" height="38">
             </a>
         </div>
         <nav class="top-right">
@@ -41,14 +248,27 @@
         </nav>
     </header>
 
+    <main id="main">
+
     <!-- === HERO SECTION (Contains 3D Object) === -->
-    <section id="hero">
+    <section id="hero" aria-labelledby="hp-name">
         <!-- Quick link to the portfolio (moved out of the nav bar so the bar matches every other page) -->
-        <a href="portfolio.html" class="folder-group hero-folder" aria-label="My Work - view my portfolio">
+        <a href="portfolio.html" class="folder-group hero-folder" aria-label="My Work: view my portfolio">
             <img src="assets/Folder1.png" alt="" class="folder-icon" width="60">
             <span class="folder-text">My Work</span>
         </a>
-        <div id="canvas-container"></div>
+
+        <!-- The spinning 3D UnwiseGenius logo (click it for a glitch). Decorative, so screen readers skip it. -->
+        <div id="canvas-container" aria-hidden="true"></div>
+
+        <!-- Who I am, in the first screen -->
+        <div class="hp-intro">
+            <p class="hp-kicker">Digital Designer</p>
+            <h1 class="hp-name scramble-heading" id="hp-name">Jared Russell</h1>
+            <p class="hp-role">Digital Design student at Ulster University, focused on <strong>UI/UX</strong>, <strong>branding</strong>, <strong>research</strong> and <strong>accessible design</strong>.</p>
+        </div>
+
+        <a href="#portfolio" class="hp-scroll">Featured work <span aria-hidden="true">&darr;</span></a>
     </section>
 
     <!-- === ABOUT SECTION === -->
@@ -64,7 +284,7 @@
         </div>
         <div class="about-image">
             <div class="avatar-holo-wrapper">
-                <img src="assets/pixelartofme.png" alt="Jared Pixel Avatar" class="floating-avatar">
+                <img src="assets/pixelartofme.png" alt="A pixel-art portrait of Jared" class="floating-avatar" loading="lazy">
             </div>
         </div>
     </section>
@@ -78,42 +298,57 @@
 
         <div class="projects-grid">
             <!-- Project 1: XP Bank -->
-            <div class="project-card tilt-card">
+            <a href="XPBANK.html" class="project-card tilt-card">
                 <div class="project-img bg-purple">
-                    <img src="assets/xp-bank-cover.jpg" alt="XP Bank" onerror="this.style.display='none'">
+                    <img src="assets/xp-bank-cover.jpg" alt="" loading="lazy">
                     <div class="scanline-sweep"></div>
                 </div>
                 <div class="project-info">
+                    <span class="hp-card-kicker">Case Study</span>
                     <h3>XP Bank</h3>
-                    <p>A bank branding project that focused on Branding, Design Systems, Research, Prototyping, Products &amp; Motion. And how they could appeal to a younger target audience.</p>
+                    <p>Branding, design systems and prototyping for a bank built to feel supportive for young, first-time customers.</p>
+                    <span class="hp-card-cta" aria-hidden="true">View case study &rarr;</span>
                 </div>
-            </div>
+            </a>
 
             <!-- Project 2: AVA -->
-            <div class="project-card tilt-card">
+            <a href="AVA.html" class="project-card tilt-card">
                 <div class="project-img bg-ava">
-                    <img src="assets/ava-app.jpg" alt="AVA Smartwatch Concept">
+                    <img src="assets/ava-app.jpg" alt="" loading="lazy">
                     <div class="scanline-sweep"></div>
                 </div>
                 <div class="project-info">
+                    <span class="hp-card-kicker">Case Study</span>
                     <h3>AVA</h3>
-                    <p>A Smartwatch concept that focused on Prototyping, Products &amp; Motion. And how you could design under the constraint of a small screen.</p>
+                    <p>A smartwatch assistant app that helps you without reaching for your phone, designed for a tiny, glanceable screen.</p>
+                    <span class="hp-card-cta" aria-hidden="true">View case study &rarr;</span>
                 </div>
-            </div>
+            </a>
 
             <!-- Project 3: Scran -->
-            <div class="project-card tilt-card">
+            <a href="Scran.html" class="project-card tilt-card">
                 <div class="project-img bg-red">
-                    <img src="assets/Scran.png" alt="Scran Cookbook App">
+                    <img src="assets/Scran.png" alt="" loading="lazy">
                     <div class="scanline-sweep"></div>
                 </div>
                 <div class="project-info">
+                    <span class="hp-card-kicker">Case Study</span>
                     <h3>Scran</h3>
-                    <p>A cookbook app that focused on Prototyping, Research, Products &amp; Motion. And how you could design for an audience of children.</p>
+                    <p>A playful cookbook app that helps children bake, cut food waste and build sustainable habits.</p>
+                    <span class="hp-card-cta" aria-hidden="true">View case study &rarr;</span>
                 </div>
-            </div>
+            </a>
+        </div>
+
+        <div class="hp-all">
+            <a href="portfolio.html" class="cyber-btn">
+                <span>See all my work</span>
+                <span class="arrow">&rarr;</span>
+            </a>
         </div>
     </section>
+
+    </main>
 
     <!-- === FOOTER === -->
     <footer id="contact">
@@ -123,9 +358,9 @@
             </a>
         </div>
         <div class="footer-right">
-            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram</a>
-            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
-            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">Youtube</a>
+            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">YouTube<span class="sr-only"> (opens in a new tab)</span></a>
         </div>
     </footer>
 
@@ -134,10 +369,14 @@
          even if the 3D script below fails)
          ===================================================================== -->
     <script>
-        // --- Text scramble (spaces preserved) ---
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const canHover     = window.matchMedia("(hover: hover)").matches;
+
+        // --- Text scramble (spaces preserved; skipped for people who prefer less motion) ---
         const GLYPHS = "!/<>[]-_=+*^?#_0101";
 
         function scrambleElement(element) {
+            if (!element || reduceMotion) return;
             const originalText = element.getAttribute("data-original") || element.innerText;
             element.setAttribute("data-original", originalText);
             let iteration = 0;
@@ -184,8 +423,15 @@
             document.querySelectorAll(".reveal-section").forEach(sec => sec.classList.add("visible"));
         }
 
-        // --- 3D card tilt ---
-        document.querySelectorAll(".tilt-card").forEach(card => {
+        // --- Missing cover image? Keep the coloured tile instead of a broken icon ---
+        document.querySelectorAll(".project-img img").forEach(img => {
+            const markMissing = () => img.parentElement.classList.add("is-missing");
+            img.addEventListener("error", markMissing);
+            if (img.complete && img.naturalWidth === 0) markMissing();
+        });
+
+        // --- 3D card tilt (mouse only, and not for people who prefer less motion) ---
+        if (!reduceMotion && canHover) document.querySelectorAll(".tilt-card").forEach(card => {
             card.addEventListener("mousemove", (e) => {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left - rect.width / 2;
@@ -195,7 +441,7 @@
             });
 
             card.addEventListener("mouseleave", () => {
-                card.style.transform = "perspective(1000px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg)";
+                card.style.transform = "";
             });
         });
     </script>
@@ -421,7 +667,8 @@
                 let glitchProgress = 0;
                 const glitchDuration = 0.85;
 
-                heroSection.addEventListener("click", () => {
+                heroSection.addEventListener("click", (e) => {
+                    if (reduceMotion || e.target.closest("a")) return;   // no flashing for reduced motion, or when clicking a link
                     isGlitching = true;
                     glitchProgress = 0;
                 });
@@ -440,8 +687,17 @@
                 // --- 10. Animation loop ---
                 const clock = new THREE.Clock();
 
+                // Only draw while the hero is on screen, to save battery and keep scrolling smooth
+                let heroVisible = true;
+                if ("IntersectionObserver" in window) {
+                    new IntersectionObserver(entries => {
+                        heroVisible = entries[0].isIntersecting;
+                    }).observe(heroSection);
+                }
+
                 function animate() {
                     requestAnimationFrame(animate);
+                    if (!heroVisible) { clock.getDelta(); return; }
 
                     const delta = clock.getDelta();
                     const elapsedTime = clock.getElapsedTime();
@@ -450,8 +706,8 @@
                         targetObject.rotation.y += (targetRotation.y - targetObject.rotation.y) * 0.055;
                         targetObject.rotation.x += (targetRotation.x - targetObject.rotation.x) * 0.055;
 
-                        const hoverWaveY = Math.sin(elapsedTime * 1.8) * 0.08;
-                        const hoverWaveX = Math.cos(elapsedTime * 1.2) * 0.04;
+                        const hoverWaveY = reduceMotion ? 0 : Math.sin(elapsedTime * 1.8) * 0.08;
+                        const hoverWaveX = reduceMotion ? 0 : Math.cos(elapsedTime * 1.2) * 0.04;
 
                         targetObject.position.x += ((mouse.x * 0.28 + hoverWaveX) - targetObject.position.x) * 0.05;
                         targetObject.position.y += ((mouse.y * 0.28 + hoverWaveY) - targetObject.position.y) * 0.05;

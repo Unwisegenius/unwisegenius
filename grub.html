@@ -540,6 +540,26 @@
             .cs-proto-frame--site  { aspect-ratio: 4 / 3; }
             .cs-proto-frame--essay { height: 75vh; }
         }
+        /* Notion notes button (end of the Reflection) */
+        .cs-btn {
+            display: inline-block;
+            margin-top: clamp(12px, 1.6vw, 20px);
+            padding: 0.85em 1.6em;
+            border-radius: 999px;
+            background-color: #111111;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1rem, 1.25vw, 1.15rem);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+        }
+
+        main a.cs-btn { color: var(--cs-lime); }
+        main a.cs-btn:hover,
+        main a.cs-btn:focus-visible { background-color: var(--cs-purple); color: #ffffff; transform: translateY(-2px); }
+
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
     </style>
 </head>
 
@@ -772,6 +792,7 @@
                 <h2 class="scramble-heading fade-up observe">Reflection</h2>
                 <p class="fade-up observe">I loved this project. Designing a fake food service portal and creating a brand identity were a lot of fun, and working with motion was the best part. I wish I could push this project further and create a fully fledged food service app or website, but I&rsquo;d need a budget, more research and more experience to do so, which is totally okay.</p>
                 <p class="fade-up observe">I loved making this project, and I hope you enjoy it too!</p>
+                <a class="cs-btn fade-up observe" href="https://jaredrussell.notion.site/Micro-Interactions-2f89a122e2e080a59490d12e7dfd1cf2" target="_blank" rel="noopener">Read my notes on Notion<span class="sr-only"> (opens in a new tab)</span></a>
             </div>
         </section>
 

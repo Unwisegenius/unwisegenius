@@ -891,6 +891,26 @@
             .cs-media, .cs-track, .cs-leaf, .cs-book-inner, .cs-book-tilt, .cs-book-floor { transition: none; }
             .cs-loader-spin img, .cs-loader-text .dot { animation: none; }
         }
+        /* Notion notes button (end of the Reflection) */
+        .cs-btn {
+            display: inline-block;
+            margin-top: clamp(12px, 1.6vw, 20px);
+            padding: 0.85em 1.6em;
+            border-radius: 999px;
+            background-color: #111111;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1rem, 1.25vw, 1.15rem);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+        }
+
+        main a.cs-btn { color: var(--cs-lime); }
+        main a.cs-btn:hover,
+        main a.cs-btn:focus-visible { background-color: var(--cs-purple); color: #ffffff; transform: translateY(-2px); }
+
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
     </style>
 </head>
 
@@ -939,10 +959,6 @@
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">Summary Of Project</h2>
                 <p class="fade-up observe stagger-1">XP Bank is a bank designed to feel approachable and supportive for first-time and early-career users who often feel let down by both traditional and modern banks.</p>
-                <a href="https://jaredrussell.notion.site/Bank-Brand-XP-18a9a122e2e0806a8619e67c19ba4506" target="_blank" rel="noopener" class="cyber-btn fade-up observe stagger-2">
-                    <span>Read this project's notes on Notion</span>
-                    <span class="arrow">&nearr;</span>
-                </a>
 
                 <div class="cs-duo">
                     <div id="contents">
@@ -985,10 +1001,12 @@
                                 </span>
                                 <p>Target audience: <strong>16–25 year olds</strong>.</p>
                             </li>
-                          
-                                <!-- CHECK: change this if anyone else worked on XP Bank, and credit them by name -->
-                               
-                          
+                            <li class="cs-spec fade-left observe stagger-4" data-needs-ai>
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4L12 3z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15z"/></svg>
+                                </span>
+                                <p>AI use: <a href="#ai" class="cs-inline-link">how AI was (and wasn&rsquo;t) used</a>.</p>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -1296,6 +1314,7 @@
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">Reflection</h2>
                 <p class="fade-up observe">This project significantly changed my approach to design. With further development, I would run structured usability testing and a full UX audit to refine accessibility, interaction accuracy and edge cases. Feedback initially challenged my design direction, but it ultimately built my confidence in responding to critique. Most importantly, it showed me how to embed values into design decisions, prioritise real user problems over purely visual ideas, and adapt the work when feedback leads to a better outcome.</p>
+                <a class="cs-btn fade-up observe" href="https://jaredrussell.notion.site/Bank-Brand-XP-18a9a122e2e0806a8619e67c19ba4506" target="_blank" rel="noopener">Read my notes on Notion<span class="sr-only"> (opens in a new tab)</span></a>
             </div>
         </section>
 

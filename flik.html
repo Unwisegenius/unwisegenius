@@ -1,141 +1,1480 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/brain-16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/brain-180.png">
-  <meta name="theme-color" content="#4A00FF">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flik Multiplex: A Cinema Brand | Case Study | Jared Russell</title>
+    <meta name="description" content="Case study: Flik Multiplex, a conceptual cinema brand inspired by Twin Peaks, with a website, merch and posters. By Jared Russell.">
+    <link rel="icon" type="image/x-icon" href="/assets/faviconbrain.png">
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Flik Multiplex — Case Study | Jared Russell // UnwiseGenius</title>
-  <link rel="stylesheet" href="style.css" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/brain-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/brain-180.png">
+    <meta name="theme-color" content="#4D04FF">
+
+    <!-- Google Fonts: Rajdhani & Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Adobe Fonts (Typekit): Stolzl Regular 400 + Bold 700. Must load BEFORE style.css -->
+    <link rel="stylesheet" href="https://use.typekit.net/inw8ngx.css">
+
+    <!-- Global CSS (keep this ?v= number in sync with the other pages) -->
+    <link rel="stylesheet" href="style.css?v=5">
+
+    <!-- If JavaScript is off, show everything instead of leaving content faded out -->
+    <noscript>
+        <style>
+            .fade-up, .fade-in, .fade-right, .fade-left { opacity: 1 !important; transform: none !important; }
+        </style>
+    </noscript>
+
+    <!-- Case study styles (all prefixed cs- so they never clash with style.css) -->
+    <style>
+        :root {
+            --cs-purple: #4D04FF;
+            --cs-lime:   #CFFF04;
+            --cs-pink:   #FB4CD1;
+        }
+
+        body { background-color: #ffffff; }
+
+        /* Stops slide-in animations from making the page scroll sideways on phones */
+        main { overflow-x: clip; }
+
+        /* Links take the colour of their section; .cyber-btn and the specific link styles below still win */
+        main a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Links inside running text keep an underline, so they're not shown by colour alone */
+        main a.cs-inline-link {
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 3px;
+            font-weight: 700;
+        }
+
+        /* --- LAYOUT --- */
+        .cs-wrap {
+            width: min(1100px, 86vw);
+            margin: 0 auto;
+        }
+
+        .cs-band {
+            padding: clamp(56px, 7vw, 104px) 0;
+        }
+
+        .cs-band--white  { background-color: #ffffff;         color: #111111; }
+        .cs-band--lime   { background-color: var(--cs-lime);   color: #111111; }
+        /* Dark text on pink: #111 on #FB4CD1 is about 6.3:1 (white was 2.98:1 and failed WCAG AA) */
+        .cs-band--pink   { background-color: var(--cs-pink);   color: #111111; }
+        .cs-band--purple { background-color: var(--cs-purple); color: #ffffff; }
+
+        .cs-band h2 {
+            font-size: clamp(2.2rem, 4vw, 3.6rem);
+            letter-spacing: -1.5px;
+            line-height: 1.05;
+            margin-bottom: clamp(20px, 2.4vw, 36px);
+            cursor: default;
+        }
+
+        .cs-band h2.cs-sub {
+            font-size: clamp(1.6rem, 2.6vw, 2.3rem);
+            letter-spacing: -1px;
+            margin-bottom: clamp(16px, 2vw, 28px);
+        }
+
+        /* Sub-headings inside a section (Brand in use, Brand guidelines, Prototype...) */
+        .cs-band h3 {
+            font-size: clamp(1.3rem, 1.9vw, 1.8rem);
+            margin: clamp(36px, 4.5vw, 64px) 0 clamp(14px, 1.6vw, 22px);
+        }
+
+        .cs-band p {
+            font-size: clamp(1.05rem, 1.35vw, 1.3rem);
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+
+        .cs-band strong { font-weight: 700; }
+
+        section[id] { scroll-margin-top: 24px; }
+
+        /* Description under every image */
+        .cs-caption {
+            display: block;
+            margin-top: 0.75rem;
+            font-size: clamp(0.9rem, 1.05vw, 1rem);
+            line-height: 1.45;
+            opacity: 0.85;
+        }
+
+        /* --- HERO --- */
+        .cs-hero {
+            background-color: var(--cs-purple);
+            color: #ffffff;
+            padding: clamp(40px, 6vw, 88px) 0 clamp(48px, 6vw, 96px);
+        }
+
+        /* Plain text label (not a pill, so it doesn't read as a button) */
+        .cs-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8em;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: clamp(0.95rem, 1.3vw, 1.2rem);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin-bottom: clamp(14px, 1.8vw, 24px);
+        }
+
+        .cs-eyebrow::before {
+            content: "";
+            width: 2.4em;
+            height: 3px;
+            background-color: var(--cs-lime);
+        }
+
+        .cs-title {
+            font-size: clamp(3.5rem, 10vw, 9rem);
+            letter-spacing: -0.02em;
+            line-height: 0.95;
+            margin-bottom: clamp(16px, 2vw, 28px);
+            cursor: default;
+        }
+
+        /* Focus areas as a slash-separated line of text, so they don't look like buttons */
+        .cs-tags {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem 0;
+            margin-bottom: clamp(28px, 4vw, 56px);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: clamp(1rem, 1.35vw, 1.25rem);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .cs-tags li + li::before {
+            content: "/";
+            margin: 0 0.9em;
+            color: var(--cs-lime);
+        }
+
+        /* Hero banner: a still image that fades in with the rest of the hero */
+        .cs-hero-media {
+            position: relative;
+            border-radius: clamp(10px, 1.2vw, 18px);
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .cs-hero-media img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .cs-hero-media:hover .cs-scan {
+            top: 120%;
+            transition: top 0.75s ease-in-out;
+        }
+
+        /* --- SUMMARY / CONTENTS / SPECS --- */
+        .cs-duo {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: clamp(32px, 5vw, 80px);
+            margin-top: clamp(40px, 5vw, 72px);
+        }
+
+        .cs-contents {
+            list-style: none;
+            display: grid;
+            gap: 0.5rem;
+            justify-items: start;
+        }
+
+        .cs-contents a {
+            position: relative;
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.8em;
+            padding: 0.2em 0.7em;
+            font-weight: 700;
+            font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+            transition: color 0.25s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cs-contents .cs-num {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8em;
+            opacity: 0.6;
+        }
+
+        /* Same [ bracket ] hover as the nav links */
+        .cs-contents a::before,
+        .cs-contents a::after {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            color: var(--cs-purple);
+            transition: opacity 0.25s ease;
+        }
+
+        .cs-contents a::before { content: '['; left: 0; }
+        .cs-contents a::after  { content: ']'; right: 0; }
+
+        .cs-contents a:hover {
+            color: var(--cs-purple);
+            transform: translateX(6px);
+        }
+
+        .cs-contents a:hover::before,
+        .cs-contents a:hover::after { opacity: 1; }
+
+        /* Specs: every row is one or two lines and the same height, so the spacing is even */
+        .cs-specs {
+            list-style: none;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .cs-spec {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            min-height: 3.5rem;
+        }
+
+        .cs-spec-icon {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            border: 3px solid #111111;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #111111;
+        }
+
+        .cs-spec-icon svg { width: 55%; height: 55%; }
+
+        .cs-band .cs-spec p { margin: 0; line-height: 1.4; }
+
+        /* --- IMAGES: tilt + scanline sweep (same effect as the homepage cards) --- */
+        .cs-media {
+            position: relative;
+            overflow: hidden;
+            border-radius: clamp(8px, 1vw, 14px);
+            will-change: transform;
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+        }
+
+        .cs-media:hover {
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22), 0 0 25px rgba(77, 4, 255, 0.18);
+        }
+
+        /* Full image always shown, never cropped */
+        .cs-media img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .cs-scan {
+            position: absolute;
+            top: -120%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.25) 50%, transparent 100%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .cs-media:hover .cs-scan {
+            top: 120%;
+            transition: top 0.75s ease-in-out;
+        }
+
+        /* If an image file is missing, show a neat tile with its description instead of a broken icon */
+        .cs-media.is-missing,
+        .cs-hero-media.is-missing {
+            min-height: 200px;
+            background-color: rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .cs-media.is-missing::after,
+        .cs-hero-media.is-missing::after {
+            content: attr(data-label);
+            font-weight: 700;
+        }
+
+        .cs-ideation { margin: 0 0 clamp(24px, 3vw, 44px); }
+
+        /* Text first, image second (stacks the same way on mobile) */
+        .cs-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(24px, 4vw, 64px);
+            align-items: center;
+        }
+
+        .cs-grid {
+            display: grid;
+            gap: clamp(20px, 2.4vw, 36px) clamp(12px, 1.6vw, 24px);
+            align-items: start;
+        }
+
+        .cs-grid--3 { grid-template-columns: repeat(3, 1fr); }
+
+        /* --- LISTS --- */
+        .cs-bullets {
+            list-style: none;
+            margin-bottom: 1.25rem;
+        }
+
+        .cs-bullets li {
+            position: relative;
+            padding-left: 2em;
+            margin-bottom: 0.7rem;
+            font-size: clamp(1.05rem, 1.35vw, 1.3rem);
+            line-height: 1.5;
+        }
+
+        /* Brain icon bullet (same artwork as the favicon) */
+        .cs-bullets li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.1em;
+            width: 1.3em;
+            height: 1.3em;
+            background: url("assets/faviconbrain.png") center / contain no-repeat;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+        }
+
+        .cs-band .cs-center { text-align: center; margin: clamp(24px, 3vw, 40px) auto 0; }
+
+        /* --- ANATOMY OF SUGAR additions --- */
+        .cs-subtitle {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.2rem, 2.2vw, 2rem);
+            letter-spacing: -0.5px;
+            color: var(--cs-lime);
+            margin-bottom: clamp(14px, 1.8vw, 22px);
+        }
+
+        .cs-grid--2 { grid-template-columns: repeat(2, 1fr); }
+
+        /* A figure that sits under a paragraph at full width */
+        .cs-fig {
+            margin: clamp(20px, 3vw, 40px) 0;
+        }
+
+        .cs-media video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Figures stay a comfortable size: centred, at most 820px wide and 70% of the screen tall.
+           Tall images (like the persona sheet) shrink to fit the height and the caption wraps to match. */
+        .cs-fig {
+            width: fit-content;
+            max-width: min(100%, 820px);
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cs-fig .cs-media img,
+        .cs-fig .cs-media video {
+            width: auto;
+            max-width: 100%;
+            max-height: 70vh;
+            margin: 0 auto;
+        }
+
+        /* The caption wraps to the image's width instead of stretching the figure */
+        .cs-fig .cs-caption { width: 0; min-width: 100%; }
+
+        /* --- NEXT PROJECT / BACK TO WORK (no dead ends at the end of a case study) --- */
+        .cs-next {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px 32px;
+        }
+
+        .cs-next-link {
+            display: inline-flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            text-decoration: none;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cs-next-link:hover,
+        .cs-next-link:focus-visible { transform: translateX(6px); }
+
+        .cs-next-link--back:hover,
+        .cs-next-link--back:focus-visible { transform: translateX(-6px); }
+
+        .cs-next-kicker {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            opacity: 0.85;
+        }
+
+        .cs-next-title {
+            font-weight: 700;
+            font-size: clamp(1.6rem, 3vw, 2.6rem);
+            letter-spacing: -1px;
+            text-decoration: underline;
+            text-decoration-thickness: 3px;
+            text-underline-offset: 6px;
+            text-decoration-color: var(--cs-lime);
+        }
+
+        .cs-next-link--next { text-align: right; margin-left: auto; }
+
+        /* --- RISE UP --- */
+        .cs-rise {
+            text-align: center;
+            padding: clamp(56px, 8vw, 120px) 0;
+        }
+
+        .rise-up-btn {
+            display: inline-block;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .rise-up-btn h2 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            letter-spacing: -2px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin: 0;
+            transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .rise-up-btn:hover h2 {
+            color: var(--cs-purple);
+            transform: skewX(-12deg);
+            text-shadow: 6px 6px 0 var(--cs-lime);
+        }
+
+        /* --- SCROLL REVEAL --- */
+        .fade-up, .fade-in, .fade-right, .fade-left {
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-up    { transform: translateY(40px); }
+        .fade-right { transform: translateX(-40px); }
+        .fade-left  { transform: translateX(40px); }
+
+        .is-visible { opacity: 1; transform: none; }
+
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        .stagger-4 { transition-delay: 0.4s; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 820px) {
+            .cs-split { grid-template-columns: 1fr; }
+            .cs-duo   { grid-template-columns: 1fr; }
+            .cs-grid--3 { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 640px) {
+            .cs-grid--3, .cs-grid--2 { grid-template-columns: 1fr; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .fade-up, .fade-in, .fade-right, .fade-left { opacity: 1; transform: none; transition: none; }
+            .cs-media, .cs-leaf, .cs-book-inner, .cs-book-tilt, .cs-book-floor { transition: none; }
+        }
+
+        /* --- FLIPPABLE BRAND GUIDELINES: a 3D booklet mockup (click a page, drag/swipe, arrows, scrub bar or arrow keys) --- */
+        .cs-book-stage {
+            position: relative;
+            margin-top: clamp(8px, 1vw, 16px);
+            padding: clamp(8px, 2vw, 28px) 0 0;
+        }
+
+        .cs-book {
+            --spread: 8 / 5;                 /* set automatically from your first page image */
+            --book-w: 900px;
+            position: relative;
+            z-index: 1;
+            width: min(var(--book-w), 100%);
+            margin: 0 auto;
+            perspective: 2600px;
+            cursor: pointer;
+            outline-offset: 12px;
+            touch-action: pan-y;
+        }
+
+        .cs-book:focus-visible { outline: 2px solid var(--cs-purple); }
+
+        /* The whole booklet leans slightly towards the pointer */
+        .cs-book-tilt {
+            transform-style: preserve-3d;
+            transform: rotateX(6deg);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cs-book-inner {
+            position: relative;
+            width: 100%;
+            aspect-ratio: var(--spread);
+            transform-style: preserve-3d;
+            transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* A closed book sits centred instead of leaving an empty half */
+        .cs-book.is-front .cs-book-inner { transform: translateX(-25%); }
+        .cs-book.is-back  .cs-book-inner { transform: translateX(25%); }
+
+        .cs-leaf {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            transform-origin: left center;
+            transform-style: preserve-3d;
+            transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cs-leaf.is-flipped { transform: rotateY(-180deg); }
+
+        .cs-face {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            background-color: #ffffff;
+        }
+
+        .cs-face img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* Moving shade across the page while it turns */
+        .cs-face::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.45s ease;
+        }
+        .cs-front::after { background: linear-gradient(90deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0) 70%); }
+        .cs-back::after  { background: linear-gradient(270deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0) 70%); }
+        .cs-leaf.is-turning .cs-face::after { opacity: 1; }
+
+        /* A missing page file shows a neat blank page instead of a broken icon */
+        .cs-face.is-missing img { visibility: hidden; }
+        .cs-face.is-missing::before {
+            content: "Page " attr(data-page);
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999999;
+            font-weight: 700;
+        }
+
+        /* Spine side shading + a thin page edge on the outside */
+        .cs-front { box-shadow: inset 12px 0 18px -10px rgba(0, 0, 0, 0.3), inset -1px 0 0 rgba(0, 0, 0, 0.08); }
+        .cs-back  { transform: rotateY(180deg); box-shadow: inset -12px 0 18px -10px rgba(0, 0, 0, 0.3), inset 1px 0 0 rgba(0, 0, 0, 0.08); }
+
+        /* Shadow on the "table" that follows the book as it opens and closes */
+        .cs-book-floor {
+            position: absolute;
+            left: 50%;
+            bottom: -26px;
+            width: 92%;
+            height: 34px;
+            transform: translateX(-50%);
+            background: radial-gradient(ellipse at center, rgba(40, 0, 50, 0.45), rgba(40, 0, 50, 0) 70%);
+            filter: blur(7px);
+            pointer-events: none;
+            transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), width 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .cs-book.is-front .cs-book-floor,
+        .cs-book.is-back  .cs-book-floor { width: 52%; }
+
+        .cs-book-controls {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: clamp(34px, 4vw, 52px);
+        }
+
+        .cs-book-btn {
+            width: clamp(40px, 4vw, 54px);
+            height: clamp(40px, 4vw, 54px);
+            border: 0;
+            border-radius: 50%;
+            background-color: var(--cs-lime);
+            color: #111111;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .cs-book-btn:hover:not(:disabled) { background-color: #111111; color: var(--cs-lime); transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25); }
+        .cs-book-btn:disabled { opacity: 0.35; cursor: default; }
+        .cs-book-btn:focus-visible { outline: 2px solid #ffffff; outline-offset: 3px; }
+
+        .cs-book-label {
+            min-width: 9em;
+            text-align: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+
+        .cs-book-scrub {
+            position: relative;
+            z-index: 1;
+            display: block;
+            width: min(420px, 80%);
+            margin: 20px auto 0;
+            height: 20px;
+            background: transparent;
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .cs-book-scrub::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: rgba(255, 255, 255, 0.45); }
+        .cs-book-scrub::-moz-range-track              { height: 4px; border-radius: 2px; background: rgba(255, 255, 255, 0.45); }
+        .cs-book-scrub::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; margin-top: -7px; border-radius: 50%; border: 0; background: var(--cs-lime); box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.25); }
+        .cs-book-scrub::-moz-range-thumb     { width: 18px; height: 18px; border-radius: 50%; border: 0; background: var(--cs-lime); box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.25); }
+        .cs-book-scrub:focus-visible { outline: 2px solid #ffffff; outline-offset: 6px; }
+
+        /* On the pink band, booklet controls switch to dark so they stay visible */
+        .cs-band--pink .cs-book-scrub::-webkit-slider-runnable-track { background: rgba(17, 17, 17, 0.35); }
+        .cs-band--pink .cs-book-scrub::-moz-range-track              { background: rgba(17, 17, 17, 0.35); }
+        .cs-band--pink .cs-book-scrub:focus-visible,
+        .cs-band--pink .cs-book-btn:focus-visible { outline-color: #111111; }
+
+        .cs-book-hint {
+            position: relative;
+            z-index: 1;
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.85;
+        }
+
+        /* Scran: the label names the pages you're looking at, so it can be a little wider */
+        .cs-book-label { min-width: 12em; }
+        .cs-book-stage[hidden] { display: none !important; }
+        #guidelines { margin-bottom: clamp(24px, 3vw, 44px); }
+
+        /* --- GRUB / SCRAN additions --- */
+        .cs-title--long { font-size: clamp(2.4rem, 6.6vw, 6rem); }
+
+        /* Videos of each microinteraction: whole frame shown, never cropped */
+        .cs-media video { background-color: #000000; }
+
+        .cs-proto-frame {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 10;          /* change this to match the Figma frame if you see bars */
+            margin: clamp(20px, 2.4vw, 36px) auto 0;
+            border-radius: clamp(12px, 1.6vw, 22px);
+            overflow: hidden;
+            background-color: #f2f2f2;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+        }
+
+        .cs-proto-frame iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Prototype: a widescreen website frame. The embeds use scaling=scale-down-width, so Figma
+           fits each screen to the full width of the frame and you scroll down it, instead of
+           shrinking the whole tall page to fit the height (which left empty bars at the sides). */
+        .cs-proto-frame--site  { aspect-ratio: 16 / 9; }
+
+        /* Case study essay: a long scrolling document, so a tall reading window instead */
+        .cs-proto-frame--essay {
+            aspect-ratio: auto;
+            height: min(85vh, 900px);
+            max-width: 900px;
+        }
+
+        .cs-band h3.cs-question { margin-top: clamp(48px, 6vw, 88px); }
+
+        /* Persona quote */
+        .cs-quote {
+            margin: clamp(20px, 3vw, 40px) 0;
+            padding-left: clamp(16px, 2vw, 28px);
+            border-left: 4px solid var(--cs-lime);
+            font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        /* --- PROTOTYPE BOX: a red 16:9 frame (the Figma prototype has its own iPad mockup inside) --- */
+        .cs-proto-box {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            margin: clamp(24px, 3vw, 40px) auto 0;
+            border-radius: clamp(12px, 1.6vw, 22px);
+            overflow: hidden;
+            background-color: #CE2D20;                      /* same red as the prototype's background */
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .cs-proto-box iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* --- MOUSEPAD additions --- */
+        /* Hero banner with no card behind it: just the image, resized to fit the page width
+           (never taller than 70% of the screen), with the same rounded corners as everything else. */
+        .cs-hero-media--bare {
+            width: fit-content;
+            max-width: 100%;
+            margin: 0 auto;
+            background: none;
+            box-shadow: none;
+        }
+
+        .cs-hero-media--bare img {
+            width: auto;
+            max-width: 100%;
+            max-height: 70vh;
+        }
+
+        /* Full-width figure that is never cropped or capped in height (the in-use photo collage) */
+        .cs-fig--full { width: 100%; max-width: 100%; }
+        .cs-fig--full .cs-media img {
+            width: 100%;
+            height: auto;
+            max-height: none;
+            object-fit: contain;
+        }
+
+        /* Process at a glance: five numbered steps */
+        .cs-steps {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: clamp(12px, 1.6vw, 20px);
+            margin: clamp(24px, 3vw, 40px) 0 0;
+            padding: 0;
+            counter-reset: step;
+        }
+
+        .cs-steps li {
+            counter-increment: step;
+            padding: clamp(14px, 1.6vw, 20px);
+            border: 3px solid currentColor;
+            border-radius: clamp(10px, 1.2vw, 16px);
+            font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+            line-height: 1.4;
+        }
+
+        .cs-steps li::before {
+            content: counter(step, decimal-leading-zero);
+            display: block;
+            margin-bottom: 0.4em;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.6em;
+            line-height: 1;
+        }
+
+        .cs-steps strong { display: block; margin-bottom: 0.2em; }
+
+        /* Do / Don't design principles */
+        .cs-dodont {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(16px, 2vw, 28px);
+            margin-top: clamp(20px, 2.4vw, 32px);
+        }
+
+        .cs-dodont > div {
+            padding: clamp(18px, 2.2vw, 30px);
+            border-radius: clamp(10px, 1.2vw, 16px);
+        }
+
+        .cs-dodont .do   { background-color: var(--cs-lime); color: #111111; }
+        .cs-dodont .dont { background-color: #ffffff;        color: #111111; }
+
+        .cs-dodont h3 { margin-top: 0; }
+
+        .cs-dodont ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.9rem; }
+        .cs-dodont li { font-size: clamp(1rem, 1.25vw, 1.2rem); line-height: 1.5; padding-left: 1.6em; position: relative; }
+        .cs-dodont .do li::before   { content: "\2713"; position: absolute; left: 0; font-weight: 700; }
+        .cs-dodont .dont li::before { content: "\2715"; position: absolute; left: 0; font-weight: 700; }
+
+        @media (max-width: 820px) { .cs-dodont { grid-template-columns: 1fr; } }
+
+        .cs-gallery { margin-top: clamp(20px, 2.4vw, 36px); }
+
+        /* Notion notes button */
+        .cs-btn {
+            display: inline-block;
+            margin-top: clamp(12px, 1.6vw, 20px);
+            padding: 0.85em 1.6em;
+            border-radius: 999px;
+            background-color: #111111;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1rem, 1.25vw, 1.15rem);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+        }
+
+        main a.cs-btn { color: var(--cs-lime); }
+        main a.cs-btn:hover,
+        main a.cs-btn:focus-visible { background-color: var(--cs-purple); color: #ffffff; transform: translateY(-2px); }
+
+        /* Project specifications: one line each (they can wrap on narrow phones) */
+        @media (min-width: 641px) {
+            .cs-band .cs-spec p { white-space: nowrap; }
+        }
+
+        @media (max-width: 900px) { .cs-steps { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 480px) { .cs-steps { grid-template-columns: 1fr; } }
+
+        @media (max-width: 640px) {
+            .cs-proto-frame--site  { aspect-ratio: 4 / 3; }
+            .cs-proto-frame--essay { height: 75vh; }
+            .cs-proto-box { aspect-ratio: 4 / 5; }          /* taller on phones so the iPad isn't tiny */
+        }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+    </style>
 </head>
 
-<body class="page-portfolio">
-  <!-- Header -->
-  <header class="nav">
-    <a href="index.html" class="logo">
-      <img src="assets/brain2.png" alt="Brain logo" />
-      <span>Jared<br>Russell</span>
-    </a>
-    <nav>
-      <a href="about.html">ABOUT ME</a>
-      <a href="portfolio.html" class="active">PORTFOLIO</a>
-      <a href="contact.html">GET IN TOUCH!</a>
-    </nav>
-  </header>
+<body id="top">
 
-  <!-- CASE STUDY (new layout) -->
-  <main class="cs">
-    <!-- Hero -->
-    <section class="cs-hero">
-    
-      <picture>
-        <img class="cs-hero-media" src="assets/flikbanner.png" alt="Flik website visual in desert scene">
-      </picture>
-    </section>
-
-    <!-- Overview -->
-    <section class="cs-section" id="overview">
-      <div class="cs-sticky"><h2>OVERVIEW</h2></div>
-      <div class="cs-body">
-        <p>
-          Based off Twin Peaks’ aesthetic, Flik Multiplex was a summer mini-project to showcase web, branding, and merchandising.
-          The design draws from the Red Room’s surreal energy—fitting the theatrical feel of a classic cinema.
-        </p>
-      </div>
-    </section>
-
-    <!-- Direction -->
-    <section class="cs-section" id="direction">
-      <div class="cs-sticky"><h2>DIRECTION</h2></div>
-      <div class="cs-body">
-        <p>
-          I initially explored a brutalist approach with dulled colours—too flat for cinema. Shifting to a Lynch/Twin Peaks
-          influence unlocked the right mood: surreal, bold, and atmospheric. That lens informed colour, typography, and motion.
-        </p>
-
-        <!-- Small supporting grid -->
-        <div class="cs-grid cs-grid--2">
-          <figure><img src="assets/Flik phone.jpg" alt="Flik phone screen mockup"></figure>
-          <figure><img src="assets/Flik.jpg" alt="User interacting with Flik site"></figure>
+    <!-- === HEADER / NAVIGATION (same as every other page) === -->
+    <header>
+        <div class="top-left">
+            <a href="index.html">
+                <img src="assets/brain-180.png" alt="Home" class="brain-icon" width="38">
+            </a>
         </div>
-      </div>
-    </section>
+        <nav class="top-right">
+            <a href="about.html" class="cyber-nav-link" data-text="About Me">About Me</a>
+            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio">Portfolio</a>
+            <a href="contact.html" class="cyber-nav-link" data-text="Get in Touch!">Get in Touch!</a>
+        </nav>
+    </header>
 
-    <!-- Designing -->
-    <section class="cs-section" id="designing">
-      <div class="cs-sticky"><h2>DESIGNING</h2></div>
-      <div class="cs-body">
-        <p>
-          The system centres on high-contrast visuals, confident type, and theatrical compositions. Patterns and textures
-          nod to curtains, chevrons, and stage lighting. Merch and posters extend the identity beyond screens.
-        </p>
+    <main>
 
-        <!-- Wide key visual -->
-        <div class="cs-wide">
-          <img src="assets/about.png" alt="Flik — About page overview">
+        <!-- === HERO === -->
+        <section class="cs-hero">
+            <div class="cs-wrap">
+                <span class="cs-eyebrow fade-up observe">Design challenge</span>
+                <h1 class="cs-title scramble-heading fade-up observe stagger-1">Flik Multiplex</h1>
+                <p class="cs-subtitle fade-up observe stagger-1">A cinema brand with a touch of Twin Peaks</p>
+
+                <ul class="cs-tags fade-up observe stagger-2" aria-label="Project focus">
+                    <li>Branding</li>
+                    <li>Web Design</li>
+                    <li>Merchandise</li>
+                    <li>Posters</li>
+                </ul>
+
+                <div class="cs-hero-media cs-hero-media--bare fade-up observe stagger-3" data-label="Flik Multiplex logo">
+                    <img src="assets/flikbanner.png" alt="The Flik Multiplex logo on a deep red banner" decoding="async" fetchpriority="high">
+                    <span class="cs-scan" aria-hidden="true"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- === SUMMARY + CONTENTS + SPECS === -->
+        <section id="summary" class="cs-band cs-band--lime">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Summary Of Project</h2>
+                <p class="fade-up observe stagger-1">After working in a cinema for many years, it felt right, after leaving for the third time, to create a cinema brand of my own. Flik Multiplex is a conceptual cinema inspired by Twin Peaks, brought to life through a website, merch and posters.</p>
+
+                <div class="cs-duo">
+                    <div id="contents">
+                        <h2 class="cs-sub scramble-heading fade-up observe">Contents</h2>
+                        <ul class="cs-contents">
+                            <li class="fade-right observe stagger-1"><a href="#overview"><span class="cs-num">01</span>Overview</a></li>
+                            <li class="fade-right observe stagger-2"><a href="#direction"><span class="cs-num">02</span>Finding the Direction</a></li>
+                            <li class="fade-right observe stagger-3"><a href="#design"><span class="cs-num">03</span>The Design</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#website"><span class="cs-num">04</span>The Website</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#merch"><span class="cs-num">05</span>Merch &amp; Posters</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num">06</span>Reflection</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="specs">
+                        <h2 class="cs-sub scramble-heading fade-up observe">Project Specifications</h2>
+                        <ul class="cs-specs" role="list">
+                            <!-- TO DO: add a software row here, e.g. "Figma and Photoshop." -->
+                            <li class="cs-spec fade-left observe stagger-1">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12"/><path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2"/><path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4"/></svg>
+                                </span>
+                                <p>The project ran for <strong>1 week</strong>.</p>
+                            </li>
+                            <li class="cs-spec fade-left observe stagger-1">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
+                                </span>
+                                <p>A <strong>self-initiated</strong> summer project.</p>
+                            </li>
+                            <li class="cs-spec fade-left observe stagger-2">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M7 3v18M17 3v18M2 8h5M2 16h5M17 8h5M17 16h5M2 12h20"/></svg>
+                                </span>
+                                <p>Inspired by <strong>Twin Peaks</strong>&rsquo; Red Room.</p>
+                            </li>
+                            <li class="cs-spec fade-left observe stagger-3">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 6h11"/><path d="M11.5 12h11"/><path d="M11.5 18h11"/><path d="M4 6l1.5 1.5L8 5"/><path d="M4 12l1.5 1.5L8 11"/><path d="M4 18l1.5 1.5L8 17"/></svg>
+                                </span>
+                                <p>Branding, a <strong>website</strong>, merch and posters.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === OVERVIEW === -->
+        <section id="overview" class="cs-band cs-band--white">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Overview</h2>
+                <p class="fade-up observe">Flik Multiplex was a summer mini project to showcase web design, branding and merchandise. Having spent years working in a cinema, I knew the place from the inside, and I wanted to design one that felt special.</p>
+                <p class="fade-up observe">The design draws on the surreal energy of Twin Peaks&rsquo; Red Room, which fits the theatrical feel of a classic cinema.</p>
+            </div>
+        </section>
+
+        <!-- === FINDING THE DIRECTION === -->
+        <section id="direction" class="cs-band cs-band--pink">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Finding the Direction</h2>
+                <p class="fade-up observe">I first explored a brutalist approach with dulled colours, but it felt too flat for a cinema. A night at the movies should feel like an event.</p>
+                <p class="fade-up observe">Shifting to a David Lynch and Twin Peaks influence unlocked the right mood: surreal, bold and atmospheric. That lens shaped the colour, typography and motion.</p>
+                <div class="cs-grid cs-grid--2">
+                    <figure class="fade-up observe">
+                        <div class="cs-media tilt-card" data-label="The Flik website on a phone lying on red curtains">
+                            <img src="assets/Flik phone.jpg" alt="The Flik website on a phone lying on red curtains" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">The site on mobile, set against red curtains.</figcaption>
+                    </figure>
+                    <figure class="fade-up observe">
+                        <div class="cs-media tilt-card" data-label="Someone browsing the Flik website on a laptop, with a Flik cup and nachos">
+                            <img src="assets/Flik.jpg" alt="Someone browsing the Flik website on a laptop, with a Flik cup and nachos" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">Booking a film, with a Flik cup and nachos close by.</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <!-- === THE DESIGN === -->
+        <section id="design" class="cs-band cs-band--lime">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">The Design</h2>
+                <p class="fade-up observe">The system centres on high-contrast visuals, confident type and theatrical compositions.</p>
+                <ul class="cs-bullets fade-up observe">
+                    <li><strong>Colour:</strong> a deep red, like the Red Room&rsquo;s curtains, paired with warm cream.</li>
+                    <li><strong>Pattern:</strong> the zigzag chevron of the Red Room floor frames every page.</li>
+                    <li><strong>Feel:</strong> textures and layouts that nod to curtains and stage lighting, so it feels like a night out.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- === THE WEBSITE === -->
+        <section id="website" class="cs-band cs-band--purple">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">The Website</h2>
+                <p class="fade-up observe">The website is where the brand comes to life. Its pages cover what&rsquo;s on, the story behind Flik and the merch shop.</p>
+                <figure class="cs-fig fade-up observe">
+                    <div class="cs-media tilt-card" data-label="The Flik website&rsquo;s What&rsquo;s Playing page">
+                        <img src="assets/MacBook Pro 14 films.png" alt="The Flik website&rsquo;s What&rsquo;s Playing page" loading="lazy" decoding="async">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">What&rsquo;s Playing: the films on now, with times to book.</figcaption>
+                </figure>
+                <div class="cs-grid cs-grid--2 cs-gallery">
+                    <figure class="fade-up observe">
+                        <div class="cs-media tilt-card" data-label="The Flik website&rsquo;s About Us page">
+                            <img src="assets/about.png" alt="The Flik website&rsquo;s About Us page" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">About Us.</figcaption>
+                    </figure>
+                    <figure class="fade-up observe">
+                        <div class="cs-media tilt-card" data-label="The Flik website&rsquo;s Merchandise page">
+                            <img src="assets/merch.png" alt="The Flik website&rsquo;s Merchandise page" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">The merch shop.</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <!-- === MERCH &AMP; POSTERS === -->
+        <section id="merch" class="cs-band cs-band--white">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Merch &amp; Posters</h2>
+                <p class="fade-up observe">Merch and posters extend the identity beyond screens. My favourite is the movie-quote poster.</p>
+                <div class="cs-grid cs-grid--2">
+                    <figure class="fade-up observe">
+                        <div class="cs-media tilt-card" data-label="Two Flik movie-quote posters">
+                            <img src="assets/Poster.jpg" alt="Two Flik movie-quote posters" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">The movie-quote posters, my favourite part of the project.</figcaption>
+                    </figure>
+                    <figure class="fade-up observe">
+                        <div class="cs-media tilt-card" data-label="A Flik branded bucket hat">
+                            <img src="assets/Hat FLIK.jpg" alt="A Flik branded bucket hat" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">Flik merch.</figcaption>
+                    </figure>
+                </div>
+                <figure class="cs-fig fade-up observe">
+                    <div class="cs-media tilt-card" data-label="The Flik website on a laptop in a desert landscape">
+                        <img src="assets/Flik Badlands.jpg" alt="The Flik website on a laptop in a desert landscape" loading="lazy" decoding="async">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">Flik out in the Badlands.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- === REFLECTION === -->
+        <section id="reflection" class="cs-band cs-band--pink">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Reflection</h2>
+                <p class="fade-up observe">I really enjoyed the experimentation on this project, especially the movie-quote poster. Moving away from the brutalist idea taught me that a strong reference can unlock a whole brand.</p>
+                <p class="fade-up observe">I gave myself one week, so with more time, I&rsquo;d design a mobile app flow and expand the merchandise line.</p>
+            </div>
+        </section>
+
+        <!-- === NEXT PROJECT / BACK TO WORK === -->
+        <nav class="cs-band cs-band--purple" aria-label="More projects">
+            <div class="cs-wrap cs-next">
+                <a href="portfolio.html" class="cs-next-link cs-next-link--back">
+                    <span class="cs-next-kicker">&larr; Back to</span>
+                    <span class="cs-next-title">All my work</span>
+                </a>
+                <!-- Change this to whichever case study you want next -->
+                <a href="roasters.html" class="cs-next-link cs-next-link--next">
+                    <span class="cs-next-kicker">Next project &rarr;</span>
+                    <span class="cs-next-title">Roasters</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- === RISE UP (scroll to top) === -->
+        <section class="cs-rise fade-in observe">
+            <a href="#top" class="rise-up-btn" aria-label="Scroll to top of page">
+                <h2>Rise Up!</h2>
+            </a>
+        </section>
+
+    </main>
+
+    <!-- === FOOTER (same as every other page) === -->
+    <footer id="contact">
+        <div class="footer-left">
+            <a href="index.html" class="footer-logo-link">
+                <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo" class="footer-logo" height="38">
+            </a>
         </div>
-      </div>
-    </section>
-
-    <!-- Outcomes -->
-    <section class="cs-section" id="outcomes">
-      <div class="cs-sticky"><h2>OUTCOMES</h2></div>
-      <div class="cs-body">
-        <p>
-          I enjoyed the experimentation—especially the movie-quote poster. With more time,
-          I’d add a mobile app flow and expand the merchandising line.
-        </p>
-
-        <!-- Final gallery (larger 2-column grid) -->
-        <div class="cs-grid cs-grid--2large">
-          <figure><img src="assets/Hat FLIK.jpg" alt="Flik hat and merch poster"></figure>
-          <figure><img src="assets/Flik Badlands.jpg" alt="Flik quote poster design"></figure>
-          <figure><img src="assets/Poster.jpg" alt="Flik quote poster design"></figure>
-          <figure><img src="assets/MacBook Pro 14 films.png" alt="What’s playing — films grid"></figure>
-          <figure><img src="assets/merch.png" alt="Flik merchandising page layout"></figure>
+        <div class="footer-right">
+            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram</a>
+            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
+            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">Youtube</a>
         </div>
-      </div>
-    </section>
-  </main>
+    </footer>
+
+    <script>
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const canHover     = window.matchMedia("(hover: hover)").matches;
+
+        /* ==================================================================
+           1. TEXT SCRAMBLE (same decryption effect as the other pages)
+           ================================================================== */
+        const GLYPHS = "!/<>[]-_=+*^?#_0101";
+
+        function scrambleElement(element) {
+            if (!element || reduceMotion) return;
+            const originalText = element.getAttribute("data-original") || element.innerText;
+            element.setAttribute("data-original", originalText);
+
+            const step = Math.max(1 / 3, originalText.length / 20);
+            let iteration = 0;
+
+            clearInterval(element._scrambleInterval);
+            element._scrambleInterval = setInterval(() => {
+                element.innerText = originalText
+                    .split("")
+                    .map((letter, index) => {
+                        if (letter === " ") return " ";
+                        if (index < iteration) return originalText[index];
+                        return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+                    })
+                    .join("");
+
+                if (iteration >= originalText.length) {
+                    clearInterval(element._scrambleInterval);
+                    element.innerText = originalText;
+                }
+                iteration += step;
+            }, 30);
+        }
+
+        document.querySelectorAll(".scramble-heading").forEach(h => {
+            h.addEventListener("mouseenter", () => scrambleElement(h));
+        });
+
+        /* ==================================================================
+           2. MISSING FILES: optional images are skipped, empty blocks are hidden
+           ================================================================== */
+        function handleBroken(t) {
+            if (!t) return;
+
+            // Booklet: a missing page becomes a blank page; if the cover itself is missing, hide the section
+            if (t.tagName === "IMG" && t.closest(".cs-book")) {
+                console.warn("Style guide page not found:", t.getAttribute("src"));
+                const face = t.closest(".cs-face");
+                if (face && face.dataset.page !== "1") {
+                    face.classList.add("is-missing");
+                } else {
+                    const g = document.getElementById("guidelines");
+                    if (g) g.remove();
+                }
+                return;
+            }
+
+            // Optional visuals (files not uploaded yet) are removed completely, so nothing looks broken
+            const optional = t.closest && t.closest("[data-optional]");
+            if (optional) { optional.remove(); return; }
+
+            // A video whose file is missing gets the same labelled tile, not an empty black player
+            if (t.tagName === "VIDEO" || t.tagName === "SOURCE") {
+                const vid = t.tagName === "VIDEO" ? t : t.closest("video");
+                const vbox = vid && vid.closest(".cs-media");
+                if (vbox) {
+                    vbox.classList.add("is-missing");
+                    vid.remove();
+                }
+                return;
+            }
+
+            if (t.tagName !== "IMG") return;
+
+            // Neat tile with the description instead of a broken icon
+            const box = t.closest(".cs-media, .cs-hero-media");
+            if (box) {
+                box.classList.add("is-missing");
+                if (!box.dataset.label) box.dataset.label = t.alt || "";
+                t.remove();
+            }
+        }
+
+        document.addEventListener("error", (e) => {
+            if (e.target) handleBroken(e.target);
+        }, true);
+
+        // Catch images that already failed before this script ran
+        document.querySelectorAll("img").forEach(img => {
+            if (img.getAttribute("src") && img.complete && img.naturalWidth === 0) handleBroken(img);
+        });
+
+        // Videos that already failed before this script ran
+        document.querySelectorAll(".cs-media video").forEach(v => {
+            if (v.error || v.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) handleBroken(v);
+        });
+
+        /* ==================================================================
+           2b. UNFINISHED SECTIONS: a section with data-todo and "hidden" also hides its Contents entry
+           and spec row (anything with data-needs="its id"). Contents numbers then count up in order.
+           ================================================================== */
+        (function () {
+            document.querySelectorAll("section[data-todo][hidden]").forEach(sec => {
+                document.querySelectorAll('[data-needs="' + sec.id + '"]').forEach(el => el.remove());
+            });
+            document.querySelectorAll(".cs-contents .cs-num").forEach((num, i) => {
+                num.textContent = String(i + 1).padStart(2, "0");
+            });
+        })();
+
+        /* ==================================================================
+           3. SCROLL REVEAL (fires once per element; headings decrypt as they appear)
+           ================================================================== */
+        const toAnimate = document.querySelectorAll(".observe");
+
+        if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add("is-visible");
+                    if (entry.target.classList.contains("scramble-heading")) {
+                        scrambleElement(entry.target);
+                    }
+                    obs.unobserve(entry.target);
+                });
+            // Reveal slightly before an element reaches the screen, so fast scrolling never shows empty white bands
+            }, { threshold: 0, rootMargin: "0px 0px 15% 0px" });
+
+            toAnimate.forEach(el => observer.observe(el));
+        } else {
+            toAnimate.forEach(el => el.classList.add("is-visible"));
+        }
+
+        /* ==================================================================
+           4. 3D TILT ON IMAGES (same as the homepage cards)
+           ================================================================== */
+        if (!reduceMotion && canHover) {
+            document.addEventListener("mousemove", (e) => {
+                const card = e.target.closest && e.target.closest(".tilt-card");
+                if (!card) return;
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                card.style.transform =
+                    `perspective(1000px) scale3d(1.02, 1.02, 1.02) rotateX(${-y / 25}deg) rotateY(${x / 25}deg)`;
+            });
+
+            document.addEventListener("mouseout", (e) => {
+                const card = e.target.closest && e.target.closest(".tilt-card");
+                if (card && !card.contains(e.relatedTarget)) {
+                    card.style.transform = "";
+                }
+            });
+        }
+
+        /* ==================================================================
+           5. FLIPPABLE STYLE GUIDE (3D booklet built from the files listed in data-files)
+           ================================================================== */
+        (function () {
+            const book = document.getElementById("book");
+            if (!book) return;
+
+            const inner  = book.querySelector(".cs-book-inner");
+            const tilt   = book.querySelector(".cs-book-tilt");
+            const prev   = document.getElementById("book-prev");
+            const next   = document.getElementById("book-next");
+            const label  = document.getElementById("book-label");
+            const scrub  = document.getElementById("book-scrub");
+
+            const folder = book.dataset.folder;
+            const files  = book.dataset.files.split("|").map(f => f.trim()).filter(Boolean);
+            // A real booklet ends with the back cover on its own. With an odd number of pages, a blank
+            // inside page goes just before the back cover so it lands on the back of the last leaf.
+            if (files.length % 2 === 1 && files.length > 2) files.splice(files.length - 1, 0, "");
+            const names  = files.map(f => f.replace(/\.[a-z0-9]+$/i, ""));   // "Tone of voice.png" -> "Tone of voice"
+            const total  = files.length;
+            const n      = Math.ceil(total / 2);   // each leaf has a front and a back page
+            let flipped  = 0;                      // how many leaves are turned
+
+            const src = (i) => folder + encodeURIComponent(files[i]);   // spaces in filenames become %20
+
+            // Build the leaves: leaf i holds page 2i+1 (front) and page 2i+2 (back)
+            function face(pageNo, cls) {
+                const d = document.createElement("div");
+                d.className = "cs-face " + cls;
+                d.dataset.page = pageNo;
+                if (pageNo > total || !files[pageNo - 1]) return d;   // blank page
+                const img = document.createElement("img");
+                img.src = src(pageNo - 1);
+                img.alt = "Scran style guide: " + names[pageNo - 1];
+                img.draggable = false;
+                img.decoding = "async";
+                if (pageNo > 4) img.loading = "lazy";
+                d.appendChild(img);
+                return d;
+            }
+
+            const leaves = [];
+            for (let i = 0; i < n; i++) {
+                const leaf = document.createElement("div");
+                leaf.className = "cs-leaf";
+                leaf.appendChild(face(2 * i + 1, "cs-front"));
+                leaf.appendChild(face(2 * i + 2, "cs-back"));
+                inner.appendChild(leaf);
+                leaves.push(leaf);
+            }
+
+            scrub.max = n;
+
+            // Match the booklet's proportions to the page images
+            const probe = new Image();
+            probe.onload = function () {
+                if (!probe.naturalWidth || !probe.naturalHeight) return;
+                const ratio = probe.naturalWidth / probe.naturalHeight;
+                book.style.setProperty("--spread", (2 * probe.naturalWidth) + " / " + probe.naturalHeight);
+                if (ratio > 1) book.style.setProperty("--book-w", "1100px"); // landscape pages get more room
+            };
+            probe.src = src(0);
+
+            function settleLayers() {
+                leaves.forEach((leaf, i) => { leaf.style.zIndex = i < flipped ? i + 1 : n - i; });
+            }
+
+            function render() {
+                leaves.forEach((leaf, i) => leaf.classList.toggle("is-flipped", i < flipped));
+                book.classList.toggle("is-front", flipped === 0);
+                book.classList.toggle("is-back", flipped === n);
+                prev.disabled = flipped === 0;
+                next.disabled = flipped === n;
+                scrub.value = flipped;
+
+                // Name the pages on show, e.g. "Colours & Typography"
+                if (flipped === 0) label.textContent = names[0];
+                else if (flipped === n) label.textContent = names[total - 1];
+                else {
+                    const shown = [names[2 * flipped - 1], names[2 * flipped]].filter(Boolean);   // skip blank pages
+                    label.textContent = shown.join(" & ");
+                }
+            }
+
+            function go(target) {
+                target = Math.max(0, Math.min(n, target));
+                if (target === flipped) { render(); return; }
+                const from = Math.min(flipped, target);
+                const to   = Math.max(flipped, target);
+                for (let i = from; i < to; i++) {
+                    leaves[i].style.zIndex = 100 + (target > flipped ? i : n - i);
+                    leaves[i].classList.add("is-turning");
+                }
+                flipped = target;
+                render();
+                setTimeout(() => {
+                    leaves.forEach(l => l.classList.remove("is-turning"));
+                    settleLayers();
+                }, reduceMotion ? 0 : 900);
+            }
+
+            prev.addEventListener("click", (e) => { e.stopPropagation(); go(flipped - 1); });
+            next.addEventListener("click", (e) => { e.stopPropagation(); go(flipped + 1); });
+            scrub.addEventListener("input", () => go(parseInt(scrub.value, 10)));
+
+            // Click: left half = back, right half = forward. Drag/swipe: left = forward, right = back.
+            let downX = 0, downY = 0, swiped = false;
+            book.addEventListener("pointerdown", (e) => { downX = e.clientX; downY = e.clientY; swiped = false; });
+            book.addEventListener("pointerup", (e) => {
+                const dx = e.clientX - downX, dy = e.clientY - downY;
+                if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+                    swiped = true;
+                    go(flipped + (dx < 0 ? 1 : -1));
+                }
+            });
+            book.addEventListener("click", (e) => {
+                if (swiped) { swiped = false; return; }
+                const rect = book.getBoundingClientRect();
+                const onRight = (e.clientX - rect.left) > rect.width / 2;
+                if (flipped === 0) go(1);
+                else if (flipped === n) go(n - 1);
+                else go(onRight ? flipped + 1 : flipped - 1);
+            });
+            book.addEventListener("keydown", (e) => {
+                if (e.key === "ArrowRight") { go(flipped + 1); e.preventDefault(); }
+                if (e.key === "ArrowLeft")  { go(flipped - 1); e.preventDefault(); }
+            });
+
+            // Lean towards the pointer (mouse only)
+            if (!reduceMotion && canHover) {
+                book.addEventListener("mousemove", (e) => {
+                    const r = book.getBoundingClientRect();
+                    const x = (e.clientX - r.left) / r.width - 0.5;
+                    const y = (e.clientY - r.top) / r.height - 0.5;
+                    tilt.style.transform = "rotateX(" + (6 - y * 10) + "deg) rotateY(" + (x * 14) + "deg)";
+                });
+                book.addEventListener("mouseleave", () => { tilt.style.transform = ""; });
+            }
+
+            settleLayers();
+            render();
+        })();
+
+        /* ==================================================================
+           7. VIDEO: plays only while it is on screen
+           ================================================================== */
+        document.querySelectorAll(".cs-media video").forEach(v => {
+            if (reduceMotion || !("IntersectionObserver" in window)) return;
+            new IntersectionObserver(entries => {
+                entries.forEach(en => {
+                    if (en.isIntersecting) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+                    else v.pause();
+                });
+            }, { threshold: 0.4 }).observe(v);
+        });
+
+        /* ==================================================================
+           8. RISE UP (smooth scroll to top)
+           ================================================================== */
+        const rise = document.querySelector(".rise-up-btn");
+        if (rise) {
+            rise.addEventListener("click", (e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+        }
+    </script>
 </body>
-<script>
-  /* Page reveal on load (CSS uses html.body-ready to avoid flash) */
-  document.documentElement.classList.add('body-ready');
-  
-  /* Intercept internal links for a graceful exit, then navigate.
-     Uses View Transitions API when available; falls back to CSS fade. */
-  (function () {
-    const isInternal = (a) => (
-      a &&
-      a.origin === window.location.origin &&
-      !a.hasAttribute('download') &&
-      a.getAttribute('target') !== '_blank' &&
-      !a.getAttribute('href')?.startsWith('#')
-    );
-  
-    addEventListener('click', (e) => {
-      const a = e.target.closest('a');
-      if (!isInternal(a)) return;
-  
-      e.preventDefault();
-      const go = () => location.href = a.href;
-  
-      if (document.startViewTransition) {
-        // Native View Transition (Chrome/Edge/Arc)
-        document.startViewTransition(() => {
-          document.body.classList.add('leaving');
-        }).finished.then(go);
-      } else {
-        // CSS fallback
-        document.body.classList.add('leaving');
-        setTimeout(go, 250);
-      }
-    }, { capture: true });
-  })();
-  </script>
-  
 </html>

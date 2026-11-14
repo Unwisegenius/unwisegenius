@@ -3,8 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Me</title>
-    <link rel="icon" type="image/x-icon" href="/assets/faviconbrain.png">
+    <title>About Me | Jared Russell | UnwiseGenius</title>
+    <meta name="description" content="About Jared Russell (UnwiseGenius): a Digital Design student at Ulster University, based in Belfast, focused on UI/UX, branding, research and accessible design.">
+
+    <!-- Favicon (same set as every other page) -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/brain-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/brain-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/brain-180.png">
+    <meta name="theme-color" content="#4D04FF">
 
     <!-- Google Fonts: Rajdhani (Bold) for Nav/Footer & Space Grotesk (Bold) for Headings -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,8 +23,49 @@
     <!-- External CSS (keep this ?v= number in sync with index.html) -->
     <link rel="stylesheet" href="style.css?v=5">
 
-    <!-- About Page Specific Navigation Overrides -->
+    <!-- If JavaScript is off, show every section instead of leaving them faded out -->
+    <noscript>
+        <style>.reveal-section { opacity: 1 !important; transform: none !important; }</style>
+    </noscript>
+
+    <!-- About Page Specific Styles -->
     <style>
+        /* Screen-reader-only text, and a "Skip to content" link that appears when you press Tab */
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+        }
+
+        .skip-link {
+            position: absolute;
+            left: 16px;
+            top: -60px;
+            z-index: 1000;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background-color: #CFFF04;
+            color: #111111;
+            font-family: "Rajdhani", sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: top 0.2s ease;
+        }
+
+        .skip-link:focus { top: 12px; }
+
+        a:focus-visible,
+        button:focus-visible {
+            outline: 3px solid #4D04FF;
+            outline-offset: 4px;
+            border-radius: 4px;
+        }
+
+        header a:focus-visible,
+        footer a:focus-visible,
+        #about-cta a:focus-visible { outline-color: #CFFF04; }
+
         body {
             background-color: #ffffff;
         }
@@ -34,48 +81,132 @@
             min-height: 200px;
         }
 
+        /* Dark text on pink: #111 on #FB4CD1 is about 6.3:1 (white was 2.98:1 and failed WCAG AA) */
+        #philosophy,
+        #philosophy p,
+        #philosophy h2 { color: #111111; }
+
+        /* Small label above a heading (not used right now, kept for future sections) */
+        .ab-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8em;
+            font-family: "Rajdhani", sans-serif;
+            font-weight: 700;
+            font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .ab-kicker::before {
+            content: "";
+            width: 2.4em;
+            height: 3px;
+            background-color: currentColor;
+        }
+
+        .ab-band { padding: clamp(70px, 9vw, 120px) 8vw; }
+
+        .ab-band h2 {
+            font-size: clamp(2.6rem, 4.2vw, 4.2rem);
+            letter-spacing: -1.5px;
+            line-height: 1.05;
+            margin-bottom: clamp(28px, 3.5vw, 48px);
+            cursor: default;
+        }
+
+        /* --- CALL TO ACTION (purple) --- */
+        #about-cta { background-color: #4D04FF; color: #ffffff; text-align: center; }
+
+        #about-cta p { max-width: 36em; margin: 0 auto clamp(28px, 3vw, 40px); color: rgba(255, 255, 255, 0.95); }
+
+        .ab-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px 18px;
+        }
+
+        .ab-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6em;
+            padding: 0.95em 1.8em;
+            border-radius: 999px;
+            border: 2.5px solid #CFFF04;
+            font-family: "Rajdhani", sans-serif;
+            font-weight: 700;
+            font-size: clamp(1rem, 1.3vw, 1.2rem);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+        }
+
+        .ab-btn--fill   { background-color: #CFFF04; color: #111111; }
+        .ab-btn--ghost  { background-color: transparent; color: #CFFF04; }
+
+        .ab-btn:hover { transform: translateY(-2px); }
+        .ab-btn--fill:hover  { background-color: #ffffff; border-color: #ffffff; }
+        .ab-btn--ghost:hover { background-color: #CFFF04; color: #111111; }
+
         @media (max-width: 768px) {
             #about-top {
                 padding-top: 50px;
             }
         }
+
+        /* --- REDUCED MOTION --- */
+        @media (prefers-reduced-motion: reduce) {
+            .reveal-section { opacity: 1 !important; transform: none !important; transition: none !important; }
+            .floating-avatar { animation: none !important; }
+            .ab-btn, .portrait-wrapper img { transition: none !important; }
+            .ab-btn:hover { transform: none; }
+        }
     </style>
 </head>
 <body>
+
+    <a class="skip-link" href="#main">Skip to content</a>
 
     <!-- === HEADER / NAVIGATION === -->
     <header>
         <div class="top-left">
             <a href="index.html">
-                <img src="assets/brain-180.png" alt="Home" class="brain-icon" width="38">
+                <img src="assets/brain-180.png" alt="UnwiseGenius home" class="brain-icon" width="38" height="38">
             </a>
         </div>
         <nav class="top-right">
-            <a href="about.html" class="cyber-nav-link" data-text="About Me">About Me</a>
+            <a href="about.html" class="cyber-nav-link" data-text="About Me" aria-current="page">About Me</a>
             <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio">Portfolio</a>
             <a href="contact.html" class="cyber-nav-link" data-text="Get in Touch!">Get in Touch!</a>
         </nav>
     </header>
+
+    <main id="main">
 
     <!-- === ABOUT TOP SECTION (White Background) === -->
     <section id="about-top" class="reveal-section visible">
         <div class="about-top-content">
             <h1 class="scramble-heading text-purple">More about Me!</h1>
 
-            <p>My name is Jared Russell, a UX design student passionate about user interaction and branding. I'm seeking a role in design that prioritises creativity and innovation.</p>
+            <p class="lead-text">Hi, I'm Jared Russell, a Digital Design student at Ulster University.</p>
 
-            <p>Apart from designing, I love researching design trends, exploring digital spaces, and enjoying a good cup of coffee.</p>
+            <p>I'm passionate about user interaction and branding, and I'm looking for a role in design that prioritises creativity and innovation.</p>
+
+            <p>Apart from designing, I love researching design trends, exploring digital spaces and enjoying a good cup of coffee.</p>
 
             <div class="location-block">
                 <h2 class="scramble-heading text-purple">Location</h2>
-                <p>Based in Belfast, Open to Anywhere!</p>
+                <p>Based in Belfast, and open to opportunities anywhere!</p>
             </div>
         </div>
 
         <div class="about-top-image">
             <div class="portrait-wrapper tilt-card">
-                <!-- The old via.placeholder.com fallback no longer works, so a missing image is now just hidden -->
-                <img src="assets/jared-portrait.jpg" alt="Jared Russell Portrait" onerror="this.style.display='none'">
+                <!-- If the photo is ever missing, it's hidden (see the script at the bottom) -->
+                <img src="assets/jared-portrait.jpg" alt="A portrait photo of Jared Russell" width="564" height="649">
                 <div class="scanline-sweep"></div>
             </div>
         </div>
@@ -86,22 +217,35 @@
         <div class="philosophy-content">
             <h2 class="scramble-heading">Design Philosophy</h2>
 
-            <p>I'm still learning and growing both as a designer and a person, so my design philosophy will only grow with design and its many practices.</p>
+            <p>I'm still learning and growing, both as a designer and as a person, so my design philosophy will keep growing with me.</p>
 
-            <p>As of right now, I believe that design should be accessible to everyone. Everything I design will always be pushed further, asking questions like: how can I improve this? What did I learn?</p>
+            <p>Right now, I believe design should be accessible to everyone. I always push my work further by asking: how can I improve this, and what did I learn?</p>
 
             <p>I believe every project, specifically in UI/UX design, should be backed by research, with constant feedback and ideation throughout.</p>
 
-            <p>I also enjoy working with others, as that is what pushes a designer to do their best and keeps the work accountable and high quality.</p>
+            <p>I also enjoy working with others. Collaboration pushes a designer to do their best, and keeps the work accountable and high quality.</p>
         </div>
 
         <div class="philosophy-image">
             <div class="avatar-holo-wrapper">
                 <!-- Tip: rename this file to john-mouse-avatar.png (no spaces/capitals) and update the path -->
-                <img src="assets/John Mouse Avatar.png" alt="Pixel Cursor Avatar" class="floating-avatar">
+                <img src="assets/John%20Mouse%20Avatar.png" alt="John Mouse, a pixel-art cursor character from my mousepad design" class="floating-avatar" loading="lazy">
             </div>
         </div>
     </section>
+
+    <!-- === CALL TO ACTION (Purple Background) === -->
+    <section id="about-cta" class="ab-band reveal-section" aria-labelledby="cta-title">
+        <h2 class="scramble-heading" id="cta-title">Let's work together!</h2>
+        <p>Whether you're hiring or have a project in mind, I'd love to hear from you. You'll find my skills and experience on my CV.</p>
+        <div class="ab-actions">
+            <a href="contact.html" class="ab-btn ab-btn--fill">Get in touch <span aria-hidden="true">&rarr;</span></a>
+            <a href="portfolio.html" class="ab-btn ab-btn--ghost">See my work <span aria-hidden="true">&rarr;</span></a>
+            <a href="assets/Jared%20Russell%20CV%202026.pdf" download="Jared Russell CV 2026.pdf" class="ab-btn ab-btn--ghost">Download my CV <span aria-hidden="true">&darr;</span><span class="sr-only"> (PDF, 117 KB)</span></a>
+        </div>
+    </section>
+
+    </main>
 
     <!-- === FOOTER === -->
     <footer id="contact">
@@ -111,18 +255,22 @@
             </a>
         </div>
         <div class="footer-right">
-            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram</a>
-            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
-            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">Youtube</a>
+            <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href="https://www.youtube.com/@jaredrussell3511" target="_blank" rel="noopener" class="footer-link">YouTube<span class="sr-only"> (opens in a new tab)</span></a>
         </div>
     </footer>
 
     <!-- === CYBERPUNK SCRIPT === -->
     <script>
-        // 1. Text scramble (spaces preserved)
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const canHover     = window.matchMedia("(hover: hover)").matches;
+
+        // 1. Text scramble (spaces preserved; skipped for people who prefer less motion)
         const GLYPHS = "!/<>[]-_=+*^?#_0101";
 
         function scrambleElement(element) {
+            if (!element || reduceMotion) return;
             const originalText = element.getAttribute("data-original") || element.innerText;
             element.setAttribute("data-original", originalText);
             let iteration = 0;
@@ -177,8 +325,16 @@
             document.querySelectorAll(".reveal-section").forEach(sec => sec.classList.add("visible"));
         }
 
-        // 3. Card tilt (uses live bounds, so it stays accurate while scrolling)
-        document.querySelectorAll(".tilt-card").forEach(card => {
+        // 3. Missing portrait? Hide it instead of showing a broken image icon
+        const portrait = document.querySelector(".portrait-wrapper img");
+        if (portrait) {
+            const hide = () => { portrait.style.display = "none"; };
+            portrait.addEventListener("error", hide);
+            if (portrait.complete && portrait.naturalWidth === 0) hide();
+        }
+
+        // 4. Card tilt (mouse only; uses live bounds, so it stays accurate while scrolling)
+        if (!reduceMotion && canHover) document.querySelectorAll(".tilt-card").forEach(card => {
             card.addEventListener("mousemove", (e) => {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left - rect.width / 2;
@@ -188,7 +344,7 @@
             });
 
             card.addEventListener("mouseleave", () => {
-                card.style.transform = "perspective(1000px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg)";
+                card.style.transform = "";
             });
         });
     </script>
