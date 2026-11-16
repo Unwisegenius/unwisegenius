@@ -732,13 +732,21 @@
         }
 
         .rise-up-btn {
-            display: inline-block;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            color: #111111;
             cursor: pointer;
             user-select: none;
         }
 
-        .rise-up-btn h2 {
+        /* Same look as before, but a span: a link should not contain a heading */
+        .rise-up-label {
+            font-family: 'Space Grotesk', -apple-system, sans-serif;
+            font-weight: 700;
             font-size: clamp(3rem, 8vw, 7rem);
+            line-height: normal;
             letter-spacing: -2px;
             text-transform: uppercase;
             display: inline-block;
@@ -746,7 +754,16 @@
             transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
         }
 
-        .rise-up-btn:hover h2 {
+        .rise-up-hint {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .rise-up-btn:hover .rise-up-label,
+        .rise-up-btn:focus-visible .rise-up-label {
             color: var(--cs-purple);
             transform: skewX(-12deg);
             text-shadow: 6px 6px 0 var(--cs-lime);
@@ -800,7 +817,7 @@
         </div>
         <nav class="top-right">
             <a href="about.html" class="cyber-nav-link" data-text="About Me">About Me</a>
-            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio">Portfolio</a>
+            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio" aria-current="page">Portfolio</a>
             <a href="contact.html" class="cyber-nav-link" data-text="Get in Touch!">Get in Touch!</a>
         </nav>
     </header>
@@ -824,7 +841,7 @@
 
                 <figure class="cs-hero-fig fade-up observe stagger-3">
                     <div class="cs-hero-media" data-label="The Anatomy of Sugar product shot">
-                        <img src="assets/anatomyofsugarproductshot.jpeg" alt="The finished Anatomy of Sugar catalogue" decoding="async" fetchpriority="high">
+                        <img src="assets/anatomyofsugarproductshot.jpeg" width="2528" height="1696" alt="The finished Anatomy of Sugar catalogue" decoding="async" fetchpriority="high">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The finished catalogue: every category of sweets reimagined in a Saul Bass style, with the imagery doing the selling.</figcaption>
@@ -837,7 +854,6 @@
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">Summary of Project</h2>
                 <p class="fade-up observe stagger-1">The Anatomy of Sugar is a catalogue built to sell 30+ sweets, with Saul Bass-inspired imagery made from my own photography, AI generation and a lot of hands-on editing.</p>
-        
 
                 <div class="cs-duo">
                     <div id="contents">
@@ -924,7 +940,7 @@
                 <p class="fade-up observe">To start the project, I needed photos of the sweets, so off to City Market I went, where I bought $90 worth of them. I should note these photos were taken three weeks after I moved to Colorado for my year abroad, so that was definitely not the welcome I was expecting&hellip;</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="Sweets on a checkout counter">
-                        <img src="assets/sweetsonacheckout.png" alt="Dozens of packets of sweets piled on a supermarket checkout counter" loading="lazy" decoding="async">
+                        <img src="assets/sweetsonacheckout.png" width="1920" height="1080" alt="Dozens of packets of sweets piled on a supermarket checkout counter" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">My $90 haul at the City Market checkout. Every sweet in the catalogue started here, photographed so the packaging could be reproduced accurately.</figcaption>
@@ -933,7 +949,7 @@
                 <p class="fade-up observe">I then took a bunch of photos of the different packaging so I could get the highest quality when generating images using Gemini.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media" data-label="Video of the sweets">
-                        <video src="assets/videoofsweets.mp4#t=0.1" muted loop playsinline preload="metadata" controls aria-label="Video of the sweets and their packaging, filmed as reference for image generation"></video>
+                        <video src="assets/videoofsweets.mp4#t=0.1" width="1920" height="1080" muted loop playsinline preload="metadata" controls aria-label="Video of the sweets and their packaging, filmed as reference for image generation"></video>
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">Video of the different sweets and their packaging, used as reference for image generation.</figcaption>
@@ -949,14 +965,14 @@
                 <div class="cs-grid cs-grid--2">
                     <figure class="fade-up observe stagger-1">
                         <div class="cs-media tilt-card" data-label="Two item parent page layout">
-                            <img src="assets/twoitemlayout.png" alt="InDesign parent page layout for two products" loading="lazy" decoding="async">
+                            <img src="assets/twoitemlayout.png" width="2158" height="1394" alt="An InDesign parent page with two product slots: grey image frames, a heading, body text and a price tag for each" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                         <figcaption class="cs-caption">A two-item parent page. As in every layout, the imagery leads and the text supports the sale.</figcaption>
                     </figure>
                     <figure class="fade-up observe stagger-2">
                         <div class="cs-media tilt-card" data-label="Single item parent page layout">
-                            <img src="assets/singleitemlayout.png" alt="InDesign parent page layout for a single product" loading="lazy" decoding="async">
+                            <img src="assets/singleitemlayout.png" width="2158" height="1394" alt="An InDesign parent page with one large image frame filling most of the spread, and a heading, body text and price tag below" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                         <figcaption class="cs-caption">A single-item parent page, giving one product the whole page to sell itself.</figcaption>
@@ -972,7 +988,7 @@
                 <p class="fade-up observe">With Gemini, I generated a lot of images of these sweets in different Saul Bass styles. Each category was inspired by his work, so, for example, the peanuts were inspired by his poster for The Shining.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="The Shining inspired peanuts">
-                        <img src="assets/theshiningpeanutsinspiration.png" alt="Peanut packets illustrated in the style of Saul Bass&rsquo;s poster for The Shining" loading="lazy" decoding="async">
+                        <img src="assets/theshiningpeanutsinspiration.png" width="1298" height="590" alt="Peanut packets illustrated in the style of Saul Bass&rsquo;s poster for The Shining" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">Peanuts, inspired by Saul Bass&rsquo;s poster for The Shining. Each category borrows from a different piece of his work.</figcaption>
@@ -981,22 +997,20 @@
                 <h3 class="fade-up observe">Developing the style</h3>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="Mood board for the catalogue">
-                        <img src="assets/sugar-moodboard.png" alt="My mood board for the look of the catalogue" loading="lazy" decoding="async">
+                        <img src="assets/sugar-moodboard.png" width="4899" height="1623" alt="My mood board: Saul Bass posters and logos, including Vertigo, Spartacus and Bonjour Tristesse, beside newer posters in his style" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">Before generating anything, I was looking for a look that captured the drama of Saul Bass&rsquo;s design: dark, moody and rough-edged.</figcaption>
                 </figure>
 
-                <!-- Two images under one caption. Left: Saul Bass's Exodus poster. Right: my cookies image.
-                     If your files are the other way round, swap the two src values (the alt text goes with the image). -->
                 <figure class="cs-fig cs-pair fade-up observe">
                     <div class="cs-pair-media">
                         <div class="cs-media tilt-card" data-label="Saul Bass's poster for Exodus">
-                            <img src="assets/sugar-reference-1.png" alt="Saul Bass&rsquo;s poster for the film Exodus, with arms reaching up for a rifle" loading="lazy" decoding="async">
+                            <img src="assets/sugar-reference-1.png" width="2280" height="1481" alt="Saul Bass&rsquo;s poster for the film Exodus, with arms reaching up for a rifle" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                         <div class="cs-media tilt-card" data-label="My cookies image, inspired by Exodus">
-                            <img src="assets/sugar-reference-2.png" alt="My cookies image for the catalogue, with arms reaching up and fighting over cookies" loading="lazy" decoding="async">
+                            <img src="assets/sugar-reference-2.png" width="1958" height="1274" alt="My cookies image for the catalogue, with arms reaching up and fighting over cookies" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                     </div>
@@ -1009,17 +1023,17 @@
                 <p class="fade-up observe">Take this spread of the Twizzlers. Making the halftone texture, the explosive shape and each hand-drawn Twizzler would have taken me hours, whereas with Gemini it took less than an hour and stayed consistent with the Roy Lichtenstein pop art style. I thought it would be fun to have the Twizzlers be their own advertisement in the catalogue, as I only bought one liquorice product. It is the one spread that steps outside the Saul Bass style on purpose: an advert inside the catalogue, so it is allowed to look like something else.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="Twizzlers pop art spread">
-                        <img src="assets/twizzlersspread.png" alt="A pop art spread of Twizzlers with halftone dots and an explosive burst shape" loading="lazy" decoding="async">
+                        <img src="assets/twizzlersspread.png" width="2154" height="1396" alt="A pop art spread of Twizzlers with halftone dots and an explosive burst shape" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The Twizzlers spread, in the style of Roy Lichtenstein. My only liquorice product, so it got a full-page advert of its own.</figcaption>
                 </figure>
 
                 <h3 class="fade-up observe">So is AI okay to use?</h3>
-                <p class="fade-up observe">It isn&rsquo;t a job stealer for designers; it&rsquo;s a tool. I feel this project supports that claim, because I still had to do so much work for it to look good. To put the nail in the coffin, here is an example of the first prompt result compared with the final image once I had put my input in.</p>
+                <p class="fade-up observe">It isn&rsquo;t a job stealer for designers; it&rsquo;s a tool. I feel this project supports that claim, because I still had to do so much work for it to look good. To prove the point, here is an example of the first prompt result compared with the final image once I had put my input in.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="Before and after my input">
-                        <img src="assets/before%26aftermyinput.png" alt="Gemini&rsquo;s first generated image beside the final edited version used in the catalogue" loading="lazy" decoding="async">
+                        <img src="assets/before%26aftermyinput.png" width="853" height="693" alt="Gemini&rsquo;s first generated image beside the final edited version used in the catalogue" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">Before and after: Gemini&rsquo;s first result next to the final image. The gap between the two is the colour correction, packaging fixes and styling I did by hand.</figcaption>
@@ -1057,7 +1071,7 @@
                 <h3 class="fade-up observe">In print</h3>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="Mockup of the printed catalogue">
-                        <img src="assets/sugar-print-mockup.png" alt="A mockup of The Anatomy of Sugar as a printed booklet" loading="lazy" decoding="async">
+                        <img src="assets/sugar-print-mockup.png" width="2400" height="1792" alt="A woman reading the printed catalogue, open on its Sweetness by Design spread" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">In print, the catalogue would be light in the hand and close to the size of an A4 booklet.</figcaption>
@@ -1065,7 +1079,7 @@
 
                 <div class="cs-actions fade-up observe">
                     <a href="assets/theanatomyofsugar.pdf" download="The Anatomy of Sugar.pdf" class="cyber-btn" id="pdf-download">
-                        <span>Download the PDF <span class="sr-only">(38 MB)</span></span>
+                        <span>Download the PDF (38 MB)</span>
                         <span class="arrow">&darr;</span>
                     </a>
                     <a href="https://unwisegenius.com/catalogue.html" target="_blank" rel="noopener" class="cyber-btn">
@@ -1086,14 +1100,14 @@
                 <div class="cs-grid cs-grid--2">
                     <figure class="fade-up observe">
                         <div class="cs-media tilt-card" data-label="A category page on the shop site">
-                            <img src="assets/sugar-shop-category.png" alt="A category page on the Shop Sugar website" loading="lazy" decoding="async">
+                            <img src="assets/sugar-shop-category.png" width="3358" height="2014" alt="The Cookies category page on the shop site: a blue banner and illustrated product cards" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                         <figcaption class="cs-caption">The categories follow the same order as the catalogue&rsquo;s contents.</figcaption>
                     </figure>
                     <figure class="fade-up observe stagger-1">
                         <div class="cs-media tilt-card" data-label="A product page on the shop site">
-                            <img src="assets/sugar-shop-product.png" alt="A product page on the Shop Sugar website" loading="lazy" decoding="async">
+                            <img src="assets/sugar-shop-product.png" width="3370" height="2022" alt="The Tony&rsquo;s Chocolonely product page on the shop site, with its illustration, price and Add to cart button" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                         <figcaption class="cs-caption">What a shopper sees when buying one of the sweets.</figcaption>
@@ -1102,7 +1116,7 @@
                 <!-- Videos sit flat (no tilt-card), so the player controls stay easy to use -->
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media" data-label="Screen recording of the shop site in use">
-                        <video src="assets/sugar-shop-in-use.mp4#t=0.1" muted loop playsinline preload="metadata" controls aria-label="Screen recording of someone buying a Butterfinger and Oreo Minis on the shop site"></video>
+                        <video src="assets/sugar-shop-in-use.mp4#t=0.1" width="3370" height="2022" muted loop playsinline preload="metadata" controls aria-label="Screen recording of someone buying a Butterfinger and Oreo Minis on the shop site"></video>
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">Buying a Butterfinger and Oreo Minis on the shop site.</figcaption>
@@ -1121,8 +1135,8 @@
         <section id="ai" class="cs-band cs-band--purple">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">AI Transparency</h2>
-                <p class="fade-up observe"><strong>Where AI was used:</strong> Gemini generated the Saul Bass-style imagery for each sweet, using my own photos and video of the packaging as reference. Gemini also helped me code the shop website, mainly its responsive layout for phones.</p>
-                <p class="fade-up observe"><strong>What I did by hand:</strong> I took all the reference photography, designed the catalogue&rsquo;s parent pages and layouts in InDesign, and edited every generated image in Photoshop, correcting the colours, fixing packaging details and pushing each one closer to the style. That took around 4 days of generating and editing.</p>
+                <p class="fade-up observe"><strong>Where AI was used:</strong> Gemini generated the Saul Bass-style imagery for each sweet, using my own photos and video of the packaging as reference. Gemini also generated the hero product shot and the &ldquo;In print&rdquo; mockup of the catalogue, and helped me code the shop website, mainly its responsive layout for phones.</p>
+                <p class="fade-up observe"><strong>What I did by hand:</strong> I took all the reference photography, designed the catalogue&rsquo;s parent pages and layouts in InDesign, and edited every generated image in Photoshop, correcting the colours, fixing packaging details and pushing each one closer to the style. That took around 4 days of generating and editing. I also wrote all the product descriptions in the catalogue and on the shop site myself.</p>
                 <p class="fade-up observe"><strong>Why:</strong> Building physical sets for 30+ products wasn&rsquo;t possible within the deadline. The before-and-after above shows how far the final images moved from Gemini&rsquo;s first results.</p>
                 <p class="fade-up observe"><strong>The writing:</strong> this write-up is in my own words, with no AI used.</p>
             </div>
@@ -1153,8 +1167,9 @@
 
         <!-- === RISE UP (scroll to top) === -->
         <section class="cs-rise fade-in observe">
-            <a href="#top" class="rise-up-btn" aria-label="Scroll to top of page">
-                <h2>Rise Up!</h2>
+            <a href="#top" class="rise-up-btn">
+                <span class="rise-up-label">Rise Up!</span>
+                <span class="rise-up-hint">Back to top &uarr;</span>
             </a>
         </section>
 
@@ -1574,14 +1589,26 @@
         })();
 
         /* ==================================================================
-           7. VIDEO: plays only while it is on screen
+           7. VIDEO: silent loops play while on screen (never with reduced motion);
+              once a visitor pauses one, it stays paused. Videos with sound never start by themselves.
            ================================================================== */
         document.querySelectorAll(".cs-media video").forEach(v => {
-            if (reduceMotion || !("IntersectionObserver" in window)) return;
+            if (!("IntersectionObserver" in window)) return;
+            let autoPausing = false;
+            v.addEventListener("pause", () => { if (!autoPausing) v.dataset.userPaused = "1"; });
+            v.addEventListener("play",  () => { delete v.dataset.userPaused; });
             new IntersectionObserver(entries => {
                 entries.forEach(en => {
-                    if (en.isIntersecting) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
-                    else v.pause();
+                    if (en.isIntersecting) {
+                        if (v.muted && !reduceMotion && !v.dataset.userPaused) {
+                            const p = v.play();
+                            if (p && p.catch) p.catch(() => {});
+                        }
+                    } else if (!v.paused) {
+                        autoPausing = true;
+                        v.pause();
+                        autoPausing = false;
+                    }
                 });
             }, { threshold: 0.4 }).observe(v);
         });
@@ -1593,7 +1620,9 @@
         if (rise) {
             rise.addEventListener("click", (e) => {
                 e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+                const skip = document.querySelector(".skip-link");
+                if (skip) skip.focus({ preventScroll: true });
             });
         }
     </script>

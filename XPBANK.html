@@ -365,13 +365,6 @@
         .cs-grid--3 { grid-template-columns: repeat(3, 1fr); }
         .cs-grid--2 { grid-template-columns: repeat(2, 1fr); }
 
-        /* Placeholder for an image that hasn't been added yet: a dashed box naming the file it needs */
-        .cs-media.cs-todo.is-missing {
-            min-height: 240px;
-            border: 3px dashed currentColor;
-            background-color: rgba(0, 0, 0, 0.06);
-        }
-
         /* --- LISTS --- */
         .cs-bullets {
             list-style: none;
@@ -852,14 +845,6 @@
 
         .cs-next-link--next { text-align: right; margin-left: auto; }
 
-        /* --- HERO SHOT (closes the case study) --- */
-        .cs-hero-shot img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: clamp(10px, 1.2vw, 18px);
-        }
-
         /* --- RISE UP --- */
         .cs-rise {
             text-align: center;
@@ -867,13 +852,21 @@
         }
 
         .rise-up-btn {
-            display: inline-block;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            color: #111111;
             cursor: pointer;
             user-select: none;
         }
 
-        .rise-up-btn h2 {
+        /* Same look as before, but a span: a link should not contain a heading */
+        .rise-up-label {
+            font-family: 'Space Grotesk', -apple-system, sans-serif;
+            font-weight: 700;
             font-size: clamp(3rem, 8vw, 7rem);
+            line-height: normal;
             letter-spacing: -2px;
             text-transform: uppercase;
             display: inline-block;
@@ -881,7 +874,16 @@
             transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
         }
 
-        .rise-up-btn:hover h2 {
+        .rise-up-hint {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .rise-up-btn:hover .rise-up-label,
+        .rise-up-btn:focus-visible .rise-up-label {
             color: var(--cs-purple);
             transform: skewX(-12deg);
             text-shadow: 6px 6px 0 var(--cs-lime);
@@ -978,12 +980,12 @@
     <header>
         <div class="top-left">
             <a href="index.html">
-                <img src="assets/brain-180.png" alt="UnwiseGenius home" class="brain-icon" width="38">
+                <img src="assets/brain-180.png" alt="UnwiseGenius home" class="brain-icon" width="38" height="38">
             </a>
         </div>
         <nav class="top-right">
             <a href="about.html" class="cyber-nav-link" data-text="About Me">About Me</a>
-            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio">Portfolio</a>
+            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio" aria-current="page">Portfolio</a>
             <a href="contact.html" class="cyber-nav-link" data-text="Get in Touch!">Get in Touch!</a>
         </nav>
     </header>
@@ -1007,7 +1009,7 @@
 
                 <figure class="cs-hero-fig fade-up observe stagger-3">
                     <div class="cs-hero-media" data-label="XP Bank banner">
-                        <img src="assets/xpbanner.png" alt="The XP Bank banner, showing the brand&rsquo;s bold brutalist identity" decoding="async" fetchpriority="high">
+                        <img src="assets/xpbanner.png" width="4977" height="1485" alt="The XP Bank banner, showing the brand&rsquo;s bold brutalist identity" decoding="async" fetchpriority="high">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">A bank for 16&ndash;25 year olds, built around the moments banks usually get wrong: scams, locked accounts and waiting for help.</figcaption>
@@ -1031,8 +1033,10 @@
                             <li class="fade-right observe stagger-4"><a href="#development"><span class="cs-num">04</span>Development</a></li>
                             <li class="fade-right observe stagger-4"><a href="#final-product"><span class="cs-num">05</span>Final Product</a></li>
                             <li class="fade-right observe stagger-4"><a href="#motion"><span class="cs-num">06</span>Motion</a></li>
-                            <li class="fade-right observe stagger-4"><a href="#ai"><span class="cs-num">07</span>AI Transparency</a></li>
-                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num">08</span>Reflection</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#guidelines"><span class="cs-num">07</span>Brand Guidelines</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#prototypes"><span class="cs-num">08</span>Interactive Prototypes</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#ai"><span class="cs-num">09</span>AI Transparency</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num">10</span>Reflection</a></li>
                         </ul>
                     </div>
 
@@ -1049,7 +1053,7 @@
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12"/><path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2"/><path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4"/></svg>
                                 </span>
-                                <p>The project ran for <strong>12 weeks</strong>.</p>
+                                <p>The project ran for <strong>12 weeks</strong> (February&ndash;May 2025).</p>
                             </li>
                             <li class="cs-spec fade-left observe stagger-2">
                                 <span class="cs-spec-icon" aria-hidden="true">
@@ -1089,10 +1093,11 @@
                     <div class="fade-right observe">
                         <p>We were tasked with creating a commercial bank brand aimed at 16–25 year olds. We could either rebrand an existing bank or create a new one.</p>
                         <p>XP Bank was built as a new brand from the ground up, so it could be shaped entirely around the needs, behaviours, and expectations of that age group.</p>
+                        <p><strong>The concept:</strong> a bank built around the moments banks usually get wrong, such as scams, locked accounts and waiting for help, with security and support always one tap away.</p>
                     </div>
                     <figure class="fade-left observe">
                         <div class="cs-media tilt-card" data-label="Person holding money">
-                            <img src="assets/brief-money.png" alt="A young person holding cash" loading="lazy" decoding="async">
+                            <img src="assets/brief-money.png" width="727" height="578" alt="A young person holding cash" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                         <figcaption class="cs-caption">Starting a brand from scratch, rather than rebranding, meant every decision could be made for this age group.</figcaption>
@@ -1119,20 +1124,17 @@
                     </div>
                     <figure class="fade-left observe">
                         <div class="cs-media tilt-card" data-label="Reviews of Nationwide & Monzo Bank">
-                            <img src="assets/bankreviews.png" alt="Trustpilot reviews of Nationwide and Monzo complaining about waiting times, verification and support" loading="lazy" decoding="async">
+                            <img src="assets/bankreviews.png" width="3120" height="2672" alt="Trustpilot reviews of Nationwide and Monzo complaining about waiting times, verification and support" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                         <figcaption class="cs-caption">Trustpilot reviews of Nationwide and Monzo. The same three complaints kept coming up, and each one became a value XP Bank had to answer.</figcaption>
                     </figure>
                 </div>
 
-                <!-- PLACEHOLDER IMAGES: each one shows as a dashed box naming the file it is waiting for.
-                     Save the image in assets/ under that name (or change the src to your own file name),
-                     then replace the alt text and the [Caption to write: ...] line. -->
                 <h3 class="fade-up observe">User personas</h3>
                 <figure class="fade-up observe">
-                    <div class="cs-media cs-todo tilt-card" data-label="PLACEHOLDER: the user personas (save it as assets/xp-personas.png)">
-                        <img src="assets/xp-personas.png" alt="TODO: describe this image" loading="lazy" decoding="async">
+                    <div class="cs-media tilt-card" data-label="User personas">
+                        <img src="assets/xp-personas.png" width="2880" height="866" alt="Two user persona sheets side by side: Will, who wants fast access, branch support and budgeting tools, and Ellie, who needs easy international banking" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">Will’s need for fast access, branch support, and budgeting inspired speed, human support, and control, while Ellie’s need for easy international banking inspired accessibility and simplicity.</figcaption>
@@ -1148,7 +1150,7 @@
                 <!-- One large image: mind map and logo iterations (assets/IdeationXP.png) -->
                 <figure class="cs-ideation fade-up observe">
                     <div class="cs-media tilt-card" data-label="Mind map and logo iterations">
-                        <img src="assets/IdeationXP.png" alt="XP Bank mind map and logo iterations" loading="lazy" decoding="async">
+                        <img src="assets/IdeationXP.png" width="2897" height="1370" alt="XP Bank mind map and logo iterations" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The mind map and logo iterations. The early cyberpunk ideas are here too, before critique pushed the identity towards a clearer brutalist style.</figcaption>
@@ -1157,10 +1159,7 @@
                 <p class="fade-up observe">Real user pain points shaped the brand identity. Users struggle most during moments of stress, such as scams, locked accounts, or unexpected issues, so the design prioritises visible security actions, simplified user flows, and a dedicated help area that feels reassuring rather than intimidating.</p>
                 <p class="fade-up observe">The first visual direction was cyberpunk-inspired, influenced by Cyberpunk 2077 and Blade Runner 2049. Critique and reflection showed it was too niche and risked harming accessibility, so it was refined into a more restrained, brutalist style that kept its personality while significantly improving clarity and usability.</p>
 
-                <!-- PLACEHOLDER IMAGES: each one shows as a dashed box naming the file it is waiting for.
-                     Save the image in assets/ under that name (or change the src to your own file name),
-                     then replace the alt text and the [Caption to write: ...] line. -->
-                
+            </div>
         </section>
 
         <!-- === DEVELOPMENT (text first, then a swipeable carousel) === -->
@@ -1170,32 +1169,27 @@
 
                 <p class="fade-up observe">The project ran for 12 weeks (February–May 2025) and covered brand guidelines, mobile app screens, and a marketing landing page. Work was built primarily in Figma, with After Effects and Blender used for motion.</p>
                 <p class="fade-up observe">To push the project further, I studied professional examples such as Wise’s design system. This led to an interactive design system website instead of a static PDF, showing how the brand, components, and patterns scale consistently across contexts.</p>
-                <p class="fade-up observe">In the end, I created five deliverables: a 55-page brand guideline, a component library, a landing page for the web, a mobile app and a design system prototype, all of which are shown below.</p>
-                <!-- PLACEHOLDER IMAGES: each one shows as a dashed box naming the file it is waiting for.
-                     Save the image in assets/ under that name (or change the src to your own file name),
-                     then replace the alt text and the [Caption to write: ...] line. -->
-                
+                <p class="fade-up observe">In the end, I created five deliverables: a 56-page brand guideline, a component library, a landing page for the web, a mobile app and a design system prototype, all of which are shown below.</p>
 
                 <!-- Carousel: swipe or drag, press the left/right edges, or use the arrow keys.
-                     Process comes first (wireframes), polished work after.
                      Any image that doesn't exist yet is skipped automatically. -->
                 <div class="fade-in observe" data-hide-if-empty>
                     <div class="cs-stage" id="carousel" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Development process">
                         <div class="cs-track">
-                            <figure class="cs-slide" data-caption="The brand guidelines: 55 pages covering the logo, colour, type and tone of voice, so anyone can use the brand consistently.">
-                                <img src="assets/xpbrandguidelines.png" alt="Brand Guidelines for XP Bank." draggable="false">
+                            <figure class="cs-slide" data-caption="The brand guidelines: 56 pages covering the logo, colour, type and tone of voice, so anyone can use the brand consistently.">
+                                <img src="assets/xpbrandguidelines.png" width="5570" height="3190" alt="Pages from the XP Bank brand guidelines" draggable="false">
                             </figure>
                             <figure class="cs-slide" data-caption="The component library in Figma: every button, card and input built once, so the app, site and design system all match.">
-                                <img src="assets/Component%20Library.png" alt="Component library" draggable="false">
+                                <img src="assets/Component%20Library.png" width="5570" height="3228" alt="The XP Bank component library in Figma: buttons, cards and inputs" draggable="false">
                             </figure>
                             <figure class="cs-slide" data-caption="The landing page puts security and support up front, answering the biggest complaints from the research.">
-                                <img src="assets/Landing%20PageXP.png" alt="Landing Page for XP Bank’s Website" draggable="false">
+                                <img src="assets/Landing%20PageXP.png" width="5570" height="3190" alt="The XP Bank marketing landing page" draggable="false">
                             </figure>
                             <figure class="cs-slide" data-caption="The mobile app: simple flows for sign-up, spending and getting help, with security actions always one tap away.">
-                                <img src="assets/MobiledeviceXP.png" alt="Mobile App for XP Bank." draggable="false">
+                                <img src="assets/MobiledeviceXP.png" width="3306" height="1860" alt="XP Bank mobile app screens" draggable="false">
                             </figure>
                             <figure class="cs-slide" data-caption="The design system as a website instead of a PDF, inspired by Wise, so it can grow with the brand.">
-                              <img src="assets/Design%20System%20Page.png" alt="Design System for XP Bank." draggable="false">
+                              <img src="assets/Design%20System%20Page.png" width="5570" height="3190" alt="The XP Bank design system website" draggable="false">
                           </figure>
                         </div>
                         <button type="button" class="cs-edge cs-edge--prev" aria-label="Previous image"><span class="cs-edge-arrow" aria-hidden="true">&larr;</span></button>
@@ -1216,77 +1210,67 @@
         <section id="final-product" class="cs-band cs-band--white">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">Final Product</h2>
-                <p class="fade-up observe stagger-1">The final outcome included a 55-page brand guideline, a structured component library, 11 mobile app screens, a multi-page landing website, and a fully prototyped design system.</p>
+                <p class="fade-up observe stagger-1">The final outcome included a 56-page brand guideline, a structured component library, 11 mobile app screens, a multi-page landing website, and a fully prototyped design system.</p>
                 <p class="fade-up observe stagger-2">The identity was applied across physical and digital touchpoints, from cards and billboards to tablet screens and stationery.</p>
 
                 <h3 class="fade-up observe">Brand in use</h3>
-                <div class="cs-grid cs-grid--3">
-                  
+                <div class="cs-grid cs-grid--2">
                     <figure class="fade-up observe stagger-2">
                         <div class="cs-media tilt-card" data-label="Credit and debit cards">
-                            <img src="assets/xpcredit%26debitcards.png" alt="XP Bank credit and debit cards" loading="lazy" decoding="async">
+                            <img src="assets/xpcredit%26debitcards.png" width="3306" height="1860" alt="XP Bank credit and debit cards" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                         <figcaption class="cs-caption">The cards: the brand at its most physical. It has to work at the size of your thumb.</figcaption>
                     </figure>
                     <figure class="fade-up observe stagger-1">
                       <div class="cs-media tilt-card" data-label="Billboards">
-                          <img src="assets/Billboards.png" alt="XP Bank billboard campaign" loading="lazy" decoding="async">
+                          <img src="assets/Billboards.png" width="1310" height="742" alt="XP Bank billboard campaign" loading="lazy" decoding="async">
                           <span class="cs-scan" aria-hidden="true"></span>
                       </div>
                       <figcaption class="cs-caption">The billboard campaign: big, blunt type that reads from across the street.</figcaption>
                   </figure>
                     <figure class="fade-up observe stagger-1">
                       <div class="cs-media tilt-card" data-label="Marketing landing page">
-                          <img src="assets/xplandingpagecard.png" alt="The XP Bank marketing landing page on a screen" loading="lazy" decoding="async">
+                          <img src="assets/xplandingpagecard.png" width="2376" height="1749" alt="The XP Bank marketing landing page on a screen" loading="lazy" decoding="async">
                           <span class="cs-scan" aria-hidden="true"></span>
                       </div>
                       <figcaption class="cs-caption">The landing page on screen, carrying the same identity as the cards and billboards.</figcaption>
                   </figure>
-                  
-                    <!-- ATM mockup: add assets/xp-atm.jpg (ideally with a person using it) and it appears automatically -->
-                    <figure class="fade-up observe stagger-2" data-optional>
-                        <div class="cs-media tilt-card" data-label="XP Bank ATM">
-                            <img src="assets/xp-atm.jpg" alt="XP Bank ATM" loading="lazy" decoding="async">
-                            <span class="cs-scan" aria-hidden="true"></span>
-                        </div>
-                        <figcaption class="cs-caption">The ATM: the brand on the high street, where the bank meets people who haven&rsquo;t opened the app yet.</figcaption>
-                    </figure>
                     <figure class="fade-up observe stagger-3">
                         <div class="cs-media tilt-card" data-label="Tablet app">
-                            <img src="assets/XPipadmockup.png" alt="XP Bank app on a tablet" loading="lazy" decoding="async">
+                            <img src="assets/XPipadmockup.png" width="1000" height="747" alt="XP Bank app on a tablet" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                         <figcaption class="cs-caption">The app on a tablet: the components scale up without being redesigned.</figcaption>
                     </figure>
-                    <figure class="fade-up observe stagger-1">
-                        <div class="cs-media tilt-card" data-label="App on device">
-                            <img src="assets/xp-bank-1.jpg" alt="XP Bank app on a phone" loading="lazy" decoding="async">
-                            <span class="cs-scan" aria-hidden="true"></span>
-                        </div>
-                        <figcaption class="cs-caption">The app on a phone, where most 16&ndash;25 year olds will actually meet the brand.</figcaption>
-                    </figure>
                     <figure class="fade-up observe stagger-2">
                         <div class="cs-media tilt-card" data-label="XP Merch">
-                            <img src="assets/personwearingXPmerch.png" alt="Person wearing XP Bank merchandise" loading="lazy" decoding="async">
+                            <img src="assets/personwearingXPmerch.png" width="3306" height="1860" alt="Person wearing XP Bank merchandise" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                         <figcaption class="cs-caption">Merch: a bank brand young people might actually want to wear.</figcaption>
                     </figure>
                     <figure class="fade-up observe stagger-3">
                         <div class="cs-media tilt-card" data-label="Brand guidelines file binder">
-                            <img src="assets/xpfilebinder.png" alt="An XP Bank-branded file binder" loading="lazy" decoding="async">
+                            <img src="assets/xpfilebinder.png" width="3306" height="1860" alt="An XP Bank-branded file binder" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                         <figcaption class="cs-caption">Stationery: proof the identity holds up on everyday, unglamorous items.</figcaption>
                     </figure>
                     <figure class="fade-up observe stagger-3">
                       <div class="cs-media tilt-card" data-label="Someone using the XP Bank Portal">
-                          <img src="assets/manusingxpsite.png" alt="Someone using the XP Bank portal on a computer" loading="lazy" decoding="async">
+                          <img src="assets/manusingxpsite.png" width="3306" height="1860" alt="Someone using the XP Bank portal on a computer" loading="lazy" decoding="async">
                           <span class="cs-scan" aria-hidden="true"></span>
                       </div>
                       <figcaption class="cs-caption">The XP Bank portal in use, showing the brand in a real setting.</figcaption>
                   </figure>
+                    <figure class="fade-up observe stagger-1">
+                        <div class="cs-media tilt-card" data-label="App on device">
+                            <img src="assets/xp-bank-1.jpg" width="681" height="510" alt="XP Bank app on a phone" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">The app on a phone, where most 16&ndash;25 year olds will actually meet the brand.</figcaption>
+                    </figure>
                 </div>
 
                 <!-- Flippable brand guidelines booklet. Pages are assets/XPBANKGUIDELINES/XPBG1.png ... XPBG56.png
@@ -1306,22 +1290,19 @@
                     </div>
                     <figure class="fade-left observe">
                         <div class="cs-media tilt-card" data-label="Animated credit card">
-                            <img src="assets/credit%20copy.gif" alt="The XP Bank credit card turning in a looping animation" loading="lazy" decoding="async">
+                            <img src="assets/credit%20copy.gif" width="800" height="450" alt="The XP Bank credit card turning in a looping animation" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                         <figcaption class="cs-caption">The card animated in Blender and After Effects, so the brand also works in motion.</figcaption>
                     </figure>
                 </div>
 
-                <!-- PLACEHOLDER IMAGES: each one shows as a dashed box naming the file it is waiting for.
-                     Save the image in assets/ under that name (or change the src to your own file name),
-                     then replace the alt text and the [Caption to write: ...] line. -->
                 <figure class="fade-up observe">
-                    <div class="cs-media cs-todo tilt-card" data-label="PLACEHOLDER: any other After Effects or Blender piece (GIF) (save it as assets/xp-motion-extra.gif)">
-                        <img src="assets/xpbank.gif" alt="TODO: describe this image" loading="lazy" decoding="async">
+                    <div class="cs-media tilt-card" data-label="XP Bank logo animation">
+                        <img src="assets/xpbank.gif" width="800" height="325" alt="The XP Bank logo animating on a purple background" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">This GIF was created to promote the brand and to be used in mock ups.</figcaption>
+                    <figcaption class="cs-caption">This GIF was created to promote the brand and to be used in mockups.</figcaption>
                 </figure>
             </div>
         </section>
@@ -1416,7 +1397,7 @@
         <section id="ai" class="cs-band cs-band--purple">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">AI Transparency</h2>
-                <p class="fade-up observe">I didn&rsquo;t use AI at any stage of XP Bank. The research, personas, logo, 55-page brand guidelines, component library, app screens, landing page, design system and motion were all made by me in Figma, Blender and After Effects. This write-up is my own words too.</p>
+                <p class="fade-up observe">I didn&rsquo;t use AI at any stage of XP Bank. The research, personas, logo, 56-page brand guidelines, component library, app screens, landing page, design system and motion were all made by me in Figma, Blender and After Effects. This write-up is my own words too.</p>
             </div>
         </section>
 
@@ -1425,22 +1406,7 @@
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">Reflection</h2>
                 <p class="fade-up observe">This project significantly changed my approach to design. With further development, I would run structured usability testing and a full UX audit to refine accessibility, interaction accuracy and edge cases. Feedback initially challenged my design direction, but it ultimately built my confidence in responding to critique. Most importantly, it showed me how to embed values into design decisions, prioritise real user problems over purely visual ideas, and adapt the work when feedback leads to a better outcome.</p>
-                <!-- FEEDBACK EXAMPLE: quote one thing that was said in critique and who said it, then delete
-                     this comment's opening and closing lines so the paragraph shows on the page.
-                <p class="fade-up observe">In critique, [name] told me &ldquo;...&rdquo;, which is what pushed the cyberpunk direction towards brutalism.</p>
-                -->
                 <a class="cs-btn fade-up observe" href="https://jaredrussell.notion.site/Bank-Brand-XP-18a9a122e2e0806a8619e67c19ba4506" target="_blank" rel="noopener">Read my notes on Notion<span class="sr-only"> (opens in a new tab)</span></a>
-            </div>
-        </section>
-
-        <!-- === HERO SHOT (ends the case study). Add assets/xp-hero-shot.jpg, ideally with a person in the mockup;
-             until the file exists this section is hidden. === -->
-        <section class="cs-band cs-band--purple" data-hide-if-empty>
-            <div class="cs-wrap">
-                <figure class="cs-hero-shot fade-up observe" data-optional>
-                    <img src="assets/xp-hero-shot.jpg" alt="XP Bank in everyday use" loading="lazy" decoding="async">
-                    <figcaption class="cs-caption">XP Bank in everyday life.</figcaption>
-                </figure>
             </div>
         </section>
 
@@ -1460,8 +1426,9 @@
 
         <!-- === RISE UP (scroll to top) === -->
         <section class="cs-rise fade-in observe">
-            <a href="#top" class="rise-up-btn" aria-label="Scroll to top of page">
-                <h2>Rise Up!</h2>
+            <a href="#top" class="rise-up-btn">
+                <span class="rise-up-label">Rise Up!</span>
+                <span class="rise-up-hint">Back to top &uarr;</span>
             </a>
         </section>
 
@@ -1595,11 +1562,6 @@
         document.querySelectorAll("img").forEach(img => {
             if (img.getAttribute("src") && img.complete && img.naturalWidth === 0) handleBroken(img);
         });
-
-        /* ==================================================================
-           2b. AI SECTION: until it's filled in (no "hidden" attribute), hide its Contents entry and spec row
-           ================================================================== */
-        /* (AI section is filled in, so nothing to hide here any more) */
 
         /* ==================================================================
            3. SCROLL REVEAL (fires once per element; headings decrypt as they appear)
@@ -1778,10 +1740,37 @@
             // Fill in your real page ranges, e.g. { from: 4, to: 13, name: "Logo" }.
             // Pages outside every range fall back to "Brand guidelines page N".
             const CHAPTERS = [
-                // { from: 0, to: 0, name: "Logo" },
-                // { from: 0, to: 0, name: "Colour" },
-                // { from: 0, to: 0, name: "Typography" },
-                // { from: 0, to: 0, name: "Tone of voice" }
+                { from: 2,  to: 2,  name: "Contents" },
+                { from: 4,  to: 4,  name: "Introduction: Hello!" },
+                { from: 5,  to: 6,  name: "Introduction: Expectations" },
+                { from: 7,  to: 7,  name: "The Brand: The Name" },
+                { from: 8,  to: 9,  name: "The Brand: Logomark" },
+                { from: 10, to: 10, name: "The Brand: Logo Variations" },
+                { from: 11, to: 11, name: "The Brand: Wordmark" },
+                { from: 12, to: 13, name: "The Brand: Icons" },
+                { from: 14, to: 15, name: "The Brand: Things to Avoid" },
+                { from: 16, to: 17, name: "Colour: Electric Violet" },
+                { from: 18, to: 19, name: "Colour: Colour Palette" },
+                { from: 20, to: 20, name: "Colour: UI Example" },
+                { from: 21, to: 22, name: "Colour: Things to Avoid" },
+                { from: 23, to: 23, name: "Typography: Introduction" },
+                { from: 24, to: 24, name: "Typography: Chosen Fonts" },
+                { from: 25, to: 25, name: "Typography: Decorative" },
+                { from: 26, to: 27, name: "Typography: Informative" },
+                { from: 28, to: 28, name: "Typography: Using Type" },
+                { from: 29, to: 30, name: "Typography: Things to Avoid" },
+                { from: 31, to: 31, name: "Our Values: Values" },
+                { from: 32, to: 32, name: "Our Values: Identity" },
+                { from: 33, to: 33, name: "Our Values: Tone of Voice" },
+                { from: 34, to: 35, name: "Our Values: Things to Avoid" },
+                { from: 36, to: 36, name: "Application: Introduction" },
+                { from: 37, to: 42, name: "Application: Device UI" },
+                { from: 43, to: 43, name: "Application: UI Features" },
+                { from: 44, to: 47, name: "Application: Card Design" },
+                { from: 48, to: 50, name: "Application: Stationery" },
+                { from: 51, to: 52, name: "Application: Photography" },
+                { from: 53, to: 54, name: "Application: Advertising" },
+                { from: 55, to: 55, name: "Summary" }
             ];
 
             // Build the leaves: leaf i holds page 2i+1 (front) and page 2i+2 (back)
@@ -1795,7 +1784,7 @@
                 const chapter = CHAPTERS.find(c => pageNo >= c.from && pageNo <= c.to);
                 img.alt = pageNo === 1 ? "Brand guidelines cover"
                         : pageNo === total ? "Brand guidelines back cover"
-                        : chapter ? "Brand guidelines, " + chapter.name + " chapter, page " + pageNo
+                        : chapter ? "Brand guidelines, " + chapter.name + ", page " + pageNo
                         : "Brand guidelines page " + pageNo;
                 img.draggable = false;
                 img.decoding = "async";
@@ -1842,7 +1831,13 @@
 
                 if (flipped === 0) label.textContent = "Cover";
                 else if (flipped === n) label.textContent = "Back cover";
-                else label.textContent = "Pages " + (2 * flipped) + "\u2013" + (2 * flipped + 1) + " of " + total;
+                else {
+                    const left = 2 * flipped;
+                    const ch = CHAPTERS.find(c => left >= c.from && left <= c.to)
+                            || CHAPTERS.find(c => left + 1 >= c.from && left + 1 <= c.to);
+                    const section = ch ? ch.name.split(":")[0] : "";
+                    label.textContent = "Pages " + left + "\u2013" + (left + 1) + " of " + total + (section ? " \u00b7 " + section : "");
+                }
             }
 
             function go(target) {
@@ -2069,7 +2064,9 @@
         if (rise) {
             rise.addEventListener("click", (e) => {
                 e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+                const skip = document.querySelector(".skip-link");
+                if (skip) skip.focus({ preventScroll: true });
             });
         }
     </script>

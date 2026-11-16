@@ -424,10 +424,13 @@
             margin-right: auto;
         }
 
+        /* Width worked out from each file's shape (--r on the tag), so the space is
+           reserved before the file loads and the Contents links land in the right place */
         .cs-fig .cs-media img,
         .cs-fig .cs-media video {
-            width: auto;
+            width: min(820px, 86vw, calc(70vh * var(--r, 1.6)));
             max-width: 100%;
+            height: auto;
             max-height: 70vh;
             margin: 0 auto;
         }
@@ -512,13 +515,21 @@
         }
 
         .rise-up-btn {
-            display: inline-block;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            color: #111111;
             cursor: pointer;
             user-select: none;
         }
 
-        .rise-up-btn h2 {
+        /* Same look as before, but a span: a link should not contain a heading */
+        .rise-up-label {
+            font-family: 'Space Grotesk', -apple-system, sans-serif;
+            font-weight: 700;
             font-size: clamp(3rem, 8vw, 7rem);
+            line-height: normal;
             letter-spacing: -2px;
             text-transform: uppercase;
             display: inline-block;
@@ -526,7 +537,16 @@
             transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
         }
 
-        .rise-up-btn:hover h2 {
+        .rise-up-hint {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .rise-up-btn:hover .rise-up-label,
+        .rise-up-btn:focus-visible .rise-up-label {
             color: var(--cs-purple);
             transform: skewX(-12deg);
             text-shadow: 6px 6px 0 var(--cs-lime);
@@ -562,201 +582,8 @@
 
         @media (prefers-reduced-motion: reduce) {
             .fade-up, .fade-in, .fade-right, .fade-left { opacity: 1; transform: none; transition: none; }
-            .cs-media, .cs-leaf, .cs-book-inner, .cs-book-tilt, .cs-book-floor { transition: none; }
+            .cs-media { transition: none; }
         }
-
-        /* --- FLIPPABLE BRAND GUIDELINES: a 3D booklet mockup (click a page, drag/swipe, arrows, scrub bar or arrow keys) --- */
-        .cs-book-stage {
-            position: relative;
-            margin-top: clamp(8px, 1vw, 16px);
-            padding: clamp(8px, 2vw, 28px) 0 0;
-        }
-
-        .cs-book {
-            --spread: 8 / 5;                 /* set automatically from your first page image */
-            --book-w: 900px;
-            position: relative;
-            z-index: 1;
-            width: min(var(--book-w), 100%);
-            margin: 0 auto;
-            perspective: 2600px;
-            cursor: pointer;
-            outline-offset: 12px;
-            touch-action: pan-y;
-        }
-
-        .cs-book:focus-visible { outline: 2px solid var(--cs-purple); }
-
-        /* The whole booklet leans slightly towards the pointer */
-        .cs-book-tilt {
-            transform-style: preserve-3d;
-            transform: rotateX(6deg);
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .cs-book-inner {
-            position: relative;
-            width: 100%;
-            aspect-ratio: var(--spread);
-            transform-style: preserve-3d;
-            transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        /* A closed book sits centred instead of leaving an empty half */
-        .cs-book.is-front .cs-book-inner { transform: translateX(-25%); }
-        .cs-book.is-back  .cs-book-inner { transform: translateX(25%); }
-
-        .cs-leaf {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 50%;
-            height: 100%;
-            transform-origin: left center;
-            transform-style: preserve-3d;
-            transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .cs-leaf.is-flipped { transform: rotateY(-180deg); }
-
-        .cs-face {
-            position: absolute;
-            inset: 0;
-            overflow: hidden;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            background-color: #ffffff;
-        }
-
-        .cs-face img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
-            pointer-events: none;
-            user-select: none;
-        }
-
-        /* Moving shade across the page while it turns */
-        .cs-face::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.45s ease;
-        }
-        .cs-front::after { background: linear-gradient(90deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0) 70%); }
-        .cs-back::after  { background: linear-gradient(270deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0) 70%); }
-        .cs-leaf.is-turning .cs-face::after { opacity: 1; }
-
-        /* A missing page file shows a neat blank page instead of a broken icon */
-        .cs-face.is-missing img { visibility: hidden; }
-        .cs-face.is-missing::before {
-            content: "Page " attr(data-page);
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999999;
-            font-weight: 700;
-        }
-
-        /* Spine side shading + a thin page edge on the outside */
-        .cs-front { box-shadow: inset 12px 0 18px -10px rgba(0, 0, 0, 0.3), inset -1px 0 0 rgba(0, 0, 0, 0.08); }
-        .cs-back  { transform: rotateY(180deg); box-shadow: inset -12px 0 18px -10px rgba(0, 0, 0, 0.3), inset 1px 0 0 rgba(0, 0, 0, 0.08); }
-
-        /* Shadow on the "table" that follows the book as it opens and closes */
-        .cs-book-floor {
-            position: absolute;
-            left: 50%;
-            bottom: -26px;
-            width: 92%;
-            height: 34px;
-            transform: translateX(-50%);
-            background: radial-gradient(ellipse at center, rgba(40, 0, 50, 0.45), rgba(40, 0, 50, 0) 70%);
-            filter: blur(7px);
-            pointer-events: none;
-            transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), width 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .cs-book.is-front .cs-book-floor,
-        .cs-book.is-back  .cs-book-floor { width: 52%; }
-
-        .cs-book-controls {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: clamp(34px, 4vw, 52px);
-        }
-
-        .cs-book-btn {
-            width: clamp(40px, 4vw, 54px);
-            height: clamp(40px, 4vw, 54px);
-            border: 0;
-            border-radius: 50%;
-            background-color: var(--cs-lime);
-            color: #111111;
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            font-size: 1.4rem;
-            cursor: pointer;
-            transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-        }
-
-        .cs-book-btn:hover:not(:disabled) { background-color: #111111; color: var(--cs-lime); transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25); }
-        .cs-book-btn:disabled { opacity: 0.35; cursor: default; }
-        .cs-book-btn:focus-visible { outline: 2px solid #ffffff; outline-offset: 3px; }
-
-        .cs-book-label {
-            min-width: 9em;
-            text-align: center;
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-        }
-
-        .cs-book-scrub {
-            position: relative;
-            z-index: 1;
-            display: block;
-            width: min(420px, 80%);
-            margin: 20px auto 0;
-            height: 20px;
-            background: transparent;
-            cursor: pointer;
-            -webkit-appearance: none;
-            appearance: none;
-        }
-
-        .cs-book-scrub::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: rgba(255, 255, 255, 0.45); }
-        .cs-book-scrub::-moz-range-track              { height: 4px; border-radius: 2px; background: rgba(255, 255, 255, 0.45); }
-        .cs-book-scrub::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; margin-top: -7px; border-radius: 50%; border: 0; background: var(--cs-lime); box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.25); }
-        .cs-book-scrub::-moz-range-thumb     { width: 18px; height: 18px; border-radius: 50%; border: 0; background: var(--cs-lime); box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.25); }
-        .cs-book-scrub:focus-visible { outline: 2px solid #ffffff; outline-offset: 6px; }
-
-        /* On the pink band, booklet controls switch to dark so they stay visible */
-        .cs-band--pink .cs-book-scrub::-webkit-slider-runnable-track { background: rgba(17, 17, 17, 0.35); }
-        .cs-band--pink .cs-book-scrub::-moz-range-track              { background: rgba(17, 17, 17, 0.35); }
-        .cs-band--pink .cs-book-scrub:focus-visible,
-        .cs-band--pink .cs-book-btn:focus-visible { outline-color: #111111; }
-
-        .cs-book-hint {
-            position: relative;
-            z-index: 1;
-            display: block;
-            margin-top: 10px;
-            text-align: center;
-            font-size: 0.9rem;
-            opacity: 0.85;
-        }
-
-        /* Scran: the label names the pages you're looking at, so it can be a little wider */
-        .cs-book-label { min-width: 12em; }
-        .cs-book-stage[hidden] { display: none !important; }
-        #guidelines { margin-bottom: clamp(24px, 3vw, 44px); }
 
         /* --- GRUB / SCRAN additions --- */
         .cs-title--long { font-size: clamp(2.4rem, 6.6vw, 6rem); }
@@ -796,6 +623,9 @@
         }
 
         .cs-band h3.cs-question { margin-top: clamp(48px, 6vw, 88px); }
+
+        /* Space between the persona captions and the paragraph after them */
+        #ui .cs-grid--2 { margin-bottom: clamp(28px, 3.5vw, 48px); }
 
         /* Persona quote */
         .cs-quote {
@@ -839,7 +669,7 @@
         }
 
         .cs-hero-media--bare img {
-            width: auto;
+            width: calc(70vh * var(--r, 3.6));
             max-width: 100%;
             max-height: 70vh;
         }
@@ -971,12 +801,12 @@
     <header>
         <div class="top-left">
             <a href="index.html">
-                <img src="assets/brain-180.png" alt="UnwiseGenius home" class="brain-icon" width="38">
+                <img src="assets/brain-180.png" alt="UnwiseGenius home" class="brain-icon" width="38" height="38">
             </a>
         </div>
         <nav class="top-right">
             <a href="about.html" class="cyber-nav-link" data-text="About Me">About Me</a>
-            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio">Portfolio</a>
+            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio" aria-current="page">Portfolio</a>
             <a href="contact.html" class="cyber-nav-link" data-text="Get in Touch!">Get in Touch!</a>
         </nav>
     </header>
@@ -1000,7 +830,7 @@
 
                 <figure class="cs-hero-fig fade-up observe stagger-3">
                     <div class="cs-hero-media cs-hero-media--bare" data-label="Orion">
-                        <img src="assets/Orion.png" alt="Orion, a goggle-free VR system" decoding="async" fetchpriority="high">
+                        <img src="assets/Orion.png" width="1343" height="370" style="--r: 1343 / 370" alt="The Orion wordmark in blue beside its round lens logo" decoding="async" fetchpriority="high">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">Orion turns the room itself into the screen: one small device, no headset, no controllers.</figcaption>
@@ -1025,7 +855,7 @@
                             <li class="fade-right observe stagger-4"><a href="#hardware"><span class="cs-num">05</span>The Hardware</a></li>
                             <li class="fade-right observe stagger-4"><a href="#ui"><span class="cs-num">06</span>The Spatial UI</a></li>
                             <li class="fade-right observe stagger-4"><a href="#narrative"><span class="cs-num">07</span>Visual Narrative</a></li>
-                            <li class="fade-right observe stagger-4" data-needs="ai"><a href="#ai"><span class="cs-num">08</span>AI Transparency</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#ai"><span class="cs-num">08</span>AI Transparency</a></li>
                             <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num">09</span>Reflection</a></li>
                         </ul>
                     </div>
@@ -1043,7 +873,7 @@
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12"/><path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2"/><path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4"/></svg>
                                 </span>
-                                <p>The project ran for <strong>7 weeks</strong>.</p>
+                                <p><strong>7 weeks</strong>, November to December 2025.</p>
                             </li>
                             <li class="cs-spec fade-left observe stagger-3">
                                 <span class="cs-spec-icon" aria-hidden="true">
@@ -1069,7 +899,7 @@
                                 </span>
                                 <p>Product, UI, reel and <strong>print campaign</strong>.</p>
                             </li>
-                            <li class="cs-spec fade-left observe stagger-4" data-needs="ai">
+                            <li class="cs-spec fade-left observe stagger-4">
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4L12 3z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15z"/></svg>
                                 </span>
@@ -1153,14 +983,14 @@
                 <p class="fade-up observe">The goal for the physical product was hardware that felt domestic, minimal and approachable, rather than an aggressive gaming peripheral or bulky server.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="First sketches of the Orion hardware">
-                        <img src="assets/orion-sketches.png" alt="My first sketches of Orion: a handheld controller with a joystick, buttons and wrist support, beside a desk setup with a motion sensor, a camera and a speaker projecting an interface onto the wall" loading="lazy" decoding="async">
+                        <img src="assets/orion-sketches.png" width="2707" height="1366" style="--r: 2707 / 1366" alt="My first sketches of Orion: a handheld controller with a joystick, buttons and wrist support, beside a desk setup with a motion sensor, a camera and a speaker projecting an interface onto the wall" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">My first sketches of the hardware in use: how it would be used, and how it would display. At this stage it was several separate pieces.</figcaption>
                 </figure>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="The Orion device: a matte black cylindrical unit modelled in Blender">
-                        <img src="assets/orionproduct.png" alt="The Orion device: a matte black cylindrical unit modelled in Blender" loading="lazy" decoding="async">
+                        <img src="assets/orionproduct.png" width="2404" height="1354" style="--r: 2404 / 1354" alt="The Orion device rendered in Blender: a matte black cylinder with a large front lens, mounted on a flat base" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The final device: feedback on my bulky first sketches pushed me to one compact cylinder that looks at home next to a smart speaker.</figcaption>
@@ -1188,17 +1018,17 @@
                 <div class="cs-grid cs-grid--2">
                     <figure class="fade-up observe">
                         <div class="cs-media tilt-card" data-label="Persona: Jerry R. Smith">
-                            <img src="assets/orion-persona-jerry.png" alt="Persona sheet for Jerry R. Smith, 34, a remote office clerk, listing his background, personality, goals, frustrations, emotional needs and product opportunities" loading="lazy" decoding="async">
+                            <img src="assets/orion-persona-jerry.png" width="595" height="791" alt="Persona sheet for Jerry R. Smith, 34, a remote office clerk, listing his background, personality, goals, frustrations, emotional needs and product opportunities" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">Jerry, 34, is an office clerk who works from home, loves new technology and gets bored easily during the workday. He needs a room that keeps his work in view and gives him a quick escape on his breaks, which is what Stats and Entertainment are for.</figcaption>
+                        <figcaption class="cs-caption">Jerry, 34, is an office clerk who works from home, loves new technology and gets bored easily during the workday. He needs a room that keeps his work in view and gives him a quick escape on his breaks, which is what Stats and Entertainment are for. Sprite: Ness from <em>EarthBound</em> (Nintendo, 1994).</figcaption>
                     </figure>
                     <figure class="fade-up observe stagger-1">
                         <div class="cs-media tilt-card" data-label="Persona: Maya T. Lin">
-                            <img src="assets/orion-persona-maya.png" alt="Persona sheet for Maya T. Lin, 34, a senior project manager, listing her background, personality, goals, frustrations, emotional needs and product opportunities" loading="lazy" decoding="async">
+                            <img src="assets/orion-persona-maya.png" width="595" height="791" alt="Persona sheet for Maya T. Lin, 34, a senior project manager, listing her background, personality, goals, frustrations, emotional needs and product opportunities" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">Maya, 34, is a senior project manager with a high-stress job, who relies on yoga and meditation to switch off. She wants technology that works quietly in the background and helps her shift from work to rest, which is what Calm is for.</figcaption>
+                        <figcaption class="cs-caption">Maya, 34, is a senior project manager with a high-stress job, who relies on yoga and meditation to switch off. She wants technology that works quietly in the background and helps her shift from work to rest, which is what Calm is for. Sprite: Paula from <em>EarthBound</em> (Nintendo, 1994).</figcaption>
                     </figure>
                 </div>
 
@@ -1222,7 +1052,7 @@
                 <p class="fade-up observe">I animated the 3D Orion model in Blender, using camera sweeps to show off the design, and edited it in Premiere Pro. I recorded the Figma prototype in action against a green-screen-style background and composited it over the hardware footage, creating an Apple-style product teaser that shows both the physical design and the interface.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media" data-label="The Orion product reel">
-                        <video src="assets/OrionRecording.mp4#t=0.1" muted loop playsinline preload="metadata" controls aria-label="The Orion product reel"></video>
+                        <video src="assets/OrionRecording.mp4#t=0.1" width="1920" height="1080" style="--r: 1920 / 1080" muted loop playsinline preload="metadata" controls aria-label="The Orion product reel: camera sweeps around the Blender model of the device, with the Figma interface composited over the footage"></video>
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The product reel: showing the hardware and the interface in one film sells the idea faster than either could alone.</figcaption>
@@ -1238,7 +1068,7 @@
                 </ul>
                 <figure class="cs-fig cs-fig--full fade-up observe">
                     <div class="cs-media" data-label="The With Orion print campaign adverts">
-                        <img src="assets/withorion.png" alt="The With Orion print campaign adverts" loading="lazy" decoding="async">
+                        <img src="assets/withorion.png" width="15958" height="5970" alt="Five &ldquo;with Orion&rdquo; adverts in two rows: Relax, Play, Work, Connect and Watch, each a photo of people at home with the Orion interface projected onto the wall" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The &ldquo;with Orion&rdquo; campaign: real people in real rooms, so the technology fades into the background, which is the whole point of Zero UI. Stock photography from Unsplash.</figcaption>
@@ -1251,9 +1081,10 @@
         <section id="ai" class="cs-band cs-band--purple">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">AI Transparency</h2>
-                <p class="fade-up observe"><strong>Where AI was used:</strong> Gemini generated the code for the shaders behind the Calm module&rsquo;s ambient background, which I based on the calm, breathing screens in Apple&rsquo;s Mindfulness app. I also used AI to help expand a few ideas that I struggled to develop on my own.</p>
+                <p class="fade-up observe"><strong>Where AI was used:</strong> Gemini generated the code for the shaders behind the Calm module&rsquo;s ambient background, which I based on the calm, breathing screens in Apple&rsquo;s Mindfulness app. I also used Gemini to help expand a few ideas that I struggled to develop on my own.</p>
                 <p class="fade-up observe"><strong>What I did by hand:</strong> the research, the sketches, the Blender model, the Figma interface and prototype, the After Effects loading animation, the product reel and the print campaign.</p>
                 <p class="fade-up observe"><strong>Why:</strong> I used AI where I was short on time or skill. Writing shader code was more than I could learn within a seven-week project, and Gemini let me get the effect I had in mind into the prototype.</p>
+                <p class="fade-up observe"><strong>The writing:</strong> this write-up is in my own words, with no AI used.</p>
             </div>
         </section>
 
@@ -1276,7 +1107,6 @@
                     <span class="cs-next-kicker">&larr; Back to</span>
                     <span class="cs-next-title">Portfolio</span>
                 </a>
-                <!-- Change this to whichever case study you want next -->
                 <a href="grub.html" class="cs-next-link cs-next-link--next">
                     <span class="cs-next-kicker">Next project &rarr;</span>
                     <span class="cs-next-title">Grub</span>
@@ -1286,8 +1116,9 @@
 
         <!-- === RISE UP (scroll to top) === -->
         <section class="cs-rise fade-in observe">
-            <a href="#top" class="rise-up-btn" aria-label="Scroll to top of page">
-                <h2>Rise Up!</h2>
+            <a href="#top" class="rise-up-btn">
+                <span class="rise-up-label">Rise Up!</span>
+                <span class="rise-up-hint">Back to top &uarr;</span>
             </a>
         </section>
 
@@ -1361,19 +1192,6 @@
         function handleBroken(t) {
             if (!t) return;
 
-            // Booklet: a missing page becomes a blank page; if the cover itself is missing, hide the section
-            if (t.tagName === "IMG" && t.closest(".cs-book")) {
-                console.warn("Style guide page not found:", t.getAttribute("src"));
-                const face = t.closest(".cs-face");
-                if (face && face.dataset.page !== "1") {
-                    face.classList.add("is-missing");
-                } else {
-                    const g = document.getElementById("guidelines");
-                    if (g) g.remove();
-                }
-                return;
-            }
-
             // Optional visuals (files not uploaded yet) are removed completely, so nothing looks broken
             const optional = t.closest && t.closest("[data-optional]");
             if (optional) { optional.remove(); return; }
@@ -1413,19 +1231,6 @@
         document.querySelectorAll(".cs-media video").forEach(v => {
             if (v.error) handleBroken(v);
         });
-
-        /* ==================================================================
-           2b. UNFINISHED SECTIONS: a section with data-todo and "hidden" also hides its Contents entry
-           and spec row (anything with data-needs="its id"). Contents numbers then count up in order.
-           ================================================================== */
-        (function () {
-            document.querySelectorAll("section[data-todo][hidden]").forEach(sec => {
-                document.querySelectorAll('[data-needs="' + sec.id + '"]').forEach(el => el.remove());
-            });
-            document.querySelectorAll(".cs-contents .cs-num").forEach((num, i) => {
-                num.textContent = String(i + 1).padStart(2, "0");
-            });
-        })();
 
         /* ==================================================================
            3. SCROLL REVEAL (fires once per element; headings decrypt as they appear)
@@ -1473,158 +1278,26 @@
         }
 
         /* ==================================================================
-           5. FLIPPABLE STYLE GUIDE (3D booklet built from the files listed in data-files)
-           ================================================================== */
-        (function () {
-            const book = document.getElementById("book");
-            if (!book) return;
-
-            const inner  = book.querySelector(".cs-book-inner");
-            const tilt   = book.querySelector(".cs-book-tilt");
-            const prev   = document.getElementById("book-prev");
-            const next   = document.getElementById("book-next");
-            const label  = document.getElementById("book-label");
-            const scrub  = document.getElementById("book-scrub");
-
-            const folder = book.dataset.folder;
-            const files  = book.dataset.files.split("|").map(f => f.trim()).filter(Boolean);
-            // A real booklet ends with the back cover on its own. With an odd number of pages, a blank
-            // inside page goes just before the back cover so it lands on the back of the last leaf.
-            if (files.length % 2 === 1 && files.length > 2) files.splice(files.length - 1, 0, "");
-            const names  = files.map(f => f.replace(/\.[a-z0-9]+$/i, ""));   // "Tone of voice.png" -> "Tone of voice"
-            const total  = files.length;
-            const n      = Math.ceil(total / 2);   // each leaf has a front and a back page
-            let flipped  = 0;                      // how many leaves are turned
-
-            const src = (i) => folder + encodeURIComponent(files[i]);   // spaces in filenames become %20
-
-            // Build the leaves: leaf i holds page 2i+1 (front) and page 2i+2 (back)
-            function face(pageNo, cls) {
-                const d = document.createElement("div");
-                d.className = "cs-face " + cls;
-                d.dataset.page = pageNo;
-                if (pageNo > total || !files[pageNo - 1]) return d;   // blank page
-                const img = document.createElement("img");
-                img.src = src(pageNo - 1);
-                img.alt = "Scran style guide: " + names[pageNo - 1];
-                img.draggable = false;
-                img.decoding = "async";
-                if (pageNo > 4) img.loading = "lazy";
-                d.appendChild(img);
-                return d;
-            }
-
-            const leaves = [];
-            for (let i = 0; i < n; i++) {
-                const leaf = document.createElement("div");
-                leaf.className = "cs-leaf";
-                leaf.appendChild(face(2 * i + 1, "cs-front"));
-                leaf.appendChild(face(2 * i + 2, "cs-back"));
-                inner.appendChild(leaf);
-                leaves.push(leaf);
-            }
-
-            scrub.max = n;
-
-            // Match the booklet's proportions to the page images
-            const probe = new Image();
-            probe.onload = function () {
-                if (!probe.naturalWidth || !probe.naturalHeight) return;
-                const ratio = probe.naturalWidth / probe.naturalHeight;
-                book.style.setProperty("--spread", (2 * probe.naturalWidth) + " / " + probe.naturalHeight);
-                if (ratio > 1) book.style.setProperty("--book-w", "1100px"); // landscape pages get more room
-            };
-            probe.src = src(0);
-
-            function settleLayers() {
-                leaves.forEach((leaf, i) => { leaf.style.zIndex = i < flipped ? i + 1 : n - i; });
-            }
-
-            function render() {
-                leaves.forEach((leaf, i) => leaf.classList.toggle("is-flipped", i < flipped));
-                book.classList.toggle("is-front", flipped === 0);
-                book.classList.toggle("is-back", flipped === n);
-                prev.disabled = flipped === 0;
-                next.disabled = flipped === n;
-                scrub.value = flipped;
-
-                // Name the pages on show, e.g. "Colours & Typography"
-                if (flipped === 0) label.textContent = names[0];
-                else if (flipped === n) label.textContent = names[total - 1];
-                else {
-                    const shown = [names[2 * flipped - 1], names[2 * flipped]].filter(Boolean);   // skip blank pages
-                    label.textContent = shown.join(" & ");
-                }
-            }
-
-            function go(target) {
-                target = Math.max(0, Math.min(n, target));
-                if (target === flipped) { render(); return; }
-                const from = Math.min(flipped, target);
-                const to   = Math.max(flipped, target);
-                for (let i = from; i < to; i++) {
-                    leaves[i].style.zIndex = 100 + (target > flipped ? i : n - i);
-                    leaves[i].classList.add("is-turning");
-                }
-                flipped = target;
-                render();
-                setTimeout(() => {
-                    leaves.forEach(l => l.classList.remove("is-turning"));
-                    settleLayers();
-                }, reduceMotion ? 0 : 900);
-            }
-
-            prev.addEventListener("click", (e) => { e.stopPropagation(); go(flipped - 1); });
-            next.addEventListener("click", (e) => { e.stopPropagation(); go(flipped + 1); });
-            scrub.addEventListener("input", () => go(parseInt(scrub.value, 10)));
-
-            // Click: left half = back, right half = forward. Drag/swipe: left = forward, right = back.
-            let downX = 0, downY = 0, swiped = false;
-            book.addEventListener("pointerdown", (e) => { downX = e.clientX; downY = e.clientY; swiped = false; });
-            book.addEventListener("pointerup", (e) => {
-                const dx = e.clientX - downX, dy = e.clientY - downY;
-                if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
-                    swiped = true;
-                    go(flipped + (dx < 0 ? 1 : -1));
-                }
-            });
-            book.addEventListener("click", (e) => {
-                if (swiped) { swiped = false; return; }
-                const rect = book.getBoundingClientRect();
-                const onRight = (e.clientX - rect.left) > rect.width / 2;
-                if (flipped === 0) go(1);
-                else if (flipped === n) go(n - 1);
-                else go(onRight ? flipped + 1 : flipped - 1);
-            });
-            book.addEventListener("keydown", (e) => {
-                if (e.key === "ArrowRight") { go(flipped + 1); e.preventDefault(); }
-                if (e.key === "ArrowLeft")  { go(flipped - 1); e.preventDefault(); }
-            });
-
-            // Lean towards the pointer (mouse only)
-            if (!reduceMotion && canHover) {
-                book.addEventListener("mousemove", (e) => {
-                    const r = book.getBoundingClientRect();
-                    const x = (e.clientX - r.left) / r.width - 0.5;
-                    const y = (e.clientY - r.top) / r.height - 0.5;
-                    tilt.style.transform = "rotateX(" + (6 - y * 10) + "deg) rotateY(" + (x * 14) + "deg)";
-                });
-                book.addEventListener("mouseleave", () => { tilt.style.transform = ""; });
-            }
-
-            settleLayers();
-            render();
-        })();
-
-        /* ==================================================================
-           7. VIDEO: plays only while it is on screen
+           7. VIDEO: silent loops play while on screen (never with reduced motion);
+              once a visitor pauses one, it stays paused. Videos with sound never start by themselves.
            ================================================================== */
         document.querySelectorAll(".cs-media video").forEach(v => {
-            if (reduceMotion || !("IntersectionObserver" in window)) return;
+            if (!("IntersectionObserver" in window)) return;
+            let autoPausing = false;
+            v.addEventListener("pause", () => { if (!autoPausing) v.dataset.userPaused = "1"; });
+            v.addEventListener("play",  () => { delete v.dataset.userPaused; });
             new IntersectionObserver(entries => {
                 entries.forEach(en => {
-                    if (en.isIntersecting) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
-                    else v.pause();
+                    if (en.isIntersecting) {
+                        if (v.muted && !reduceMotion && !v.dataset.userPaused) {
+                            const p = v.play();
+                            if (p && p.catch) p.catch(() => {});
+                        }
+                    } else if (!v.paused) {
+                        autoPausing = true;
+                        v.pause();
+                        autoPausing = false;
+                    }
                 });
             }, { threshold: 0.4 }).observe(v);
         });
@@ -1636,7 +1309,9 @@
         if (rise) {
             rise.addEventListener("click", (e) => {
                 e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+                const skip = document.querySelector(".skip-link");
+                if (skip) skip.focus({ preventScroll: true });
             });
         }
     </script>

@@ -430,10 +430,13 @@
             margin-right: auto;
         }
 
+        /* Width comes from each file's proportions (--r, set on the element), so the space is
+           reserved before a lazy image loads and anchor links land in the right place. */
         .cs-fig .cs-media img,
         .cs-fig .cs-media video {
-            width: auto;
+            width: min(820px, 86vw, calc(70vh * var(--r, 1.6)));
             max-width: 100%;
+            height: auto;
             max-height: 70vh;
             margin: 0 auto;
         }
@@ -444,22 +447,6 @@
         /* Reference and slide side by side: line the two images up at the top */
         .cs-compare { align-items: start; margin: clamp(20px, 3vw, 40px) 0; }
 
-        /* Placeholder for an image or video that hasn't been added yet: a dashed box naming the file it needs */
-        .cs-media.cs-todo.is-missing {
-            min-height: 240px;
-            border: 3px dashed currentColor;
-            background-color: rgba(0, 0, 0, 0.06);
-        }
-        .cs-fig .cs-media.cs-todo.is-missing { min-width: min(520px, 80vw); }
-
-        /* Placeholder for text that still needs writing */
-        .cs-band p.cs-todo-text {
-            padding: 1em 1.2em;
-            border: 3px dashed currentColor;
-            border-radius: 10px;
-            font-weight: 700;
-        }
-        .cs-todo-inline { font-weight: 700; }
 
         /* Footer: logo left, page links dead centre, socials right.
            Three columns (1fr auto 1fr) keep the middle group centred on the page
@@ -538,13 +525,21 @@
         }
 
         .rise-up-btn {
-            display: inline-block;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            color: #111111;
             cursor: pointer;
             user-select: none;
         }
 
-        .rise-up-btn h2 {
+        /* Same look as before, but a span: a link should not contain a heading */
+        .rise-up-label {
+            font-family: 'Space Grotesk', -apple-system, sans-serif;
+            font-weight: 700;
             font-size: clamp(3rem, 8vw, 7rem);
+            line-height: normal;
             letter-spacing: -2px;
             text-transform: uppercase;
             display: inline-block;
@@ -552,7 +547,16 @@
             transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
         }
 
-        .rise-up-btn:hover h2 {
+        .rise-up-hint {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .rise-up-btn:hover .rise-up-label,
+        .rise-up-btn:focus-visible .rise-up-label {
             color: var(--cs-purple);
             transform: skewX(-12deg);
             text-shadow: 6px 6px 0 var(--cs-lime);
@@ -590,6 +594,132 @@
             .fade-up, .fade-in, .fade-right, .fade-left { opacity: 1; transform: none; transition: none; }
             .cs-media, .cs-leaf, .cs-book-inner, .cs-book-tilt, .cs-book-floor { transition: none; }
         }
+
+        /* --- SLIDES CAROUSEL (same as XP Bank): swipe, drag, press the left/right edges, or use the arrow keys --- */
+        .cs-stage {
+            transition: height 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            border-radius: clamp(10px, 1.2vw, 18px);
+            background-color: rgba(0, 0, 0, 0.22);
+            touch-action: pan-y;
+            cursor: grab;
+            outline-offset: 4px;
+        }
+
+        .cs-stage:active { cursor: grabbing; }
+        .cs-stage:focus-visible { outline: 2px solid var(--cs-lime); }
+
+        .cs-track {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform;
+        }
+
+        .cs-slide {
+            flex: 0 0 100%;
+            margin: 0;
+            display: block;
+        }
+
+        /* Each slide takes its image's own proportions, so the whole image shows with no bars and no cropping */
+        .cs-slide img {
+            width: 100%;
+            height: auto;
+            display: block;
+            -webkit-user-drag: none;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .cs-edge {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 20%;
+            padding: 0 clamp(10px, 1.6vw, 24px);
+            border: 0;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            z-index: 3;
+            color: #111111;
+            cursor: pointer;
+            transition: background-color 0.3s ease, opacity 0.3s ease;
+        }
+
+        .cs-edge--prev { left: 0;  justify-content: flex-start; background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.28), transparent); background-color: transparent; opacity: 0; }
+        .cs-edge--next { right: 0; justify-content: flex-end;   background-image: linear-gradient(270deg, rgba(0, 0, 0, 0.28), transparent); background-color: transparent; opacity: 0; }
+
+        .cs-edge:hover,
+        .cs-edge:focus-visible { opacity: 1; }
+        .cs-edge:disabled { cursor: default; opacity: 0 !important; }
+
+        .cs-edge-arrow {
+            width: clamp(40px, 4vw, 54px);
+            height: clamp(40px, 4vw, 54px);
+            border-radius: 50%;
+            background-color: var(--cs-lime);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+
+        /* Touch screens have no hover, so keep the edge arrows visible */
+        @media (hover: none) {
+            .cs-edge { opacity: 0.9; background-image: none; }
+        }
+
+        .cs-carousel-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 14px 0 0;
+        }
+
+        .cs-progress {
+            display: flex;
+            flex: 1;
+            gap: 6px;
+        }
+
+        .cs-progress span {
+            flex: 1;
+            height: 4px;
+            border-radius: 2px;
+            background-color: rgba(255, 255, 255, 0.3);
+            transition: background-color 0.3s ease;
+        }
+
+        .cs-progress span.is-on { background-color: var(--cs-lime); }
+
+        .cs-count {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .cs-hint {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.9rem;
+            opacity: 0.75;
+        }
+
+        /* On the lime band the progress bars and focus ring switch to dark so they stay visible */
+        .cs-band--lime .cs-progress span       { background-color: rgba(17, 17, 17, 0.2); }
+        .cs-band--lime .cs-progress span.is-on { background-color: #111111; }
+        .cs-band--lime .cs-stage:focus-visible { outline-color: #111111; }
+
+        @media (max-width: 640px) { .cs-edge { width: 26%; } }
+        @media (prefers-reduced-motion: reduce) { .cs-track { transition: none; } }
 
         /* --- FLIPPABLE BRAND GUIDELINES: a 3D booklet mockup (click a page, drag/swipe, arrows, scrub bar or arrow keys) --- */
         .cs-book-stage {
@@ -1012,7 +1142,7 @@
         </div>
         <nav class="top-right">
             <a href="about.html" class="cyber-nav-link" data-text="About Me">About Me</a>
-            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio">Portfolio</a>
+            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio" aria-current="page">Portfolio</a>
             <a href="contact.html" class="cyber-nav-link" data-text="Get in Touch!">Get in Touch!</a>
         </nav>
     </header>
@@ -1035,7 +1165,7 @@
 
                 <figure class="cs-hero-fig fade-up observe stagger-3">
                     <div class="cs-hero-media cs-hero-media--bare" data-label="The Pioneers of Web Design presentation slides">
-                        <img src="assets/piobanner.png" alt="The Pioneers of Web Design presentation slides, styled like a classic macOS desktop" decoding="async" fetchpriority="high">
+                        <img src="assets/piobanner.png" width="1852" height="532" alt="The Pioneers of Web Design presentation slides, styled like a classic macOS desktop" decoding="async" fetchpriority="high">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The deck dressed as a classic Mac desktop, so the design itself tells part of the history the talk covers.</figcaption>
@@ -1077,7 +1207,7 @@
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12"/><path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2"/><path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4"/></svg>
                                 </span>
-                                <p>The project ran for <strong>5 weeks</strong>.</p>
+                                <p>The project ran for <strong>one month</strong>.</p>
                             </li>
                             <li class="cs-spec fade-left observe stagger-3">
                                 <span class="cs-spec-icon" aria-hidden="true">
@@ -1132,7 +1262,7 @@
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">Constraints</h2>
                 <ul class="cs-bullets fade-up observe">
-                    <li><strong>A brand-new group:</strong> this was a first-year, first-semester project, so we didn&rsquo;t really know each other yet. That was a challenge at first, but contributing, talking and having a laugh or two sorted it out quickly.</li>
+                    <li><strong>A brand-new group:</strong> we didn&rsquo;t really know each other yet. That was a challenge at first, but contributing, talking and having a laugh or two sorted it out quickly.</li>
                     <li><strong>Four people, one deck:</strong> everyone made their own slides, but the work still had to look and feel consistent.</li>
                     <li><strong>Five minutes:</strong> our content had to fit the time limit while staying engaging and legible for the class.</li>
                     <li><strong>Design with a purpose:</strong> the visuals had to support the theme, not distract from it.</li>
@@ -1156,47 +1286,44 @@
                 <p class="fade-up observe">I offered to take on the coordination role. I set up a Miro board for shared research, a Google Slides document for us all to work in, and a Slack group chat to talk, share tasks and keep everything clear and consistent. It meant we could each work on our own parts while staying aligned.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="Our Slack group chat">
-                        <img src="assets/text.png" alt="Our Slack group chat, where I shared the Notion notes, the Miro research board and the Google Slides document" loading="lazy" decoding="async">
+                        <img src="assets/text.png" width="2268" height="1476" style="--r: 2268 / 1476" alt="Our Slack group chat, where I shared the Notion notes, the Miro research board and the Google Slides document" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">Our Slack group chat, where I shared my Notion notes, the Miro research board and the Google Slides document with Erin, Jacob and Katie.</figcaption>
                 </figure>
-                <!-- PLACEHOLDERS: each image or video shows as a dashed box naming the file it is waiting for.
-                     Save the file in assets/ under that name (or change the src to your own file name),
-                     then replace the alt text / aria-label and the [Caption to write: ...] line.
-                     Delete any placeholder you don't fill before you submit. -->
                 <figure class="cs-fig fade-up observe">
-                    <div class="cs-media cs-todo tilt-card" data-label="PLACEHOLDER: a screenshot of the Miro research board (save it as assets/pioneers-miro-board.png)">
-                        <img src="assets/pioneers-miro-board.png" alt="TODO: describe this image" loading="lazy" decoding="async">
+                    <div class="cs-media tilt-card" data-label="Our group Miro board">
+                        <img src="assets/pioneers-miro-board.png" width="3010" height="1548" style="--r: 3010 / 1548" alt="Our Miro board: four columns of research notes, one each for Jared, Katie, Erin and Jacob" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">Our Group Miro Board, where we compiled our research and shared it.</figcaption>
+                    <figcaption class="cs-caption">Our group Miro board, where we compiled and shared our research.</figcaption>
                 </figure>
                 <h3 class="fade-up observe">My research</h3>
                 <p class="fade-up observe">My section covered design in apps from 2010 to the present: the shift towards mobile-first design, flat UI and platform-specific conventions. I wrote my research out in Miro, then adapted it into the presentation, putting clarity ahead of extensive detail.</p>
                 <h3 class="fade-up observe">My slides</h3>
-                <div class="cs-grid cs-grid--3">
-                    <figure class="fade-up observe">
-                        <div class="cs-media cs-todo tilt-card" data-label="PLACEHOLDER: one of your own slides (save it as assets/pioneers-my-slide-1.png)">
-                            <img src="assets/pioneers-my-slide-1.png" alt="TODO: describe this image" loading="lazy" decoding="async">
-                            <span class="cs-scan" aria-hidden="true"></span>
+                <!-- Carousel: swipe or drag, press the left/right edges, or use the arrow keys -->
+                <div class="fade-in observe">
+                    <div class="cs-stage" id="carousel" tabindex="0" role="group" aria-roledescription="carousel" aria-label="My slides">
+                        <div class="cs-track">
+                            <figure class="cs-slide" data-caption="My section started in 2010, and the first major site I covered was Pinterest.">
+                                <img src="assets/pioneers-my-slide-1.png" width="2514" height="1416" alt="My slide styled as a classic Mac window, introducing 2010 to the present with the Pinterest logo" draggable="false">
+                            </figure>
+                            <figure class="cs-slide" data-caption="HTML5, which became the recommended standard for coding websites.">
+                                <img src="assets/pioneers-my-slide-2.png" width="2514" height="1416" alt="My slide on HTML5, with a block of website code in a classic Mac window" draggable="false">
+                            </figure>
+                            <figure class="cs-slide" data-caption="Responsive design: if you&rsquo;re reading this on a phone, you&rsquo;re seeing it in action.">
+                                <img src="assets/pioneers-my-slide-3.png" width="2514" height="1416" alt="My slide on responsive design, with a photo of a designer and a phone showing a responsive site" draggable="false">
+                            </figure>
                         </div>
-                        <figcaption class="cs-caption">I covered 2010 to present, and the first major site was Pinterest.</figcaption>
-                    </figure>
-                    <figure class="fade-up observe stagger-1">
-                        <div class="cs-media cs-todo tilt-card" data-label="PLACEHOLDER: a second slide of yours (save it as assets/pioneers-my-slide-2.png)">
-                            <img src="assets/pioneers-my-slide-2.png" alt="TODO: describe this image" loading="lazy" decoding="async">
-                            <span class="cs-scan" aria-hidden="true"></span>
-                        </div>
-                        <figcaption class="cs-caption">I talked about how HTML 5 was the chosen reccomendation for coding websites.</figcaption>
-                    </figure>
-                    <figure class="fade-up observe stagger-2">
-                        <div class="cs-media cs-todo tilt-card" data-label="PLACEHOLDER: a third slide of yours (save it as assets/pioneers-my-slide-3.png)">
-                            <img src="assets/pioneers-my-slide-3.png" alt="TODO: describe this image" loading="lazy" decoding="async">
-                            <span class="cs-scan" aria-hidden="true"></span>
-                        </div>
-                        <figcaption class="cs-caption">I also talked about Responsive Design, which if you're viewing on a phone, That is responsive.</figcaption>
-                    </figure>
+                        <button type="button" class="cs-edge cs-edge--prev" aria-label="Previous slide"><span class="cs-edge-arrow" aria-hidden="true">&larr;</span></button>
+                        <button type="button" class="cs-edge cs-edge--next" aria-label="Next slide"><span class="cs-edge-arrow" aria-hidden="true">&rarr;</span></button>
+                    </div>
+                    <div class="cs-carousel-meta">
+                        <div class="cs-progress" id="carousel-progress" aria-hidden="true"></div>
+                        <span class="cs-count" id="carousel-count">1 / 3</span>
+                    </div>
+                    <span class="cs-caption" id="carousel-caption" aria-live="polite"></span>
+                    <span class="cs-hint">Swipe, drag or press the edges to move through my slides.</span>
                 </div>
                 <h3 class="fade-up observe">Refining the talk</h3>
                 <p class="fade-up observe">As the presentation developed, I kept an eye out for clutter and helped refine the layout, slide order and timing. When we were running over the time limit, we cut it back together, focusing on quality over quantity.</p>
@@ -1213,25 +1340,21 @@
                     <li><strong>The typeface:</strong> we chose EB Garamond together, for its link to early Apple marketing and because it reads well on a projector.</li>
                 </ul>
 
-                <!-- PLACEHOLDERS: each image or video shows as a dashed box naming the file it is waiting for.
-                     Save the file in assets/ under that name (or change the src to your own file name),
-                     then replace the alt text / aria-label and the [Caption to write: ...] line.
-                     Delete any placeholder you don't fill before you submit. -->
                 <h3 class="fade-up observe">From reference to slide</h3>
                 <div class="cs-split cs-compare">
                     <figure class="fade-right observe">
-                        <div class="cs-media cs-todo tilt-card" data-label="PLACEHOLDER: the classic Mac interface you referenced (save it as assets/pioneers-mac-reference.png)">
-                            <img src="assets/pioneers-mac-reference.png" alt="TODO: describe this image" loading="lazy" decoding="async">
+                        <div class="cs-media tilt-card" data-label="The classic Mac interface we referenced">
+                        <img src="assets/pioneers-mac-reference.png" width="1599" height="1200" alt="A classic Mac OS desktop: grey windows with title bars, folder icons and a menu bar" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">Mac User Interface we took inspiration from</figcaption>
+                        <figcaption class="cs-caption">The classic Mac interface we took inspiration from.</figcaption>
                     </figure>
                     <figure class="fade-left observe">
-                        <div class="cs-media cs-todo tilt-card" data-label="PLACEHOLDER: a slide that uses that reference (save it as assets/pioneers-mac-slide.png)">
-                            <img src="assets/pioneers-mac-slide.png" alt="TODO: describe this image" loading="lazy" decoding="async">
+                        <div class="cs-media tilt-card" data-label="One of our slides in the classic Mac style">
+                        <img src="assets/pioneers-mac-slide.png" width="2514" height="1416" alt="One of our slides: text in a pale yellow note window beside the Figma logo, on a classic Mac desktop" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">Design of our slide deck, Based of the classic Mac UI.</figcaption>
+                        <figcaption class="cs-caption">One of our slides, based on the classic Mac interface.</figcaption>
                     </figure>
                 </div>
             </div>
@@ -1241,15 +1364,14 @@
         <section id="outcome" class="cs-band cs-band--white">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">The Outcome</h2>
-                <p class="fade-up observe">The final presentation combined historical research with a cohesive design that reinforced the story. Feedback <span class="cs-todo-inline">[say who gave it: your tutor, the class, or both]</span> singled out the classic macOS interface as a strong, legible choice that helped keep the class engaged. We presented calmly, clearly and confidently, and the talk was well received.</p>
+                <p class="fade-up observe">The final presentation combined historical research with a cohesive design that reinforced the story. Feedback from my lecturer, Paul, singled out the classic macOS interface as a strong, legible choice that helped keep the class engaged. We presented calmly, clearly and confidently, and the talk was well received.</p>
                 <figure class="cs-slides-fig fade-up observe">
                     <div class="cs-slides">
                         <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSwcZ-KFKjBraMNk6BaNBt2abeUeqdl-GAvdHOc9mB8lELCYmiY6yc_UGPQhTJNGrbdTK5id9nCHOKr/pubembed?start=false&amp;loop=false&amp;delayms=15000" allowfullscreen loading="lazy" title="The Pioneers of Web Design slide deck"></iframe>
                     </div>
                     <figcaption class="cs-caption">The full slide deck: four people&rsquo;s sections, held together by one shared classic Mac style and EB Garamond. Use the arrows to click through it, or open it full screen.</figcaption>
                 </figure>
-
-               
+            </div>
         </section>
 
         <!-- === AI TRANSPARENCY === -->
@@ -1257,7 +1379,7 @@
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">AI Transparency</h2>
                 <p class="fade-up observe"><strong>No AI was used on this project</strong>, by me or the rest of the group. The research, the slides, the classic Mac visual direction and the talk itself were all our own work.</p>
-               
+                <p class="fade-up observe"><strong>The writing:</strong> this write-up is in my own words, with no AI used.</p>
             </div>
         </section>
 
@@ -1288,8 +1410,9 @@
 
         <!-- === RISE UP (scroll to top) === -->
         <section class="cs-rise fade-in observe">
-            <a href="#top" class="rise-up-btn" aria-label="Scroll to top of page">
-                <h2>Rise Up!</h2>
+            <a href="#top" class="rise-up-btn">
+                <span class="rise-up-label">Rise Up!</span>
+                <span class="rise-up-hint">Back to top &uarr;</span>
             </a>
         </section>
 
@@ -1417,19 +1540,6 @@
         document.querySelectorAll(".cs-media video").forEach(v => {
             if (v.error) handleBroken(v);
         });
-
-        /* ==================================================================
-           2b. UNFINISHED SECTIONS: a section with data-todo and "hidden" also hides its Contents entry
-           and spec row (anything with data-needs="its id"). Contents numbers then count up in order.
-           ================================================================== */
-        (function () {
-            document.querySelectorAll("section[data-todo][hidden]").forEach(sec => {
-                document.querySelectorAll('[data-needs="' + sec.id + '"]').forEach(el => el.remove());
-            });
-            document.querySelectorAll(".cs-contents .cs-num").forEach((num, i) => {
-                num.textContent = String(i + 1).padStart(2, "0");
-            });
-        })();
 
         /* ==================================================================
            3. SCROLL REVEAL (fires once per element; headings decrypt as they appear)
@@ -1621,6 +1731,113 @@
         })();
 
         /* ==================================================================
+           6. SLIDES CAROUSEL (swipe, drag, press the edges, arrow keys)
+           ================================================================== */
+        (function () {
+            const stage = document.getElementById("carousel");
+            if (!stage) return;
+
+            const track    = stage.querySelector(".cs-track");
+            const prevBtn  = stage.querySelector(".cs-edge--prev");
+            const nextBtn  = stage.querySelector(".cs-edge--next");
+            const capEl    = document.getElementById("carousel-caption");
+            const countEl  = document.getElementById("carousel-count");
+            const progress = document.getElementById("carousel-progress");
+
+            let index = 0;
+            let dragging = false;
+            let startX = 0;
+            let dx = 0;
+            let moved = false;
+            let suppressClick = false;
+
+            const slides = () => Array.from(track.children);
+
+            // Match the stage height to the visible slide's image
+            function fit() {
+                const cur = slides()[index];
+                if (!cur) return;
+                const h = cur.getBoundingClientRect().height;
+                if (h > 0) stage.style.height = h + "px";
+            }
+
+            function update() {
+                const list = slides();
+                const n = list.length;
+                if (!n) return;
+
+                index = Math.max(0, Math.min(index, n - 1));
+
+                track.style.transition = "";
+                track.style.transform = `translateX(${-index * 100}%)`;
+
+                list.forEach((s, i) => s.setAttribute("aria-hidden", i === index ? "false" : "true"));
+
+                fit();
+                capEl.textContent = list[index].dataset.caption || "";
+                countEl.textContent = (index + 1) + " / " + n;
+                prevBtn.disabled = index === 0;
+                nextBtn.disabled = index === n - 1;
+
+                if (progress.children.length !== n) {
+                    progress.innerHTML = "";
+                    for (let i = 0; i < n; i++) progress.appendChild(document.createElement("span"));
+                }
+                Array.from(progress.children).forEach((bar, i) => bar.classList.toggle("is-on", i <= index));
+            }
+
+            prevBtn.addEventListener("click", () => { if (suppressClick) return; index--; update(); });
+            nextBtn.addEventListener("click", () => { if (suppressClick) return; index++; update(); });
+
+            // Drag (mouse) and swipe (touch) share the same pointer handling
+            stage.addEventListener("pointerdown", (e) => {
+                if (e.pointerType === "mouse" && e.button !== 0) return;
+                dragging = true;
+                moved = false;
+                startX = e.clientX;
+                dx = 0;
+                track.style.transition = "none";
+            });
+
+            window.addEventListener("pointermove", (e) => {
+                if (!dragging) return;
+                dx = e.clientX - startX;
+                if (Math.abs(dx) > 6) moved = true;
+                track.style.transform = `translateX(calc(${-index * 100}% + ${dx}px))`;
+            });
+
+            function endDrag() {
+                if (!dragging) return;
+                dragging = false;
+                const threshold = Math.min(120, stage.clientWidth * 0.15);
+                if (dx < -threshold) index++;
+                else if (dx > threshold) index--;
+                if (moved) {
+                    suppressClick = true;
+                    setTimeout(() => { suppressClick = false; }, 0);
+                }
+                update();
+            }
+
+            window.addEventListener("pointerup", endDrag);
+            window.addEventListener("pointercancel", endDrag);
+
+            stage.addEventListener("keydown", (e) => {
+                if (e.key === "ArrowLeft")  { index--; update(); e.preventDefault(); }
+                if (e.key === "ArrowRight") { index++; update(); e.preventDefault(); }
+            });
+
+            // Re-fit when images finish loading or the window resizes
+            stage.querySelectorAll("img").forEach(img => img.addEventListener("load", fit));
+            window.addEventListener("resize", fit);
+
+            // A slide was removed because its file is missing
+            window.addEventListener("cs:slides", update);
+
+            update();
+        })();
+
+        /* ==================================================================
            7. VIDEO: plays only while it is on screen
            ================================================================== */
         document.querySelectorAll(".cs-media video").forEach(v => {
@@ -1640,7 +1857,9 @@
         if (rise) {
             rise.addEventListener("click", (e) => {
                 e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+                const skip = document.querySelector(".skip-link");
+                if (skip) skip.focus({ preventScroll: true });
             });
         }
     </script>

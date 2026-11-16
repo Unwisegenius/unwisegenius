@@ -199,6 +199,28 @@
             box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
         }
 
+        /* Pause / play for the looping hero preview (WCAG 2.2.2: moving content can be paused) */
+        .cs-video-toggle {
+            position: absolute;
+            right: 14px;
+            bottom: 14px;
+            z-index: 3;
+            min-height: 44px;
+            padding: 8px 18px;
+            border: 0;
+            border-radius: 999px;
+            background-color: var(--cs-lime);
+            color: #111111;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .cs-video-toggle:focus-visible { outline: 3px solid #ffffff; outline-offset: 3px; }
+
         .cs-hero-media img, .cs-hero-media video {
             width: 100%;
             height: auto;
@@ -428,9 +450,6 @@
         }
         .cs-yt iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
-        /* Marks a gap in a sentence that still needs filling in */
-        .cs-todo-inline { font-weight: 700; }
-
         /* Footer: logo left, page links dead centre, socials right.
            Three columns (1fr auto 1fr) keep the middle group centred on the page
            whatever the widths of the logo and the socials.
@@ -508,13 +527,21 @@
         }
 
         .rise-up-btn {
-            display: inline-block;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            color: #111111;
             cursor: pointer;
             user-select: none;
         }
 
-        .rise-up-btn h2 {
+        /* Same look as before, but a span: a link should not contain a heading */
+        .rise-up-label {
+            font-family: 'Space Grotesk', -apple-system, sans-serif;
+            font-weight: 700;
             font-size: clamp(3rem, 8vw, 7rem);
+            line-height: normal;
             letter-spacing: -2px;
             text-transform: uppercase;
             display: inline-block;
@@ -522,7 +549,16 @@
             transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
         }
 
-        .rise-up-btn:hover h2 {
+        .rise-up-hint {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .rise-up-btn:hover .rise-up-label,
+        .rise-up-btn:focus-visible .rise-up-label {
             color: var(--cs-purple);
             transform: skewX(-12deg);
             text-shadow: 6px 6px 0 var(--cs-lime);
@@ -572,12 +608,12 @@
     <header>
         <div class="top-left">
             <a href="index.html">
-                <img src="assets/brain-180.png" alt="UnwiseGenius home" class="brain-icon" width="38">
+                <img src="assets/brain-180.png" alt="UnwiseGenius home" class="brain-icon" width="38" height="38">
             </a>
         </div>
         <nav class="top-right">
             <a href="about.html" class="cyber-nav-link" data-text="About Me">About Me</a>
-            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio">Portfolio</a>
+            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio" aria-current="page">Portfolio</a>
             <a href="contact.html" class="cyber-nav-link" data-text="Get in Touch!">Get in Touch!</a>
         </nav>
     </header>
@@ -600,7 +636,8 @@
                 <figure class="cs-hero-fig fade-up observe stagger-3">
                     <div class="cs-hero-media" data-label="The refreshed title sequence">
                         <!-- Silent looping preview; the full sequence with controls is further down the page -->
-                        <video src="Sequence 01.mp4" muted loop playsinline autoplay preload="metadata" aria-label="Silent preview of my refreshed title sequence for The Shining"></video>
+                        <video id="hero-preview" src="Sequence 01.mp4" width="1920" height="1080" muted loop playsinline preload="metadata" aria-label="Silent preview of my refreshed title sequence for The Shining"></video>
+                        <button type="button" class="cs-video-toggle" aria-controls="hero-preview">Play preview</button>
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">Three minutes of slow aerial shots, cut to thirty seconds that hint at what&rsquo;s coming.</figcaption>
@@ -622,27 +659,25 @@
                             <li class="fade-right observe stagger-2"><a href="#research"><span class="cs-num">02</span>Researching The Shining</a></li>
                             <li class="fade-right observe stagger-3"><a href="#developing"><span class="cs-num">03</span>Developing the Title Sequence</a></li>
                             <li class="fade-right observe stagger-4"><a href="#sequence"><span class="cs-num">04</span>The Title Sequence</a></li>
-                            <li class="fade-right observe stagger-5" data-needs-ai><a href="#ai"><span class="cs-num">05</span>AI Transparency</a></li>
-                            <li class="fade-right observe stagger-5"><a href="#reflection"><span class="cs-num" data-num-after-ai>05</span>Reflection</a></li>
+                            <li class="fade-right observe stagger-5"><a href="#ai"><span class="cs-num">05</span>AI Transparency</a></li>
+                            <li class="fade-right observe stagger-5"><a href="#reflection"><span class="cs-num">06</span>Reflection</a></li>
                         </ul>
                     </div>
 
                     <div id="specs">
                         <h2 class="cs-sub scramble-heading fade-up observe">Project Specifications</h2>
                         <ul class="cs-specs" role="list">
-                            <!-- ROLE: check this wording is right -->
                             <li class="cs-spec fade-left observe stagger-1">
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>
                                 </span>
                                 <p>Role: <strong>solo project</strong> (research, edit and pacing).</p>
                             </li>
-                            <!-- TIMELINE: replace the bracketed text with the real length and date -->
                             <li class="cs-spec fade-left observe stagger-2">
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12"/><path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2"/><path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4"/></svg>
                                 </span>
-                                <p>The project ran for <strong>[X weeks, month and year]</strong>.</p>
+                                <p>The project ran for <strong>one month</strong> (October 2026).</p>
                             </li>
                             <li class="cs-spec fade-left observe stagger-3">
                                 <span class="cs-spec-icon" aria-hidden="true">
@@ -668,7 +703,7 @@
                                 </span>
                                 <p>Aimed at a <strong>younger, modern</strong> demographic.</p>
                             </li>
-                            <li class="cs-spec fade-left observe stagger-4" data-needs-ai>
+                            <li class="cs-spec fade-left observe stagger-4">
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4L12 3z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15z"/></svg>
                                 </span>
@@ -695,13 +730,14 @@
                 <h2 class="scramble-heading fade-up observe">Researching The Shining</h2>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="Symbolism in The Shining">
-                        <img src="assets/symbolismintheshining.png" alt="My research board on the symbolism in The Shining, including the Native American imagery and the hedge maze" loading="lazy" decoding="async">
+                        <img src="assets/symbolismintheshining.png" width="2873" height="1215" alt="My research board on the symbolism in The Shining, including the Native American imagery and the hedge maze" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">My research on the film&rsquo;s symbolism. The maze and the burial ground became the ideas I wanted the new sequence to hint at.</figcaption>
                 </figure>
                 <p class="fade-up observe">I started by rewatching the movie, which, if you haven&rsquo;t seen it, I highly recommend. I picked up a few things while watching. There is a lot of hidden symbolism in the movie, specifically the Native American imagery. If you didn&rsquo;t know, the hotel the movie is set in was built on a Native American burial ground. The maze acts as a psychological trap and a loss of control, which is what happens to Jack.</p>
                 <p class="fade-up observe">What struck me most was how quickly Jack unravels: about a month of isolation in the Colorado mountains is all it takes. That speed was something I wanted a shorter sequence to capture.</p>
+                <p class="fade-up observe">I also looked at the poster Saul Bass designed for the film, and felt that the movie didn&rsquo;t do anything to match that design, which is just bad cohesion. So I made it a point to design the typography to feel more like Saul Bass&rsquo;s style.</p>
             </div>
         </section>
 
@@ -712,9 +748,8 @@
                 <p class="fade-up observe">Before I show what I&rsquo;ve done, I feel I should remind you what the intro sequence for The Shining is, so please enjoy these next 3 minutes!</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media" data-label="The original title sequence">
-                        <video playsinline preload="metadata" controls aria-label="The original three-minute title sequence of The Shining">
+                        <video width="1920" height="1072" playsinline preload="metadata" controls aria-label="The original three-minute title sequence of The Shining">
                             <source src="assets/thecurrentshiningtitle.mp4#t=0.1" type="video/mp4">
-                            <source src="thecurrentshiningtitle.mp4#t=0.1" type="video/mp4">
                             Your browser can&rsquo;t play this video.
                         </video>
                         <span class="cs-scan" aria-hidden="true"></span>
@@ -727,7 +762,7 @@
                 <p class="fade-up observe">So I thought of some ideas to do just that, and decided to cut it down to 30 seconds, as 3 minutes is far too long. I also wanted to foreshadow what happens in the movie, and a great way of doing this was to generate images from frames of the movie. Below is a collage of all the frames that were generated for the project:</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="Collage of generated frames">
-                        <img src="assets/collageoftheshining.png" alt="Collage of all the generated frames used in the project" loading="lazy" decoding="async">
+                        <img src="assets/collageoftheshining.png" width="1391" height="838" alt="Collage of all the generated frames used in the project" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">Every AI-generated frame made for the project. Each one foreshadows a moment from the film, so the sequence hints at the story without spoiling it.</figcaption>
@@ -735,7 +770,7 @@
                 <h3 class="fade-up observe">Planning the thirty seconds</h3>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="Storyboard for the new title sequence">
-                        <img src="assets/shining-storyboard.png" alt="My storyboard for the new 30-second title sequence" loading="lazy" decoding="async">
+                        <img src="assets/shining-storyboard.png" width="2223" height="1543" alt="My storyboard for the new 30-second title sequence" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The storyboard for the new title sequence, shortened from 3 minutes to 30 seconds.</figcaption>
@@ -744,7 +779,7 @@
                 <p class="fade-up observe">I then went on to Premiere Pro and got to work editing and creating a title sequence that would fill you with dread whilst also keeping your attention.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="The Premiere Pro timeline">
-                        <img src="assets/shining-premiere-timeline.png" alt="The Premiere Pro timeline for my 30-second title sequence" loading="lazy" decoding="async">
+                        <img src="assets/shining-premiere-timeline.png" width="1698" height="1998" alt="The Premiere Pro timeline for my 30-second title sequence" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The original&rsquo;s slow pacing, cut down to 30 seconds, still leaves you with a feeling of dread.</figcaption>
@@ -762,7 +797,7 @@
                 <h2 class="scramble-heading fade-up observe">The Title Sequence</h2>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media" data-label="The refreshed title sequence">
-                        <video playsinline preload="metadata" controls aria-label="My refreshed 30-second title sequence for The Shining">
+                        <video width="1920" height="1080" playsinline preload="metadata" controls aria-label="My refreshed 30-second title sequence for The Shining">
                             <source src="assets/theshiningtitlesequencerefresh.mp4" type="video/mp4">
                             Your browser can&rsquo;t play this video.
                         </video>
@@ -777,7 +812,7 @@
         <section id="ai" class="cs-band cs-band--purple">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">AI Transparency</h2>
-                <p class="fade-up observe">The frames in the collage were generated with <span class="cs-todo-inline">[name the AI tool]</span>, using frames from the film as the starting point. I chose which moments to foreshadow and which results to keep.</p>
+                <p class="fade-up observe">The frames in the collage were generated with <strong>Gemini</strong>, using frames from the film as the starting point. I chose which moments to foreshadow and which results to keep.</p>
                 <p class="fade-up observe">Everything else was mine: the research, the idea of cutting three minutes to thirty seconds, and the editing and pacing in Premiere Pro.</p>
                 <p class="fade-up observe">This write-up is in my own words, with no AI used.</p>
             </div>
@@ -810,8 +845,9 @@
 
         <!-- === RISE UP (scroll to top) === -->
         <section class="cs-rise fade-in observe">
-            <a href="#top" class="rise-up-btn" aria-label="Scroll to top of page">
-                <h2>Rise Up!</h2>
+            <a href="#top" class="rise-up-btn">
+                <span class="rise-up-label">Rise Up!</span>
+                <span class="rise-up-hint">Back to top &uarr;</span>
             </a>
         </section>
 
@@ -886,6 +922,8 @@
             const vbox = vid && vid.closest(".cs-media, .cs-hero-media");
             if (vbox && !vbox.classList.contains("is-missing")) {
                 vbox.classList.add("is-missing");
+                const toggle = vbox.querySelector(".cs-video-toggle");
+                if (toggle) toggle.remove();
                 vid.remove();
             }
         }
@@ -927,19 +965,6 @@
         document.querySelectorAll(".cs-media video, .cs-hero-media video").forEach(v => {
             if (v.error) markVideoMissing(v);
         });
-
-        /* ==================================================================
-           2b. AI SECTION: until it's filled in (no "hidden" attribute), hide its Contents entry and spec row
-           ================================================================== */
-        (function () {
-            const ai = document.getElementById("ai");
-            if (ai && !ai.hidden) {
-                const n = document.querySelector("[data-num-after-ai]");
-                if (n) n.textContent = "06";
-                return;
-            }
-            document.querySelectorAll("[data-needs-ai]").forEach(el => el.remove());
-        })();
 
         /* ==================================================================
            3. SCROLL REVEAL (fires once per element; headings decrypt as they appear)
@@ -987,17 +1012,47 @@
         }
 
         /* ==================================================================
-           7. VIDEO: plays only while it is on screen
+           7. VIDEO: the silent preview plays while on screen (never with reduced motion,
+              never after the visitor pauses it). Videos with sound only ever pause
+              when scrolled away: they never start by themselves.
            ================================================================== */
         document.querySelectorAll(".cs-media video, .cs-hero-media video").forEach(v => {
-            if (reduceMotion || !("IntersectionObserver" in window)) return;
+            if (!("IntersectionObserver" in window)) return;
+            const isSilentPreview = v.muted && !v.controls;
             new IntersectionObserver(entries => {
                 entries.forEach(en => {
-                    if (en.isIntersecting) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
-                    else v.pause();
+                    if (en.isIntersecting) {
+                        if (isSilentPreview && !reduceMotion && !v.dataset.userPaused) {
+                            const p = v.play();
+                            if (p && p.catch) p.catch(() => {});
+                        }
+                    } else if (!v.paused) {
+                        v.pause();
+                    }
                 });
             }, { threshold: 0.4 }).observe(v);
         });
+
+        const heroVideo  = document.getElementById("hero-preview");
+        const heroToggle = document.querySelector(".cs-video-toggle");
+        if (heroVideo && heroToggle) {
+            const syncToggle = () => {
+                heroToggle.textContent = heroVideo.paused ? "Play preview" : "Pause preview";
+            };
+            heroToggle.addEventListener("click", () => {
+                if (heroVideo.paused) {
+                    delete heroVideo.dataset.userPaused;
+                    const p = heroVideo.play();
+                    if (p && p.catch) p.catch(() => {});
+                } else {
+                    heroVideo.dataset.userPaused = "1";
+                    heroVideo.pause();
+                }
+            });
+            heroVideo.addEventListener("play", syncToggle);
+            heroVideo.addEventListener("pause", syncToggle);
+            syncToggle();
+        }
 
         /* ==================================================================
            8. RISE UP (smooth scroll to top)
@@ -1006,7 +1061,9 @@
         if (rise) {
             rise.addEventListener("click", (e) => {
                 e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+                const skip = document.querySelector(".skip-link");
+                if (skip) skip.focus({ preventScroll: true });
             });
         }
     </script>

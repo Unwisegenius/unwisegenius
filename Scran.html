@@ -430,10 +430,13 @@
             margin-right: auto;
         }
 
+        /* Width comes from each file's proportions (--r, set on the element), so the space is
+           reserved before a lazy image loads and anchor links land in the right place. */
         .cs-fig .cs-media img,
         .cs-fig .cs-media video {
-            width: auto;
+            width: min(820px, 86vw, calc(70vh * var(--r, 1.6)));
             max-width: 100%;
+            height: auto;
             max-height: 70vh;
             margin: 0 auto;
         }
@@ -456,9 +459,6 @@
             #guidelines .cs-book-stage { display: none; }
             .cs-book-pages { display: block; }
         }
-
-        /* Marks a gap in a sentence that still needs filling in */
-        .cs-todo-inline { font-weight: 700; }
 
         /* Footer: logo left, page links dead centre, socials right.
            Three columns (1fr auto 1fr) keep the middle group centred on the page
@@ -537,13 +537,21 @@
         }
 
         .rise-up-btn {
-            display: inline-block;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            color: #111111;
             cursor: pointer;
             user-select: none;
         }
 
-        .rise-up-btn h2 {
+        /* Same look as before, but a span: a link should not contain a heading */
+        .rise-up-label {
+            font-family: 'Space Grotesk', -apple-system, sans-serif;
+            font-weight: 700;
             font-size: clamp(3rem, 8vw, 7rem);
+            line-height: normal;
             letter-spacing: -2px;
             text-transform: uppercase;
             display: inline-block;
@@ -551,7 +559,16 @@
             transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
         }
 
-        .rise-up-btn:hover h2 {
+        .rise-up-hint {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .rise-up-btn:hover .rise-up-label,
+        .rise-up-btn:focus-visible .rise-up-label {
             color: var(--cs-purple);
             transform: skewX(-12deg);
             text-shadow: 6px 6px 0 var(--cs-lime);
@@ -893,7 +910,7 @@
         </div>
         <nav class="top-right">
             <a href="about.html" class="cyber-nav-link" data-text="About Me">About Me</a>
-            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio">Portfolio</a>
+            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio" aria-current="page">Portfolio</a>
             <a href="contact.html" class="cyber-nav-link" data-text="Get in Touch!">Get in Touch!</a>
         </nav>
     </header>
@@ -916,10 +933,8 @@
                 </ul>
 
                 <figure class="cs-hero-fig fade-up observe stagger-3">
-                    <!-- HERO: the caption and alt describe the logo banner that SCRANLONG.png currently is.
-                         If you swap in a row of app screens, rewrite both to describe that instead. -->
                     <div class="cs-hero-media" data-label="The Scran logo">
-                        <img src="assets/SCRANLONG.png" alt="The Scran logo on a red banner" decoding="async" fetchpriority="high">
+                        <img src="assets/SCRANLONG.png" width="2304" height="651" alt="The Scran logo on a red banner" decoding="async" fetchpriority="high">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">Scran: a cooking app that helps children bake, use up leftovers and waste less food.</figcaption>
@@ -945,8 +960,8 @@
                             <li class="fade-right observe stagger-4"><a href="#screens"><span class="cs-num">06</span>Designing the Screens</a></li>
                             <li class="fade-right observe stagger-4"><a href="#redevelopment"><span class="cs-num">07</span>Redevelopment</a></li>
                             <li class="fade-right observe stagger-4"><a href="#outcome"><span class="cs-num">08</span>Outcome</a></li>
-                            <li class="fade-right observe stagger-4" data-needs-ai><a href="#ai"><span class="cs-num">09</span>AI Transparency</a></li>
-                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num" data-num-after-ai>09</span>Reflection</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#ai"><span class="cs-num">09</span>AI Transparency</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num">10</span>Reflection</a></li>
                         </ul>
                     </div>
 
@@ -989,7 +1004,7 @@
                                 </span>
                                 <p>UN goal: <strong>Zero Hunger</strong>, through reducing food waste.</p>
                             </li>
-                            <li class="cs-spec fade-left observe stagger-4" data-needs-ai>
+                            <li class="cs-spec fade-left observe stagger-4">
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4L12 3z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15z"/></svg>
                                 </span>
@@ -1044,7 +1059,7 @@
                 </ul>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="The Gousto app home screen">
-                        <img src="assets/HomeFood.png" alt="The Gousto app home screen" loading="lazy" decoding="async">
+                        <img src="assets/HomeFood.png" width="2062" height="1432" style="--r: 2062 / 1432" alt="The Gousto app home screen: large food photos, a picture for each ingredient and recipe tags" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">Gousto&rsquo;s home screen: big imagery, ingredient pictures and clear tags.</figcaption>
@@ -1055,14 +1070,14 @@
                 <p class="fade-up observe">Naming the app took a long list, from FoodCycle and Loop Kitchen to ReHeat and Savethepeels. One stood out straight away: <strong>Scran</strong>, slang for food, and only one letter away from &ldquo;scrap&rdquo;. I really love that one.</p>
                 <figure class="cs-fig fade-up observe" data-optional>
                     <div class="cs-media tilt-card" data-label="Mind map of Scran ideas">
-                        <img src="assets/scran-mindmap.png" alt="Mind map of Scran ideas" loading="lazy" decoding="async">
+                        <img src="assets/scran-mindmap.png" width="5249" height="3537" style="--r: 5249 / 3537" alt="A hand-drawn mind map of Scran features: recipes, leftovers, a carbon footprint tracker and colour ideas" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">My mind map of features and ideas for the app.</figcaption>
                 </figure>
                 <figure class="cs-fig fade-up observe" data-optional>
                     <div class="cs-media tilt-card" data-label="Lo-fi sketches of Scran features">
-                        <img src="assets/scran-sketches.png" alt="Lo-fi sketches of Scran features" loading="lazy" decoding="async">
+                        <img src="assets/scran-sketches.png" width="1489" height="838" style="--r: 1489 / 838" alt="Lo-fi pencil sketches of Scran screens, including leftover-ingredient ideas and a carbon footprint tracker" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">Early lo-fi sketches: leftover-ingredient ideas and a carbon footprint tracker.</figcaption>
@@ -1075,7 +1090,7 @@
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">Designing for Children</h2>
                 <p class="fade-up observe">Then came a curveball. Rereading the brief in class, I noticed the audience was children, and everything I had planned was built for adults: a retro style aimed at young adults, and recipes that involved frying and sharp knives.</p>
-                <p class="fade-up observe">Scrapping the idea was tempting, but after talking it through with Kyle, I kept the idea and changed three things:</p>
+                <p class="fade-up observe">Scrapping the idea was tempting, but after talking it through with my lecturer, Kyle, I kept the idea and changed three things:</p>
                 <ul class="cs-bullets fade-up observe">
                     <li><strong>Baking, not frying.</strong> Banana bread is far safer for a 10-year-old than frying an egg.</li>
                     <li><strong>A new visual style,</strong> inspired by The Great British Bake Off&rsquo;s illustrations, Paddy Donnelly&rsquo;s children&rsquo;s books, Cath Kidston&rsquo;s patterns and the cookbook <em>Kids Can Bake</em>.</li>
@@ -1084,13 +1099,13 @@
                 <p class="fade-up observe">Drawing every illustration by hand would have taken ages, so to get that Bake Off look, I photographed the food and ran it through Illustrator&rsquo;s Image Trace on low-fidelity settings.</p>
                 <figure class="cs-fig fade-up observe" data-optional>
                     <div class="cs-media tilt-card" data-label="Pages from the Kids Can Bake cookbook">
-                        <img src="assets/scran-kidscanbake.png" alt="Pages from the Kids Can Bake cookbook" loading="lazy" decoding="async">
+                        <img src="assets/scran-kidscanbake.png" width="1500" height="1142" style="--r: 1500 / 1142" alt="An open page of the Kids Can Bake cookbook, with a detailed illustration of a three-tiered cake" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption"><em>Kids Can Bake</em>: exactly the feel I wanted, just in app form.</figcaption>
                 </figure>
                 <h3 class="fade-up observe">Meet Sophie Baker</h3>
-                <p class="fade-up observe">To keep every decision grounded in the audience, I wrote a persona for Sophie Baker (get it?), a 10-year-old from Northern Ireland who loves The Great British Bake Off.</p>
+                <p class="fade-up observe">To keep every decision grounded in the audience, I wrote a persona for Sophie Baker (get it?), a 10-year-old from Northern Ireland who loves The Great British Bake Off. I made Sophie 10 on purpose: it sits in the middle of the 8&ndash;14 age range, so designing for her keeps the app simple enough for younger children without talking down to older ones.</p>
                 <ul class="cs-bullets fade-up observe">
                     <li><strong>Goals:</strong> bake simple recipes like banana bread on her own, and use up leftovers.</li>
                     <li><strong>Frustrations:</strong> cooking apps with complicated text, dangerous steps, and plain, boring visuals.</li>
@@ -1099,10 +1114,10 @@
                 <blockquote class="cs-quote fade-up observe">&ldquo;I love baking cakes like the ones on Bake Off! It&rsquo;s fun when I can do it myself and help the planet too.&rdquo;</blockquote>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="The Sophie Baker user persona sheet">
-                        <img src="assets/Target%20Audience%202.png" alt="The Sophie Baker user persona sheet" loading="lazy" decoding="async">
+                        <img src="assets/Target%20Audience%202.png" width="842" height="595" style="--r: 842 / 595" alt="The persona sheet for Sophie Baker, aged 10, listing her background, goals, frustrations, needs and motivations" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">Sophie Baker&rsquo;s persona sheet, which I checked my decisions against throughout.</figcaption>
+                    <figcaption class="cs-caption">Sophie Baker&rsquo;s persona sheet, which I checked my decisions against throughout. Sprite: Paula from <em>EarthBound</em> (Nintendo, 1994).</figcaption>
                 </figure>
             </div>
         </section>
@@ -1165,7 +1180,7 @@
                 <p class="fade-up observe">Before designing anything, I mapped out the user flow as a wireframe, then sketched each screen in more detail.</p>
                 <figure class="cs-fig fade-up observe" data-optional>
                     <div class="cs-media tilt-card" data-label="Scran user flow wireframe">
-                        <img src="assets/scran-flow.png" alt="Scran user flow wireframe" loading="lazy" decoding="async">
+                        <img src="assets/scran-flow.png" width="2000" height="1095" style="--r: 2000 / 1095" alt="A hand-drawn user flow on a whiteboard: loading screen, sign-up, questionnaire, home, then recipes and Sue Chef" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The user flow, from loading screen to recipe.</figcaption>
@@ -1174,7 +1189,7 @@
                 <p class="fade-up observe">Remember the loading screens on children&rsquo;s PS2 games, where the text pulsed and bounced? I borrowed that. The Scran icon jumps up and down while the background colour and icon change.</p>
                 <figure class="cs-fig fade-up observe" data-optional>
                     <div class="cs-media" data-label="The Scran loading screen animation">
-                        <video src="assets/scran-loading.mp4#t=0.1" muted loop playsinline preload="metadata" controls aria-label="The Scran loading screen animation"></video>
+                        <video src="assets/scran-loading.mp4#t=0.1" width="3840" height="2160" style="--r: 3840 / 2160" muted loop playsinline preload="metadata" controls aria-label="The Scran loading screen animation"></video>
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The loading screen: a bouncing icon with changing colours, borrowed from the pulsing loading screens of children&rsquo;s PS2 games, so even waiting feels playful.</figcaption>
@@ -1183,7 +1198,7 @@
                 <p class="fade-up observe">My first sign-up page was boring enough to depress any child, so I spiced it up with a background video, cut together from stock footage of families baking. It took ages, and it still feels a little mature, so it&rsquo;s a screen I&rsquo;d revisit with some illustrations.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="Wireframe of the sign-in onboarding">
-                        <img src="assets/scran-signup.png" alt="Wireframe of Scran&rsquo;s sign-in and onboarding screens" loading="lazy" decoding="async">
+                        <img src="assets/scran-signup.png" width="1667" height="429" style="--r: 1667 / 429" alt="Wireframe of Scran&rsquo;s sign-in and onboarding screens" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The wireframe for the sign-in onboarding.</figcaption>
@@ -1191,7 +1206,7 @@
                 <p class="fade-up observe">The questionnaire asks just three things: your name, your baking level and the food you like. If a long form puts me off, it&rsquo;s even worse for a child, so it takes 5 to 10 seconds, with a little animation each time you answer.</p>
                 <figure class="cs-fig fade-up observe" data-optional>
                     <div class="cs-media" data-label="The Scran questionnaire animation">
-                        <video src="assets/scran-questionnaire.mp4#t=0.1" muted loop playsinline preload="metadata" controls aria-label="The Scran questionnaire animation"></video>
+                        <video src="assets/scran-questionnaire.mp4#t=0.1" width="1666" height="1262" style="--r: 1666 / 1262" muted loop playsinline preload="metadata" controls aria-label="The Scran questionnaire animation"></video>
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The questionnaire: just three questions, 5 to 10 seconds in total, with a small animation rewarding each answer so a child never gets bored of a form.</figcaption>
@@ -1200,7 +1215,7 @@
                 <p class="fade-up observe">Looking back at my first draft of the home screen, I made the tags tappable, made the recipes scroll horizontally, and added the button I&rsquo;d forgotten: the ingredient manager.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="The Scran home screen">
-                        <img src="assets/scran-home.png" alt="The Scran home screen" loading="lazy" decoding="async">
+                        <img src="assets/scran-home.png" width="2033" height="1205" style="--r: 2033 / 1205" alt="The first and final drafts of the Scran home screen side by side on iPads" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The home screen after its redesign: brighter colours with more variety, an AI assistant on the home page, and a new This Week in Review.</figcaption>
@@ -1209,7 +1224,7 @@
                 <p class="fade-up observe">The ingredient manager needed a better name. Children type in the leftovers they have at home, and the app suggests recipes that use them up: the heart of the Zero Hunger idea. Meet <strong>Sue Chef</strong>. Yes, it should be &ldquo;sous&rdquo;, and yes, he has a moustache, a nod to an old Johnny Cash song. In my opinion, it&rsquo;s funny. Hover over him and he even winks.</p>
                 <figure class="cs-fig fade-up observe" data-optional>
                     <div class="cs-media" data-label="Sue Chef icon designs">
-                        <video src="assets/scran-suechef.mp4#t=0.1" muted loop playsinline preload="metadata" controls aria-label="Sue Chef icon designs"></video>
+                        <video src="assets/scran-suechef.mp4#t=0.1" width="3056" height="1704" style="--r: 3056 / 1704" muted loop playsinline preload="metadata" controls aria-label="Sue Chef, the moustached chef icon, winking"></video>
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">Sue Chef in motion, winking with a sparkle in his eye.</figcaption>
@@ -1218,7 +1233,7 @@
                 <p class="fade-up observe">The recipe screen takes inspiration from BBC Good Food and Gousto, with tags that help adults judge time, difficulty and allergens. Nutritional information sits behind a drop-down, because calorie counts can be too much for children. The cooking steps looked a little plain at first, so I added an icon for each stage, like a whisk for mixing: a kid-friendly reminder of where you are.</p>
                 <figure class="cs-fig fade-up observe" data-optional>
                     <div class="cs-media" data-label="Scran cooking step screens with stage icons">
-                        <video src="assets/scran-cooking-steps.mp4#t=0.1" muted loop playsinline preload="metadata" controls aria-label="Scran cooking step screens with stage icons"></video>
+                        <video src="assets/scran-cooking-steps.mp4#t=0.1" width="1136" height="1512" style="--r: 1136 / 1512" muted loop playsinline preload="metadata" controls aria-label="Scran cooking step screens with stage icons"></video>
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">Swiping through the cooking steps. Each stage gets its own icon, like a whisk for mixing, so a child can always see where they are.</figcaption>
@@ -1239,7 +1254,7 @@
                 </ul>
                 <figure class="cs-fig fade-up observe" data-optional>
                     <div class="cs-media tilt-card" data-label="The This Week in Review screen">
-                        <img src="assets/scran-week-review.png" alt="The This Week in Review screen" loading="lazy" decoding="async">
+                        <img src="assets/scran-week-review.png" width="890" height="1349" style="--r: 890 / 1349" alt="The This Week in Review screen: 6 ingredients saved from waste, a 7kg carbon footprint and homegrown recipes followed" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">This Week in Review: positive statistics, no stars or emojis.</figcaption>
@@ -1282,7 +1297,7 @@
         <section id="ai" class="cs-band cs-band--purple">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">AI Transparency</h2>
-                <p class="fade-up observe"><strong>Where AI was used:</strong> I used <span class="cs-todo-inline">[name the AI tool]</span> to help draft the Sophie Baker persona, then edited it and checked my decisions against it throughout the project.</p>
+                <p class="fade-up observe"><strong>Where AI was used:</strong> I used <strong>Gemini</strong> to help draft the Sophie Baker persona, then edited it and checked my decisions against it throughout the project.</p>
                 <p class="fade-up observe"><strong>Where it wasn&rsquo;t:</strong> the illustrated look was not AI-generated. I made it from my own photographs using Illustrator&rsquo;s Image Trace. The research, style guide, screens and prototype are my own work.</p>
                 <p class="fade-up observe"><strong>Worth separating:</strong> Sue Chef is a feature within the app concept, not a tool I used to design it.</p>
                 <p class="fade-up observe"><strong>The writing:</strong> this write-up is in my own words, with no AI used.</p>
@@ -1318,8 +1333,9 @@
 
         <!-- === RISE UP (scroll to top) === -->
         <section class="cs-rise fade-in observe">
-            <a href="#top" class="rise-up-btn" aria-label="Scroll to top of page">
-                <h2>Rise Up!</h2>
+            <a href="#top" class="rise-up-btn">
+                <span class="rise-up-label">Rise Up!</span>
+                <span class="rise-up-hint">Back to top &uarr;</span>
             </a>
         </section>
 
@@ -1447,19 +1463,6 @@
         document.querySelectorAll(".cs-media video").forEach(v => {
             if (v.error) handleBroken(v);
         });
-
-        /* ==================================================================
-           2b. AI SECTION: until it's filled in (no "hidden" attribute), hide its Contents entry and spec row
-           ================================================================== */
-        (function () {
-            const ai = document.getElementById("ai");
-            if (ai && !ai.hidden) {
-                const n = document.querySelector("[data-num-after-ai]");
-                if (n) n.textContent = "10";
-                return;
-            }
-            document.querySelectorAll("[data-needs-ai]").forEach(el => el.remove());
-        })();
 
         /* ==================================================================
            3. SCROLL REVEAL (fires once per element; headings decrypt as they appear)
@@ -1666,14 +1669,26 @@
         })();
 
         /* ==================================================================
-           7. VIDEO: plays only while it is on screen
+           7. VIDEO: silent loops play while on screen (never with reduced motion);
+              once a visitor pauses one, it stays paused. Videos with sound never start by themselves.
            ================================================================== */
         document.querySelectorAll(".cs-media video").forEach(v => {
-            if (reduceMotion || !("IntersectionObserver" in window)) return;
+            if (!("IntersectionObserver" in window)) return;
+            let autoPausing = false;
+            v.addEventListener("pause", () => { if (!autoPausing) v.dataset.userPaused = "1"; });
+            v.addEventListener("play",  () => { delete v.dataset.userPaused; });
             new IntersectionObserver(entries => {
                 entries.forEach(en => {
-                    if (en.isIntersecting) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
-                    else v.pause();
+                    if (en.isIntersecting) {
+                        if (v.muted && !reduceMotion && !v.dataset.userPaused) {
+                            const p = v.play();
+                            if (p && p.catch) p.catch(() => {});
+                        }
+                    } else if (!v.paused) {
+                        autoPausing = true;
+                        v.pause();
+                        autoPausing = false;
+                    }
                 });
             }, { threshold: 0.4 }).observe(v);
         });
@@ -1685,7 +1700,9 @@
         if (rise) {
             rise.addEventListener("click", (e) => {
                 e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+                const skip = document.querySelector(".skip-link");
+                if (skip) skip.focus({ preventScroll: true });
             });
         }
     </script>

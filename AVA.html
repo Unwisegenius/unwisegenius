@@ -430,10 +430,13 @@
             margin-right: auto;
         }
 
+        /* Width comes from each file's proportions (--r, set on the element), so the space is
+           reserved before a lazy image loads and anchor links land in the right place. */
         .cs-fig .cs-media img,
         .cs-fig .cs-media video {
-            width: auto;
+            width: min(820px, 86vw, calc(70vh * var(--r, 1.6)));
             max-width: 100%;
+            height: auto;
             max-height: 70vh;
             margin: 0 auto;
         }
@@ -443,21 +446,6 @@
 
         /* Before and after side by side: line the two images up at the top */
         .cs-compare { align-items: start; margin: clamp(20px, 3vw, 40px) 0; }
-
-        /* Placeholder for an image or video that hasn't been added yet: a dashed box naming the file it needs */
-        .cs-media.cs-todo.is-missing {
-            min-height: 240px;
-            border: 3px dashed currentColor;
-            background-color: rgba(0, 0, 0, 0.06);
-        }
-
-        /* Placeholder for text that still needs writing */
-        .cs-band p.cs-todo-text {
-            padding: 1em 1.2em;
-            border: 3px dashed currentColor;
-            border-radius: 10px;
-            font-weight: 700;
-        }
 
         /* Footer: logo left, page links dead centre, socials right.
            Three columns (1fr auto 1fr) keep the middle group centred on the page
@@ -536,13 +524,21 @@
         }
 
         .rise-up-btn {
-            display: inline-block;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            color: #111111;
             cursor: pointer;
             user-select: none;
         }
 
-        .rise-up-btn h2 {
+        /* Same look as before, but a span: a link should not contain a heading */
+        .rise-up-label {
+            font-family: 'Space Grotesk', -apple-system, sans-serif;
+            font-weight: 700;
             font-size: clamp(3rem, 8vw, 7rem);
+            line-height: normal;
             letter-spacing: -2px;
             text-transform: uppercase;
             display: inline-block;
@@ -550,7 +546,16 @@
             transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
         }
 
-        .rise-up-btn:hover h2 {
+        .rise-up-hint {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .rise-up-btn:hover .rise-up-label,
+        .rise-up-btn:focus-visible .rise-up-label {
             color: var(--cs-purple);
             transform: skewX(-12deg);
             text-shadow: 6px 6px 0 var(--cs-lime);
@@ -1037,7 +1042,7 @@
         </div>
         <nav class="top-right">
             <a href="about.html" class="cyber-nav-link" data-text="About Me">About Me</a>
-            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio">Portfolio</a>
+            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio" aria-current="page">Portfolio</a>
             <a href="contact.html" class="cyber-nav-link" data-text="Get in Touch!">Get in Touch!</a>
         </nav>
     </header>
@@ -1061,7 +1066,7 @@
 
                 <figure class="cs-hero-fig fade-up observe stagger-3">
                     <div class="cs-hero-media cs-hero-media--bare" data-label="AVA watch screens overview">
-                        <img src="assets/avabanner.jpg" alt="An overview of AVA&rsquo;s smartwatch screens" decoding="async" fetchpriority="high">
+                        <img src="assets/avabanner.jpg" width="1036" height="282" alt="An overview of AVA&rsquo;s smartwatch screens" decoding="async" fetchpriority="high">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">AVA across its screens: one glanceable assistant instead of a separate app for every job.</figcaption>
@@ -1085,11 +1090,11 @@
                             <li class="fade-right observe stagger-4"><a href="#ideation"><span class="cs-num">04</span>Sketching AVA</a></li>
                             <li class="fade-right observe stagger-4"><a href="#identity"><span class="cs-num">05</span>The Identity</a></li>
                             <li class="fade-right observe stagger-4"><a href="#motion"><span class="cs-num">06</span>Motion</a></li>
-                            <li class="fade-right observe stagger-4"><a href="#feedback"><span class="cs-num">06</span>Feedback &amp; Critique</a></li>
-                            <li class="fade-right observe stagger-4"><a href="#redevelopment"><span class="cs-num">07</span>Redevelopment</a></li>
-                            <li class="fade-right observe stagger-4"><a href="#outcome"><span class="cs-num">08</span>The Outcome</a></li>
-                            <li class="fade-right observe stagger-4"><a href="#ai"><span class="cs-num">09</span>AI Transparency</a></li>
-                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num">10</span>Reflection</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#feedback"><span class="cs-num">07</span>Feedback &amp; Critique</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#redevelopment"><span class="cs-num">08</span>Redevelopment</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#outcome"><span class="cs-num">09</span>The Outcome</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#ai"><span class="cs-num">10</span>AI Transparency</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num">11</span>Reflection</a></li>
                         </ul>
                     </div>
 
@@ -1106,7 +1111,7 @@
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12"/><path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2"/><path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4"/></svg>
                                 </span>
-                                <p>The project ran for <strong>3 weeks</strong>.</p>
+                                <p>The project ran for <strong>3 weeks</strong> (late September to mid-October 2025).</p>
                             </li>
                             <li class="cs-spec fade-left observe stagger-3">
                                 <span class="cs-spec-icon" aria-hidden="true">
@@ -1187,14 +1192,14 @@
             <div class="cs-grid">
                 <figure class="fade-up observe">
                     <div class="cs-media tilt-card" data-label="Outlook on a smartwatch">
-                        <img src="assets/outlook.png" alt="Outlook on a smartwatch" loading="lazy" decoding="async">
+                        <img src="assets/outlook.png" width="1600" height="1200" alt="Outlook on a smartwatch" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">Outlook: short, scannable messages with one clear action at a time.</figcaption>
                 </figure>
                 <figure class="fade-up observe">
                     <div class="cs-media tilt-card" data-label="Apple&rsquo;s Workout app on a smartwatch">
-                        <img src="assets/workout.png" alt="Apple&rsquo;s Workout app on a smartwatch" loading="lazy" decoding="async">
+                        <img src="assets/workout.png" width="1512" height="969" alt="Apple&rsquo;s Workout app on a smartwatch" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">Apple&rsquo;s Workout: big numbers and colour that read at a glance.</figcaption>
@@ -1211,14 +1216,14 @@
                 <div class="cs-grid cs-grid--2">
                     <figure class="fade-up observe">
                         <div class="cs-media tilt-card" data-label="Early AVA concept sketches">
-                            <img src="assets/avask1.png" alt="Early AVA concept sketches" loading="lazy" decoding="async">
+                            <img src="assets/avask1.png" width="4284" height="2161" alt="Pencil wireframes on watch templates showing AVA&rsquo;s states: idle, listening, thinking and complete" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                         <figcaption class="cs-caption">My first wireframe sketches, showing AVA&rsquo;s states from idle to complete.</figcaption>
                     </figure>
                     <figure class="fade-up observe">
                         <div class="cs-media tilt-card" data-label="More AVA sketch layouts">
-                            <img src="assets/avask2.png" alt="More AVA sketch layouts" loading="lazy" decoding="async">
+                            <img src="assets/avask2.png" width="5600" height="3070" alt="More pencil wireframes: the prompt suggestions list and a watch face" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                         <figcaption class="cs-caption">More sketches, including the prompt suggestions and a watch face.</figcaption>
@@ -1248,24 +1253,20 @@
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">Motion</h2>
                 <p class="fade-up observe">The swirl is the centre of AVA&rsquo;s identity, and it only makes sense when it moves. At idle it turns slowly; in the thinking state it spins three times faster.</p>
-                <!-- PLACEHOLDERS: each image or video shows as a dashed box naming the file it is waiting for.
-                     Save the file in assets/ under that name (or change the src to your own file name),
-                     then replace the alt text / aria-label and the [Caption to write: ...] line.
-                     Delete any placeholder you don't fill before you submit. -->
                 <div class="cs-grid cs-grid--2">
                     <figure class="fade-up observe">
-                        <div class="cs-media cs-todo tilt-card" data-label="PLACEHOLDER: a short clip of the swirl in its idle state (save it as assets/ava-swirl-idle.mp4)">
-                            <video src="assets/ava-swirl-idle.mp4#t=0.1" muted loop playsinline preload="metadata" controls aria-label="TODO: describe this video"></video>
+                        <div class="cs-media tilt-card" data-label="The idle swirl">
+                            <video src="assets/ava-swirl-idle.mp4#t=0.1" width="1172" height="1416" muted loop playsinline preload="metadata" controls aria-label="AVA&rsquo;s idle screen on a watch: the blue and white swirl turning slowly"></video>
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">The slow movement is to show AVA's idle but aware state.</figcaption>
+                        <figcaption class="cs-caption">The slow movement shows AVA&rsquo;s idle but aware state.</figcaption>
                     </figure>
                     <figure class="fade-up observe stagger-1">
-                        <div class="cs-media cs-todo tilt-card" data-label="PLACEHOLDER: a short clip of the swirl in its thinking state (save it as assets/ava-swirl-thinking.mp4)">
-                            <video src="assets/ava-swirl-thinking.mp4#t=0.1" muted loop playsinline preload="metadata" controls aria-label="TODO: describe this video"></video>
+                        <div class="cs-media tilt-card" data-label="The thinking swirl">
+                            <video src="assets/ava-swirl-thinking.mp4#t=0.1" width="1172" height="1416" muted loop playsinline preload="metadata" controls aria-label="AVA&rsquo;s thinking screen on a watch: the swirl spinning three times faster"></video>
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">The faster swirl is meant to show that AVA is thinking.</figcaption>
+                        <figcaption class="cs-caption">The faster swirl shows that AVA is thinking.</figcaption>
                     </figure>
                 </div>
             </div>
@@ -1285,25 +1286,21 @@
                 </ul>
                 <p class="fade-up observe">I made the prompt bars smaller with slimmer icons beside the labels, and switched several screens to lighter, solid backgrounds. Even I could barely read some of them when they were pinned up on the board. Looking back, the swirl works better used less: it leaves a stronger impression that way.</p>
 
-                <!-- PLACEHOLDERS: each image or video shows as a dashed box naming the file it is waiting for.
-                     Save the file in assets/ under that name (or change the src to your own file name),
-                     then replace the alt text / aria-label and the [Caption to write: ...] line.
-                     Delete any placeholder you don't fill before you submit. -->
                 <h3 class="fade-up observe">Before and after</h3>
                 <div class="cs-split cs-compare">
                     <figure class="fade-right observe">
-                        <div class="cs-media cs-todo tilt-card" data-label="PLACEHOLDER: one screen before the critique, with the swirl behind the text (save it as assets/ava-critique-before.png)">
-                            <img src="assets/ava-critique-before.png" alt="TODO: describe this image" loading="lazy" decoding="async">
+                        <div class="cs-media tilt-card" data-label="The search answer before the critique">
+                            <img src="assets/ava-critique-before.png" width="1172" height="1416" alt="AVA&rsquo;s search answer about John F. Kennedy, with white text over the moving swirl" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">[Caption to write: what was hard to read on this version]</figcaption>
+                        <figcaption class="cs-caption">Before: the answer sat on top of the moving swirl, so the white text was hard to read, even up close.</figcaption>
                     </figure>
                     <figure class="fade-left observe">
-                        <div class="cs-media cs-todo tilt-card" data-label="PLACEHOLDER: the same screen after the critique, on a solid background (save it as assets/ava-critique-after.png)">
-                            <img src="assets/ava-critique-after.png" alt="TODO: describe this image" loading="lazy" decoding="async">
+                        <div class="cs-media tilt-card" data-label="The search answer after the critique">
+                            <img src="assets/ava-critique-after.png" width="1172" height="1416" alt="The same search answer on a solid light background, with the text in a blue box" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">[Caption to write: what you changed and how it reads now]</figcaption>
+                        <figcaption class="cs-caption">After: a solid background behind the answer, so it reads at a glance and the swirl stays for the moments it matters.</figcaption>
                     </figure>
                 </div>
             </div>
@@ -1339,7 +1336,7 @@
                 <p class="fade-up observe">The style guide pulls together AVA&rsquo;s colours, typography, iconography and general branding.</p>
                 <figure class="cs-fig fade-up observe" data-optional>
                     <div class="cs-media tilt-card" data-label="The AVA style guide">
-                        <img src="assets/avastyleguide.jpg" alt="The AVA style guide" loading="lazy" decoding="async">
+                        <img src="assets/avastyleguide.jpg" width="1350" height="1172" style="--r: 1350 / 1172" alt="The AVA style guide" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">AVA&rsquo;s style guide: colours, typography, iconography and branding, with each colour tied to a brain chemical and the emotion it stands for.</figcaption>
@@ -1350,42 +1347,42 @@
                 <div class="cs-grid cs-gallery">
                     <figure class="fade-up observe">
                         <div class="cs-media tilt-card" data-label="AVA&rsquo;s core screens">
-                            <img src="assets/1.jpg" alt="AVA&rsquo;s core smartwatch screens shown together" loading="lazy" decoding="async">
+                            <img src="assets/1.jpg" width="1920" height="1080" alt="AVA&rsquo;s core smartwatch screens shown together" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                         <figcaption class="cs-caption">AVA&rsquo;s core screens. The time sits in exactly the same spot on every one, so the set reads as a single, real app.</figcaption>
                     </figure>
                     <figure class="fade-up observe">
-                        <div class="cs-media tilt-card" data-label="AVA listening and responding to a request">
-                            <img src="assets/2.jpg" alt="AVA listening and responding to a request" loading="lazy" decoding="async">
+                        <div class="cs-media tilt-card" data-label="AVA&rsquo;s idle screen">
+                            <img src="assets/2.jpg" width="1920" height="1080" alt="AVA&rsquo;s idle screen on an Apple Watch, with the blue swirl and &ldquo;Ask me anything!&rdquo;, beside the heading &ldquo;A new kind of assistant&rdquo;" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">The assistant in action: listening, thinking and responding. Each state has its own colour, from calm blue at idle to creative orange while thinking.</figcaption>
+                        <figcaption class="cs-caption">Meet AVA: the idle screen, where the slow blue swirl invites you to ask anything.</figcaption>
                     </figure>
                     <figure class="fade-up observe">
                         <div class="cs-media tilt-card" data-label="Turn-by-turn directions and a compass in AVA">
-                            <img src="assets/3.jpg" alt="Turn-by-turn directions and a compass in AVA" loading="lazy" decoding="async">
+                            <img src="assets/3.jpg" width="1920" height="1080" alt="Turn-by-turn directions and a compass in AVA" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                         <figcaption class="cs-caption">Turn-by-turn directions and the compass. After the critique, the map was simplified to the major points and your location.</figcaption>
                     </figure>
                     <figure class="fade-up observe">
-                        <div class="cs-media tilt-card" data-label="AVA&rsquo;s home screen with quick actions">
-                            <img src="assets/4.jpg" alt="AVA&rsquo;s home screen with quick actions" loading="lazy" decoding="async">
+                        <div class="cs-media tilt-card" data-label="Home automation in AVA">
+                            <img src="assets/4.jpg" width="1920" height="1080" alt="AVA on an Apple Watch confirming &ldquo;Dim the lights to 30%&rdquo;, beside the heading Home Automation" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">The home screen and quick actions, set in big, bold Helvetica Neue so they read at a glance.</figcaption>
+                        <figcaption class="cs-caption">Home automation: ask AVA to dim the lights, and it confirms on your wrist in big, bold Helvetica Neue.</figcaption>
                     </figure>
                     <figure class="fade-up observe">
-                        <div class="cs-media tilt-card" data-label="An alternate visual design and layout for AVA">
-                            <img src="assets/5.png" alt="An alternate visual design and layout for AVA" loading="lazy" decoding="async">
+                        <div class="cs-media tilt-card" data-label="Searching the web in AVA">
+                            <img src="assets/5.png" width="1920" height="1080" alt="Three Apple Watches showing AVA&rsquo;s web search, with an answer about John F. Kennedy, beside the heading Searching the web" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">An alternate visual design and layout I explored for AVA.</figcaption>
+                        <figcaption class="cs-caption">Searching the web: AVA answers a question on the spot, here who the 35th US president was.</figcaption>
                     </figure>
                     <figure class="fade-up observe">
                         <div class="cs-media tilt-card" data-label="Spotify controls inside AVA">
-                            <img src="assets/6.png" alt="Spotify controls inside AVA" loading="lazy" decoding="async">
+                            <img src="assets/6.png" width="1920" height="1080" alt="Spotify controls inside AVA" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                         <figcaption class="cs-caption">Spotify controls, without leaving AVA: one of the screens added after Kyle&rsquo;s feedback to show what happens after you ask.</figcaption>
@@ -1401,6 +1398,7 @@
                 <p class="fade-up observe"><strong>Where AI was used:</strong> for the swirl. I found an open-source version of Balatro&rsquo;s background shader on Shadertoy, and ChatGPT converted it to JavaScript and recoloured it in AVA&rsquo;s blue and white.</p>
                 <p class="fade-up observe"><strong>What I did by hand:</strong> I kept editing that code myself in VS Code, adding the grey background, reducing the pixelation, removing the CRT filter and making the swirl spin three times faster for the thinking state. The research, sketches, identity, screens, style guide and prototype are my own work, designed in Figma.</p>
                 <p class="fade-up observe"><strong>Worth separating:</strong> AVA itself is an AI assistant, but that&rsquo;s the concept of the app, not a tool I used to design it.</p>
+                <p class="fade-up observe"><strong>The writing:</strong> this write-up is in my own words, with no AI used.</p>
             </div>
         </section>
 
@@ -1432,8 +1430,9 @@
 
         <!-- === RISE UP (scroll to top) === -->
         <section class="cs-rise fade-in observe">
-            <a href="#top" class="rise-up-btn" aria-label="Scroll to top of page">
-                <h2>Rise Up!</h2>
+            <a href="#top" class="rise-up-btn">
+                <span class="rise-up-label">Rise Up!</span>
+                <span class="rise-up-hint">Back to top &uarr;</span>
             </a>
         </section>
 
@@ -1561,19 +1560,6 @@
         document.querySelectorAll(".cs-media video").forEach(v => {
             if (v.error) handleBroken(v);
         });
-
-        /* ==================================================================
-           2b. UNFINISHED SECTIONS: a section with data-todo and "hidden" also hides its Contents entry
-           and spec row (anything with data-needs="its id"). Contents numbers then count up in order.
-           ================================================================== */
-        (function () {
-            document.querySelectorAll("section[data-todo][hidden]").forEach(sec => {
-                document.querySelectorAll('[data-needs="' + sec.id + '"]').forEach(el => el.remove());
-            });
-            document.querySelectorAll(".cs-contents .cs-num").forEach((num, i) => {
-                num.textContent = String(i + 1).padStart(2, "0");
-            });
-        })();
 
         /* ==================================================================
            3. SCROLL REVEAL (fires once per element; headings decrypt as they appear)
@@ -1765,14 +1751,26 @@
         })();
 
         /* ==================================================================
-           7. VIDEO: plays only while it is on screen
+           7. VIDEO: silent loops play while on screen (never with reduced motion);
+              once a visitor pauses one, it stays paused. Videos with sound never start by themselves.
            ================================================================== */
         document.querySelectorAll(".cs-media video").forEach(v => {
-            if (reduceMotion || !("IntersectionObserver" in window)) return;
+            if (!("IntersectionObserver" in window)) return;
+            let autoPausing = false;
+            v.addEventListener("pause", () => { if (!autoPausing) v.dataset.userPaused = "1"; });
+            v.addEventListener("play",  () => { delete v.dataset.userPaused; });
             new IntersectionObserver(entries => {
                 entries.forEach(en => {
-                    if (en.isIntersecting) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
-                    else v.pause();
+                    if (en.isIntersecting) {
+                        if (v.muted && !reduceMotion && !v.dataset.userPaused) {
+                            const p = v.play();
+                            if (p && p.catch) p.catch(() => {});
+                        }
+                    } else if (!v.paused) {
+                        autoPausing = true;
+                        v.pause();
+                        autoPausing = false;
+                    }
                 });
             }, { threshold: 0.4 }).observe(v);
         });
@@ -1784,7 +1782,9 @@
         if (rise) {
             rise.addEventListener("click", (e) => {
                 e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+                const skip = document.querySelector(".skip-link");
+                if (skip) skip.focus({ preventScroll: true });
             });
         }
     </script>

@@ -366,6 +366,14 @@
 
         .cs-grid--3 { grid-template-columns: repeat(3, 1fr); }
 
+        /* Up close: all three photos in one 4:3 shape, so the row lines up
+           (the portrait photo is trimmed at the top and bottom) */
+        .cs-closeups .cs-media img {
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            object-position: center;
+        }
+
         /* --- LISTS --- */
         .cs-bullets {
             list-style: none;
@@ -497,13 +505,21 @@
         }
 
         .rise-up-btn {
-            display: inline-block;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            color: #111111;
             cursor: pointer;
             user-select: none;
         }
 
-        .rise-up-btn h2 {
+        /* Same look as before, but a span: a link should not contain a heading */
+        .rise-up-label {
+            font-family: 'Space Grotesk', -apple-system, sans-serif;
+            font-weight: 700;
             font-size: clamp(3rem, 8vw, 7rem);
+            line-height: normal;
             letter-spacing: -2px;
             text-transform: uppercase;
             display: inline-block;
@@ -511,7 +527,16 @@
             transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
         }
 
-        .rise-up-btn:hover h2 {
+        .rise-up-hint {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .rise-up-btn:hover .rise-up-label,
+        .rise-up-btn:focus-visible .rise-up-label {
             color: var(--cs-purple);
             transform: skewX(-12deg);
             text-shadow: 6px 6px 0 var(--cs-lime);
@@ -560,12 +585,12 @@
     <header>
         <div class="top-left">
             <a href="index.html">
-                <img src="assets/brain-180.png" alt="UnwiseGenius home" class="brain-icon" width="38">
+                <img src="assets/brain-180.png" alt="UnwiseGenius home" class="brain-icon" width="38" height="38">
             </a>
         </div>
         <nav class="top-right">
             <a href="about.html" class="cyber-nav-link" data-text="About Me">About Me</a>
-            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio">Portfolio</a>
+            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio" aria-current="page">Portfolio</a>
             <a href="contact.html" class="cyber-nav-link" data-text="Get in Touch!">Get in Touch!</a>
         </nav>
     </header>
@@ -589,7 +614,7 @@
 
                 <figure class="cs-hero-fig fade-up observe stagger-3">
                     <div class="cs-hero-media" data-label="The finished LUCKY piece">
-                        <img src="assets/luckypainted.png" alt="The finished LUCKY spray painting: chunky mint green and light blue letters with a black outline, in ESOW&rsquo;s style" decoding="async" fetchpriority="high">
+                        <img src="assets/luckypainted.png" width="5100" height="3300" alt="The finished LUCKY spray painting: chunky mint green and light blue letters with a black outline, in ESOW&rsquo;s style" decoding="async" fetchpriority="high">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">My first ever spray painting: LUCKY, in a Japanese artist&rsquo;s alphabet, five colours and one week on the wall.</figcaption>
@@ -610,7 +635,7 @@
                         <ul class="cs-contents">
                             <li class="fade-right observe stagger-1"><a href="#brief"><span class="cs-num">01</span>The Brief</a></li>
                             <li class="fade-right observe stagger-2"><a href="#planning"><span class="cs-num">02</span>Sketching and Planning</a></li>
-                            <li class="fade-right observe stagger-3"><a href="#spraying"><span class="cs-num">03</span>Spraying &amp; Painting</a></li>
+                            <li class="fade-right observe stagger-3"><a href="#spraying"><span class="cs-num">03</span>Spraying and Painting</a></li>
                             <li class="fade-right observe stagger-4"><a href="#ai"><span class="cs-num">04</span>AI Transparency</a></li>
                             <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num">05</span>Reflection</a></li>
                         </ul>
@@ -669,6 +694,7 @@
                 <p class="fade-up observe">The graffiti artist I was given was ESOW, a Japanese artist who doesn&rsquo;t specifically do spray painting but is a jack of all trades when it comes to creating art. His style has big, bold lettering with little characters in the letters, so it was really fun to do.</p>
 
                 <h3 class="fade-up observe">The concept</h3>
+                <p class="fade-up observe">My idea was to make ESOW&rsquo;s little characters stand out more. I chose mint green and light blue because the characters stand out against them, and the two colours work well together on a gradient.</p>
                 <p class="fade-up observe">LUCKY was chosen by a class vote. Each of us was given a different artist&rsquo;s alphabet and had to recreate that artist&rsquo;s lettering, so the class agreed on one neutral word for everyone to paint.</p>
             </div>
         </section>
@@ -680,7 +706,7 @@
                 <p class="fade-up observe">The first thing I did was find out what his alphabet was. This was the image that was supplied.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="ESOW alphabet">
-                        <img src="assets/esowsalphabet.png" alt="ESOW&rsquo;s full alphabet: chunky, rounded capital letters with small cartoon characters inside them" loading="lazy" decoding="async">
+                        <img src="assets/esowsalphabet.png" width="3304" height="2158" alt="ESOW&rsquo;s full alphabet: chunky, rounded capital letters with small cartoon characters inside them" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">ESOW&rsquo;s alphabet: chunky, rounded letters with little characters living inside them. Those characters were the part I most wanted to keep. Lettering by ESOW; image supplied with the brief.</figcaption>
@@ -689,7 +715,7 @@
                 <p class="fade-up observe">When I first saw it, I was very excited, as I felt it was a fun and very expressive typeface. With that, I did a sketch of what the word would look like. The chosen word was LUCKY.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="Sketch of the word LUCKY">
-                        <img src="assets/luckysketch.png" alt="Sketch of the word LUCKY" loading="lazy" decoding="async">
+                        <img src="assets/luckysketch.png" width="5100" height="3300" alt="Pencil sketch of LUCKY on grid paper in ESOW&rsquo;s rounded letters, with small faces drawn inside the letters" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The first sketch: working out how the five letters lock together before any paint was involved.</figcaption>
@@ -698,7 +724,7 @@
                 <p class="fade-up observe">After the sketch was done, I made a digital painting in Photoshop, and then placed it on the wall to get a visual reference of what it should look like.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="Digital painting of LUCKY on the wall">
-                        <img src="assets/digitalpaintingoflucky.png" alt="Digital painting of LUCKY on the wall" loading="lazy" decoding="async">
+                        <img src="assets/digitalpaintingoflucky.png" width="5100" height="3300" alt="The Photoshop plan: LUCKY in mint green and light blue with a black outline, placed on a photo of the graffiti-covered wall" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The Photoshop plan on a photo of the wall, so I could check the size and colours before buying a single can.</figcaption>
@@ -711,13 +737,11 @@
         <!-- === SPRAYING & PAINTING === -->
         <section id="spraying" class="cs-band cs-band--purple">
             <div class="cs-wrap">
-                <h2 class="scramble-heading fade-up observe">Spraying &amp; Painting</h2>
+                <h2 class="scramble-heading fade-up observe">Spraying and Painting</h2>
                 <p class="fade-up observe">On the Saturday, when the weather was good, I woke up around 9am to start spraying my piece. I started by doing a black outline of the shape of the word LUCKY.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="Spraying the black outline">
-                        <!-- One file, no type attribute: browsers work out the format themselves.
-                             If you export an .mp4 (H.264) later, just change the file name here. -->
-                        <video src="assets/blackoutline.MOV#t=0.1" muted loop playsinline preload="metadata" controls aria-label="Time-lapse video of me spraying the black outline of LUCKY"></video>
+                        <video src="assets/blackoutline.MOV#t=0.1" width="1920" height="1080" muted loop playsinline preload="metadata" controls aria-label="Time-lapse video of me spraying the black outline of LUCKY"></video>
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The black outline went on first, giving me a frame to fill and a guide for every colour after it.</figcaption>
@@ -726,7 +750,7 @@
                 <p class="fade-up observe">I then started to paint inside the outline. I chose a mint green and a light blue with a grey gradient in the middle to separate them, as I felt it worked best with the word and the artist&rsquo;s style. I also wanted to challenge myself: instead of using one colour, I wanted to use five. The colours were max green, costa brava blue, black, white and sputnik grey.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="The spray cans used">
-                        <img src="assets/spraycans.png" alt="The spray cans used" loading="lazy" decoding="async">
+                        <img src="assets/spraycans.png" width="1280" height="590" alt="Five spray cans in a row, labelled Max Green, Costa Brava Blue, Black, White and Sputnik Grey" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The five colours: max green, costa brava blue, black, white and sputnik grey. Five instead of one was a deliberate challenge.</figcaption>
@@ -735,42 +759,34 @@
                 <h3 class="fade-up observe">Before the colour</h3>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="The black outline of LUCKY on the wall">
-                        <img src="assets/bite-fill-1.png" alt="The black outline of LUCKY sprayed on a wall already covered in colourful graffiti, before any colour was filled in" loading="lazy" decoding="async">
+                        <img src="assets/bite-fill-1.png" width="5712" height="4284" alt="The black outline of LUCKY sprayed on a wall already covered in colourful graffiti, before any colour was filled in" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The black outline on the wall, before any colour went in.</figcaption>
                 </figure>
 
-                <figure class="cs-fig fade-up observe">
-                    <div class="cs-media tilt-card" data-label="The finished LUCKY piece">
-                        <img src="assets/luckypainted.png" alt="The finished LUCKY piece on the wall" loading="lazy" decoding="async">
-                        <span class="cs-scan" aria-hidden="true"></span>
-                    </div>
-                    <figcaption class="cs-caption">The finished piece. Compared with the Photoshop plan, the details inside the letters grew bigger, and the grey gradient is the part I&rsquo;d redo.</figcaption>
-                </figure>
-
                 <h3 class="fade-up observe">Up close</h3>
-                <div class="cs-grid cs-grid--3">
+                <div class="cs-grid cs-grid--3 cs-closeups">
                     <figure class="fade-up observe">
                         <div class="cs-media tilt-card" data-label="Close-up of a character inside a letter">
-                            <img src="assets/bite-closeup-character.png" alt="Close-up of one of the little characters painted inside the letters" loading="lazy" decoding="async">
+                            <img src="assets/bite-closeup-character.png" width="5712" height="4284" alt="Close-up of the letters: the little faces painted inside them, and the grey band between the mint green and the light blue" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                         <figcaption class="cs-caption">ESOW&rsquo;s little characters had to stay: they give the piece its personality.</figcaption>
                     </figure>
                     <figure class="fade-up observe stagger-1">
-                        <div class="cs-media tilt-card" data-label="Close-up of the fade">
-                            <img src="assets/bite-closeup-gradient.png" alt="Close-up of the grey fade between the mint green and the light blue" loading="lazy" decoding="async">
+                        <div class="cs-media tilt-card" data-label="LUCKY from the left">
+                            <img src="assets/bite-closeup-gradient.png" width="4284" height="5712" alt="The finished LUCKY piece photographed from the left, looking along the wall" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">The fade between the green and the blue, up close.</figcaption>
+                        <figcaption class="cs-caption">LUCKY from the left, looking along the wall.</figcaption>
                     </figure>
                     <figure class="fade-up observe stagger-2">
-                        <div class="cs-media tilt-card" data-label="LUCKY at an angle">
-                            <img src="assets/bite-closeup-edge.png" alt="The finished LUCKY piece photographed from an angle" loading="lazy" decoding="async">
+                        <div class="cs-media tilt-card" data-label="LUCKY from the right">
+                            <img src="assets/bite-closeup-edge.png" width="5712" height="4284" alt="The finished LUCKY piece photographed from the right, looking along the wall" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
-                        <figcaption class="cs-caption">LUCKY at an angle.</figcaption>
+                        <figcaption class="cs-caption">LUCKY from the right.</figcaption>
                     </figure>
                 </div>
             </div>
@@ -792,14 +808,14 @@
                 <div class="cs-split cs-compare">
                     <figure class="fade-right observe">
                         <div class="cs-media tilt-card" data-label="The Photoshop plan">
-                            <img src="assets/digitalpaintingoflucky.png" alt="The Photoshop plan of LUCKY placed on a photo of the wall" loading="lazy" decoding="async">
+                            <img src="assets/digitalpaintingoflucky.png" width="5100" height="3300" alt="The Photoshop plan of LUCKY placed on a photo of the wall" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                         <figcaption class="cs-caption">The plan: what I meant to paint.</figcaption>
                     </figure>
                     <figure class="fade-left observe">
                         <div class="cs-media tilt-card" data-label="The finished wall">
-                            <img src="assets/luckypainted.png" alt="The finished LUCKY piece on the wall" loading="lazy" decoding="async">
+                            <img src="assets/luckypainted.png" width="5100" height="3300" alt="The finished LUCKY piece on the wall" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                         <figcaption class="cs-caption">The wall: what I actually painted. The details inside the letters are bigger and the gradient is harsher.</figcaption>
@@ -827,8 +843,9 @@
 
         <!-- === RISE UP (scroll to top) === -->
         <section class="cs-rise fade-in observe">
-            <a href="#top" class="rise-up-btn" aria-label="Scroll to top of page">
-                <h2>Rise Up!</h2>
+            <a href="#top" class="rise-up-btn">
+                <span class="rise-up-label">Rise Up!</span>
+                <span class="rise-up-hint">Back to top &uarr;</span>
             </a>
         </section>
 
@@ -986,14 +1003,26 @@
         }
 
         /* ==================================================================
-           7. VIDEO: plays only while it is on screen
+           7. VIDEO: silent loops play while on screen (never with reduced motion);
+              once a visitor pauses one, it stays paused. Videos with sound never start by themselves.
            ================================================================== */
         document.querySelectorAll(".cs-media video").forEach(v => {
-            if (reduceMotion || !("IntersectionObserver" in window)) return;
+            if (!("IntersectionObserver" in window)) return;
+            let autoPausing = false;
+            v.addEventListener("pause", () => { if (!autoPausing) v.dataset.userPaused = "1"; });
+            v.addEventListener("play",  () => { delete v.dataset.userPaused; });
             new IntersectionObserver(entries => {
                 entries.forEach(en => {
-                    if (en.isIntersecting) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
-                    else v.pause();
+                    if (en.isIntersecting) {
+                        if (v.muted && !reduceMotion && !v.dataset.userPaused) {
+                            const p = v.play();
+                            if (p && p.catch) p.catch(() => {});
+                        }
+                    } else if (!v.paused) {
+                        autoPausing = true;
+                        v.pause();
+                        autoPausing = false;
+                    }
                 });
             }, { threshold: 0.4 }).observe(v);
         });
@@ -1005,7 +1034,9 @@
         if (rise) {
             rise.addEventListener("click", (e) => {
                 e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+                const skip = document.querySelector(".skip-link");
+                if (skip) skip.focus({ preventScroll: true });
             });
         }
     </script>

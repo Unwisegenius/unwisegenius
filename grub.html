@@ -513,13 +513,21 @@
         }
 
         .rise-up-btn {
-            display: inline-block;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            color: #111111;
             cursor: pointer;
             user-select: none;
         }
 
-        .rise-up-btn h2 {
+        /* Same look as before, but a span: a link should not contain a heading */
+        .rise-up-label {
+            font-family: 'Space Grotesk', -apple-system, sans-serif;
+            font-weight: 700;
             font-size: clamp(3rem, 8vw, 7rem);
+            line-height: normal;
             letter-spacing: -2px;
             text-transform: uppercase;
             display: inline-block;
@@ -527,7 +535,16 @@
             transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
         }
 
-        .rise-up-btn:hover h2 {
+        .rise-up-hint {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .rise-up-btn:hover .rise-up-label,
+        .rise-up-btn:focus-visible .rise-up-label {
             color: var(--cs-purple);
             transform: skewX(-12deg);
             text-shadow: 6px 6px 0 var(--cs-lime);
@@ -568,6 +585,9 @@
 
         /* --- GRUB additions --- */
         .cs-title--long { font-size: clamp(2.4rem, 6.6vw, 6rem); }
+
+        /* The long hero subtitle: balance its lines so the last word never sits alone */
+        .cs-hero .cs-subtitle { text-wrap: balance; }
 
         /* Videos of each microinteraction: whole frame shown, never cropped */
         .cs-media video { background-color: #000000; }
@@ -645,7 +665,7 @@
         </div>
         <nav class="top-right">
             <a href="about.html" class="cyber-nav-link" data-text="About Me">About Me</a>
-            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio">Portfolio</a>
+            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio" aria-current="page">Portfolio</a>
             <a href="contact.html" class="cyber-nav-link" data-text="Get in Touch!">Get in Touch!</a>
         </nav>
     </header>
@@ -669,7 +689,7 @@
 
                 <figure class="cs-hero-fig fade-up observe stagger-3">
                     <div class="cs-hero-media" data-label="The Grub logo">
-                        <img src="assets/grubbanner.png" alt="The Grub logo" decoding="async" fetchpriority="high">
+                        <img src="assets/grubbanner.png" width="2021" height="1210" alt="The Grub logo: a white burger icon above chunky GRUB lettering on red, between red-and-white checked borders" decoding="async" fetchpriority="high">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">Grub, the fake food delivery brand I created so the microinteractions had a real-feeling service to live in.</figcaption>
@@ -695,8 +715,8 @@
                             <li class="fade-right observe stagger-2"><a href="#ideation"><span class="cs-num">02</span>Ideation</a></li>
                             <li class="fade-right observe stagger-3"><a href="#development"><span class="cs-num">03</span>Development</a></li>
                             <li class="fade-right observe stagger-4"><a href="#prototype"><span class="cs-num">04</span>Prototype</a></li>
-                            <li class="fade-right observe stagger-4" data-needs-ai><a href="#ai"><span class="cs-num">05</span>AI Transparency</a></li>
-                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num" data-num-after-ai>05</span>Reflection</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#ai"><span class="cs-num">05</span>AI Transparency</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num">06</span>Reflection</a></li>
                         </ul>
                     </div>
 
@@ -713,7 +733,7 @@
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12"/><path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2"/><path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4"/></svg>
                                 </span>
-                                <p>The project ran for <strong>5 weeks</strong>.</p>
+                                <p>The project ran for <strong>5 weeks</strong> (6 November to 11 December 2025).</p>
                             </li>
                             <li class="cs-spec fade-left observe stagger-3">
                                 <span class="cs-spec-icon" aria-hidden="true">
@@ -733,7 +753,7 @@
                                 </span>
                                 <p>Each runs for <strong>0.5&ndash;3 seconds</strong> at <strong>30fps</strong> or more.</p>
                             </li>
-                            <li class="cs-spec fade-left observe stagger-4" data-needs-ai>
+                            <li class="cs-spec fade-left observe stagger-4">
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4L12 3z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15z"/></svg>
                                 </span>
@@ -763,11 +783,11 @@
                 <figure class="cs-fig cs-pair fade-up observe">
                     <div class="cs-pair-media">
                         <div class="cs-media tilt-card" data-label="Uber Eats reference">
-                            <img src="assets/grub-reference-1.png" alt="A screenshot of Uber Eats that I used as a layout reference" loading="lazy" decoding="async">
+                            <img src="assets/grub-reference-1.png" width="3360" height="2010" alt="A restaurant page on Uber Eats, with a large food photo, a category menu on the left and rows of featured dishes, which I used as a layout reference" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                         <div class="cs-media tilt-card" data-label="Uber Eats reference">
-                            <img src="assets/grub-reference-2.png" alt="A second screenshot of Uber Eats that I used as a layout reference" loading="lazy" decoding="async">
+                            <img src="assets/grub-reference-2.png" width="3364" height="1966" alt="A second screenshot of Uber Eats that I used as a layout reference" loading="lazy" decoding="async">
                             <span class="cs-scan" aria-hidden="true"></span>
                         </div>
                     </div>
@@ -775,7 +795,7 @@
                 </figure>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="The Grub user interface">
-                        <img src="assets/grubui.png" alt="The Grub user interface" loading="lazy" decoding="async">
+                        <img src="assets/grubui.png" width="1584" height="1516" alt="The Grub checkout screen in red and cream under a checked header: the order list, the delivery and pickup options, and the payment button" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The Grub interface, built in Figma after researching services like Uber Eats. Focusing on one service left time to brand it properly.</figcaption>
@@ -787,22 +807,20 @@
         <section id="development" class="cs-band cs-band--purple">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">Development</h2>
-
-                <!-- VIDEOS: each clip is one .mov file with no type attribute, so browsers work out the format themselves.
-                     If you export .mp4 (H.264) versions later, change the file names in the four src values below. -->
+                <p class="fade-up observe">The brief asked for three microinteractions, but I made four, so I&rsquo;d have more examples for this case study.</p>
                 <h3 class="fade-up observe">1. The payment button</h3>
                 <p class="fade-up observe">The first microinteraction I made was the payment button. I wanted a payment button that was fun, but that also reduced panic purchases. When you go to pay for your food, you have the option to cancel, because you may look at your order at the last second and see you&rsquo;ve forgotten something. I then used Smart Animate in Figma to bring it to life.</p>
                 <!-- Smaller and with no tilt-card: the tilt effect warped this image -->
                 <figure class="cs-fig cs-fig--small fade-up observe">
                     <div class="cs-media" data-label="Process work for the payment button">
-                        <img src="assets/car%20process.png" alt="Figma frames showing each state of the payment button" loading="lazy" decoding="async">
+                        <img src="assets/car%20process.png" width="960" height="1284" alt="Nine frames of the payment button: &ldquo;Continue to Payment?&rdquo;, a countdown from &ldquo;Cancel in 5 seconds&rdquo; to 1 as a little car drives along, &ldquo;Confirming&hellip;&rdquo;, then a green &ldquo;Transaction Successful&rdquo;" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">Process work for the payment button: each state laid out as its own frame, ready for Smart Animate to move between them.</figcaption>
                 </figure>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media" data-label="The payment button microinteraction">
-                        <video src="assets/continuetopayment.mov#t=0.1" muted loop playsinline preload="metadata" controls aria-label="The payment button microinteraction"></video>
+                        <video src="assets/continuetopayment.mov#t=0.1" width="2564" height="1514" muted loop playsinline preload="metadata" controls aria-label="The payment button microinteraction: Continue to Payment, a five-second countdown with a cancel option, then Transaction Successful"></video>
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The payment button: continue to payment, with a cancel option so a last-second &ldquo;I forgot something&rdquo; never turns into a panic purchase.</figcaption>
@@ -812,14 +830,14 @@
                 <p class="fade-up observe">I then moved on to more microinteractions. I created a drop-down menu to tidy up the clutter on the page.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="Each state of the drop-down menu">
-                        <img src="assets/grub-dropdown-states.png" alt="Figma frames showing each state of the drop-down menu" loading="lazy" decoding="async">
+                        <img src="assets/grub-dropdown-states.png" width="2233" height="577" alt="Six Figma frames of the drop-down menu, from closed to fully open with its list of options" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">Every state of the drop-down menu, each laid out as its own frame.</figcaption>
                 </figure>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media" data-label="The drop-down menu microinteraction">
-                        <video src="assets/dropdownmenu.mov#t=0.1" muted loop playsinline preload="metadata" controls aria-label="The drop-down menu microinteraction"></video>
+                        <video src="assets/dropdownmenu.mov#t=0.1" width="2564" height="1514" muted loop playsinline preload="metadata" controls aria-label="The drop-down menu microinteraction: the menu opening and closing on the Grub page"></video>
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The drop-down menu, tidying options away until they&rsquo;re needed, so the page stays clear.</figcaption>
@@ -829,14 +847,14 @@
                 <p class="fade-up observe">I noticed something on a lot of food service websites: you can switch between delivery and pickup. That switch is a microinteraction in itself, giving the user the choice between collecting the order and having it delivered, so it needed to be built in too. I used Smart Animate in Figma to transition between the two and make it clear which option you were picking.</p>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="The two frames of the delivery and pickup toggle">
-                        <img src="assets/grub-toggle-states.png" alt="Two Figma frames of the delivery and pickup toggle, identical apart from the selected option" loading="lazy" decoding="async">
+                        <img src="assets/grub-toggle-states.png" width="3367" height="1824" alt="Two Figma frames of the delivery and pickup toggle, identical apart from the selected option" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">To build the toggle, I made two identical frames and changed only the delivery and pickup box between them.</figcaption>
                 </figure>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media" data-label="The delivery and pickup toggle microinteraction">
-                        <video src="assets/toggledelivery.mov#t=0.1" muted loop playsinline preload="metadata" controls aria-label="The delivery and pickup toggle microinteraction"></video>
+                        <video src="assets/toggledelivery.mov#t=0.1" width="2564" height="1514" muted loop playsinline preload="metadata" controls aria-label="The delivery and pickup toggle microinteraction: the highlight sliding between Delivery and Pickup"></video>
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The delivery and pickup toggle: the motion shows which way you&rsquo;ve switched, so there&rsquo;s no doubt how your food is arriving.</figcaption>
@@ -847,14 +865,14 @@
                 <figure class="cs-fig cs-fig--small fade-up observe">
                     <!-- No tilt-card here: the tilt effect warped this image -->
                     <div class="cs-media" data-label="Each position of the savings notification">
-                        <img src="assets/grub-notification-states.png" alt="Figma frames showing each position of the savings notification" loading="lazy" decoding="async">
+                        <img src="assets/grub-notification-states.png" width="394" height="1796" alt="Four frames of the savings notification, stacked: a pound sign appears, then the saving of &minus;&pound;1.79 slides in above a line about the free delivery fee" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">Each position of the objects inside the frame, set out so Smart Animate can move smoothly from one to the next.</figcaption>
                 </figure>
                 <figure class="cs-fig fade-up observe">
                     <div class="cs-media" data-label="The savings notification microinteraction">
-                        <video src="assets/NotificationGrub.mov#t=0.1" muted loop playsinline preload="metadata" controls aria-label="The savings notification microinteraction"></video>
+                        <video src="assets/NotificationGrub.mov#t=0.1" width="1282" height="758" muted loop playsinline preload="metadata" controls aria-label="The savings notification microinteraction: the saving pops up as the prototype opens"></video>
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
                     <figcaption class="cs-caption">The notification that greets you with your savings the moment the prototype opens: a small reward before you&rsquo;ve even ordered.</figcaption>
@@ -920,7 +938,6 @@
                     <span class="cs-next-kicker">&larr; Back to</span>
                     <span class="cs-next-title">Portfolio</span>
                 </a>
-                <!-- Change this to whichever case study you want next -->
                 <a href="Scran.html" class="cs-next-link cs-next-link--next">
                     <span class="cs-next-kicker">Next project &rarr;</span>
                     <span class="cs-next-title">Scran</span>
@@ -930,8 +947,9 @@
 
         <!-- === RISE UP (scroll to top) === -->
         <section class="cs-rise fade-in observe">
-            <a href="#top" class="rise-up-btn" aria-label="Scroll to top of page">
-                <h2>Rise Up!</h2>
+            <a href="#top" class="rise-up-btn">
+                <span class="rise-up-label">Rise Up!</span>
+                <span class="rise-up-hint">Back to top &uarr;</span>
             </a>
         </section>
 
@@ -1046,19 +1064,6 @@
         });
 
         /* ==================================================================
-           2b. AI SECTION: until it's filled in (no "hidden" attribute), hide its Contents entry and spec row
-           ================================================================== */
-        (function () {
-            const ai = document.getElementById("ai");
-            if (ai && !ai.hidden) {
-                const n = document.querySelector("[data-num-after-ai]");
-                if (n) n.textContent = "06";
-                return;
-            }
-            document.querySelectorAll("[data-needs-ai]").forEach(el => el.remove());
-        })();
-
-        /* ==================================================================
            3. SCROLL REVEAL (fires once per element; headings decrypt as they appear)
            ================================================================== */
         const toAnimate = document.querySelectorAll(".observe");
@@ -1104,14 +1109,26 @@
         }
 
         /* ==================================================================
-           7. VIDEO: plays only while it is on screen
+           7. VIDEO: silent loops play while on screen (never with reduced motion);
+              once a visitor pauses one, it stays paused. Videos with sound never start by themselves.
            ================================================================== */
         document.querySelectorAll(".cs-media video").forEach(v => {
-            if (reduceMotion || !("IntersectionObserver" in window)) return;
+            if (!("IntersectionObserver" in window)) return;
+            let autoPausing = false;
+            v.addEventListener("pause", () => { if (!autoPausing) v.dataset.userPaused = "1"; });
+            v.addEventListener("play",  () => { delete v.dataset.userPaused; });
             new IntersectionObserver(entries => {
                 entries.forEach(en => {
-                    if (en.isIntersecting) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
-                    else v.pause();
+                    if (en.isIntersecting) {
+                        if (v.muted && !reduceMotion && !v.dataset.userPaused) {
+                            const p = v.play();
+                            if (p && p.catch) p.catch(() => {});
+                        }
+                    } else if (!v.paused) {
+                        autoPausing = true;
+                        v.pause();
+                        autoPausing = false;
+                    }
                 });
             }, { threshold: 0.4 }).observe(v);
         });
@@ -1123,7 +1140,9 @@
         if (rise) {
             rise.addEventListener("click", (e) => {
                 e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+                const skip = document.querySelector(".skip-link");
+                if (skip) skip.focus({ preventScroll: true });
             });
         }
     </script>
