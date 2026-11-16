@@ -79,25 +79,58 @@
             padding-top: 80px;
         }
 
-        /* Keeps the portrait area from collapsing if the image is missing */
+        /* ID card (assets/Pixelcardofme.gif): it turns to face the mouse.
+           The script sets --rx / --ry (tilt) and --mx / --my (where the light sits). */
+        .about-top-image { perspective: 1100px; }
+
         .portrait-wrapper {
+            --rx: 0deg; --ry: 0deg;
+            --mx: 50%;  --my: 30%;
+            --sx: 0px;  --sy: 18px;
             position: relative;
-            background-color: #e9e9e9;
-            min-height: 200px;
-            cursor: pointer;
+            display: block;
+            width: 100%;
+            min-height: 0;
+            background: none;
+            border-radius: 14px;
+            transform: rotateX(var(--rx)) rotateY(var(--ry));
+            transform-style: preserve-3d;
+            will-change: transform;
+            /* Neon glow that slides the opposite way to the tilt, so the card feels like it floats */
+            filter: drop-shadow(var(--sx) var(--sy) 26px rgba(77, 4, 255, 0.45));
         }
 
-        /* Glitch layer: sits exactly over the photo and only shows while it glitches */
-        .portrait-glitch {
+        .portrait-wrapper video {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 14px;
+        }
+
+        /* Holographic sheen: a pool of light that follows the mouse across the card */
+        .card-glare {
             position: absolute;
+            inset: 0;
+            border-radius: 14px;
             pointer-events: none;
+            z-index: 2;
             opacity: 0;
-            z-index: 1;
+            transition: opacity 0.35s ease;
+            background:
+                radial-gradient(circle at var(--mx) var(--my), rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0) 45%),
+                radial-gradient(circle at calc(100% - var(--mx)) calc(100% - var(--my)), rgba(251, 76, 209, 0.22) 0%, rgba(251, 76, 209, 0) 55%),
+                repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.10) 0 1px, rgba(0, 0, 0, 0) 1px 3px);
+            mix-blend-mode: soft-light;
         }
 
-        .portrait-glitch.is-on { opacity: 1; }
+        .portrait-wrapper.is-live .card-glare { opacity: 1; }
 
-        .portrait-wrapper .scanline-sweep { z-index: 2; }
+        /* Touch screens and phones have no mouse, so the card just sways gently on its own */
+        @keyframes card-sway {
+            0%, 100% { transform: rotateX(4deg)  rotateY(-8deg); }
+            50%      { transform: rotateX(-3deg) rotateY(8deg); }
+        }
+        .portrait-wrapper.is-idle { animation: card-sway 7s ease-in-out infinite; }
 
         /* Dark text on pink: #111 on #FB4CD1 is about 6.3:1 (white was 2.98:1 and failed WCAG AA) */
         #philosophy,
@@ -205,10 +238,10 @@
         @media (prefers-reduced-motion: reduce) {
             .reveal-section { opacity: 1 !important; transform: none !important; transition: none !important; }
             .floating-avatar { animation: none !important; }
-            .ab-btn, .portrait-wrapper img { transition: none !important; }
+            .ab-btn { transition: none !important; }
             .ab-btn:hover { transform: none; }
-            .portrait-wrapper { cursor: default; }
-            .portrait-glitch { display: none; }
+            .portrait-wrapper { transform: none !important; animation: none !important; }
+            .card-glare { display: none; }
         }
     </style>
 </head>
@@ -256,10 +289,11 @@
         </div>
 
         <div class="about-top-image">
-            <div class="portrait-wrapper tilt-card">
-                <!-- If the photo is ever missing, it's hidden (see the script at the bottom) -->
-                <img src="assets/jared-portrait.jpg" alt="A portrait photo of Jared Russell" width="564" height="649">
-                <div class="scanline-sweep"></div>
+            <div class="portrait-wrapper" id="id-card">
+                <!-- Muted looping video. If the file is ever missing, it's hidden (see the script at the bottom) -->
+                <video src="assets/Pixelcardofme.mp4#t=0.1" autoplay muted loop playsinline preload="auto" disablepictureinpicture
+                       role="img" aria-label="A cyberpunk, Blade Runner-style ID card for Jared Russell"></video>
+                <div class="card-glare" aria-hidden="true"></div>
             </div>
         </div>
     </section>
@@ -385,246 +419,62 @@
             document.querySelectorAll(".reveal-section").forEach(sec => sec.classList.add("visible"));
         }
 
-        // 3. Missing portrait? Hide it instead of showing a broken image icon
-        const portrait = document.querySelector(".portrait-wrapper img");
+        // 3. ID card video: hide it if the file is missing, and don't autoplay for people who prefer less motion
+        const portrait = document.querySelector(".portrait-wrapper video");
         if (portrait) {
-            const hide = () => { portrait.style.display = "none"; };
-            portrait.addEventListener("error", hide);
-            if (portrait.complete && portrait.naturalWidth === 0) hide();
+            portrait.addEventListener("error", () => { portrait.style.display = "none"; });
+            if (reduceMotion) { portrait.removeAttribute("autoplay"); portrait.pause(); }
         }
 
-        // 4. Card tilt (mouse only; uses live bounds, so it stays accurate while scrolling)
-        if (!reduceMotion && canHover) document.querySelectorAll(".tilt-card").forEach(card => {
-            card.addEventListener("mousemove", (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                card.style.transform =
-                    `perspective(1000px) scale3d(1.02, 1.02, 1.02) rotateX(${-y / 25}deg) rotateY(${x / 25}deg)`;
-            });
-
-            card.addEventListener("mouseleave", () => {
-                card.style.transform = "";
-            });
-        });
-
-        // 5. Glitching portrait: the same glitch shader as the 3D logo on the home page,
-        //    run with plain WebGL so this page doesn't need to load Three.js.
-        //    Fires when the photo scrolls into view, on hover, on click or tap,
-        //    and now and then on its own. Off entirely for people who prefer less motion.
-        //    The flicker is slower than the home page's, so it stays under 3 flashes a second.
+        // 4. The ID card turns to face the mouse, wherever it is on the page.
+        //    Eased every frame so it glides instead of snapping. Touch screens get a slow sway instead.
         (function () {
-            const wrap = document.querySelector(".portrait-wrapper");
-            const img = wrap && wrap.querySelector("img");
-            if (!img || reduceMotion) return;
+            const card = document.getElementById("id-card");
+            if (!card || reduceMotion) return;
 
-            const canvas = document.createElement("canvas");
-            canvas.className = "portrait-glitch";
-            canvas.setAttribute("aria-hidden", "true");
-            const gl = canvas.getContext("webgl", { premultipliedAlpha: false });
-            if (!gl) return;   // No WebGL: the plain photo stays as it is
+            if (!canHover) { card.classList.add("is-idle"); return; }
 
-            const vertexSrc = `
-                attribute vec2 position;
-                varying vec2 vUv;
-                void main() {
-                    vUv = position * 0.5 + 0.5;
-                    gl_Position = vec4(position, 0.0, 1.0);
-                }
-            `;
+            const MAX_TILT = 16;                 // degrees at the edge of the screen
+            let tx = 0, ty = 0;                  // where the tilt is heading (-1 to 1)
+            let cx = 0, cy = 0;                  // where it is now
+            let lx = 0.5, ly = 0.3, glx = 0.5, gly = 0.3;   // light position (0 to 1)
+            let raf = 0;
 
-            const fragmentSrc = `
-                precision mediump float;
-                uniform sampler2D tDiffuse;
-                uniform float amount;
-                uniform float time;
-                uniform float seed;
-                uniform vec2 uvScale;
-                uniform vec2 uvOffset;
-                varying vec2 vUv;
+            function clamp(n) { return Math.max(-1, Math.min(1, n)); }
 
-                float rand(vec2 co) {
-                    return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
-                }
+            window.addEventListener("pointermove", (e) => {
+                if (e.pointerType === "touch") return;
+                const r = card.getBoundingClientRect();
+                // Distance from the card's centre, in "half a screen" units
+                tx = clamp((e.clientX - (r.left + r.width / 2)) / (window.innerWidth / 2));
+                ty = clamp((e.clientY - (r.top + r.height / 2)) / (window.innerHeight / 2));
+                // Light follows the cursor on the card itself
+                lx = clamp((e.clientX - r.left) / r.width * 2 - 1) * 0.5 + 0.5;
+                ly = clamp((e.clientY - r.top) / r.height * 2 - 1) * 0.5 + 0.5;
+                card.classList.add("is-live");
+                if (!raf) raf = requestAnimationFrame(step);
+            }, { passive: true });
 
-                // Matches the photo's object-fit crop, so the glitch lines up with the image
-                vec4 photo(vec2 uv) {
-                    return texture2D(tDiffuse, clamp(uv * uvScale + uvOffset, 0.0, 1.0));
-                }
+            // Mouse leaves the window: settle back to flat
+            document.documentElement.addEventListener("mouseleave", () => { tx = ty = 0; lx = 0.5; ly = 0.3; if (!raf) raf = requestAnimationFrame(step); });
 
-                void main() {
-                    vec2 uv = vUv;
-                    if (amount <= 0.001) { gl_FragColor = photo(uv); return; }
+            function step() {
+                cx += (tx - cx) * 0.12;
+                cy += (ty - cy) * 0.12;
+                glx += (lx - glx) * 0.2;
+                gly += (ly - gly) * 0.2;
 
-                    float sliceCount = 35.0;
-                    float sliceY = floor(uv.y * sliceCount);
-                    float sliceNoise = rand(vec2(sliceY, floor(time * 12.0) + seed));
-                    if (sliceNoise < amount * 0.85) {
-                        uv.x += (rand(vec2(sliceY, seed)) - 0.5) * 0.25 * amount;
-                    }
+                card.style.setProperty("--ry", (cx * MAX_TILT).toFixed(2) + "deg");
+                card.style.setProperty("--rx", (-cy * MAX_TILT).toFixed(2) + "deg");
+                card.style.setProperty("--mx", (glx * 100).toFixed(1) + "%");
+                card.style.setProperty("--my", (gly * 100).toFixed(1) + "%");
+                card.style.setProperty("--sx", (-cx * 22).toFixed(1) + "px");
+                card.style.setProperty("--sy", (18 - cy * 14).toFixed(1) + "px");
 
-                    float splitOffset = 0.04 * amount * (rand(vec2(floor(time * 20.0), 1.0)) - 0.5);
-                    vec4 rCol = photo(uv + vec2(splitOffset, 0.0));
-                    vec4 gCol = photo(uv);
-                    vec4 bCol = photo(uv - vec2(splitOffset, 0.0));
-                    vec4 color = vec4(rCol.r, gCol.g, bCol.b, 1.0);
-
-                    float glitchNoise = rand(uv + time);
-                    if (glitchNoise < amount * 0.3) {
-                        color.r *= 0.2; color.g += 0.5 * amount; color.b += 0.8 * amount;
-                    } else if (glitchNoise < amount * 0.4) {
-                        color.r += 0.6 * amount; color.g *= 0.2; color.b += 0.8 * amount;
-                    }
-
-                    color.rgb -= sin(uv.y * 700.0) * 0.12 * amount;
-
-                    vec2 blockUv = floor(uv * vec2(8.0, 60.0));
-                    if (rand(blockUv + floor(time * 10.0)) < amount * 0.3) {
-                        float pick = rand(blockUv + seed);
-                        if (pick < 0.3) color.rgb = vec3(0.0, 0.3, 1.0);
-                        else if (pick < 0.6) color.rgb = vec3(0.0, 0.9, 0.3);
-                        else if (pick < 0.8) color.rgb = vec3(0.7, 0.0, 0.9);
-                        else color.rgb = vec3(0.0);
-                        color.rgb += rand(blockUv + seed) * 0.2;
-                    }
-
-                    gl_FragColor = color;
-                }
-            `;
-
-            function compile(type, src) {
-                const s = gl.createShader(type);
-                gl.shaderSource(s, src);
-                gl.compileShader(s);
-                return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null;
+                const settled = Math.abs(tx - cx) < 0.001 && Math.abs(ty - cy) < 0.001 &&
+                                Math.abs(lx - glx) < 0.002 && Math.abs(ly - gly) < 0.002;
+                raf = settled ? 0 : requestAnimationFrame(step);
             }
-
-            const vs = compile(gl.VERTEX_SHADER, vertexSrc);
-            const fs = compile(gl.FRAGMENT_SHADER, fragmentSrc);
-            if (!vs || !fs) return;
-
-            const program = gl.createProgram();
-            gl.attachShader(program, vs);
-            gl.attachShader(program, fs);
-            gl.linkProgram(program);
-            if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
-            gl.useProgram(program);
-
-            // One rectangle covering the canvas
-            gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
-            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
-            const posLoc = gl.getAttribLocation(program, "position");
-            gl.enableVertexAttribArray(posLoc);
-            gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
-
-            const u = {};
-            ["amount", "time", "seed", "uvScale", "uvOffset"].forEach(n => { u[n] = gl.getUniformLocation(program, n); });
-
-            let ready = false;
-
-            function setup() {
-                try {
-                    const tex = gl.createTexture();
-                    gl.bindTexture(gl.TEXTURE_2D, tex);
-                    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-                    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
-                } catch (err) {
-                    return;   // e.g. opened from a local file: keep the plain photo
-                }
-                wrap.insertBefore(canvas, img.nextSibling);
-                ready = true;
-                layout();
-                watch();
-            }
-
-            // Place the canvas exactly over the photo and copy its crop
-            function layout() {
-                const w = img.offsetWidth, h = img.offsetHeight;
-                if (!w || !h) return;
-                const dpr = Math.min(window.devicePixelRatio || 1, 2);
-                canvas.style.left = img.offsetLeft + "px";
-                canvas.style.top = img.offsetTop + "px";
-                canvas.style.width = w + "px";
-                canvas.style.height = h + "px";
-                canvas.width = Math.round(w * dpr);
-                canvas.height = Math.round(h * dpr);
-                gl.viewport(0, 0, canvas.width, canvas.height);
-
-                let sx = 1, sy = 1;
-                if (getComputedStyle(img).objectFit === "cover") {
-                    const boxRatio = w / h;
-                    const imgRatio = img.naturalWidth / img.naturalHeight;
-                    if (imgRatio > boxRatio) sx = boxRatio / imgRatio;
-                    else sy = imgRatio / boxRatio;
-                }
-                gl.uniform2f(u.uvScale, sx, sy);
-                gl.uniform2f(u.uvOffset, (1 - sx) / 2, (1 - sy) / 2);
-            }
-
-            window.addEventListener("resize", () => { if (ready) layout(); });
-
-            // The glitch itself: 0.85s, two strong pulses, then fades out
-            const duration = 0.85;
-            let start = 0, running = false;
-
-            function frame(now) {
-                const t = (now - start) / 1000;
-                const norm = t / duration;
-                if (norm >= 1) {
-                    running = false;
-                    canvas.classList.remove("is-on");
-                    return;
-                }
-                const flicker = Math.sin(norm * Math.PI * 4) + 1;
-                const fadeOut = Math.pow(1 - norm, 1.2);
-                gl.uniform1f(u.amount, (1 + flicker) * fadeOut);
-                gl.uniform1f(u.time, now / 1000);
-                gl.uniform1f(u.seed, Math.random());
-                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-                requestAnimationFrame(frame);
-            }
-
-            function glitch() {
-                if (!ready || running) return;
-                layout();
-                running = true;
-                start = performance.now();
-                canvas.classList.add("is-on");
-                requestAnimationFrame(frame);
-            }
-
-            function watch() {
-                let onScreen = false;
-
-                if ("IntersectionObserver" in window) {
-                    let firstTime = true;
-                    new IntersectionObserver(entries => {
-                        onScreen = entries[0].isIntersecting;
-                        if (onScreen && firstTime) {
-                            firstTime = false;
-                            setTimeout(glitch, 400);
-                        }
-                    }, { threshold: 0.5 }).observe(wrap);
-                }
-
-                if (canHover) wrap.addEventListener("mouseenter", glitch);
-                wrap.addEventListener("click", glitch);
-
-                // Every 6–11 seconds while the photo is on screen
-                (function idle() {
-                    setTimeout(() => {
-                        if (onScreen && document.visibilityState === "visible") glitch();
-                        idle();
-                    }, 6000 + Math.random() * 5000);
-                })();
-            }
-
-            if (img.complete && img.naturalWidth) setup();
-            else img.addEventListener("load", setup, { once: true });
         })();
     </script>
 </body>
