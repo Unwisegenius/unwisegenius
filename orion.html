@@ -435,6 +435,32 @@
         /* The caption wraps to the image's width instead of stretching the figure */
         .cs-fig .cs-caption { width: 0; min-width: 100%; }
 
+        /* Footer: logo left, page links dead centre, socials right.
+           Three columns (1fr auto 1fr) keep the middle group centred on the page
+           whatever the widths of the logo and the socials.
+           (Move this block into style.css once every page has the footer links.) */
+        footer {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            column-gap: 24px;
+            row-gap: 14px;
+            box-sizing: border-box;
+            max-width: 100%;
+        }
+        footer .footer-left  { justify-self: start; }
+        footer .footer-right { flex-wrap: wrap; min-width: 0; margin: 0; }
+        footer .footer-nav   { justify-self: center; justify-content: center; }
+        footer .footer-right:last-child { justify-self: end; justify-content: flex-end; }
+
+        /* Phones and small tablets: stack the three groups, all centred */
+        @media (max-width: 760px) {
+            footer { grid-template-columns: 1fr; justify-items: center; }
+            footer .footer-left,
+            footer .footer-nav,
+            footer .footer-right:last-child { justify-self: center; justify-content: center; }
+        }
+
         /* --- NEXT PROJECT / BACK TO WORK (no dead ends at the end of a case study) --- */
         .cs-next {
             display: flex;
@@ -985,7 +1011,7 @@
         <!-- === SUMMARY + CONTENTS + SPECS === -->
         <section id="summary" class="cs-band cs-band--lime">
             <div class="cs-wrap">
-                <h2 class="scramble-heading fade-up observe">Summary Of Project</h2>
+                <h2 class="scramble-heading fade-up observe">Summary of Project</h2>
                 <p class="fade-up observe stagger-1">Orion is a goggle-free VR system for the smart home of 2053. Spatial cameras and projection turn the room itself into the interface, so it can shift from a focused office by day to an immersive games room by night, with no headset in sight.</p>
 
                 <div class="cs-duo">
@@ -1007,30 +1033,35 @@
                     <div id="specs">
                         <h2 class="cs-sub scramble-heading fade-up observe">Project Specifications</h2>
                         <ul class="cs-specs" role="list">
-                            <!-- TO DO: add a timeline row here, e.g. "The project ran for X weeks." -->
                             <li class="cs-spec fade-left observe stagger-1">
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
                                 </span>
                                 <p>My role: <strong>research, product, UI and campaign</strong>.</p>
                             </li>
-                            <li class="cs-spec fade-left observe stagger-1">
-                                <span class="cs-spec-icon" aria-hidden="true">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
-                                </span>
-                                <p>Brief: the <strong>smart home of 2053</strong>.</p>
-                            </li>
                             <li class="cs-spec fade-left observe stagger-2">
                                 <span class="cs-spec-icon" aria-hidden="true">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21a8 8 0 1 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12"/><path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2"/><path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4"/></svg>
                                 </span>
-                                <p>For a <strong>remote worker</strong> in a bungalow.</p>
+                                <p>The project ran for <strong>7 weeks</strong>.</p>
                             </li>
                             <li class="cs-spec fade-left observe stagger-3">
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                                 </span>
                                 <p><strong>Blender</strong>, <strong>Figma</strong>, <strong>After Effects</strong>, <strong>Premiere</strong>.</p>
+                            </li>
+                            <li class="cs-spec fade-left observe stagger-4">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+                                </span>
+                                <p>Brief: the <strong>smart home of 2053</strong>.</p>
+                            </li>
+                            <li class="cs-spec fade-left observe stagger-4">
+                                <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21a8 8 0 1 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>
+                                </span>
+                                <p>For a <strong>remote worker</strong> in a bungalow.</p>
                             </li>
                             <li class="cs-spec fade-left observe stagger-4">
                                 <span class="cs-spec-icon" aria-hidden="true">
@@ -1121,6 +1152,13 @@
                 <h2 class="scramble-heading fade-up observe">The Hardware</h2>
                 <p class="fade-up observe">The goal for the physical product was hardware that felt domestic, minimal and approachable, rather than an aggressive gaming peripheral or bulky server.</p>
                 <figure class="cs-fig fade-up observe">
+                    <div class="cs-media tilt-card" data-label="First sketches of the Orion hardware">
+                        <img src="assets/orion-sketches.png" alt="My first sketches of Orion: a handheld controller with a joystick, buttons and wrist support, beside a desk setup with a motion sensor, a camera and a speaker projecting an interface onto the wall" loading="lazy" decoding="async">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">My first sketches of the hardware in use: how it would be used, and how it would display. At this stage it was several separate pieces.</figcaption>
+                </figure>
+                <figure class="cs-fig fade-up observe">
                     <div class="cs-media tilt-card" data-label="The Orion device: a matte black cylindrical unit modelled in Blender">
                         <img src="assets/orionproduct.png" alt="The Orion device: a matte black cylindrical unit modelled in Blender" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
@@ -1146,6 +1184,24 @@
                     </div>
                     <figcaption class="cs-caption">The Orion spatial UI prototype in Figma. Click through it here, or <a href="https://www.figma.com/proto/Txm6XbPsuRDcMtX0MtXbzg/Smart-Home-Project---Jared-Russell?node-id=193-540&amp;starting-point-node-id=193%3A540&amp;page-id=193%3A538&amp;scaling=scale-down&amp;content-scaling=fixed" target="_blank" rel="noopener" class="cs-inline-link">open it full screen in Figma</a>.</figcaption>
                 </figure>
+                <h3 class="fade-up observe">Who it is for</h3>
+                <div class="cs-grid cs-grid--2">
+                    <figure class="fade-up observe">
+                        <div class="cs-media tilt-card" data-label="Persona: Jerry R. Smith">
+                            <img src="assets/orion-persona-jerry.png" alt="Persona sheet for Jerry R. Smith, 34, a remote office clerk, listing his background, personality, goals, frustrations, emotional needs and product opportunities" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">Jerry, 34, is an office clerk who works from home, loves new technology and gets bored easily during the workday. He needs a room that keeps his work in view and gives him a quick escape on his breaks, which is what Stats and Entertainment are for.</figcaption>
+                    </figure>
+                    <figure class="fade-up observe stagger-1">
+                        <div class="cs-media tilt-card" data-label="Persona: Maya T. Lin">
+                            <img src="assets/orion-persona-maya.png" alt="Persona sheet for Maya T. Lin, 34, a senior project manager, listing her background, personality, goals, frustrations, emotional needs and product opportunities" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">Maya, 34, is a senior project manager with a high-stress job, who relies on yoga and meditation to switch off. She wants technology that works quietly in the background and helps her shift from work to rest, which is what Calm is for.</figcaption>
+                    </figure>
+                </div>
+
                 <p class="fade-up observe">The UI had to prove the Zero UI concept: that a system could be powerful enough for work and gaming without cluttering the room with digital noise. I designed five core modules in Figma:</p>
                 <ul class="cs-bullets fade-up observe">
                     <li><strong>The System Hub (loading and home):</strong> inspired by the clean boot sequences of modern consoles, I built an animated wave loading screen in After Effects and brought it into Figma as a GIF. The home screen is a scrollable, depth-layered interface, similar to visionOS, designed for eye tracking and micro gestures. I placed secondary controls like volume and power outside the main window, breaking free from the traditional 16:9 monitor.</li>
@@ -1185,20 +1241,19 @@
                         <img src="assets/withorion.png" alt="The With Orion print campaign adverts" loading="lazy" decoding="async">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">The &ldquo;with Orion&rdquo; campaign: real people in real rooms, so the technology fades into the background, which is the whole point of Zero UI.</figcaption>
+                    <figcaption class="cs-caption">The &ldquo;with Orion&rdquo; campaign: real people in real rooms, so the technology fades into the background, which is the whole point of Zero UI. Stock photography from Unsplash.</figcaption>
                 </figure>
                 <p class="fade-up observe">Together, the hardware, interface and campaign showed that a goggle-free, ambient spatial system could realistically support work, play and wellbeing in a modern home.</p>
             </div>
         </section>
 
-        <!-- === AI TRANSPARENCY ===
-             TO DO: write 1–3 sentences on how AI was used, then DELETE the word "hidden" below.
-             If you used no AI, delete this whole section, its Contents entry and its spec row instead.
-             While it's hidden, the Contents entry and spec row hide too. -->
-        <section id="ai" class="cs-band cs-band--purple" data-todo hidden>
+        <!-- === AI TRANSPARENCY === -->
+        <section id="ai" class="cs-band cs-band--purple">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">AI Transparency</h2>
-                <p class="fade-up observe">WRITE YOUR AI STATEMENT HERE.</p>
+                <p class="fade-up observe"><strong>Where AI was used:</strong> Gemini generated the code for the shaders behind the Calm module&rsquo;s ambient background, which I based on the calm, breathing screens in Apple&rsquo;s Mindfulness app. I also used AI to help expand a few ideas that I struggled to develop on my own.</p>
+                <p class="fade-up observe"><strong>What I did by hand:</strong> the research, the sketches, the Blender model, the Figma interface and prototype, the After Effects loading animation, the product reel and the print campaign.</p>
+                <p class="fade-up observe"><strong>Why:</strong> I used AI where I was short on time or skill. Writing shader code was more than I could learn within a seven-week project, and Gemini let me get the effect I had in mind into the prototype.</p>
             </div>
         </section>
 
@@ -1208,6 +1263,7 @@
                 <h2 class="scramble-heading fade-up observe">Reflection</h2>
                 <p class="fade-up observe">I enjoyed working on this project, as it let me expand my idea and see what it would look like as a real product you could buy.</p>
                 <p class="fade-up observe">However, I feel the idea could have been pushed further by researching how virtual reality systems are actually made and adapting that more closely to my idea. It also isn&rsquo;t truly immersive, which is a pain point. One way to fix that would be a 360-degree screen surrounding you, but Figma&rsquo;s technical limitations held me back.</p>
+                <p class="fade-up observe">The research taught me to look at the bottom line of every precedent: what worked, what didn&rsquo;t, and why it succeeded or failed.</p>
                 <p class="fade-up observe">Overall, it was a cool project, and I&rsquo;d definitely be interested in designing UI for everyday technology.</p>
                 <a class="cs-btn fade-up observe" href="https://jaredrussell.notion.site/Smart-Homes-in-the-Future-2f89a122e2e080b1b93bedece01e41c1" target="_blank" rel="noopener">Read my notes on Notion<span class="sr-only"> (opens in a new tab)</span></a>
             </div>
@@ -1218,7 +1274,7 @@
             <div class="cs-wrap cs-next">
                 <a href="portfolio.html" class="cs-next-link cs-next-link--back">
                     <span class="cs-next-kicker">&larr; Back to</span>
-                    <span class="cs-next-title">All my work</span>
+                    <span class="cs-next-title">Portfolio</span>
                 </a>
                 <!-- Change this to whichever case study you want next -->
                 <a href="grub.html" class="cs-next-link cs-next-link--next">
@@ -1244,6 +1300,12 @@
                 <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo" class="footer-logo" height="38">
             </a>
         </div>
+        <!-- Page links, so the way back to the work is in the footer as well as the header -->
+        <nav class="footer-right footer-nav" aria-label="Footer">
+            <a href="about.html" class="footer-link">About Me</a>
+            <a href="portfolio.html" class="footer-link">Portfolio</a>
+            <a href="contact.html" class="footer-link">Get in Touch!</a>
+        </nav>
         <div class="footer-right">
             <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram<span class="sr-only"> (opens in a new tab)</span></a>
             <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>

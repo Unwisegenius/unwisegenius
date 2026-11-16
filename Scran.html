@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scran: The Sustainable Cooking App for Kids | Case Study | Jared Russell</title>
-    <meta name="description" content="Case study: Scran, a playful baking app that teaches 8–14 year olds to reduce food waste, designed around the UN's Zero Hunger goal. Research, a mid-project pivot, style guide and prototype. By Jared Russell.">
+    <meta name="description" content="Case study: Scran, a playful cooking app that teaches 8–14 year olds to reduce food waste, designed around the UN's Zero Hunger goal. Research, a mid-project pivot, style guide and prototype. By Jared Russell.">
     <!-- Favicon: the brain with no background (assets/faviconbrain.png) -->
     <link rel="icon" type="image/png" href="assets/faviconbrain.png">
     <link rel="apple-touch-icon" href="assets/faviconbrain.png">
@@ -441,6 +441,51 @@
         /* The caption wraps to the image's width instead of stretching the figure */
         .cs-fig .cs-caption { width: 0; min-width: 100%; }
 
+        /* Style guide on phones: full-width pages, one per row, instead of the booklet */
+        .cs-book-pages { display: none; }
+        .cs-book-pages img {
+            display: block;
+            width: 100%;
+            height: auto;
+            margin-bottom: 14px;
+            border-radius: 8px;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+        }
+
+        @media (max-width: 640px) {
+            #guidelines .cs-book-stage { display: none; }
+            .cs-book-pages { display: block; }
+        }
+
+        /* Marks a gap in a sentence that still needs filling in */
+        .cs-todo-inline { font-weight: 700; }
+
+        /* Footer: logo left, page links dead centre, socials right.
+           Three columns (1fr auto 1fr) keep the middle group centred on the page
+           whatever the widths of the logo and the socials.
+           (Move this block into style.css once every page has the footer links.) */
+        footer {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            column-gap: 24px;
+            row-gap: 14px;
+            box-sizing: border-box;
+            max-width: 100%;
+        }
+        footer .footer-left  { justify-self: start; }
+        footer .footer-right { flex-wrap: wrap; min-width: 0; margin: 0; }
+        footer .footer-nav   { justify-self: center; justify-content: center; }
+        footer .footer-right:last-child { justify-self: end; justify-content: flex-end; }
+
+        /* Phones and small tablets: stack the three groups, all centred */
+        @media (max-width: 760px) {
+            footer { grid-template-columns: 1fr; justify-items: center; }
+            footer .footer-left,
+            footer .footer-nav,
+            footer .footer-right:last-child { justify-self: center; justify-content: center; }
+        }
+
         /* --- NEXT PROJECT / BACK TO WORK (no dead ends at the end of a case study) --- */
         .cs-next {
             display: flex;
@@ -860,7 +905,7 @@
             <div class="cs-wrap">
                 <span class="cs-eyebrow fade-up observe">Case Study</span>
                 <h1 class="cs-title scramble-heading fade-up observe stagger-1">Scran</h1>
-                <p class="cs-subtitle fade-up observe stagger-1">The sustainable baking app for kids</p>
+                <p class="cs-subtitle fade-up observe stagger-1">The sustainable cooking app for kids</p>
 
                 <ul class="cs-tags fade-up observe stagger-2" aria-label="Project focus">
                     <li>Research</li>
@@ -871,11 +916,13 @@
                 </ul>
 
                 <figure class="cs-hero-fig fade-up observe stagger-3">
-                    <div class="cs-hero-media" data-label="Scran app screens">
-                        <img src="assets/SCRANLONG.png" alt="A row of Scran app screens: loading, home, recipe and Sue Chef" decoding="async" fetchpriority="high">
+                    <!-- HERO: the caption and alt describe the logo banner that SCRANLONG.png currently is.
+                         If you swap in a row of app screens, rewrite both to describe that instead. -->
+                    <div class="cs-hero-media" data-label="The Scran logo">
+                        <img src="assets/SCRANLONG.png" alt="The Scran logo on a red banner" decoding="async" fetchpriority="high">
                         <span class="cs-scan" aria-hidden="true"></span>
                     </div>
-                    <figcaption class="cs-caption">The journey in one row: loading, home, a recipe and Sue Chef, all in the illustrated Bake Off style made for 10-year-olds.</figcaption>
+                    <figcaption class="cs-caption">Scran: a cooking app that helps children bake, use up leftovers and waste less food.</figcaption>
                 </figure>
             </div>
         </section>
@@ -883,8 +930,8 @@
         <!-- === SUMMARY + CONTENTS + SPECS === -->
         <section id="summary" class="cs-band cs-band--lime">
             <div class="cs-wrap">
-                <h2 class="scramble-heading fade-up observe">Summary Of Project</h2>
-                <p class="fade-up observe stagger-1">Scran is a playful, illustrated baking app that helps children cut down on food waste. Built around the UN&rsquo;s Zero Hunger goal, it mixes simple recipes, a cheeky helper called Sue Chef, and a look inspired by The Great British Bake Off.</p>
+                <h2 class="scramble-heading fade-up observe">Summary of Project</h2>
+                <p class="fade-up observe stagger-1">Scran is a playful, illustrated cooking app that helps children cut down on food waste. Built around the UN&rsquo;s Zero Hunger goal, it mixes simple recipes, a cheeky helper called Sue Chef, and a look inspired by The Great British Bake Off.</p>
 
                 <div class="cs-duo">
                     <div id="contents">
@@ -908,17 +955,23 @@
                         <ul class="cs-specs" role="list">
                             <li class="cs-spec fade-left observe stagger-1">
                                 <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/><path d="M17 3l1.5 1.5L21 2"/></svg>
+                                </span>
+                                <p>Role: <strong>solo project</strong>.</p>
+                            </li>
+                            <li class="cs-spec fade-left observe stagger-2">
+                                <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12"/><path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2"/><path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4"/></svg>
                                 </span>
                                 <p><strong>9 weeks</strong> (autumn 2025), plus redevelopment afterwards.</p>
                             </li>
-                            <li class="cs-spec fade-left observe stagger-2">
+                            <li class="cs-spec fade-left observe stagger-3">
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                                 </span>
                                 <p>Software: <strong>Figma</strong>, <strong>Illustrator</strong> and <strong>After Effects</strong>.</p>
                             </li>
-                            <li class="cs-spec fade-left observe stagger-3">
+                            <li class="cs-spec fade-left observe stagger-4">
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M11 18h2"/></svg>
                                 </span>
@@ -935,12 +988,6 @@
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
                                 </span>
                                 <p>UN goal: <strong>Zero Hunger</strong>, through reducing food waste.</p>
-                            </li>
-                            <li class="cs-spec fade-left observe stagger-4">
-                                <span class="cs-spec-icon" aria-hidden="true">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/><path d="M17 3l1.5 1.5L21 2"/></svg>
-                                </span>
-                                <p>Role: <strong>solo project</strong>.</p>
                             </li>
                             <li class="cs-spec fade-left observe stagger-4" data-needs-ai>
                                 <span class="cs-spec-icon" aria-hidden="true">
@@ -976,11 +1023,11 @@
                 <h2 class="scramble-heading fade-up observe">Finding the Idea</h2>
                 <p class="fade-up observe">After reading the brief and looking through a few examples, I jotted down some quick ideas, each tackling a different goal:</p>
                 <ul class="cs-bullets fade-up observe">
-                    <li><strong>Zero Hunger:</strong> a cookbook app that shows how to prevent food waste, such as turning onion scraps into seasoning.</li>
+                    <li><strong>Zero Hunger:</strong> a cooking app that shows how to prevent food waste, such as turning onion scraps into seasoning.</li>
                     <li><strong>Sustainable Cities and Communities:</strong> a city-planner game that reviews how sustainable your city is and explains why. Fun, but scanning a whole city would have been a nightmare to build in Figma.</li>
                     <li><strong>No Poverty:</strong> a stockbroker game where your decisions affect both the world and your wallet.</li>
                 </ul>
-                <p class="fade-up observe">In the end, the cookbook won. There was room for a great brand, and I could genuinely see it growing into a real app that promotes sustainability.</p>
+                <p class="fade-up observe">In the end, the cooking app won. There was room for a great brand, and I could genuinely see it growing into a real app that promotes sustainability.</p>
             </div>
         </section>
 
@@ -1003,7 +1050,7 @@
                     <figcaption class="cs-caption">Gousto&rsquo;s home screen: big imagery, ingredient pictures and clear tags.</figcaption>
                 </figure>
                 <h3 class="fade-up observe">A similar case study</h3>
-                <p class="fade-up observe">While researching, I came across a UX case study by Rebecca that tackled sustainable eating through vegan alternatives, whereas Scran focuses on food waste. She clearly did her homework: a target audience sheet before designing, wireframes before screens, and a carbon footprint calculator that motivated users with positive statistics. The first two went straight into my own process.</p>
+                <p class="fade-up observe">While researching, I came across <a href="https://uxplanet.org/ux-case-study-helping-people-adopt-sustainable-habits-3e659d422b37" target="_blank" rel="noopener" class="cs-inline-link">a UX case study by Rebecca Ionescu<span class="sr-only"> (opens in a new tab)</span></a> that tackled sustainable eating through vegan alternatives, whereas Scran focuses on food waste. She clearly did her homework: a target audience sheet before designing, wireframes before screens, and a carbon footprint calculator that motivated users with positive statistics. The first two went straight into my own process.</p>
                 <h3 class="fade-up observe">Naming the app</h3>
                 <p class="fade-up observe">Naming the app took a long list, from FoodCycle and Loop Kitchen to ReHeat and Savethepeels. One stood out straight away: <strong>Scran</strong>, slang for food, and only one letter away from &ldquo;scrap&rdquo;. I really love that one.</p>
                 <figure class="cs-fig fade-up observe" data-optional>
@@ -1028,7 +1075,7 @@
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">Designing for Children</h2>
                 <p class="fade-up observe">Then came a curveball. Rereading the brief in class, I noticed the audience was children, and everything I had planned was built for adults: a retro style aimed at young adults, and recipes that involved frying and sharp knives.</p>
-                <p class="fade-up observe">Scrapping the cookbook was tempting, but after talking it through with Kyle, I kept the idea and changed three things:</p>
+                <p class="fade-up observe">Scrapping the idea was tempting, but after talking it through with Kyle, I kept the idea and changed three things:</p>
                 <ul class="cs-bullets fade-up observe">
                     <li><strong>Baking, not frying.</strong> Banana bread is far safer for a 10-year-old than frying an egg.</li>
                     <li><strong>A new visual style,</strong> inspired by The Great British Bake Off&rsquo;s illustrations, Paddy Donnelly&rsquo;s children&rsquo;s books, Cath Kidston&rsquo;s patterns and the cookbook <em>Kids Can Bake</em>.</li>
@@ -1088,6 +1135,9 @@
                         <input type="range" class="cs-book-scrub" id="book-scrub" min="0" max="1" value="0" step="1" aria-label="Jump through the brand guidelines">
                         <span class="cs-book-hint">Flip through the Scran brand guidelines: click a page, drag or swipe, use the arrows or slider, or press the arrow keys.</span>
                     </div>
+                    <!-- Phones: the booklet is too small to read, so the same pages are listed one per row at full width.
+                         The script at the bottom fills this in from the booklet's file list. -->
+                    <div class="cs-book-pages" id="book-pages" aria-label="Scran brand guidelines, page by page"></div>
                 </div>
 
                 <h3 class="fade-up observe">Colour</h3>
@@ -1131,6 +1181,13 @@
                 </figure>
                 <h3 class="fade-up observe">Sign-up and questionnaire</h3>
                 <p class="fade-up observe">My first sign-up page was boring enough to depress any child, so I spiced it up with a background video, cut together from stock footage of families baking. It took ages, and it still feels a little mature, so it&rsquo;s a screen I&rsquo;d revisit with some illustrations.</p>
+                <figure class="cs-fig fade-up observe">
+                    <div class="cs-media tilt-card" data-label="Wireframe of the sign-in onboarding">
+                        <img src="assets/scran-signup.png" alt="Wireframe of Scran&rsquo;s sign-in and onboarding screens" loading="lazy" decoding="async">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">The wireframe for the sign-in onboarding.</figcaption>
+                </figure>
                 <p class="fade-up observe">The questionnaire asks just three things: your name, your baking level and the food you like. If a long form puts me off, it&rsquo;s even worse for a child, so it takes 5 to 10 seconds, with a little animation each time you answer.</p>
                 <figure class="cs-fig fade-up observe" data-optional>
                     <div class="cs-media" data-label="The Scran questionnaire animation">
@@ -1141,6 +1198,13 @@
                 </figure>
                 <h3 class="fade-up observe">Home screen</h3>
                 <p class="fade-up observe">Looking back at my first draft of the home screen, I made the tags tappable, made the recipes scroll horizontally, and added the button I&rsquo;d forgotten: the ingredient manager.</p>
+                <figure class="cs-fig fade-up observe">
+                    <div class="cs-media tilt-card" data-label="The Scran home screen">
+                        <img src="assets/scran-home.png" alt="The Scran home screen" loading="lazy" decoding="async">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">The home screen after its redesign: brighter colours with more variety, an AI assistant on the home page, and a new This Week in Review.</figcaption>
+                </figure>
                 <h3 class="fade-up observe">Sue Chef</h3>
                 <p class="fade-up observe">The ingredient manager needed a better name. Children type in the leftovers they have at home, and the app suggests recipes that use them up: the heart of the Zero Hunger idea. Meet <strong>Sue Chef</strong>. Yes, it should be &ldquo;sous&rdquo;, and yes, he has a moustache, a nod to an old Johnny Cash song. In my opinion, it&rsquo;s funny. Hover over him and he even winks.</p>
                 <figure class="cs-fig fade-up observe" data-optional>
@@ -1208,7 +1272,7 @@
                 <p class="cs-center fade-up observe">
                     <a href="https://www.figma.com/proto/ezsMsShPpMjb9xdAuSMIf0/Scran-Project---Jared?node-id=51-73&amp;p=f&amp;viewport=183%2C424%2C0.05&amp;t=rc3oSyfWKQrtGTbd-1&amp;scaling=scale-down&amp;content-scaling=fixed&amp;starting-point-node-id=51%3A73&amp;page-id=34%3A443" target="_blank" rel="noopener" class="cyber-btn">
                         <span>Open the prototype in Figma</span>
-                        <span class="arrow">&nearr;</span>
+                        <span class="arrow" aria-hidden="true">&nearr;</span><span class="sr-only"> (opens in a new tab)</span>
                     </a>
                 </p>
             </div>
@@ -1218,9 +1282,10 @@
         <section id="ai" class="cs-band cs-band--purple">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">AI Transparency</h2>
-                <p class="fade-up observe"><strong>Where AI was used:</strong> I used AI to help draft the Sophie Baker persona, then edited it and checked my decisions against it throughout the project.</p>
+                <p class="fade-up observe"><strong>Where AI was used:</strong> I used <span class="cs-todo-inline">[name the AI tool]</span> to help draft the Sophie Baker persona, then edited it and checked my decisions against it throughout the project.</p>
                 <p class="fade-up observe"><strong>Where it wasn&rsquo;t:</strong> the illustrated look was not AI-generated. I made it from my own photographs using Illustrator&rsquo;s Image Trace. The research, style guide, screens and prototype are my own work.</p>
                 <p class="fade-up observe"><strong>Worth separating:</strong> Sue Chef is a feature within the app concept, not a tool I used to design it.</p>
+                <p class="fade-up observe"><strong>The writing:</strong> this write-up is in my own words, with no AI used.</p>
             </div>
         </section>
 
@@ -1241,7 +1306,7 @@
             <div class="cs-wrap cs-next">
                 <a href="portfolio.html" class="cs-next-link cs-next-link--back">
                     <span class="cs-next-kicker">&larr; Back to</span>
-                    <span class="cs-next-title">All my work</span>
+                    <span class="cs-next-title">Portfolio</span>
                 </a>
                 <!-- Follows the Portfolio page order: ... Grub → Scran → AVA → ... -->
                 <a href="AVA.html" class="cs-next-link cs-next-link--next">
@@ -1267,6 +1332,12 @@
                 <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo" class="footer-logo" height="38">
             </a>
         </div>
+        <!-- Page links, so the way back to the work is in the footer as well as the header -->
+        <nav class="footer-right footer-nav" aria-label="Footer">
+            <a href="about.html" class="footer-link">About Me</a>
+            <a href="portfolio.html" class="footer-link">Portfolio</a>
+            <a href="contact.html" class="footer-link">Get in Touch!</a>
+        </nav>
         <div class="footer-right">
             <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram<span class="sr-only"> (opens in a new tab)</span></a>
             <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
@@ -1488,6 +1559,21 @@
             }
 
             scrub.max = n;
+
+            // Phones: list the same pages one per row at full width (the 3D booklet is hidden by CSS there)
+            const pageList = document.getElementById("book-pages");
+            if (pageList) {
+                files.forEach((f, i) => {
+                    if (!f) return;                       // skip the blank inside page
+                    const img = document.createElement("img");
+                    img.src = src(i);
+                    img.alt = "Scran style guide: " + names[i];
+                    img.loading = "lazy";                 // not downloaded at all on screens where the list is hidden
+                    img.decoding = "async";
+                    img.addEventListener("error", () => img.remove());
+                    pageList.appendChild(img);
+                });
+            }
 
             // Match the booklet's proportions to the page images
             const probe = new Image();

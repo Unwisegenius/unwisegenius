@@ -441,6 +441,50 @@
         /* The caption wraps to the image's width instead of stretching the figure */
         .cs-fig .cs-caption { width: 0; min-width: 100%; }
 
+        /* Before and after side by side: line the two images up at the top */
+        .cs-compare { align-items: start; margin: clamp(20px, 3vw, 40px) 0; }
+
+        /* Placeholder for an image or video that hasn't been added yet: a dashed box naming the file it needs */
+        .cs-media.cs-todo.is-missing {
+            min-height: 240px;
+            border: 3px dashed currentColor;
+            background-color: rgba(0, 0, 0, 0.06);
+        }
+
+        /* Placeholder for text that still needs writing */
+        .cs-band p.cs-todo-text {
+            padding: 1em 1.2em;
+            border: 3px dashed currentColor;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        /* Footer: logo left, page links dead centre, socials right.
+           Three columns (1fr auto 1fr) keep the middle group centred on the page
+           whatever the widths of the logo and the socials.
+           (Move this block into style.css once every page has the footer links.) */
+        footer {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            column-gap: 24px;
+            row-gap: 14px;
+            box-sizing: border-box;
+            max-width: 100%;
+        }
+        footer .footer-left  { justify-self: start; }
+        footer .footer-right { flex-wrap: wrap; min-width: 0; margin: 0; }
+        footer .footer-nav   { justify-self: center; justify-content: center; }
+        footer .footer-right:last-child { justify-self: end; justify-content: flex-end; }
+
+        /* Phones and small tablets: stack the three groups, all centred */
+        @media (max-width: 760px) {
+            footer { grid-template-columns: 1fr; justify-items: center; }
+            footer .footer-left,
+            footer .footer-nav,
+            footer .footer-right:last-child { justify-self: center; justify-content: center; }
+        }
+
         /* --- NEXT PROJECT / BACK TO WORK (no dead ends at the end of a case study) --- */
         .cs-next {
             display: flex;
@@ -1028,7 +1072,7 @@
         <!-- === SUMMARY + CONTENTS + SPECS === -->
         <section id="summary" class="cs-band cs-band--lime">
             <div class="cs-wrap">
-                <h2 class="scramble-heading fade-up observe">Summary Of Project</h2>
+                <h2 class="scramble-heading fade-up observe">Summary of Project</h2>
                 <p class="fade-up observe stagger-1">AVA (Adaptive Virtual Assistant) is a smartwatch app that helps you without pulling out your phone, whether you&rsquo;re driving, exercising or running late. Instead of one app per job, AVA brings everything together in one glanceable assistant that feels alive.</p>
 
                 <div class="cs-duo">
@@ -1040,6 +1084,7 @@
                             <li class="fade-right observe stagger-3"><a href="#research"><span class="cs-num">03</span>The Research</a></li>
                             <li class="fade-right observe stagger-4"><a href="#ideation"><span class="cs-num">04</span>Sketching AVA</a></li>
                             <li class="fade-right observe stagger-4"><a href="#identity"><span class="cs-num">05</span>The Identity</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#motion"><span class="cs-num">06</span>Motion</a></li>
                             <li class="fade-right observe stagger-4"><a href="#feedback"><span class="cs-num">06</span>Feedback &amp; Critique</a></li>
                             <li class="fade-right observe stagger-4"><a href="#redevelopment"><span class="cs-num">07</span>Redevelopment</a></li>
                             <li class="fade-right observe stagger-4"><a href="#outcome"><span class="cs-num">08</span>The Outcome</a></li>
@@ -1053,17 +1098,23 @@
                         <ul class="cs-specs" role="list">
                             <li class="cs-spec fade-left observe stagger-1">
                                 <span class="cs-spec-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/><path d="M17 3l1.5 1.5L21 2"/></svg>
+                                </span>
+                                <p>Role: <strong>solo project</strong>.</p>
+                            </li>
+                            <li class="cs-spec fade-left observe stagger-2">
+                                <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12"/><path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2"/><path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4"/></svg>
                                 </span>
                                 <p>The project ran for <strong>3 weeks</strong>.</p>
                             </li>
-                            <li class="cs-spec fade-left observe stagger-2">
+                            <li class="cs-spec fade-left observe stagger-3">
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                                 </span>
                                 <p><strong>Figma</strong> and <strong>Visual Studio Code</strong>.</p>
                             </li>
-                            <li class="cs-spec fade-left observe stagger-3">
+                            <li class="cs-spec fade-left observe stagger-4">
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 6h11"/><path d="M11.5 12h11"/><path d="M11.5 18h11"/><path d="M4 6l1.5 1.5L8 5"/><path d="M4 12l1.5 1.5L8 11"/><path d="M4 18l1.5 1.5L8 17"/></svg>
                                 </span>
@@ -1074,12 +1125,6 @@
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21a8 8 0 1 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>
                                 </span>
                                 <p>For <strong>16&ndash;25 year olds</strong>.</p>
-                            </li>
-                            <li class="cs-spec fade-left observe stagger-4">
-                                <span class="cs-spec-icon" aria-hidden="true">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/><path d="M17 3l1.5 1.5L21 2"/></svg>
-                                </span>
-                                <p>Role: <strong>solo project</strong>.</p>
                             </li>
                             <li class="cs-spec fade-left observe stagger-4">
                                 <span class="cs-spec-icon" aria-hidden="true">
@@ -1110,52 +1155,53 @@
                 <p class="fade-up observe">So I landed on an AI assistant that lives on your watch. You speak to it, it helps you on the go, and it syncs with your phone in the background. Say &ldquo;set a reminder at 18:00 to take the bins out&rdquo;, and it answers you on your wrist while updating your phone.</p>
                 <h3 class="fade-up observe">Why it matters</h3>
                 <p class="fade-up observe">Most smartwatch apps are built for a single category, like fitness, music or messaging. AVA fills that gap by bringing them together in one assistant that shows information in an accessible, glanceable way. A smartwatch is a tiny screen you only glance at, so if the content isn&rsquo;t readable and immediate, it fails at the one job a watch does best: helping you in the moment.</p>
+            
                 <h3 class="fade-up observe">Finding a name</h3>
                 <p class="fade-up observe">I wanted a name with personality, like Iron Man&rsquo;s J.A.R.V.I.S. (Just A Rather Very Intelligent System), which is both a name and an acronym. I wrote out a list, including Eve (Enhanced Virtual Entity), Milo (Machine Intelligence for Life Optimisation) and Mira (Machine Intelligence for Responsive Assistance).</p>
                 <p class="fade-up observe">Milo was a close second, but I chose <strong>AVA, Adaptive Virtual Assistant</strong>. It&rsquo;s simple, and the acronym describes exactly what I wanted the app to be.</p>
             </div>
         </section>
 
-        <!-- === THE RESEARCH === -->
-        <section id="research" class="cs-band cs-band--white">
-            <div class="cs-wrap">
-                <h2 class="scramble-heading fade-up observe">The Research</h2>
-                <p class="fade-up observe">Smartwatch apps weren&rsquo;t something I knew well, so I started by browsing them on Pinterest. My first thought was: why is everything in dark mode? Using brighter colours could help AVA stand out.</p>
-                <p class="fade-up observe">I then looked at the apps on my own Apple Watch SE and picked three from different categories to analyse:</p>
-                <div class="cs-cols fade-up observe">
-                    <div>
-                        <h3>Workout (health)</h3>
-                        <p>Large text and icons sized for a fingertip, with bright colours on dark mode. Small touches show real care for the user, like turning on Water Lock automatically for a swim, and syncing stats to your iPhone.</p>
-                    </div>
-                    <div>
-                        <h3>Spotify (lifestyle)</h3>
-                        <p>Quick control of your music on the go, with a swipe to reach your library and recently played. It&rsquo;s handy, but some icons are a little too small to press reliably.</p>
-                    </div>
-                    <div>
-                        <h3>Outlook (productivity)</h3>
-                        <p>Minimal and glance-focused, with quick replies by voice, mail and meeting notifications, and calendar complications right on the watch face.</p>
-                    </div>
+       <!-- === THE RESEARCH === -->
+       <section id="research" class="cs-band cs-band--white">
+        <div class="cs-wrap">
+            <h2 class="scramble-heading fade-up observe">The Research</h2>
+            <p class="fade-up observe">Smartwatch apps weren&rsquo;t something I knew well, so I started by browsing them on Pinterest. My first thought was: why is everything in dark mode? Using brighter colours could help AVA stand out.</p>
+            <p class="fade-up observe">I then looked at the apps on my own Apple Watch SE and picked three from different categories to analyse:</p>
+            <div class="cs-cols fade-up observe">
+                <div>
+                    <h3>Workout (health)</h3>
+                    <p>Large text and icons sized for a fingertip, with bright colours on dark mode. Small touches show real care for the user, like turning on Water Lock automatically for a swim, and syncing stats to your iPhone.</p>
                 </div>
-                <p class="fade-up observe">All three share the same pattern: glanceability and quick, light interactions. Each shows the most relevant information at a glance, and relies on notifications to keep you engaged.</p>
-                <div class="cs-grid cs-grid--2">
-                    <figure class="fade-up observe">
-                        <div class="cs-media tilt-card" data-label="Outlook on a smartwatch">
-                            <img src="assets/outlook.png" alt="Outlook on a smartwatch" loading="lazy" decoding="async">
-                            <span class="cs-scan" aria-hidden="true"></span>
-                        </div>
-                        <figcaption class="cs-caption">Outlook: short, scannable messages with one clear action at a time.</figcaption>
-                    </figure>
-                    <figure class="fade-up observe">
-                        <div class="cs-media tilt-card" data-label="Apple&rsquo;s Workout app on a smartwatch">
-                            <img src="assets/workout.png" alt="Apple&rsquo;s Workout app on a smartwatch" loading="lazy" decoding="async">
-                            <span class="cs-scan" aria-hidden="true"></span>
-                        </div>
-                        <figcaption class="cs-caption">Apple&rsquo;s Workout: big numbers and colour that read at a glance.</figcaption>
-                    </figure>
+                <div>
+                    <h3>Spotify (lifestyle)</h3>
+                    <p>Quick control of your music on the go, with a swipe to reach your library and recently played. It&rsquo;s handy, but some icons are a little too small to press reliably.</p>
+                </div>
+                <div>
+                    <h3>Outlook (productivity)</h3>
+                    <p>Minimal and glance-focused, with quick replies by voice, mail and meeting notifications, and calendar complications right on the watch face.</p>
                 </div>
             </div>
-        </section>
+            <p class="fade-up observe">All three share the same pattern: glanceability and quick, light interactions. Each shows the most relevant information at a glance, and relies on notifications to keep you engaged.</p>
 
+            <div class="cs-grid">
+                <figure class="fade-up observe">
+                    <div class="cs-media tilt-card" data-label="Outlook on a smartwatch">
+                        <img src="assets/outlook.png" alt="Outlook on a smartwatch" loading="lazy" decoding="async">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">Outlook: short, scannable messages with one clear action at a time.</figcaption>
+                </figure>
+                <figure class="fade-up observe">
+                    <div class="cs-media tilt-card" data-label="Apple&rsquo;s Workout app on a smartwatch">
+                        <img src="assets/workout.png" alt="Apple&rsquo;s Workout app on a smartwatch" loading="lazy" decoding="async">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">Apple&rsquo;s Workout: big numbers and colour that read at a glance.</figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
         <!-- === SKETCHING AVA === -->
         <section id="ideation" class="cs-band cs-band--lime">
             <div class="cs-wrap">
@@ -1197,6 +1243,34 @@
             </div>
         </section>
 
+        <!-- === MOTION: the swirl, moving === -->
+        <section id="motion" class="cs-band cs-band--lime">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Motion</h2>
+                <p class="fade-up observe">The swirl is the centre of AVA&rsquo;s identity, and it only makes sense when it moves. At idle it turns slowly; in the thinking state it spins three times faster.</p>
+                <!-- PLACEHOLDERS: each image or video shows as a dashed box naming the file it is waiting for.
+                     Save the file in assets/ under that name (or change the src to your own file name),
+                     then replace the alt text / aria-label and the [Caption to write: ...] line.
+                     Delete any placeholder you don't fill before you submit. -->
+                <div class="cs-grid cs-grid--2">
+                    <figure class="fade-up observe">
+                        <div class="cs-media cs-todo tilt-card" data-label="PLACEHOLDER: a short clip of the swirl in its idle state (save it as assets/ava-swirl-idle.mp4)">
+                            <video src="assets/ava-swirl-idle.mp4#t=0.1" muted loop playsinline preload="metadata" controls aria-label="TODO: describe this video"></video>
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">The slow movement is to show AVA's idle but aware state.</figcaption>
+                    </figure>
+                    <figure class="fade-up observe stagger-1">
+                        <div class="cs-media cs-todo tilt-card" data-label="PLACEHOLDER: a short clip of the swirl in its thinking state (save it as assets/ava-swirl-thinking.mp4)">
+                            <video src="assets/ava-swirl-thinking.mp4#t=0.1" muted loop playsinline preload="metadata" controls aria-label="TODO: describe this video"></video>
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">The faster swirl is meant to show that AVA is thinking.</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
         <!-- === FEEDBACK &AMP; CRITIQUE === -->
         <section id="feedback" class="cs-band cs-band--white">
             <div class="cs-wrap">
@@ -1210,6 +1284,28 @@
                     <li><strong>The map:</strong> make it simpler, more like a compass showing the major points and your location.</li>
                 </ul>
                 <p class="fade-up observe">I made the prompt bars smaller with slimmer icons beside the labels, and switched several screens to lighter, solid backgrounds. Even I could barely read some of them when they were pinned up on the board. Looking back, the swirl works better used less: it leaves a stronger impression that way.</p>
+
+                <!-- PLACEHOLDERS: each image or video shows as a dashed box naming the file it is waiting for.
+                     Save the file in assets/ under that name (or change the src to your own file name),
+                     then replace the alt text / aria-label and the [Caption to write: ...] line.
+                     Delete any placeholder you don't fill before you submit. -->
+                <h3 class="fade-up observe">Before and after</h3>
+                <div class="cs-split cs-compare">
+                    <figure class="fade-right observe">
+                        <div class="cs-media cs-todo tilt-card" data-label="PLACEHOLDER: one screen before the critique, with the swirl behind the text (save it as assets/ava-critique-before.png)">
+                            <img src="assets/ava-critique-before.png" alt="TODO: describe this image" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">[Caption to write: what was hard to read on this version]</figcaption>
+                    </figure>
+                    <figure class="fade-left observe">
+                        <div class="cs-media cs-todo tilt-card" data-label="PLACEHOLDER: the same screen after the critique, on a solid background (save it as assets/ava-critique-after.png)">
+                            <img src="assets/ava-critique-after.png" alt="TODO: describe this image" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">[Caption to write: what you changed and how it reads now]</figcaption>
+                    </figure>
+                </div>
             </div>
         </section>
 
@@ -1250,7 +1346,8 @@
                 </figure>
                 <h3 class="fade-up observe">High-quality mockups</h3>
                 <p class="fade-up observe">For the mockups, I took inspiration from how Apple showcases the Apple Watch on its online store, and made it my own.</p>
-                <div class="cs-grid cs-grid--2 cs-gallery">
+                <!-- One mockup per row (was two), so the text inside each mockup is large enough to read -->
+                <div class="cs-grid cs-gallery">
                     <figure class="fade-up observe">
                         <div class="cs-media tilt-card" data-label="AVA&rsquo;s core screens">
                             <img src="assets/1.jpg" alt="AVA&rsquo;s core smartwatch screens shown together" loading="lazy" decoding="async">
@@ -1323,7 +1420,7 @@
             <div class="cs-wrap cs-next">
                 <a href="portfolio.html" class="cs-next-link cs-next-link--back">
                     <span class="cs-next-kicker">&larr; Back to</span>
-                    <span class="cs-next-title">All my work</span>
+                    <span class="cs-next-title">Portfolio</span>
                 </a>
                 <!-- Follows the Portfolio page order: ... Scran → AVA → XP Bank → ... -->
                 <a href="XPBANK.html" class="cs-next-link cs-next-link--next">
@@ -1349,6 +1446,12 @@
                 <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo" class="footer-logo" height="38">
             </a>
         </div>
+        <!-- Page links, so the way back to the work is in the footer as well as the header -->
+        <nav class="footer-right footer-nav" aria-label="Footer">
+            <a href="about.html" class="footer-link">About Me</a>
+            <a href="portfolio.html" class="footer-link">Portfolio</a>
+            <a href="contact.html" class="footer-link">Get in Touch!</a>
+        </nav>
         <div class="footer-right">
             <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram<span class="sr-only"> (opens in a new tab)</span></a>
             <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>

@@ -441,6 +441,52 @@
         /* The caption wraps to the image's width instead of stretching the figure */
         .cs-fig .cs-caption { width: 0; min-width: 100%; }
 
+        /* Reference and slide side by side: line the two images up at the top */
+        .cs-compare { align-items: start; margin: clamp(20px, 3vw, 40px) 0; }
+
+        /* Placeholder for an image or video that hasn't been added yet: a dashed box naming the file it needs */
+        .cs-media.cs-todo.is-missing {
+            min-height: 240px;
+            border: 3px dashed currentColor;
+            background-color: rgba(0, 0, 0, 0.06);
+        }
+        .cs-fig .cs-media.cs-todo.is-missing { min-width: min(520px, 80vw); }
+
+        /* Placeholder for text that still needs writing */
+        .cs-band p.cs-todo-text {
+            padding: 1em 1.2em;
+            border: 3px dashed currentColor;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+        .cs-todo-inline { font-weight: 700; }
+
+        /* Footer: logo left, page links dead centre, socials right.
+           Three columns (1fr auto 1fr) keep the middle group centred on the page
+           whatever the widths of the logo and the socials.
+           (Move this block into style.css once every page has the footer links.) */
+        footer {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            column-gap: 24px;
+            row-gap: 14px;
+            box-sizing: border-box;
+            max-width: 100%;
+        }
+        footer .footer-left  { justify-self: start; }
+        footer .footer-right { flex-wrap: wrap; min-width: 0; margin: 0; }
+        footer .footer-nav   { justify-self: center; justify-content: center; }
+        footer .footer-right:last-child { justify-self: end; justify-content: flex-end; }
+
+        /* Phones and small tablets: stack the three groups, all centred */
+        @media (max-width: 760px) {
+            footer { grid-template-columns: 1fr; justify-items: center; }
+            footer .footer-left,
+            footer .footer-nav,
+            footer .footer-right:last-child { justify-self: center; justify-content: center; }
+        }
+
         /* --- NEXT PROJECT / BACK TO WORK (no dead ends at the end of a case study) --- */
         .cs-next {
             display: flex;
@@ -1000,7 +1046,7 @@
         <!-- === SUMMARY + CONTENTS + SPECS === -->
         <section id="summary" class="cs-band cs-band--lime">
             <div class="cs-wrap">
-                <h2 class="scramble-heading fade-up observe">Summary Of Project</h2>
+                <h2 class="scramble-heading fade-up observe">Summary of Project</h2>
                 <p class="fade-up observe stagger-1">Together with Erin Megrath, Jacob Thompson and Katie Johnson, I researched the people who shaped web design, and we turned it into a five-minute talk for our class. Each of us researched and designed our own part of the deck. Alongside my own section, I kept the group organised and proposed the classic macOS look, which we agreed on together, so the design itself told part of the history.</p>
 
                 <div class="cs-duo">
@@ -1023,15 +1069,15 @@
                         <ul class="cs-specs" role="list">
                             <li class="cs-spec fade-left observe stagger-1">
                                 <span class="cs-spec-icon" aria-hidden="true">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12"/><path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2"/><path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4"/></svg>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg>
                                 </span>
-                                <p>The project ran for <strong>5 weeks</strong>.</p>
+                                <p>My role: <strong>organiser</strong> and <strong>visual direction</strong>.</p>
                             </li>
                             <li class="cs-spec fade-left observe stagger-2">
                                 <span class="cs-spec-icon" aria-hidden="true">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12"/><path d="M8 2v4a4 4 0 0 0 4 4 4 4 0 0 0 4-4V2"/><path d="M16 22v-4a4 4 0 0 0-4-4 4 4 0 0 0-4 4v4"/></svg>
                                 </span>
-                                <p>A group project, <strong>team of four</strong>.</p>
+                                <p>The project ran for <strong>5 weeks</strong>.</p>
                             </li>
                             <li class="cs-spec fade-left observe stagger-3">
                                 <span class="cs-spec-icon" aria-hidden="true">
@@ -1041,15 +1087,15 @@
                             </li>
                             <li class="cs-spec fade-left observe stagger-4">
                                 <span class="cs-spec-icon" aria-hidden="true">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 6h11"/><path d="M11.5 12h11"/><path d="M11.5 18h11"/><path d="M4 6l1.5 1.5L8 5"/><path d="M4 12l1.5 1.5L8 11"/><path d="M4 18l1.5 1.5L8 17"/></svg>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                                 </span>
-                                <p>A <strong>5-minute</strong> class presentation.</p>
+                                <p>A group project, <strong>team of four</strong>.</p>
                             </li>
                             <li class="cs-spec fade-left observe stagger-4">
                                 <span class="cs-spec-icon" aria-hidden="true">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 6h11"/><path d="M11.5 12h11"/><path d="M11.5 18h11"/><path d="M4 6l1.5 1.5L8 5"/><path d="M4 12l1.5 1.5L8 11"/><path d="M4 18l1.5 1.5L8 17"/></svg>
                                 </span>
-                                <p>My role: <strong>organiser</strong> and <strong>visual direction</strong>.</p>
+                                <p>A <strong>5-minute</strong> class presentation.</p>
                             </li>
                             <li class="cs-spec fade-left observe stagger-4">
                                 <span class="cs-spec-icon" aria-hidden="true">
@@ -1115,8 +1161,43 @@
                     </div>
                     <figcaption class="cs-caption">Our Slack group chat, where I shared my Notion notes, the Miro research board and the Google Slides document with Erin, Jacob and Katie.</figcaption>
                 </figure>
+                <!-- PLACEHOLDERS: each image or video shows as a dashed box naming the file it is waiting for.
+                     Save the file in assets/ under that name (or change the src to your own file name),
+                     then replace the alt text / aria-label and the [Caption to write: ...] line.
+                     Delete any placeholder you don't fill before you submit. -->
+                <figure class="cs-fig fade-up observe">
+                    <div class="cs-media cs-todo tilt-card" data-label="PLACEHOLDER: a screenshot of the Miro research board (save it as assets/pioneers-miro-board.png)">
+                        <img src="assets/pioneers-miro-board.png" alt="TODO: describe this image" loading="lazy" decoding="async">
+                        <span class="cs-scan" aria-hidden="true"></span>
+                    </div>
+                    <figcaption class="cs-caption">Our Group Miro Board, where we compiled our research and shared it.</figcaption>
+                </figure>
                 <h3 class="fade-up observe">My research</h3>
                 <p class="fade-up observe">My section covered design in apps from 2010 to the present: the shift towards mobile-first design, flat UI and platform-specific conventions. I wrote my research out in Miro, then adapted it into the presentation, putting clarity ahead of extensive detail.</p>
+                <h3 class="fade-up observe">My slides</h3>
+                <div class="cs-grid cs-grid--3">
+                    <figure class="fade-up observe">
+                        <div class="cs-media cs-todo tilt-card" data-label="PLACEHOLDER: one of your own slides (save it as assets/pioneers-my-slide-1.png)">
+                            <img src="assets/pioneers-my-slide-1.png" alt="TODO: describe this image" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">I covered 2010 to present, and the first major site was Pinterest.</figcaption>
+                    </figure>
+                    <figure class="fade-up observe stagger-1">
+                        <div class="cs-media cs-todo tilt-card" data-label="PLACEHOLDER: a second slide of yours (save it as assets/pioneers-my-slide-2.png)">
+                            <img src="assets/pioneers-my-slide-2.png" alt="TODO: describe this image" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">I talked about how HTML 5 was the chosen reccomendation for coding websites.</figcaption>
+                    </figure>
+                    <figure class="fade-up observe stagger-2">
+                        <div class="cs-media cs-todo tilt-card" data-label="PLACEHOLDER: a third slide of yours (save it as assets/pioneers-my-slide-3.png)">
+                            <img src="assets/pioneers-my-slide-3.png" alt="TODO: describe this image" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">I also talked about Responsive Design, which if you're viewing on a phone, That is responsive.</figcaption>
+                    </figure>
+                </div>
                 <h3 class="fade-up observe">Refining the talk</h3>
                 <p class="fade-up observe">As the presentation developed, I kept an eye out for clutter and helped refine the layout, slide order and timing. When we were running over the time limit, we cut it back together, focusing on quality over quantity.</p>
             </div>
@@ -1131,6 +1212,28 @@
                     <li><strong>The interface:</strong> each slide borrows the look of a classic Mac desktop, so the presentation feels like a piece of the history it talks about.</li>
                     <li><strong>The typeface:</strong> we chose EB Garamond together, for its link to early Apple marketing and because it reads well on a projector.</li>
                 </ul>
+
+                <!-- PLACEHOLDERS: each image or video shows as a dashed box naming the file it is waiting for.
+                     Save the file in assets/ under that name (or change the src to your own file name),
+                     then replace the alt text / aria-label and the [Caption to write: ...] line.
+                     Delete any placeholder you don't fill before you submit. -->
+                <h3 class="fade-up observe">From reference to slide</h3>
+                <div class="cs-split cs-compare">
+                    <figure class="fade-right observe">
+                        <div class="cs-media cs-todo tilt-card" data-label="PLACEHOLDER: the classic Mac interface you referenced (save it as assets/pioneers-mac-reference.png)">
+                            <img src="assets/pioneers-mac-reference.png" alt="TODO: describe this image" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">Mac User Interface we took inspiration from</figcaption>
+                    </figure>
+                    <figure class="fade-left observe">
+                        <div class="cs-media cs-todo tilt-card" data-label="PLACEHOLDER: a slide that uses that reference (save it as assets/pioneers-mac-slide.png)">
+                            <img src="assets/pioneers-mac-slide.png" alt="TODO: describe this image" loading="lazy" decoding="async">
+                            <span class="cs-scan" aria-hidden="true"></span>
+                        </div>
+                        <figcaption class="cs-caption">Design of our slide deck, Based of the classic Mac UI.</figcaption>
+                    </figure>
+                </div>
             </div>
         </section>
 
@@ -1138,14 +1241,15 @@
         <section id="outcome" class="cs-band cs-band--white">
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">The Outcome</h2>
-                <p class="fade-up observe">The final presentation combined historical research with a cohesive design that reinforced the story. Feedback singled out the classic macOS interface as a strong, legible choice that helped keep the class engaged. We presented calmly, clearly and confidently, and the talk was well received.</p>
+                <p class="fade-up observe">The final presentation combined historical research with a cohesive design that reinforced the story. Feedback <span class="cs-todo-inline">[say who gave it: your tutor, the class, or both]</span> singled out the classic macOS interface as a strong, legible choice that helped keep the class engaged. We presented calmly, clearly and confidently, and the talk was well received.</p>
                 <figure class="cs-slides-fig fade-up observe">
                     <div class="cs-slides">
                         <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSwcZ-KFKjBraMNk6BaNBt2abeUeqdl-GAvdHOc9mB8lELCYmiY6yc_UGPQhTJNGrbdTK5id9nCHOKr/pubembed?start=false&amp;loop=false&amp;delayms=15000" allowfullscreen loading="lazy" title="The Pioneers of Web Design slide deck"></iframe>
                     </div>
                     <figcaption class="cs-caption">The full slide deck: four people&rsquo;s sections, held together by one shared classic Mac style and EB Garamond. Use the arrows to click through it, or open it full screen.</figcaption>
                 </figure>
-            </div>
+
+               
         </section>
 
         <!-- === AI TRANSPARENCY === -->
@@ -1153,6 +1257,7 @@
             <div class="cs-wrap">
                 <h2 class="scramble-heading fade-up observe">AI Transparency</h2>
                 <p class="fade-up observe"><strong>No AI was used on this project</strong>, by me or the rest of the group. The research, the slides, the classic Mac visual direction and the talk itself were all our own work.</p>
+               
             </div>
         </section>
 
@@ -1171,7 +1276,7 @@
             <div class="cs-wrap cs-next">
                 <a href="portfolio.html" class="cs-next-link cs-next-link--back">
                     <span class="cs-next-kicker">&larr; Back to</span>
-                    <span class="cs-next-title">All my work</span>
+                    <span class="cs-next-title">Portfolio</span>
                 </a>
                 <!-- Follows the Portfolio page order: Pioneers is last, so it loops back to the first -->
                 <a href="anatomyofsugar.html" class="cs-next-link cs-next-link--next">
@@ -1197,6 +1302,12 @@
                 <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo" class="footer-logo" height="38">
             </a>
         </div>
+        <!-- Page links, so the way back to the work is in the footer as well as the header -->
+        <nav class="footer-right footer-nav" aria-label="Footer">
+            <a href="about.html" class="footer-link">About Me</a>
+            <a href="portfolio.html" class="footer-link">Portfolio</a>
+            <a href="contact.html" class="footer-link">Get in Touch!</a>
+        </nav>
         <div class="footer-right">
             <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram<span class="sr-only"> (opens in a new tab)</span></a>
             <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>

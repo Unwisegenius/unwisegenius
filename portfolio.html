@@ -167,6 +167,12 @@
 
         .pf-tab:hover { color: var(--pf-lime); transform: translateY(-2px); }
         .pf-tab[aria-pressed="true"] { color: var(--pf-lime); }
+        /* The active filter is underlined as well as lime, so colour is never the only signal */
+        .pf-tab[aria-pressed="true"] .pf-tab-label {
+            text-decoration: underline;
+            text-decoration-thickness: 0.12em;
+            text-underline-offset: 0.28em;
+        }
         .pf-tab:focus-visible {
             outline: 2px solid var(--pf-lime);
             outline-offset: 4px;
@@ -341,6 +347,32 @@
         }
 
 
+        /* Footer: logo left, page links dead centre, socials right.
+           Three columns (1fr auto 1fr) keep the middle group centred on the page
+           whatever the widths of the logo and the socials.
+           (Move this block into style.css once every page has the footer links.) */
+        footer {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            column-gap: 24px;
+            row-gap: 14px;
+            box-sizing: border-box;
+            max-width: 100%;
+        }
+        footer .footer-left  { justify-self: start; }
+        footer .footer-right { flex-wrap: wrap; min-width: 0; margin: 0; }
+        footer .footer-nav   { justify-self: center; justify-content: center; }
+        footer .footer-right:last-child { justify-self: end; justify-content: flex-end; }
+
+        /* Phones and small tablets: stack the three groups, all centred */
+        @media (max-width: 760px) {
+            footer { grid-template-columns: 1fr; justify-items: center; }
+            footer .footer-left,
+            footer .footer-nav,
+            footer .footer-right:last-child { justify-self: center; justify-content: center; }
+        }
+
         /* --- RESPONSIVE --- */
         @media (max-width: 900px) {
             .pf-items, .pf-flat { width: min(86vw, 920px); }
@@ -409,6 +441,12 @@
             <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo" class="footer-logo" height="38">
         </a>
     </div>
+        <!-- Page links, so the way back to the work is in the footer as well as the header -->
+        <nav class="footer-right footer-nav" aria-label="Footer">
+            <a href="about.html" class="footer-link">About Me</a>
+            <a href="portfolio.html" class="footer-link">Portfolio</a>
+            <a href="contact.html" class="footer-link">Get in Touch!</a>
+        </nav>
         <div class="footer-right">
             <a href="https://www.instagram.com/unwisegenius/" target="_blank" rel="noopener" class="footer-link">Instagram<span class="sr-only"> (opens in a new tab)</span></a>
             <a href="https://www.linkedin.com/in/unwisegenius/" target="_blank" rel="noopener" class="footer-link">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
@@ -429,61 +467,61 @@
             sugar: {
                 title: "The Anatomy of Sugar",
                 img: "assets/theanatomyofsugar.png", tile: "#D96BD8", ink: "#111111",
-                desc: "A project in which I had to create a catalogue that would sell a product. I photographed 30 different kinds of sweets and presented them in a Saul Bass design style.",
+                desc: "A project in which I had to create a catalogue that would sell a product. I photographed more than 30 kinds of sweets and presented them in a Saul Bass design style.",
                 caseStudy: "anatomyofsugar.html"
             },
             bite: {
                 title: "Bite – Spray Painting Project",
                 img: "assets/blackoutline.MOV", tile: "#6F93C4", ink: "#111111",
-                desc: "A spray-painting project at CMU, in which we had to steal an artist’s alphabet and replicate their style in a word of our choosing: in my case, <strong>LUCKY</strong>.",
+                desc: "A spray-painting project at Colorado Mesa University (CMU), in which we had to steal an artist’s alphabet and replicate their style in a word of our choosing: in my case, <strong>LUCKY</strong>.",
                 caseStudy: "bite.html"
             },
             shining: {
                 title: "Title Sequence Refresh for The Shining",
                 img: "assets/theshiningtitlesequence.mp4", tile: "#2F6FB2", ink: "#ffffff",
-                desc: "A CMU project in which I refreshed a chosen title sequence for a movie or show, to appeal to a younger demographic. For this, I chose The Shining.",
+                desc: "A Colorado Mesa University project in which I refreshed a chosen title sequence for a movie or show, to appeal to a younger demographic. For this, I chose The Shining.",
                 caseStudy: "theshining.html"
             },
             mousepad: {
                 title: "Mousepad Competition for CMU",
                 img: "assets/johnmousemockup.png", tile: "#0AA7D6", ink: "#ffffff",
-                desc: "A design competition held in the first few weeks of my study abroad programme at CMU.",
+                desc: "A design competition held in the first few weeks of my study abroad programme at Colorado Mesa University (CMU). Students voted, my design won, and it is now printed on desks across the building.",
                 caseStudy: "mousepad.html"
             },
             orion: {
                 title: "Orion – A VR System without the Headset",
                 img: "assets/OrionCard.png", tile: "#FFFFFF", ink: "#0A84FF",
-                desc: "A smart home project that focused on Research, Prototyping, Motion, Products &amp; Design Systems. I created a conceptual 3D projector that you could interact with and do everyday tasks with.",
+                desc: "A conceptual 3D projector for the smart home that you can interact with and do everyday tasks with, no headset needed. Focused on Research, Prototyping, Motion, Products &amp; Design Systems.",
                 caseStudy: "orion.html"
             },
             grub: {
-                title: "How Microinteractions Support the User Journey",
+                title: "Grub – How Microinteractions Support the User Journey",
                 img: "assets/grublogo.png", tile: "#F5EBE4", ink: "#D01C30",
-                desc: "A food service prototype that focused on Prototyping, Research &amp; Motion. I was tasked with writing an essay on how microinteractions support the user journey, with a prototype to back it up.",
+                desc: "A food service prototype built to back up an essay on how microinteractions support the user journey. Focused on Prototyping, Research &amp; Motion.",
                 caseStudy: "grub.html"
             },
             scran: {
                 title: "Scran – The Sustainable Cooking App for Kids!",
                 img: "assets/Scran.png", tile: "#DC0A14", ink: "#ffffff",
-                desc: "A cookbook app that focused on Prototyping, Research, Products &amp; Motion, and on how to design for an audience of children while also promoting sustainable habits.",
+                desc: "A cooking app designed for an audience of children that also promotes sustainable habits. Focused on Prototyping, Research, Products &amp; Motion.",
                 caseStudy: "Scran.html"
             },
             xp: {
                 title: "XP Bank – The Bank Made for Young People",
                 img: "assets/xp-bank-cover.jpg", tile: "#6A35FF", ink: "#ffffff",
-                desc: "A bank branding project that focused on Branding, Design Systems, Research, Prototyping, Products &amp; Motion, and on how a bank could appeal to a younger audience.",
+                desc: "A bank brand built to appeal to a younger audience. Focused on Branding, Design Systems, Research, Prototyping, Products &amp; Motion.",
                 caseStudy: "XPBANK.html"
             },
             ava: {
                 title: "AVA – The Smartwatch Assistant",
                 img: "assets/ava-app.jpg", tile: "#111111", ink: "#ffffff",
-                desc: "A smartwatch concept that focused on Prototyping, Products &amp; Motion, and on how to design within the constraint of a small screen.",
+                desc: "A smartwatch assistant designed within the constraint of a small screen. Focused on Prototyping, Products &amp; Motion.",
                 caseStudy: "AVA.html"
             },
             pioneers: {
                 title: "The Pioneers of Web Design",
                 img: "assets/macicon.png", tile: "#0000E6", ink: "#ffffff",
-                desc: "A group project that focused on Research, Presentation &amp; Design Systems. Our task was to give a talk on the people who helped build the World Wide Web and its design system.",
+                desc: "A group talk on the people who helped build the World Wide Web and its design system. Focused on Research, Presentation &amp; Design Systems.",
                 caseStudy: "pioneersofwebdesign.html"
             }
         };
@@ -491,8 +529,7 @@
         // "All" view: grouped by year, in this order
         const GROUPS = [
             { key: "2026", label: "2026",         ids: ["sugar", "bite", "shining", "mousepad", "orion", "grub"] },
-            { key: "2025", label: "2025",         ids: ["scran", "ava", "xp"] },
-            { key: "old",  label: "Old Projects", ids: ["pioneers"] }
+            { key: "2025", label: "2025",         ids: ["scran", "ava", "xp", "pioneers"] }
         ];
 
         // Filtered views: which projects show, and in what order.

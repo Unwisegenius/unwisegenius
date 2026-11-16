@@ -283,6 +283,27 @@
             height: 50px;
         }
 
+        /* Link back to the Anatomy of Sugar case study on the portfolio */
+        footer {
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px 30px;
+        }
+
+        .back-link {
+            color: var(--color-white);
+            font-family: var(--font-title);
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: underline;
+            text-decoration-thickness: 3px;
+            text-underline-offset: 5px;
+        }
+
+        .back-link:hover,
+        .back-link:focus-visible { color: var(--color-yellow); }
+
         /* Mobile & iPhone 15 Optimization */
         @media (max-width: 900px) {
             header {
@@ -354,6 +375,7 @@
             footer { 
                 padding: 30px 20px calc(30px + env(safe-area-inset-bottom, 0px)); 
                 justify-content: center; 
+                text-align: center;
             }
         }
     </style>
@@ -422,14 +444,14 @@
                     </div>
                 </a>
 
-                <!-- Product 2: Oreo Mini's -->
+                <!-- Product 2: Oreo Minis -->
                 <a href="oreominis.html" class="card-link">
                     <div class="product-image-block">
-                        <img src="assets/oreoAI.png" alt="Oreo Mini's Graphic">
+                        <img src="assets/oreoAI.png" alt="Oreo Minis Graphic">
                     </div>
                     <div class="product-editorial">
                         <div class="product-header">
-                            <h3 class="product-title">Oreo Mini's</h3>
+                            <h3 class="product-title">Oreo Minis</h3>
                             <div class="price-text">$3.99</div>
                         </div>
                         <p class="product-desc">A study in high-contrast monochrome. Strip back the wrapper to reveal dense cocoa disks sandwiching a stark white core, poppable geometry engineered for a revolution in black and white.</p>
@@ -438,14 +460,14 @@
                     </div>
                 </a>
 
-                <!-- Product 3: Reece's Cups -->
+                <!-- Product 3: Reese's Cups (the page and image file names keep their old spelling) -->
                 <a href="reecescups.html" class="card-link">
                     <div class="product-image-block">
                         <img src="assets/reecescups.png" alt="Reese's Cups Graphic">
                     </div>
                     <div class="product-editorial">
                         <div class="product-header">
-                            <h3 class="product-title">Reece's Cups</h3>
+                            <h3 class="product-title">Reese's Cups</h3>
                             <div class="price-text">$2.00</div>
                         </div>
                         <p class="product-desc">An exercise in radial symmetry and scalloped contours. Strip away the vibrant orange frame to reveal fluted chocolate disks encasing a dense, salted peanut butter core.</p>
@@ -454,14 +476,14 @@
                     </div>
                 </a>
 
-                <!-- Product 4: Chip's Ahoy -->
+                <!-- Product 4: Chips Ahoy -->
                 <a href="chipsahoy.html" class="card-link">
                     <div class="product-image-block">
-                        <img src="assets/chipsahoyAI.png" alt="Chip's Ahoy Graphic">
+                        <img src="assets/chipsahoyAI.png" alt="Chips Ahoy Graphic">
                     </div>
                     <div class="product-editorial">
                         <div class="product-header">
-                            <h3 class="product-title">Chip's Ahoy</h3>
+                            <h3 class="product-title">Chips Ahoy</h3>
                             <div class="price-text">$3.50</div>
                         </div>
                         <p class="product-desc">A rigid sequence of chocolate-studded craters. Engineered for rapid-fire crunch and maximum chocolate chip density.</p>
@@ -508,6 +530,7 @@
     <!-- Footer -->
     <footer>
         <img src="assets/UnwiseGeniusLogowhite.png" alt="UnwiseGenius Logo">
+        <a href="anatomyofsugar.html" class="back-link">&larr; Back to the case study</a>
     </footer>
 
     <!-- Dropdown Toggle Script -->
