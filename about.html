@@ -83,6 +83,39 @@
            The script sets --rx / --ry (tilt) and --mx / --my (where the light sits). */
         .about-top-image { perspective: 1100px; }
 
+        /* Bigger ID card: style.css caps the column at 42% and the card at 480px,
+           which left it small next to the long text. On desktop the image column
+           now takes a fixed 45% share, the card fills it, and it sits centred
+           against the text instead of hugging the top. */
+        @media (min-width: 1025px) {
+            #about-top { gap: 4vw; }
+            .about-top-content { flex: 1 1 auto; }
+            .about-top-image {
+                flex: 0 0 45%;
+                max-width: 45%;
+                align-self: center;
+            }
+            .about-top-image .portrait-wrapper { max-width: 680px; }
+        }
+
+        /* Tablet and phone (stacked layout): let the card use more of the width */
+        @media (max-width: 1024px) {
+            .about-top-image { width: 100%; }
+            .about-top-image .portrait-wrapper { max-width: 560px; margin: 0 auto; }
+        }
+
+        /* Fun facts as a real numbered list, keeping the bold look of the old paragraphs */
+        .fun-facts {
+            margin: 0;
+            padding-left: 1.4em;
+            font-weight: 700;
+            font-size: clamp(1.1rem, 1.4vw, 1.4rem);
+            line-height: 1.5;
+            color: #222;
+        }
+        .fun-facts li { margin-bottom: 18px; padding-left: 0.2em; }
+        .fun-facts li:last-child { margin-bottom: 0; }
+
         .portrait-wrapper {
             --rx: 0deg; --ry: 0deg;
             --mx: 50%;  --my: 30%;
@@ -275,12 +308,14 @@
             <p>User interaction and branding are what I&rsquo;m most passionate about, and I&rsquo;m looking for a design role that prioritises creativity and innovation.</p>
 
             <p>Right now, home is a long way off: I&rsquo;ve swapped Belfast for Colorado, where I&rsquo;m spending an exchange year at Colorado Mesa University (CMU).</p>
-
-            <!-- WHERE "UNWISEGENIUS" COMES FROM: visitors will wonder. Write one or two sentences
-                 between the <p> tags below, then delete this comment's opening and closing lines
-                 so the paragraph shows on the page.
-            <p>The name UnwiseGenius comes from ...</p>
-            -->
+            <div class="location-block">
+                <h2 class="scramble-heading text-purple">Fun Facts</h2>
+                <ol class="fun-facts">
+                    <li>The name UnwiseGenius comes from an old Xbox gamertag from 2017.</li>
+                    <li>I&rsquo;m interested in working in game development, on the UI of a game.</li>
+                    <li>I have a crippling Coke Zero addiction.</li>
+                </ol>
+            </div>
 
             <div class="location-block">
                 <h2 class="scramble-heading text-purple">Location</h2>
