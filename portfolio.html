@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://use.typekit.net/inw8ngx.css">
 
     <!-- Global CSS (keep this ?v= number in sync with the other pages) -->
-    <link rel="stylesheet" href="style.css?v=6">
+    <link rel="stylesheet" href="style.css?v=7">
 
     <!-- Portfolio page styles (all prefixed pf- so they never clash with style.css) -->
     <style>
@@ -342,9 +342,14 @@
             font-size: clamp(0.8rem, 1.2vw, 1.2rem);
             padding: 0.7em 1.5em;
             border-radius: 14px;
-            cursor: default;
-            user-select: none;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.25s ease, transform 0.25s ease;
         }
+
+        /* The pill is a real link now, so it reacts like one */
+        .pf-pill:hover { background-color: #ffffff; transform: translateY(-2px); }
+        @media (prefers-reduced-motion: reduce) { .pf-pill { transition: none; } .pf-pill:hover { transform: none; } }
 
 
         /* Footer: logo left, page links dead centre, socials right.
@@ -408,7 +413,7 @@
         </div>
         <nav class="top-right">
             <a href="about.html" class="cyber-nav-link" data-text="About Me">About Me</a>
-            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio">Portfolio</a>
+            <a href="portfolio.html" class="cyber-nav-link" data-text="Portfolio" aria-current="page">Portfolio</a>
             <a href="contact.html" class="cyber-nav-link" data-text="Get in Touch!">Get in Touch!</a>
         </nav>
     </header>
@@ -444,7 +449,7 @@
         <!-- Page links, so the way back to the work is in the footer as well as the header -->
         <nav class="footer-right footer-nav" aria-label="Footer">
             <a href="about.html" class="footer-link">About Me</a>
-            <a href="portfolio.html" class="footer-link">Portfolio</a>
+            <a href="portfolio.html" class="footer-link" aria-current="page">Portfolio</a>
             <a href="contact.html" class="footer-link">Get in Touch!</a>
         </nav>
         <div class="footer-right">
@@ -489,7 +494,7 @@
                 caseStudy: "mousepad.html"
             },
             orion: {
-                title: "Orion – A VR System without the Headset",
+                title: "Orion – A VR System Without the Headset",
                 img: "assets/OrionCard.png", tile: "#FFFFFF", ink: "#0A84FF",
                 desc: "A conceptual 3D projector for the smart home that you can interact with and do everyday tasks with, no headset needed. Focused on Research, Prototyping, Motion, Products &amp; Design Systems.",
                 caseStudy: "orion.html"
@@ -528,8 +533,8 @@
 
         // "All" view: grouped by year, in this order
         const GROUPS = [
-            { key: "2026", label: "2026",         ids: ["sugar", "bite", "shining", "mousepad", "orion", "grub"] },
-            { key: "2025", label: "2025",         ids: ["scran", "ava", "xp", "pioneers"] }
+            { key: "2026", label: "2026",         ids: ["sugar", "bite", "shining", "mousepad"] },
+            { key: "2025", label: "2025",         ids: ["orion", "grub", "scran", "ava", "xp", "pioneers"] }
         ];
 
         // Filtered views: which projects show, and in what order.
@@ -652,10 +657,11 @@
                 ? `<h3><a class="pf-title-link" href="${url}">${p.title}</a></h3>`
                 : `<h3>${p.title}</h3>`;
 
-            // Pink "Case Study" label on every project with a case study page.
-            // It is a label only (not a link); the card and title do the linking.
+            // Pink "Case Study" button on every project with a case study page.
+            // It links to the case study too. Like the thumbnail, keyboard and screen-reader users
+            // skip it, because the title link already goes to the same place.
             const pill = url
-                ? `<span class="pf-pill">Case Study</span>`
+                ? `<a class="pf-pill" href="${url}" tabindex="-1" aria-hidden="true">Case Study</a>`
                 : "";
 
             return `

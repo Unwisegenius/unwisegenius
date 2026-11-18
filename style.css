@@ -949,3 +949,23 @@ footer {
     .project-card:hover .project-img img,
     .footer-logo:hover { transform: none; }
 }
+/* ==========================================================================
+   CASE STUDY READING WIDTH
+   Body text, list items and captions stop at about 68 characters a line
+   (around 900px), instead of running the full 1100px. Shorter lines are
+   easier to read, and together with no-widows.js no line ends on one or
+   two words. Images and grids still use the full width.
+   ========================================================================== */
+.cs-band .cs-wrap p:not(.cs-center),
+.cs-band .cs-wrap li,
+.cs-band .cs-wrap figcaption { max-width: 68ch; }
+
+/* ==========================================================================
+   YOU ARE HERE: the current page's nav link keeps its lime brackets
+   (pages mark it with aria-current="page")
+   ========================================================================== */
+.cyber-nav-link[aria-current="page"] { color: #CFFF04; }
+.cyber-nav-link[aria-current="page"]::before,
+.cyber-nav-link[aria-current="page"]::after { opacity: 1; }
+.footer-link[aria-current="page"] { color: #CFFF04; }
+.footer-link[aria-current="page"]::after { width: 100%; }

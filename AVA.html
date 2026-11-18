@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://use.typekit.net/inw8ngx.css">
 
     <!-- Global CSS (keep this ?v= number in sync with the other pages) -->
-    <link rel="stylesheet" href="style.css?v=6">
+    <link rel="stylesheet" href="style.css?v=7">
 
     <!-- If JavaScript is off, show everything instead of leaving content faded out -->
     <noscript>
@@ -987,7 +987,7 @@
         /* A short quoted voice flow */
         .cs-flow { list-style: none; padding: 0; margin: clamp(16px, 2vw, 28px) 0; display: grid; gap: 0.8rem; }
         .cs-flow li { font-size: clamp(1.05rem, 1.35vw, 1.3rem); line-height: 1.5; padding-left: 1em; border-left: 4px solid var(--cs-lime); }
-        .cs-flow .you { font-weight: 700; }
+        .cs-flow .you { font-weight: 700; display: block; }   /* the question sits on its own line, no <br> needed */
 
         /* Final screens gallery: two per row, uncropped */
         .cs-gallery { margin-top: clamp(24px, 3vw, 40px); }
@@ -1312,9 +1312,9 @@
                 <h2 class="scramble-heading fade-up observe">Redevelopment</h2>
                 <p class="fade-up observe">After finishing, I came back to AVA with more experience and time. Looking at it again, its features (listening, directions, Spotify, home and search) were all competing with each other. An assistant needs one main job, so I designed the app around a single, everyday scenario: <strong>&ldquo;I&rsquo;m running late and I&rsquo;m driving. I need help without pulling my phone out.&rdquo;</strong></p>
                 <ul class="cs-flow fade-up observe">
-                    <li><span class="you">&ldquo;Hey AVA, I&rsquo;m running late. What&rsquo;s on my schedule today?&rdquo;</span><br>AVA shows your schedule: a meeting at 12pm with your boss, picking up Jedidiah from school at 4pm, and your dry cleaning at 4:30pm.</li>
-                    <li><span class="you">&ldquo;Thanks AVA. Could you message my dad and ask if he&rsquo;s free next Sunday at 12?&rdquo;</span><br>&ldquo;Sure! Message sent.&rdquo;</li>
-                    <li><span class="you">&ldquo;Could you play my driving playlist?&rdquo;</span><br>&ldquo;Okay!&rdquo; and the built-in Spotify opens.</li>
+                    <li><span class="you">&ldquo;Hey AVA, I&rsquo;m running late. What&rsquo;s on my schedule today?&rdquo;</span>AVA shows your schedule: a meeting at 12pm with your boss, picking up Jedidiah from school at 4pm, and your dry cleaning at 4:30pm.</li>
+                    <li><span class="you">&ldquo;Thanks AVA. Could you message my dad and ask if he&rsquo;s free next Sunday at 12?&rdquo;</span>&ldquo;Sure! Message sent.&rdquo;</li>
+                    <li><span class="you">&ldquo;Could you play my driving playlist?&rdquo;</span>&ldquo;Okay!&rdquo; and the built-in Spotify opens.</li>
                 </ul>
                 <p class="fade-up observe">I sketched the flow, built it on its own page in Figma and prototyped it. I also redesigned the Spotify screen with more of a Spotify DJ feel, where AVA talks to you about what&rsquo;s playing, and checked that the time sits in exactly the same position on every screen, so the app feels real.</p>
             </div>
@@ -1788,5 +1788,7 @@
             });
         }
     </script>
+    <!-- Keeps at least three words on the last line of each paragraph -->
+    <script src="no-widows.js?v=1"></script>
 </body>
 </html>
