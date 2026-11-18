@@ -192,6 +192,14 @@
             padding: clamp(16px, 2.4vw, 36px) 7vw;
         }
 
+        /* Desktop: the year sits on the left, and the projects are centred on the page,
+           lined up exactly with the filtered views (Digital Design, Graphic Design, My Favourites) */
+        @media (min-width: 901px) {
+            .pf-band { display: block; position: relative; }
+            .pf-band .pf-year { position: absolute; left: 7vw; top: clamp(16px, 2.4vw, 36px); }
+            .pf-band .pf-items { margin: 0 auto; }
+        }
+
         .pf-band--2026 { background-color: var(--pf-purple); color: #ffffff; }
         .pf-band--2025 { background-color: var(--pf-lime);   color: #111111; }
         .pf-band--old  { background-color: var(--pf-red);    color: #ffffff; }
