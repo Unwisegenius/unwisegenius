@@ -648,6 +648,34 @@
         main a.cs-btn:hover,
         main a.cs-btn:focus-visible { background-color: var(--cs-purple); color: #ffffff; transform: translateY(-2px); }
 
+        /* Timing and easing tables (one per microinteraction) */
+        .cs-timing {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 0 1.25rem;
+            font-size: clamp(1rem, 1.25vw, 1.2rem);
+            line-height: 1.45;
+        }
+
+        .cs-timing th,
+        .cs-timing td {
+            text-align: left;
+            vertical-align: top;
+            padding: 0.75em 1.2em 0.75em 0;
+            border-bottom: 2px solid rgba(17, 17, 17, 0.18);
+        }
+
+        .cs-timing thead th {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 0.95em;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            border-bottom: 3px solid #111111;
+        }
+
+        .cs-timing td:last-child { font-weight: 700; width: 45%; }
+
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
     </style>
 </head>
@@ -714,9 +742,10 @@
                             <li class="fade-right observe stagger-1"><a href="#brief"><span class="cs-num">01</span>The Brief</a></li>
                             <li class="fade-right observe stagger-2"><a href="#ideation"><span class="cs-num">02</span>Ideation</a></li>
                             <li class="fade-right observe stagger-3"><a href="#development"><span class="cs-num">03</span>Development</a></li>
-                            <li class="fade-right observe stagger-4"><a href="#prototype"><span class="cs-num">04</span>Prototype</a></li>
-                            <li class="fade-right observe stagger-4"><a href="#ai"><span class="cs-num">05</span>AI Transparency</a></li>
-                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num">06</span>Reflection</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#timing"><span class="cs-num">04</span>Timing and Easing</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#prototype"><span class="cs-num">05</span>Prototype</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#ai"><span class="cs-num">06</span>AI Transparency</a></li>
+                            <li class="fade-right observe stagger-4"><a href="#reflection"><span class="cs-num">07</span>Reflection</a></li>
                         </ul>
                     </div>
 
@@ -751,7 +780,7 @@
                                 <span class="cs-spec-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
                                 </span>
-                                <p>Each runs for <strong>0.5&ndash;3 seconds</strong> at <strong>30fps</strong> or more.</p>
+                                <p>Each animation step runs for <strong>100ms&ndash;2 seconds</strong> at <strong>30fps</strong> or more.</p>
                             </li>
                             <li class="cs-spec fade-left observe stagger-4">
                                 <span class="cs-spec-icon" aria-hidden="true">
@@ -877,6 +906,69 @@
                     </div>
                     <figcaption class="cs-caption">The notification that greets you with your savings the moment the prototype opens: a small reward before you&rsquo;ve even ordered.</figcaption>
                 </figure>
+            </div>
+        </section>
+
+        <!-- === TIMING AND EASING (values and reasoning from the essay) === -->
+        <section id="timing" class="cs-band cs-band--lime">
+            <div class="cs-wrap">
+                <h2 class="scramble-heading fade-up observe">Timing and Easing</h2>
+                <p class="fade-up observe">I created these microinteractions not only for decor but as functional tools: to reduce cognitive load, provide immediate feedback and establish a clear motion hierarchy. Every one was built with Smart Animate in Figma, and here are the timings and easing behind each.</p>
+
+                <h3 class="fade-up observe">1. The payment button</h3>
+                <table class="cs-timing fade-up observe">
+                    <thead>
+                        <tr><th scope="col">Moment</th><th scope="col">Timing and easing</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Hover: the colour darkens and the car engine starts</td><td>Bouncy curve, 800ms</td></tr>
+                        <tr><td>&ldquo;Cancel in 5 seconds&rdquo; counts down, the car tilts as if moving</td><td>After delay, 1000ms per second, five times</td></tr>
+                        <tr><td>The car flies off and &ldquo;Confirming&rdquo; appears</td><td>Eases in after 300ms</td></tr>
+                        <tr><td>The button turns green: &ldquo;Transaction Successful&rdquo;</td><td>After 2000ms</td></tr>
+                    </tbody>
+                </table>
+                <p class="fade-up observe">The bounce represents the car starting, which tells the user the button can be pressed. The five-second countdown gives them ample time to react to a misclick or a forgotten item, removing the anxiety of &ldquo;Did I click it?&rdquo; By providing reaction time, a fun animation that connotes processing of the order and reassuring feedback, the interface feels functional, responsive and trustworthy.</p>
+
+                <h3 class="fade-up observe">2. The drop-down menu</h3>
+                <table class="cs-timing fade-up observe">
+                    <thead>
+                        <tr><th scope="col">Moment</th><th scope="col">Timing and easing</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>The box opens</td><td>Gentle, 200ms</td></tr>
+                        <tr><td>Each order item fades in, one after another</td><td>Fade, 100ms each, 100ms apart</td></tr>
+                        <tr><td>The box closes and the items disappear</td><td>Gentle, 400ms</td></tr>
+                    </tbody>
+                </table>
+                <p class="fade-up observe">Instead of abruptly snapping into view, which can cause disorientation, the box drops down and the items appear one by one. This guides the user&rsquo;s eye downwards, letting them confirm each item of their order as it appears, so they don&rsquo;t just glance over it.</p>
+
+                <h3 class="fade-up observe">3. The delivery and pickup toggle</h3>
+                <table class="cs-timing fade-up observe">
+                    <thead>
+                        <tr><th scope="col">Moment</th><th scope="col">Timing and easing</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>The frame changes from delivery to pickup</td><td>Gentle, 800ms</td></tr>
+                        <tr><td>The line under Delivery slides across to Pickup</td><td>800ms</td></tr>
+                        <tr><td>Switching back to delivery</td><td>The same animation in reverse</td></tr>
+                    </tbody>
+                </table>
+                <p class="fade-up observe">The moving line gives the user an understanding of which option they have selected, and the pickup frame shows a map of the restaurant to confirm it. Using the exact same Smart Animate settings in both directions keeps it consistent, reducing friction and disorientation on the payment screen.</p>
+
+                <h3 class="fade-up observe">4. The savings notification</h3>
+                <table class="cs-timing fade-up observe">
+                    <thead>
+                        <tr><th scope="col">Moment</th><th scope="col">Timing and easing</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>The notification bounces in</td><td>After a 3000ms delay</td></tr>
+                        <tr><td>The pound symbol moves to the left</td><td>200ms, after a 200ms delay</td></tr>
+                        <tr><td>The amount saved fades in</td><td>Gentle fade, 200ms, after a 200ms delay</td></tr>
+                        <tr><td>The exit button eases in</td><td>200ms, after a 200ms delay</td></tr>
+                        <tr><td>The user closes it</td><td>Instant</td></tr>
+                    </tbody>
+                </table>
+                <p class="fade-up observe">The animations draw enough attention to the user&rsquo;s eyes to notify them that their delivery is free. However, since the notification appears to the right of the screen and the user gets to close it manually, it doesn&rsquo;t obstruct important details, keeping them informed without overwhelming them.</p>
             </div>
         </section>
 
